@@ -1,0 +1,105 @@
+export const handleResponsiveness=(xs,md)=>{
+  return {xs:xs,md:md}
+}
+
+export const signUpStyle={
+  signUpMainContainer:{
+    width:'100%',
+    height:handleResponsiveness('auto','100vh'),
+    display:'flex',
+    flexDirection:handleResponsiveness('column-reverse','row-reverse'),
+    position:'relative'
+  },
+  signUpLeftContainer:{
+    width:handleResponsiveness('100%','50%'),
+    height:handleResponsiveness('70%','100%'),
+    backgroundColor:'white',
+    borderRadius:'0',
+    overflowY:'scroll',
+    overflowX:'hidden'
+  },
+  companyLogo:{
+    width:'100%',
+    height:'60px',
+    display:'flex',
+    justifyContent:'space-between',
+    alignItems:'center',
+    padding:'20px',
+    cursor:'pinter',
+  },
+
+  signUpCardContainer:{
+    width:'100%',
+    height:'80vh',
+    display:'flex',
+    justifyContent:'center',
+  
+  },
+  signUpCard:{
+    width:'450px',
+    height:'700px',
+    boxShadow:'none',
+ 
+  },
+  signUpTitleContainer:{
+    width:'100%',
+    height:'50px',
+    display:'flex',
+    justifyContent:'center',
+    alignItems:'center'
+  },
+  signUpInputFieldContainer:{
+    width:'100%',
+    height:'50px',
+    display:'flex',
+    justifyContent:'center',
+    alignItems:'center',
+    marginTop:'20px'
+  },
+  signUpNameInputFieldContainer:{
+    width:'80%',
+    height:'50px',
+    display:'flex',
+    marginLeft:'10%',
+    justifyContent:'center',
+    alignItems:'center',
+    marginTop:'20px'
+  },
+  signUpButtonContainer:{
+    width:'96%',
+    height:'50px',
+    display:'flex',
+    justifyContent:'center',
+    alignItems:'center',
+    marginTop:'30px',
+  },
+  forgotPasswordContainer:{
+    width:'77%',
+    height:'30px',
+    marginTop:'16px',
+    display:'flex',
+    justifyContent:'flex-end',
+    alignItems:'center',
+    marginLeft:'10%'
+  },
+  signUpRightContainer:{
+    width:handleResponsiveness('100%','50%'),
+    height:handleResponsiveness('30%','100%'),
+    backgroundColor:'#D9D9D9',
+    borderRadius:'0'
+  },
+  companyName:{
+      width:'100%',
+      height:'80px',
+      display:'flex',
+      justifyContent:'flex-end',
+      alignItems:'center',
+  },
+  createAccountLabelContainer:{
+      width:'100%',
+      height:'40px',
+      display:'flex',
+      justifyContent:'center',
+      marginTop:'10px'
+  }
+}
