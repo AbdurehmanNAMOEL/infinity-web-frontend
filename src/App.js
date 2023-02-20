@@ -1,7 +1,6 @@
 import { Box } from '@mui/material';
 import { useEffect, useState } from 'react';
-import Header from './admin-page/components/Header';
-import SideBar from './admin-page/components/SideBar';
+
 import './App.css';
 import {BrowserRouter as Router ,Routes,Route} from 'react-router-dom'
 import DashBoard from './admin-page/pages/DashBoard';
@@ -11,7 +10,6 @@ import ChartHomePage from './admin-page/pages/chart/chartHomepage/ChartHomePage'
 import Blog from './admin-page/pages/Blog';
 import HomePage from './users-page/pages/HomePage';
 import { Login } from './users-page/auth/page/Login';
-import NavBar from './users-page/components/NavBar';
 import AboutUs from './users-page/pages/AboutUs';
 import SignUp from './users-page/auth/page/SignUp';
 import BlogsHome from './users-page/pages/blog/BlogsHome';
@@ -35,7 +33,9 @@ function App() {
           isDrawerOpen={isDrawerOpen} 
           closeDrawer={closeDrawer}
           drawerWidth={isDrawerOpen?200:0}/>}>
-        <Route path='adminHome' element={<AdminHome  closeDrawer={closeDrawer}/>}/>
+        <Route 
+          path='' 
+          element={<AdminHome  closeDrawer={closeDrawer}/>}/>
         <Route 
          path='users' 
          element={<Users 

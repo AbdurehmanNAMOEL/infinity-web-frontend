@@ -5,11 +5,15 @@ import { MenuOutlined,CloseOutlined } from '@mui/icons-material'
 import { Box } from '@mui/system'
 import LogoImage from '../../assets/image/logo.jpg'
 import SideBar from './SideBar'
+import { useNavigate } from 'react-router-dom'
 const MenuBar = () => {
-  const [navTitle,setNavTitle]= useState('Home')
+   const navigate= useNavigate('/')
+   const [navTitle,setNavTitle]= useState('Home')
    const [isSideBarOpen,setIsSideBarOpen]= useState(false)
-   const handleSideBarNavigation=(iconName)=>{
-       setNavTitle(iconName)
+   const handleSideBarNavigation=(name,navigateTo)=>{
+       setNavTitle(name)
+       navigate(`${navigateTo}`)
+        
        setIsSideBarOpen(prev=>!prev) // this to close the sidebar after clicking
   }
   return (

@@ -14,7 +14,7 @@ const style={
     }
 }
 export const sideBarIconList=[
-    {"routeTo":'dashBoard/adminHome', "title":'DashBoard',"icon":<DashboardOutlined sx={style.iconStyle}/>},
+    {"routeTo":'/dashBoard/adminHome', "title":'DashBoard',"icon":<DashboardOutlined sx={style.iconStyle}/>},
     {"routeTo":'dashBoard/Chart', "title":'Chart',"icon":<BarChart sx={style.iconStyle}/>},
     {"routeTo":'dashBoard/Users', "title":'Users',"icon":<PersonSearchOutlined sx={style.iconStyle}/>},
     {"routeTo":'dashBoard/adminBlog', "title":'Blog',"icon":<DocumentScanner sx={style.iconStyle}/>},

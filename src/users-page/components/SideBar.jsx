@@ -14,7 +14,7 @@ const SideBar = ({isSideBarOpen,setIsSideBarOpen,handleSideBarNavigation,navTitl
             </Box>
             {navList.map((item,index)=>
             <IconButton
-              onClick={()=>handleSideBarNavigation(item.title)}
+              onClick={()=>handleSideBarNavigation(item.title,item.to)}
               sx={[style.sideBarIconButtonList,
                  {borderRightColor:`${navTitle===item.title?'#1A6CE8':'rgba(0,0,0,0)'}`}]} 
               key={index}>{item.title} </IconButton>
