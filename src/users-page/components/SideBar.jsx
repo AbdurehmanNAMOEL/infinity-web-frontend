@@ -27,11 +27,11 @@ const SideBar = ({isSideBarOpen,setIsSideBarOpen,handleSideBarNavigation,navTitl
 const style = {
     sideBarContainer:{
       width:handleResponsiveness('80%','50%'),
-      height:'100%',
-      position:'absolute',
+      height:'auto',
+      position:'fixed',
       backgroundColor:'#5c5b5bb9',
       display:'flex',
-      gap:'40px',
+      gap:'20px',
       transition:'all 0.7s',
       flexDirection:'column',
       borderRadius:'0',
