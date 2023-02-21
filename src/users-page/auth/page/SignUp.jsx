@@ -36,6 +36,9 @@ import { signUp } from '../../../redux/features/authSlice'
          alert(userData)
          dispatch(signUp({userData,toast,navigate}))
          setFormValidation(true)
+         setUserData({ firstName:'',lastName:'', phoneNumber:'',email:'',
+                    password:'',confirmPassword:'',address:''})
+
        }else setFormValidation(false)
        
    }

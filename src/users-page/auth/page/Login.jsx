@@ -29,6 +29,7 @@ export const Login = ({isSideBarOpen,setIsSideBarOpen,handleSideBarNavigation,na
          alert(userData)
          dispatch(signIn({userData,toast,navigate}))
          setFormValidation(true)
+         setUserData({email:'',password:''})
        }else setFormValidation(false)
        
    }

@@ -4,7 +4,7 @@ import axios from 'axios'
 export const signUp = createAsyncThunk('auth/signUp',async({userData,toast,navigate})=>{
     try {
     
-         const response = await axios.post('http://localhost:4000/signUp',userData)
+         const response = await axios.post('https://infinity-api-oqlt.onrender.com/signUp',userData)
          if(response){
             toast.success('your account is successfully created')
             navigate('/')
@@ -18,7 +18,7 @@ export const signUp = createAsyncThunk('auth/signUp',async({userData,toast,navig
 
 export const signIn = createAsyncThunk('auth/signIn',async({userData,toast,navigate})=>{
     try {
-         const response = await axios.post('http://localhost:4000/signIn',userData)
+         const response = await axios.post('https://infinity-api-oqlt.onrender.com/signIn',userData)
          if(response){
             toast.success('well come back')
             navigate('/')
