@@ -1,5 +1,5 @@
 import { Box, Card, CardMedia, Divider,Paper, Typography } from '@mui/material'
-import React from 'react'
+import React, { useState } from 'react'
 import LogoImage from '../../../assets/image/logo.jpg'
 import ActionButton from '../../components/ActionButton'
 import InputField from '../../components/InputField'
@@ -10,13 +10,28 @@ import DataBaseImage from '../../../assets/image/dataBase.svg'
 import SideBar from '../../components/SideBar'
 import { useNavigate } from 'react-router-dom'
 import { motion } from "framer-motion";
-
-
+import { signIn } from '../../../redux/features/authSlice'
+import { useDispatch } from 'react-redux'
+import {toast} from 'react-toastify'
 
 
 export const Login = ({isSideBarOpen,setIsSideBarOpen,handleSideBarNavigation,navTitle}) => {
-   const navigate = useNavigate()
+    const navigate = useNavigate()
+   const dispatch= useDispatch()
+   const [isFormValid,setFormValidation]=useState(false)
    const TypoGraphMotion = motion(Typography);
+   const [userData,setUserData]= useState({email:'',password:'',})
+   const handleSubmit=()=>{
+    
+     if(userData.firstName!=='' && userData.lastName!==''
+       && userData.phoneNumber!=='' && userData.email!==''
+       &&userData.password!==''&&userData.confirmPassword!==''&& userData.address!==''){
+         alert(userData)
+         dispatch(signIn({userData,toast,navigate}))
+         setFormValidation(true)
+       }else setFormValidation(false)
+       
+   }
 
   return (
     <Box sx={loginStyle.loginMainContainer}>
@@ -49,12 +64,16 @@ export const Login = ({isSideBarOpen,setIsSideBarOpen,handleSideBarNavigation,na
                       <InputField 
                       inputLabel={'Email/Phone Number'}
                       type='text'
+                      inputValaue={userData.email}
+                      setValue={(e)=>setUserData({...userData,"email":e.target.value})}
                     />
                     </Box>
                       <Box sx={loginStyle.loginInputFieldContainer}>                    
                       <InputField 
                       inputLabel={'password'}
                       type='password'
+                      inputValaue={userData.password}
+                      setValue={(e)=>setUserData({...userData,"password":e.target.value})}
                     />
                     </Box>
                     <Box sx={loginStyle.forgotPasswordContainer}>
@@ -66,6 +85,7 @@ export const Login = ({isSideBarOpen,setIsSideBarOpen,handleSideBarNavigation,na
                      <ActionButton
                        btnLabel='Login'
                        btnWidth={'80%'}
+                       onClick={handleSubmit}
                       />
                     </Box>
                   <Divider sx={{marginTop:'20px'}}/>     
@@ -88,7 +108,7 @@ export const Login = ({isSideBarOpen,setIsSideBarOpen,handleSideBarNavigation,na
                mediaHeight={'35px'} 
                imgUrl={DataBaseImage}
               />
-              <TypoGraphMotion 
+              <Typography
                 animate={{ x: [400,0] }} 
                 transition = {{ ease: "easeInOut", duration: 2 }} 
                  sx={
@@ -101,7 +121,7 @@ export const Login = ({isSideBarOpen,setIsSideBarOpen,handleSideBarNavigation,na
                     cursor:'pointer'
                 }}>
                   INFINITY CONSULTANCY AND TRANING FIRM
-             </TypoGraphMotion>
+             </Typography>
            </Box>
            
           
@@ -116,7 +136,7 @@ export const Login = ({isSideBarOpen,setIsSideBarOpen,handleSideBarNavigation,na
               }
            }>
 
-    <TypoGraphMotion
+    <Typography
             animate={{ y: [-500,0] }} 
             transition = {{ ease: "easeInOut", duration: 2 }} 
             variant='h4' 
@@ -127,7 +147,7 @@ export const Login = ({isSideBarOpen,setIsSideBarOpen,handleSideBarNavigation,na
                   color:'rgba(0,0,0,0.6)',
                   fontWeight:'bold',
                
-                }}>Welcome Back</TypoGraphMotion>
+                }}>Welcome Back</Typography>
            
                <Card 
                  sx={

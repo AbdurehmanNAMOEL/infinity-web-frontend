@@ -7,9 +7,13 @@ import MenuBar from './MenuBar'
 import LogoImage from '../../assets/image/logo.jpg'
 import MediaCard from './MediaCard'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { logOut } from '../../redux/features/authSlice'
 const NavBar = () => {
     const navigate=useNavigate()
     const [navTitle,setNavTitle]= useState('Home')
+    const {isLoggedIn} = useSelector(state=>state.auth)
+    const dispatch = useDispatch()
     const handleNavigation=(title,navigateTo)=>{
        setNavTitle(title)
        navigate(`${navigateTo}`)
@@ -34,7 +38,14 @@ const NavBar = () => {
                 {item.title}
             </IconButton>
           )}
-          <IconButton onClick={()=>navigate('/login')} sx={style.logoInIcon}>Login</IconButton>
+          {!isLoggedIn?<IconButton 
+            onClick={()=>navigate('/login')} 
+            sx={style.logoInIcon}>Login</IconButton>:
+            <IconButton 
+            onClick={()=>dispatch(logOut())} 
+            sx={style.logoInIcon}>LogOut</IconButton>
+            
+            }
         </Box>
     </Header>
     </Box>

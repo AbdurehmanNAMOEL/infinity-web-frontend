@@ -1,6 +1,7 @@
 import { Box } from '@mui/material';
 import { useEffect, useState } from 'react';
-
+import {ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
 import {BrowserRouter as Router ,Routes,Route} from 'react-router-dom'
 import DashBoard from './admin-page/pages/DashBoard';
@@ -16,6 +17,7 @@ import BlogsHome from './users-page/pages/blog/BlogsHome';
 import SurveyHome from './users-page/pages/survey/SurveyHome';
 import ContactUs from './users-page/pages/ContactUs';
 import AdminHome from './admin-page/pages/AdminHome';
+import PrivateRoute from './users-page/privateRoute/PrivateRoute';
 function App() {
    const [isDrawerOpen,setDrawerOpen]=useState(true)
     const closeDrawer=()=>{
@@ -27,6 +29,7 @@ function App() {
   return (
     <Box sx={{width:'100%',display:'flex'}}>
       <Router>
+        <ToastContainer/>
        <Routes>
         <Route path='/dashBoard' 
           element={<DashBoard 
@@ -60,13 +63,15 @@ function App() {
           closeDrawer={closeDrawer}
           drawerWidth={isDrawerOpen?200:0}/>}/>
         </Route>
-        <Route path='/' element={<HomePage/>}/>
         <Route path='/login' element={<Login/>}/>
         <Route path='/signUp' element={<SignUp/>}/>
+        <Route path='/' element={<HomePage/>}/>
         <Route path='/aboutUs' element={<AboutUs/>}/>
         <Route path='/blog' element={<BlogsHome/>}/>
-        <Route path='/survey' element={<SurveyHome/>}/>
         <Route path='/contactUs' element={<ContactUs/>}/>
+        <Route element={<PrivateRoute/>}>
+         <Route path='/survey' element={<SurveyHome/>}/>
+        </Route>
        </Routes>
       </Router>
      

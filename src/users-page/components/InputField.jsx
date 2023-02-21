@@ -8,14 +8,12 @@ import FormControl from '@mui/material/FormControl';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
-const InputField = ({inputLabel,type,setValue}) => {
+const InputField = ({inputLabel,type,setValue,inputValaue}) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleClickShowPassword = () => setShowPassword(show => !show);
   
-  const handleInput =(e)=>{
-     setValue(e.target.value)
-  }
+
 
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
@@ -28,7 +26,8 @@ const InputField = ({inputLabel,type,setValue}) => {
             id="outlined-adornment"
             sx={{ height:'50px', width: '96%',backgroundColor:'white' }}
             type={type==='password'?showPassword?'text':'password':type}
-            onChange={handleInput}
+            onChange={setValue}
+            value={inputValaue}
             endAdornment={
               <InputAdornment position="start">
                 <IconButton

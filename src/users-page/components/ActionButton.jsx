@@ -1,10 +1,10 @@
 import { Button, Typography } from '@mui/material'
 import React from 'react'
 
-const ActionButton = ({btnWidth,btnLabel,Click}) => {
+const ActionButton = ({btnWidth,btnLabel,onClick}) => {
   return (
     <Button 
-      onClick={Click}
+      onClick={onClick}
       sx={[style.buttonStyle,{width:btnWidth}]}>
       <Typography>{btnLabel}</Typography>  
     </Button>

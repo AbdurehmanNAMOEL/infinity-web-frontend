@@ -1,5 +1,5 @@
-import { Box, Card, CardMedia, Divider, IconButton, Paper, Typography } from '@mui/material'
-import React from 'react'
+import { Box, Card, CardMedia, Divider, Paper, Typography } from '@mui/material'
+import React, { useState } from 'react'
 import LogoImage from '../../../assets/image/logo.jpg'
 import ActionButton from '../../components/ActionButton'
 import InputField from '../../components/InputField'
@@ -7,14 +7,38 @@ import { handleResponsiveness, signUpStyle } from '../styles/signUpStyle'
 import AboutUs from '../../../assets/image/blog.svg'
 import MediaCard from '../../components/MediaCard'
 import DataBaseImage from '../../../assets/image/dataBase.svg'
-import SideBar from '../../components/SideBar'
-import { MenuOutlined } from '@mui/icons-material'
 import { useNavigate } from 'react-router-dom'
 import { motion } from "framer-motion";
-
- const SignUp = ({isSideBarOpen,setIsSideBarOpen,handleSideBarNavigation,navTitle}) => {
+import {toast} from 'react-toastify'
+import { useDispatch } from 'react-redux'
+import { signUp } from '../../../redux/features/authSlice'
+ const SignUp = () => {
    const navigate = useNavigate()
+   const dispatch= useDispatch()
+   const [isFormValid,setFormValidation]=useState(false)
    const TypoGraphMotion = motion(Typography);
+   const [userData,setUserData]= useState({
+    firstName:'',
+    lastName:'',
+    phoneNumber:'',
+    email:'',
+    password:'',
+    confirmPassword:'',
+    address:''
+   })
+
+
+   const handleSubmit=()=>{
+    
+     if(userData.firstName!=='' && userData.lastName!==''
+       && userData.phoneNumber!=='' && userData.email!==''
+       &&userData.password!==''&&userData.confirmPassword!==''&& userData.address!==''){
+         alert(userData)
+         dispatch(signUp({userData,toast,navigate}))
+         setFormValidation(true)
+       }else setFormValidation(false)
+       
+   }
 
   return (
     <Box sx={signUpStyle.signUpMainContainer}>
@@ -25,7 +49,7 @@ import { motion } from "framer-motion";
                mediaHeight={'35px'} 
                imgUrl={DataBaseImage}
               />
-              <TypoGraphMotion 
+              <Typography 
                 animate={{ x: [400,0] }} 
                 transition = {{ ease: "easeInOut", duration: 2 }} 
                  sx={
@@ -38,7 +62,7 @@ import { motion } from "framer-motion";
                     cursor:'pointer'
                 }}>
                   INFINITY CONSULTANCY AND TRANING FIRM
-             </TypoGraphMotion>
+             </Typography>
            </Box>
            
          
@@ -54,46 +78,61 @@ import { motion } from "framer-motion";
                       <InputField 
                       inputLabel={'FirstName'}
                       type='text'
+                      inputValaue={userData.firstName}
+                      setValue={(e)=>setUserData({...userData,"firstName":e.target.value})}
                     />
                      <InputField 
                       inputLabel={'LastName'}
                       type='text'
+                      inputValaue={userData.lastName}
+                      setValue={(e)=>setUserData({...userData,"lastName":e.target.value})}
                     />
                     </Box>
                     <Box sx={signUpStyle.signUpInputFieldContainer}>                    
                       <InputField 
                       inputLabel={'Phone Number'}
                       type='text'
+                      inputValaue={userData.phoneNumber}
+                      setValue={(e)=>setUserData({...userData,"phoneNumber":e.target.value})}
                     />
                     </Box>
                        <Box sx={signUpStyle.signUpInputFieldContainer}>                    
                       <InputField 
                       inputLabel={'Email'}
                       type='text'
+                      inputValaue={userData.email}
+                      setValue={(e)=>setUserData({...userData,"email":e.target.value})}
                     />
                     </Box>
                     <Box sx={signUpStyle.signUpInputFieldContainer}>                    
                       <InputField 
                       inputLabel={'Address'}
                       type='text'
+                      inputValaue={userData.address}
+                      setValue={(e)=>setUserData({...userData,"address":e.target.value})}
                     />
                     </Box>
                        <Box sx={signUpStyle.signUpInputFieldContainer}>                    
                       <InputField 
                       inputLabel={'password'}
                       type='password'
+                      inputValaue={userData.password}
+                      setValue={(e)=>setUserData({...userData,"password":e.target.value})}
                     />
                     </Box>
                       <Box sx={signUpStyle.signUpInputFieldContainer}>                    
                       <InputField 
                       inputLabel={'ConfirmPassword'}
                       type='password'
+                      inputValaue={userData.confirmPassword}
+                      setValue={(e)=>setUserData({...userData,"confirmPassword":e.target.value})}
                     />
                     </Box>                
                     <Box sx={signUpStyle.signUpButtonContainer}>    
                      <ActionButton
                        btnLabel='signUp'
                        btnWidth={'80%'}
+                       onClick={handleSubmit}
                       />
                     </Box>
                   <Divider sx={{marginTop:'20px'}}/>     
@@ -131,7 +170,7 @@ import { motion } from "framer-motion";
               }
            }>
 
-    <TypoGraphMotion
+    <Typography
             animate={{ y: [-500,0] }} 
             transition = {{ ease: "easeInOut", duration: 2 }} 
             variant='h4' 
@@ -144,7 +183,7 @@ import { motion } from "framer-motion";
                
                 }}>
                We are the bridge  between 
-                </TypoGraphMotion>
+                </Typography>
               <Typography 
                variant='h4'
                sx={
@@ -168,7 +207,10 @@ import { motion } from "framer-motion";
                     boxShadow:'none',
                     borderRadius:'0'
                     }}>
-                <CardMedia image={AboutUs} sx={{width:'90%',height:'90%'}}/>
+                <CardMedia 
+                  image={AboutUs} 
+                   sx={{width:'90%',height:'90%'}}
+                   />
                </Card>
            </Box>
         </Paper>
