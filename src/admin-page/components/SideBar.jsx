@@ -14,6 +14,7 @@ const SideBar = ({isDrawerOpen,closeDrawer,drawerWidth}) => {
   const {isLightMode}= useSelector(state=>state.auth)
   const dispatch= useDispatch()
   console.log(navTitle);
+  
   return (
     <Drawer
      open={{xs:!isDrawerOpen,md:isDrawerOpen}}
