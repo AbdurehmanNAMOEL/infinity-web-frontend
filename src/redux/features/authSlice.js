@@ -36,11 +36,15 @@ export const authSlice= createSlice({
     initialState:{
       users:[],
       loading:false,
-      isLoggedIn:false
+      isLoggedIn:false,
+      isLightMode:true
 },
   reducers:{
     logOut:(state,action)=>{
        state.isLoggedIn=false
+    },
+     setMode:(state,action)=>{
+       state.isLightMode=!state.isLightMode
     }
   },
   extraReducers:{
@@ -71,6 +75,6 @@ export const authSlice= createSlice({
 
 })
 
-  export const {logOut}=authSlice.actions
+  export const {logOut,setMode}=authSlice.actions
 
  export const authReducer=authSlice.reducer

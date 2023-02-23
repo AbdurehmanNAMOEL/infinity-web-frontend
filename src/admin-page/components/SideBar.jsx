@@ -1,27 +1,42 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {Card, CardMedia, Drawer, IconButton, Typography} from '@mui/material'
 import { Box } from '@mui/system'
 import AdminImage from '../../assets/image/user.gif'
 import { sideBarIconList } from '../utils/iconsList'
 import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 const SideBar = ({isDrawerOpen,closeDrawer,drawerWidth}) => {
    
   const [navText,setNavText]=useState('dashboard/adminHome')
   const navigate = useNavigate()
-  
+  const {isLightMode}= useSelector(state=>state.auth)
+  const [width,setWidth]= useState(drawerWidth)
 
+  useEffect(()=>{
+     if(window.innerWidth<=540){
+         setWidth(0)
+         if(!isDrawerOpen){
+             setWidth(0)
+         }else setWidth(200)
+     }else {
+       setWidth(200)
+      if(isDrawerOpen){
+         setWidth(200)
+       }else setWidth(0)
+     }
+  },[width,isDrawerOpen])
   return (
     <Drawer
      open={isDrawerOpen}
      onClose={closeDrawer}   
      variant='persistent' 
      sx={{
-          width:drawerWidth,
+          width:width,
           color:'white',
           "& .MuiDrawer-paper":{
-            backgroundColor:'#D9D9D9',
-            width:drawerWidth,
+            backgroundColor:`${isLightMode?'#D9D9D9':'#121212'}`,
+            width:width,
           }
          }}>
          <Box sx={style.drawerHeader}>
@@ -31,7 +46,7 @@ const SideBar = ({isDrawerOpen,closeDrawer,drawerWidth}) => {
               <Card sx={style.adminImageContainer}>
                 <CardMedia sx={{width:'90%',height:'90%'}} image={AdminImage}/>
               </Card>
-              <Typography sx={{mt:'8px'}}>Abdurehman Saeed</Typography>
+              <Typography sx={{mt:'8px',color:`${isLightMode?'#121212':'white'}`}}>Abdurehman Saeed</Typography>
               <Typography sx={style.adminPosition}>CEO</Typography>
          </Box>
          <div style={style.divider}/>
@@ -45,7 +60,8 @@ const SideBar = ({isDrawerOpen,closeDrawer,drawerWidth}) => {
               }} 
               sx={[
                 style.listIconContainer,
-                {backgroundColor:`${item.routeTo===navText?'white':'#D9D9D9'}`},
+                {backgroundColor:`${item.routeTo===navText?'white':`${isLightMode?'#D9D9D9':'#121212'}`}`},
+                {color:`${item.routeTo===navText?'#121212':`${isLightMode?'#121212':'white'}`}`}
                 ]}>
               {item.icon}
               <Typography>{item.title}</Typography>

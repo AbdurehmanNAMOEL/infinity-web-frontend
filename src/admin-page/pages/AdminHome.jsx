@@ -1,11 +1,14 @@
 import { Box, Paper } from '@mui/material'
 import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
+import Card from '../components/Card'
 import Header from '../components/Header'
 import SideBar from '../components/SideBar'
 import LineChart from './chart/LineChart'
 
 const AdminHome = () => {
     const [isDrawerOpen,closeDrawer] = useState(true)
+    const {isLightMode}= useSelector(state=>state.auth)
   return (
      <div 
         style={
@@ -26,12 +29,12 @@ const AdminHome = () => {
          <Box sx={{position:'fixed',width:`${isDrawerOpen?86:100}%`,zIndex:200}}> 
          <Header closeDrawer={()=>closeDrawer(prev=>!prev)}/>
          </Box>
-         <Box sx={style.topContainer}>
-            <Paper sx={{width:'300px',height:'100%',backgroundColor:'#D9D9D9'}}></Paper>
-             <Paper sx={{width:'300px',height:'100%',backgroundColor:'#D9D9D9'}}></Paper>
-              <Paper sx={{width:'300px',height:'100%',backgroundColor:'#D9D9D9'}}></Paper>
+         <Box sx={[style.topContainer,{backgroundColor:`${isLightMode?"white":'#121212'}`}]}>
+           <Card/>
+           <Card/>
+           <Card/>
          </Box>
-         <Box sx={style.chartDisplay}>
+         <Box sx={[style.chartDisplay,{backgroundColor:`${isLightMode?"white":"#121212"}`}]}>
             <LineChart/>
          </Box>
          <Box sx={style.chartDisplay}>

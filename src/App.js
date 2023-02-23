@@ -18,8 +18,10 @@ import SurveyHome from './users-page/pages/survey/SurveyHome';
 import ContactUs from './users-page/pages/ContactUs';
 import AdminHome from './admin-page/pages/AdminHome';
 import PrivateRoute from './users-page/privateRoute/PrivateRoute';
+import { useSelector } from 'react-redux';
 function App() {
    const [isDrawerOpen,setDrawerOpen]=useState(true)
+   const {isLightMode}= useSelector(state=>state.auth)
     const closeDrawer=()=>{
           setDrawerOpen(prev=>!prev)
     }
@@ -27,7 +29,7 @@ function App() {
     useEffect(()=>{
     },[isDrawerOpen])
   return (
-    <Box sx={{width:'100%',display:'flex'}}>
+    <Box sx={{width:'100%',display:'flex',backgroundColor:`${isLightMode?'white':'#121212'}`}}>
       <Router>
         <ToastContainer/>
        <Routes>
