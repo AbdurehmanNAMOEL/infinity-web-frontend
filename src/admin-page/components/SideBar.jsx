@@ -11,32 +11,22 @@ const SideBar = ({isDrawerOpen,closeDrawer,drawerWidth}) => {
   const [navText,setNavText]=useState('dashboard/adminHome')
   const navigate = useNavigate()
   const {isLightMode}= useSelector(state=>state.auth)
+  
+ 
+
   const [width,setWidth]= useState(drawerWidth)
 
-  useEffect(()=>{
-     if(window.innerWidth<=540){
-         setWidth(0)
-         if(!isDrawerOpen){
-             setWidth(0)
-         }else setWidth(200)
-     }else {
-       setWidth(200)
-      if(isDrawerOpen){
-         setWidth(200)
-       }else setWidth(0)
-     }
-  },[width,isDrawerOpen])
   return (
     <Drawer
-     open={isDrawerOpen}
+     open={{xs:!isDrawerOpen,md:isDrawerOpen}}
      onClose={closeDrawer}   
      variant='persistent' 
      sx={{
-          width:width,
+          width:{xs:!isDrawerOpen?200:0,md:drawerWidth},
           color:'white',
           "& .MuiDrawer-paper":{
             backgroundColor:`${isLightMode?'#D9D9D9':'#121212'}`,
-            width:width,
+            width:{xs:!isDrawerOpen?200:0,md:drawerWidth},
           }
          }}>
          <Box sx={style.drawerHeader}>

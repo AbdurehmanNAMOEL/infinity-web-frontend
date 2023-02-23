@@ -20,10 +20,12 @@ function Header({closeDrawer}) {
    }
   return (
     <Paper sx={[style.headerContainer,{backgroundColor:`${isLightMode?"#D9D9D9":"#121212"}`,}]}>
+       <Box sx={{width:'50%',display:'flex',justifyContent:'flex-start'}}>
         <IconButton onClick={closeDrawer}>
             <MenuOutlined sx={{color:'#1977FC', fontweight:'bold'}}/>
         </IconButton>
-        <Box>
+        </Box>
+        <Box sx={{width:'50%',display:'flex',justifyContent:'center'}}>
         {isLightMode?<IconButton onClick={handleDispatch}>
             <ModeNight sx={{color:'black', fontweight:'bold'}}/>
         </IconButton>:
@@ -47,7 +49,7 @@ const style ={
         height:'60px',
         display:'flex',
         flexDirection:'row',
-        justifyContent:'space-between',
+        justifyContent:'space-around',
         alignItems:'center',
         zIndex:400,
         borderRadius:'0px',
