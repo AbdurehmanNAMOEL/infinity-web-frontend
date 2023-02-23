@@ -8,14 +8,13 @@ export const signUpStyle={
     height:handleResponsiveness('auto','100vh'),
     display:'flex',
     flexDirection:handleResponsiveness('column-reverse','row-reverse'),
-    position:'relative'
   },
   signUpLeftContainer:{
     width:handleResponsiveness('100%','50%'),
-    height:handleResponsiveness('70%','100%'),
+    height:handleResponsiveness('auto','100%'),
     backgroundColor:'white',
     borderRadius:'0',
-    overflowY:'scroll',
+    overflowY:{md:'scroll',xs:'hidden'},
     overflowX:'hidden'
   },
   companyLogo:{
@@ -30,7 +29,7 @@ export const signUpStyle={
 
   signUpCardContainer:{
     width:'100%',
-    height:'80vh',
+    height:handleResponsiveness('auto','80vh'),
     display:'flex',
     justifyContent:'center',
   
@@ -46,7 +45,8 @@ export const signUpStyle={
     height:'50px',
     display:'flex',
     justifyContent:'center',
-    alignItems:'center'
+    alignItems:'center',
+    marginTop:{xs:'20px',md:'0px'}
   },
   signUpInputFieldContainer:{
     width:'100%',
@@ -84,14 +84,14 @@ export const signUpStyle={
   },
   signUpRightContainer:{
     width:handleResponsiveness('100%','50%'),
-    height:handleResponsiveness('30%','100%'),
+    height:handleResponsiveness('auto','100%'),
     backgroundColor:'#D9D9D9',
     borderRadius:'0'
   },
   companyName:{
       width:'100%',
       height:'80px',
-      display:'flex',
+      display:{xs:'none',md:'flex'},
       justifyContent:'flex-end',
       alignItems:'center',
   },

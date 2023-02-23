@@ -74,9 +74,15 @@ import { signUp } from '../../../redux/features/authSlice'
                     <Box sx={signUpStyle.signUpTitleContainer}>
                       <Typography 
                          variant='h5' 
-                         sx={{color:'rgba(0,0,0,0.5)',fontWeight:'bold',fontFamily:'Poppins'}}>SignUp</Typography>
+                         sx={{
+                          color:'rgba(0,0,0,0.5)',
+                          fontWeight:'bold',
+                          fontFamily:'Poppins',
+                          marginBottom:'20px'
+                          
+                          }}>SignUp</Typography>
                     </Box>
-                    {/* <Divider/> */}
+                    <Divider sx={{width:'80%',marginLeft:'10%'}}/>
                      <Box sx={signUpStyle.signUpNameInputFieldContainer}>                    
                       <InputField 
                       inputLabel={'FirstName'}
@@ -153,9 +159,9 @@ import { signUp } from '../../../redux/features/authSlice'
      
         <Paper sx={signUpStyle.signUpRightContainer}>
               <Box onClick={()=>navigate('/home')} sx={signUpStyle.companyLogo}>
-               <MediaCard
-                 mediaHeight={'100%'}
-                 mediaWidth={'120px'}
+                 <MediaCard
+                 mediaHeight={'40px'}
+                 mediaWidth={'80px'}
                  imgUrl={LogoImage}
                />
                {/* <IconButton onClick={()=>setIsSideBarOpen(prev=>!prev)}>
@@ -165,7 +171,7 @@ import { signUp } from '../../../redux/features/authSlice'
            <Box sx={
             {
               width:'100%',
-              height:handleResponsiveness('30vh','80vh'),
+              height:handleResponsiveness('auto','80vh'),
               display:'flex',
               justifyContent:'center',
               alignItems:'center',
@@ -176,13 +182,13 @@ import { signUp } from '../../../redux/features/authSlice'
     <Typography
             animate={{ y: [-500,0] }} 
             transition = {{ ease: "easeInOut", duration: 2 }} 
-            variant='h4' 
             sx={
                 {
                   textAlign:'center',
                   fontFamily:'Poppins',
                   color:'rgba(0,0,0,0.6)',
                   fontWeight:'bold',
+                  fontSize:{xs:'24px',md:'40px'}
                
                 }}>
                We are the bridge  between 
@@ -195,6 +201,7 @@ import { signUp } from '../../../redux/features/authSlice'
                   fontFamily:'Poppins',
                   color:'#1A6CE8',
                   fontWeight:'bold',
+                  fontSize:{xs:'24px',md:'40px'}
                
                 }}
                >Information and Development!</Typography>
@@ -202,17 +209,18 @@ import { signUp } from '../../../redux/features/authSlice'
                  sx={
                   {
                     width:'100%',
-                    height:'60vh',
+                    height:{xs:'40vh',md:'60vh'},
                     display:'flex',
                     justifyContent:'center',
                     alignItems:'center',
                     backgroundColor:'#D9D9D9',
                     boxShadow:'none',
-                    borderRadius:'0'
+                    borderRadius:'0',
+                    marginTop:'20px'
                     }}>
                 <CardMedia 
                   image={AboutUs} 
-                   sx={{width:'90%',height:'90%'}}
+                   sx={{width:'60%',height:'100%'}}
                    />
                </Card>
            </Box>

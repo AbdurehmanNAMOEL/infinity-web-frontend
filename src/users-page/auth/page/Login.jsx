@@ -43,15 +43,12 @@ export const Login = ({isSideBarOpen,setIsSideBarOpen,handleSideBarNavigation,na
         navTitle={navTitle}
       />
         <Paper sx={loginStyle.loginLeftContainer}>
-             <Box onClick={()=>navigate('/')} sx={loginStyle.companyLogo}>
+             <Box onClick={()=>navigate('/')} sx={[loginStyle.companyLogo,{display:{xs:'none',md:'flex'}}]}>
                <MediaCard
-                 mediaHeight={'100%'}
-                 mediaWidth={'60px'}
+                 mediaHeight={'40px'}
+                 mediaWidth={'80px'}
                  imgUrl={LogoImage}
                />
-               {/* <IconButton onClick={()=>setIsSideBarOpen(prev=>!prev)}>
-                  <MenuOutlined/>
-               </IconButton> */}
              </Box>
              <Box sx={loginStyle.loginCardContainer}>
                 <Paper sx={loginStyle.loginCard}>
@@ -104,14 +101,22 @@ export const Login = ({isSideBarOpen,setIsSideBarOpen,handleSideBarNavigation,na
      
         <Paper sx={loginStyle.loginRightContainer}>
            <Box sx={loginStyle.companyName}>
-            <MediaCard 
+              <Box onClick={()=>navigate('/')} sx={[loginStyle.companyLogo,{display:{xs:'flex',md:'none'}}]}>
+               <MediaCard
+                 mediaHeight={'40px'}
+                 mediaWidth={'80px'}
+                 imgUrl={LogoImage}
+               />
+             </Box>
+              <Box onClick={()=>navigate('/')} sx={{display:{xs:'none',md:'flex'}}}>
+               <MediaCard
                mediaWidth={'30px'} 
                mediaHeight={'35px'} 
                imgUrl={DataBaseImage}
-              />
+               />
+             </Box>
+           
               <Typography
-                animate={{ x: [400,0] }} 
-                transition = {{ ease: "easeInOut", duration: 2 }} 
                  sx={
                   {
                     fontSize:'13px',
@@ -119,7 +124,9 @@ export const Login = ({isSideBarOpen,setIsSideBarOpen,handleSideBarNavigation,na
                     width:'200px',
                     color:'rgba(0,0,0,0.5)',
                     fontWeight:'bold',
-                    cursor:'pointer'
+                    cursor:'pointer',
+                    display:{xs:'none',md:'flex'}
+
                 }}>
                   INFINITY CONSULTANCY AND TRANING FIRM
              </Typography>
