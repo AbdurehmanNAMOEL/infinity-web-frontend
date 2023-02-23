@@ -1,21 +1,19 @@
-import React, { useEffect, useState } from 'react'
+import React, {useEffect, useState } from 'react'
 import {Card, CardMedia, Drawer, IconButton, Typography} from '@mui/material'
 import { Box } from '@mui/system'
 import AdminImage from '../../assets/image/user.gif'
 import { sideBarIconList } from '../utils/iconsList'
 import { useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { setNavTitle } from '../../redux/features/adminSlice'
 
 const SideBar = ({isDrawerOpen,closeDrawer,drawerWidth}) => {
    
-  const [navText,setNavText]=useState('dashboard/adminHome')
+  const {navTitle}= useSelector(state=>state.admin)
   const navigate = useNavigate()
   const {isLightMode}= useSelector(state=>state.auth)
-  
- 
-
-  const [width,setWidth]= useState(drawerWidth)
-
+  const dispatch= useDispatch()
+  console.log(navTitle);
   return (
     <Drawer
      open={{xs:!isDrawerOpen,md:isDrawerOpen}}
@@ -45,13 +43,13 @@ const SideBar = ({isDrawerOpen,closeDrawer,drawerWidth}) => {
             <IconButton 
               key={index}
               onClick={()=>{
-                setNavText(item.routeTo)
+               dispatch(setNavTitle(item.routeTo))
                 navigate(`/${item.routeTo}`)
               }} 
               sx={[
                 style.listIconContainer,
-                {backgroundColor:`${item.routeTo===navText?'white':`${isLightMode?'#D9D9D9':'#121212'}`}`},
-                {color:`${item.routeTo===navText?'#121212':`${isLightMode?'#121212':'white'}`}`}
+                {backgroundColor:`${item.routeTo===navTitle?'white':`${isLightMode?'#D9D9D9':'#121212'}`}`},
+                {color:`${item.routeTo===navTitle?'#121212':`${isLightMode?'#121212':'white'}`}`}
                 ]}>
               {item.icon}
               <Typography>{item.title}</Typography>

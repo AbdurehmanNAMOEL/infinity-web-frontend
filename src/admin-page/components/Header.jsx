@@ -4,7 +4,7 @@ import {
  MenuOutlined,
  HomeOutlined,
  ModeNight,
-LightMode,
+ LightMode,
  NotificationsOutlined,
 } from '@mui/icons-material/'
 import { useNavigate } from 'react-router-dom'

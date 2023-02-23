@@ -22,6 +22,7 @@ import { useSelector } from 'react-redux';
 function App() {
    const [isDrawerOpen,setDrawerOpen]=useState(true)
    const {isLightMode}= useSelector(state=>state.auth)
+   const [navText,setNavText]=useState('dashboard/adminHome')
     const closeDrawer=()=>{
           setDrawerOpen(prev=>!prev)
     }
