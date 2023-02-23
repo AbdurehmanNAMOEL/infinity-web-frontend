@@ -12,7 +12,7 @@ const QuestionnairePage = ({closeDrawer,isDrawerOpen}) => {
           drawerWidth={isDrawerOpen?200:0}
         />
         <Box sx={{display:'flex',width:'100%',position:'relative',flexDirection:'column'}}>
-         <Box sx={{position:'fixed',width:`${100}%`,zIndex:200}}> 
+        <Box sx={{position:'fixed',width:`${isDrawerOpen?100:100}%`,zIndex:200}}> 
          <Header closeDrawer={()=>closeDrawer(prev=>!prev)}/>
          </Box>
          </Box>
