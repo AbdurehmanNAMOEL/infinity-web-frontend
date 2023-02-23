@@ -3,7 +3,14 @@ import React from 'react'
 import { MenuOutlined,CloseOutlined } from '@mui/icons-material'
 import { navList } from '../utils/navlist'
 import { handleResponsiveness } from '../auth/styles/loginStyle'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { logOut } from '../../redux/features/authSlice'
 const SideBar = ({isSideBarOpen,setIsSideBarOpen,handleSideBarNavigation,navTitle}) => {
+  const dispatch = useDispatch()
+  const navigate= useNavigate()
+  const {isLoggedIn} = useSelector(state=>state.auth)
+
   return (
    <Paper sx={[style.sideBarContainer,{marginLeft:`${isSideBarOpen?'0%':'-100%'}`}]}>
             <Box sx={style.closingIconContainer}>
@@ -19,6 +26,16 @@ const SideBar = ({isSideBarOpen,setIsSideBarOpen,handleSideBarNavigation,navTitl
                  {borderRightColor:`${navTitle===item.title?'#1A6CE8':'rgba(0,0,0,0)'}`}]} 
               key={index}>{item.title} </IconButton>
           )}
+
+          {!isLoggedIn?<IconButton
+            onClick={()=>navigate('/login')} 
+            sx={style.logButton}
+            >Login</IconButton>:
+            <IconButton 
+            onClick={()=>dispatch(logOut())} 
+            sx={style.logButton}>LogOut</IconButton>
+            
+            }
 
       </Paper>
   )
@@ -64,6 +81,13 @@ const style = {
       borderBottomWidth:15,
       fontWeigh:'bold',
       marginBottom:'15px'
+    },
+    logButton:{
+      borderRadius:'0',
+      backgroundColor:'#1A6CE8',
+      color:'white',
+      fontWeigh:'bold',
+      fontSize:'15px'
     }
 }
 export default SideBar
