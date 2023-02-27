@@ -47,9 +47,9 @@ const Footer = () => {
                </Box>
            </Box>
           <Box sx={style.footerSectionContainer}>
-             <Typography sx={{marginBottom:'16px',fontWeight:'bold'}}>Follow Us</Typography>
+             <Typography sx={{marginBottom:'10px',fontWeight:'bold'}}>Follow Us</Typography>
               {/* <span>Feel free to contact</span> */}
-               <Box sx={{width:'100%',display:'flex',flexDirection:'row',gap:'16px'}}>
+               <Box sx={style.contactUsContainer}>
                   <FacebookOutlinedIcon sx={{color:'#1A6CE8'}}/>
                   <TelegramIcon sx={{color:'#1A6CE8'}}/>
                   <LinkedInIcon sx={{color:'#1A6CE8'}}/>
@@ -107,7 +107,7 @@ const style={
        gap:'60px'
     },
     footerBottomContainer:{
-      width:'100%',
+      width:'80%',
       height:handleResponsiveness('auto','20%'),
       display:'flex',
       flexDirection:handleResponsiveness('column','row'),
@@ -140,17 +140,27 @@ const style={
     },
     footerSectionContainer: {
       width:handleResponsiveness('80%','250px'),
-      height:handleResponsiveness('auto','80%'),
+      height:handleResponsiveness('100px','80%'),
+      gap:handleResponsiveness('10px','50px')
     },
   footerCopyRightText:{
-    fontSize:handleResponsiveness('1rem','16px'),
+    fontSize:handleResponsiveness('14px','16px'),
     width:handleResponsiveness('80%','50%'),
-    marginLeft:handleResponsiveness('20px','0px')
+    marginLeft:handleResponsiveness('20px','40px')
   },
   footerPolicyContainer:{
     fontSize:handleResponsiveness('1rem','16px'),
     width:handleResponsiveness('80%','50%'),
-    marginLeft:handleResponsiveness('20px','0px')
+    marginLeft:handleResponsiveness('20px','0px'),
+    display:'flex',
+    gap:'50px'
+  },
+  contactUsContainer:{
+    width:'100%',
+    height:'100px',
+    display:'flex',
+    flexDirection:'row',
+    gap:'16px'
   }
     
 }

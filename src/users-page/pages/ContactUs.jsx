@@ -22,7 +22,7 @@ const ContactUs = () => {
      <Box sx={style.contactLeftContainer}>
         <Box sx={style.logoContainer}>
             <Card  onClick={()=>navigate('/')} 
-              sx={{cursor:'pointer',width:'100px',padding:'40px',height:'100px',boxShadow:'none'}}>
+              sx={{cursor:'pointer',width:'200px',height:'150px',boxShadow:'none'}}>
                 <CardMedia
                    sx={{width:'100%',height:'100%'}}
                    image={LogoImage}
@@ -128,6 +128,7 @@ const style ={
       display:'flex',
       flexDirection:responsive('column','row'),
       gap:responsive('0','5%'),
+      overflowX:'hidden'
     },
     contactLeftContainer:{
       width:responsive('100%','70%'),
@@ -148,7 +149,9 @@ const style ={
         backgroundColor:'white',
         display:'flex',
         alignItems:'center',
-        justifyContent:'space-between'
+        justifyContent:'space-between',
+        marginTop:'40px',
+        marginLeft:'20px'
     },
     contactFormContainer:{
         width:'100%',
