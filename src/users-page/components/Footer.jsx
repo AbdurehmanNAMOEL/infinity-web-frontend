@@ -17,55 +17,36 @@ const Footer = () => {
   const handleCopyToClipBoard=(e)=>{
        e.stopPropagation()
        e.preventDefault()
-       console.log(e.target)
+     
   }
 
   return (
     <Box sx={style.footerStyle}>
        <Box sx={style.footerTopContainer}>
-           <Box sx={
-            {
-             width:handleResponsiveness('80%','250px'),
-              height:handleResponsiveness('auto','60%'),
-              display:'flex',
-              justifyContent:handleResponsiveness('flex-Start','center'),
-              marginTop:handleResponsiveness('20px','0')
-              }
-              }>
+           <Box sx={style.footerTopInnerContainer}>
               <Card sx={{width:'55%',height:'80px'}}>
                 <CardMedia image={LogoImage} sx={{width:'100%',height:'100%'}}/>
               </Card>
            </Box>
-
-             <Box sx={
-            {
-             width:handleResponsiveness('80%','250px'),
-              height:handleResponsiveness('auto','80%'),
-              }
-              }>
+             <Box sx={style.footerSectionContainer}>
                <Typography sx={{marginBottom:'16px',fontWeight:'bold'}}>Contact Us</Typography>
                <Box sx={{width:'100%',display:'flex',flexDirection:'column',gap:'16px'}}>
-                  <Box onClick={(e)=>handleCopyToClipBoard(e)} sx={{display:'flex',gap:'10px',cursor:'pointer'}}>
+                  <Box onClick={(e)=>handleCopyToClipBoard(e)} 
+                    sx={style.footerContactIconContainer}>
                     <PhoneForwardedIcon sx={{color:'#1A6CE8'}}/>
                     <span style={{fontSize:'14px'}}>+2510936970345</span>
                   </Box>
-                  <Box sx={{display:'flex',gap:'10px',cursor:'pointer'}}>
+                  <Box sx={style.footerContactIconContainer}>
                     <MailIcon sx={{color:'#1A6CE8'}}/>
                     <span style={{fontSize:'14px'}}>asaeed526@gmail.com</span>
                   </Box>
-                  <Box sx={{display:'flex',gap:'10px',cursor:'pointer'}}>
+                  <Box sx={style.footerContactIconContainer}>
                     <LocationOnIcon sx={{color:'#1A6CE8'}}/>
                     <span style={{fontSize:'14px'}}>Addis Ababa</span>
                   </Box>
                </Box>
            </Box>
-
-             <Box sx={
-            {
-              width:handleResponsiveness('80%','250px'),
-              height:handleResponsiveness('auto','80%'),
-              }
-              }>
+          <Box sx={style.footerSectionContainer}>
              <Typography sx={{marginBottom:'16px',fontWeight:'bold'}}>Follow Us</Typography>
               {/* <span>Feel free to contact</span> */}
                <Box sx={{width:'100%',display:'flex',flexDirection:'row',gap:'16px'}}>
@@ -75,39 +56,31 @@ const Footer = () => {
                   <WhatsAppIcon sx={{color:'#1A6CE8'}}/>
                </Box>
            </Box>
-           <Box sx={{width:handleResponsiveness('80%','250px'),height:handleResponsiveness('auto','80%')}}>
-            <Typography sx={{marginBottom:'16px',fontWeight:'bold'}}>Download Our app</Typography>
-            <Box sx={{width:'100%',display:'flex',flexDirection:handleResponsiveness('column','row'),gap:'16px'}}>
-              <Card sx={
-                {
-                  width:'150px',
-                  height:'40px',
-                  boxShadow:'none',
-                  cursor:'pointer',
-                  backgroundColor:'#DFDFDF'
-                  }
-                }>
-                <CardMedia image={googlePlayImage} sx={{width:'100%',height:'90%'}}/>
+           <Box sx={style.footerSectionContainer}>
+            <Typography 
+               sx={{marginBottom:'16px',fontWeight:'bold'}}>
+                Download Our app
+             </Typography>
+            <Box 
+               sx={style.googleIconMainContainer}>
+              <Card sx={style.googleIconContainer}>
+                <CardMedia 
+                  image={googlePlayImage} 
+                  sx={{width:'100%',height:'90%'}}
+                />
               </Card>
             </Box>
            </Box>
        </Box>
        <Box sx={style.footerBottomContainer}>
           <Typography 
-             sx={{
-              fontSize:handleResponsiveness('14px','28px'),
-              width:handleResponsiveness('80%','50%')
-             ,marginLeft:handleResponsiveness('20px','0px')}}>© 2023 -  Infinity. All Rights Reserved</Typography>
-          <Box sx={
-            {   width:handleResponsiveness('80%','20%'),
-               marginLeft:handleResponsiveness('20px','0px'),
-               display:'flex',gap:'30px'
-            }}>
+             sx={style.footerCopyRightText}>© 2023 -  Infinity. All Rights Reserved</Typography>
+          <Box sx={style.footerPolicyContainer}>
             <Typography 
-              sx={{fontSize:handleResponsiveness('12px','28px')}}>
+              sx={{fontSize:handleResponsiveness('12px','16px')}}>
                 Privacy policy
               </Typography>
-            <Typography sx={{fontSize:handleResponsiveness('12px','28px')}}>
+            <Typography sx={{fontSize:handleResponsiveness('12px','16px')}}>
               Term of services
             </Typography>
           </Box>
@@ -139,6 +112,46 @@ const style={
       display:'flex',
       flexDirection:handleResponsiveness('column','row'),
       justifyContent:'space-around'
-    }
+    },
+    footerTopInnerContainer:{
+      width:handleResponsiveness('80%','250px'),
+      height:handleResponsiveness('auto','60%'),
+      display:'flex',
+      justifyContent:handleResponsiveness('flex-Start','center'),
+      marginTop:handleResponsiveness('20px','0')
+    },
+    footerContactIconContainer:{
+     display:'flex',
+     gap:'10px',
+     cursor:'pointer'
+    },
+    googleIconContainer:  {
+      width:'120px',
+      height:'40px',
+      boxShadow:'none',
+      cursor:'pointer',
+      backgroundColor:'#DFDFDF'
+    },
+    googleIconMainContainer:{
+      width:'100%',
+      display:'flex',
+      flexDirection:handleResponsiveness('column','row'),
+      gap:'16px'
+    },
+    footerSectionContainer: {
+      width:handleResponsiveness('80%','250px'),
+      height:handleResponsiveness('auto','80%'),
+    },
+  footerCopyRightText:{
+    fontSize:handleResponsiveness('1rem','16px'),
+    width:handleResponsiveness('80%','50%'),
+    marginLeft:handleResponsiveness('20px','0px')
+  },
+  footerPolicyContainer:{
+    fontSize:handleResponsiveness('1rem','16px'),
+    width:handleResponsiveness('80%','50%'),
+    marginLeft:handleResponsiveness('20px','0px')
+  }
+    
 }
 export default Footer
