@@ -18,6 +18,7 @@ import ContactUs from './users-page/pages/ContactUs';
 import AdminHome from './admin-page/pages/AdminHome';
 import PrivateRoute from './users-page/privateRoute/PrivateRoute';
 import { useSelector } from 'react-redux';
+import PrivacyPolicyHome from './users-page/pages/policy/PrivacyPolicyHome';
 function App() {
    const [isDrawerOpen,setDrawerOpen]=useState(true)
    const {isLightMode}= useSelector(state=>state.auth)
@@ -67,6 +68,7 @@ function App() {
         </Route>
         <Route path='/login' element={<Login/>}/>
         <Route path='/signUp' element={<SignUp/>}/>
+        <Route path='/policy' element={<PrivacyPolicyHome/>}/>
         <Route path='/' element={<HomePage/>}/>
         <Route path='/aboutUs' element={<AboutUs/>}/>
         <Route path='/contactUs' element={<ContactUs/>}/>
