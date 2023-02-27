@@ -1,8 +1,9 @@
 import React from 'react'
 import { ResponsiveLine } from '@nivo/line'
 import { lineData } from '../../DummyData/data'
+import { useSelector } from 'react-redux'
 function LineChart() {
-
+ const {isLightMode} = useSelector(state=>state.auth)
 // make sure parent container have a defined height when using
 // responsive component, otherwise height will be 0 and
 // no chart will be rendered.
@@ -21,6 +22,21 @@ function LineChart() {
             stacked: true,
             reverse: false
         }}
+        theme={{
+          axis: {
+            ticks: {
+              text: {
+                fontSize: 11,
+                fill: `${isLightMode?'#1E1E1E':'white'}`
+              }
+            },
+            legend:{
+              text:{ 
+              fill: `${isLightMode?'#1E1E1E':'white'}`
+            }
+           } 
+          }
+        }}
         yFormat=" >-.2f"
         axisTop={null}
         axisRight={null}
@@ -31,7 +47,8 @@ function LineChart() {
             tickRotation: 0,
             legend: 'transportation',
             legendOffset: 36,
-            legendPosition: 'middle'
+            legendPosition: 'middle',
+            
         }}
         axisLeft={{
             orient: 'left',
@@ -40,10 +57,10 @@ function LineChart() {
             tickRotation: 0,
             legend: 'count',
             legendOffset: -40,
-            legendPosition: 'middle'
+            legendPosition: 'middle',
         }}
         pointSize={10}
-        pointColor={{ theme: 'background' }}
+        pointColor={{ theme: 'background'}}
         pointBorderWidth={2}
         pointBorderColor={{ from: 'serieColor' }}
         pointLabelYOffset={-12}
@@ -63,6 +80,7 @@ function LineChart() {
                 symbolSize: 12,
                 symbolShape: 'circle',
                 symbolBorderColor: 'rgba(0, 0, 0, .5)',
+                itemTextColor:`${isLightMode?'#1E1E1E':'white'}`,
                 effects: [
                     {
                         on: 'hover',

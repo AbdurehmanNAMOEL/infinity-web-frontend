@@ -19,7 +19,7 @@ function Header({closeDrawer}) {
     dispatch(setMode())
    }
   return (
-    <Paper sx={[style.headerContainer,{backgroundColor:`${isLightMode?"#D9D9D9":"#121212"}`,}]}>
+    <Paper sx={[style.headerContainer,{backgroundColor:`${isLightMode?"#D9D9D9":"#1E1E1E"}`,}]}>
        <Box sx={{width:'50%',display:'flex',justifyContent:'flex-start'}}>
         <IconButton onClick={closeDrawer}>
             <MenuOutlined sx={{color:'#1977FC', fontweight:'bold'}}/>

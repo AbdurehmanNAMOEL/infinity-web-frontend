@@ -1,4 +1,4 @@
-import { Box, Paper } from '@mui/material'
+import { Box} from '@mui/material'
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import Card from '../components/Card'
@@ -29,12 +29,12 @@ const AdminHome = () => {
          <Box sx={{position:'fixed',width:`${isDrawerOpen?100:100}%`,zIndex:200}}> 
          <Header closeDrawer={()=>closeDrawer(prev=>!prev)}/>
          </Box>
-         <Box sx={[style.topContainer,{backgroundColor:`${isLightMode?"white":'#121212'}`}]}>
+         <Box sx={[style.topContainer,{backgroundColor:`${isLightMode?"white":'#1E1E1E'}`}]}>
            <Card/>
            <Card/>
            <Card/>
          </Box>
-         <Box sx={[style.chartDisplay,{backgroundColor:`${isLightMode?"white":"#121212"}`}]}>
+         <Box sx={[style.chartDisplay,{backgroundColor:`${isLightMode?"white":'#1E1E1E'}`}]}>
             <LineChart/>
          </Box>
          <Box sx={style.chartDisplay}>
@@ -54,7 +54,7 @@ const AdminHome = () => {
         height:{md:'200px',xs:'500px'},
         display:'flex',
         flexDirection:{xs:'column',md:'row'},
-        justifyContent:'space-around',
+        justifyContent:'center',
         alignItems:'center',
         marginTop:'80px',
         gap:'60px'
@@ -62,8 +62,11 @@ const AdminHome = () => {
     
     chartDisplay:{
         width:{xs:'100%',md:'90%'},
-        height:{xs:'350px',md:'400px'},
-        marginLeft:'5%'
+        height:{xs:'350px',md:'300px'},
+        marginTop:'20px',
+        marginLeft:'5%',
+        border:'solid 1px #acacac69',
+        borderRadius:'15px'
     }
  }
 

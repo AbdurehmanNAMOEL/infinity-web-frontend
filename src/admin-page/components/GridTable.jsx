@@ -1,17 +1,19 @@
 import { Box } from '@mui/material'
 import { DataGrid,GridToolbar } from '@mui/x-data-grid'
 import React from 'react'
+import { useSelector } from 'react-redux'
 
 const GridTable = ({colors,data,columnFieldsList}) => {
+     const {isLightMode}= useSelector(state=>state.auth)
   return (
     <Box sx={[style.gridDataContainer,{   
         "& .name-column-cell":{
-           color:'#121212'
+           color:`${isLightMode?'#1E1E1E':'white'}`
         },
      }]}>
         <DataGrid
         components={{Toolbar:GridToolbar}}
-        sx={{color:'#121212',headerStyle:{backgroundColor:'blue'}}}
+        sx={{color:`${isLightMode?'#1E1E1E':'white'}`,headerStyle:{backgroundColor:'blue'}}}
         rows={data}
         columns={columnFieldsList}
         />

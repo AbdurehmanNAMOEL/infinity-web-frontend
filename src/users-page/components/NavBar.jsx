@@ -9,7 +9,7 @@ import MediaCard from './MediaCard'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { logOut } from '../../redux/features/authSlice'
-const NavBar = () => {
+const NavBar = ({isScrolling}) => {
     const navigate=useNavigate()
     const [navTitle,setNavTitle]= useState('Home')
     const {isLoggedIn} = useSelector(state=>state.auth)
@@ -19,7 +19,15 @@ const NavBar = () => {
        navigate(`${navigateTo}`)
     }
   return (
-    <Box sx={{width:'100%'}}>
+    <Box 
+      sx={{
+        width:'100%',
+        zIndex:300,
+        position:'fixed',
+        backgroundColor:'white',
+        boxShadow:`${isScrolling?'2px 2px 10px 2px rgba(0,0,0,0.5)':''}`
+      }}
+      >
      <Box sx={{width:'100%',display:{xs:'none',md:'flex'}}}>   
      <Header>
        <Box sx={{marginLeft:'40px',marginTop:'5px'}}>
@@ -33,7 +41,7 @@ const NavBar = () => {
           {navList.map((item,index)=>
             <IconButton
                 onClick={()=>handleNavigation(item.title,item.to)}
-               sx={[style.navLists, {borderBottomColor:`${navTitle===item.title?'#1A6CE8':'white'}`}]} 
+               sx={[style.navLists]} 
                key={index}>
                 {item.title}
             </IconButton>
@@ -81,8 +89,6 @@ const style = {
       borderRadius:'0',
       width:'80px',
       height:'100%',
-      borderBottom:1,
-      borderBottomWidth:3,
       ml:'5px',
      },
     logoInIcon: {
@@ -90,12 +96,12 @@ const style = {
       borderRadius:'5px',
       height:'40px',
       width:'120px',
-      backgroundColor:'#26A9E0',
+      backgroundColor:'#1A6CE8',
       color:'white',
       fontWeight:'bold',
       marginRight:'60px',
       '&:hover':{
-        backgroundColor:'#26A9E0'           
+        backgroundColor:'#1A6CE8'           
       },
              
      }

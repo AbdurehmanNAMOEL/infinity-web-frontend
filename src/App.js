@@ -13,7 +13,6 @@ import HomePage from './users-page/pages/HomePage';
 import { Login } from './users-page/auth/page/Login';
 import AboutUs from './users-page/pages/AboutUs';
 import SignUp from './users-page/auth/page/SignUp';
-import BlogsHome from './users-page/pages/blog/BlogsHome';
 import SurveyHome from './users-page/pages/survey/SurveyHome';
 import ContactUs from './users-page/pages/ContactUs';
 import AdminHome from './admin-page/pages/AdminHome';
@@ -30,7 +29,7 @@ function App() {
     useEffect(()=>{
     },[isDrawerOpen])
   return (
-    <Box sx={{width:'100%',display:'flex',backgroundColor:`${isLightMode?'white':'#121212'}`}}>
+    <Box sx={{width:'100%',display:'flex',backgroundColor:`${isLightMode?'white':'#1E1E1E'}`}}>
       <Router>
         <ToastContainer/>
        <Routes>
@@ -70,7 +69,6 @@ function App() {
         <Route path='/signUp' element={<SignUp/>}/>
         <Route path='/' element={<HomePage/>}/>
         <Route path='/aboutUs' element={<AboutUs/>}/>
-        <Route path='/blog' element={<BlogsHome/>}/>
         <Route path='/contactUs' element={<ContactUs/>}/>
         <Route element={<PrivateRoute/>}>
          <Route path='/survey' element={<SurveyHome/>}/>

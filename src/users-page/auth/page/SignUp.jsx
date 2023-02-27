@@ -13,6 +13,8 @@ import {toast} from 'react-toastify'
 import { useDispatch } from 'react-redux'
 import { signUp } from '../../../redux/features/authSlice'
  const SignUp = () => {
+
+
    const navigate = useNavigate()
    const dispatch= useDispatch()
    const [isFormValid,setFormValidation]=useState(false)

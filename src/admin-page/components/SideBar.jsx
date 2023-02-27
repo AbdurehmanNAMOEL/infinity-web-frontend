@@ -1,4 +1,4 @@
-import React, {useEffect, useState } from 'react'
+import React from 'react'
 import {Card, CardMedia, Drawer, IconButton, Typography} from '@mui/material'
 import { Box } from '@mui/system'
 import AdminImage from '../../assets/image/user.gif'
@@ -13,7 +13,6 @@ const SideBar = ({isDrawerOpen,closeDrawer,drawerWidth}) => {
   const navigate = useNavigate()
   const {isLightMode}= useSelector(state=>state.auth)
   const dispatch= useDispatch()
-  console.log(navTitle);
   
   return (
     <Drawer
@@ -24,7 +23,7 @@ const SideBar = ({isDrawerOpen,closeDrawer,drawerWidth}) => {
           width:{xs:!isDrawerOpen?200:0,md:drawerWidth},
           color:'white',
           "& .MuiDrawer-paper":{
-            backgroundColor:`${isLightMode?'#D9D9D9':'#121212'}`,
+            backgroundColor:`${isLightMode?'#D9D9D9':'#1E1E1E'}`,
             width:{xs:!isDrawerOpen?200:0,md:drawerWidth},
           }
          }}>
@@ -35,7 +34,7 @@ const SideBar = ({isDrawerOpen,closeDrawer,drawerWidth}) => {
               <Card sx={style.adminImageContainer}>
                 <CardMedia sx={{width:'90%',height:'90%'}} image={AdminImage}/>
               </Card>
-              <Typography sx={{mt:'8px',color:`${isLightMode?'#121212':'white'}`}}>Abdurehman Saeed</Typography>
+              <Typography sx={{mt:'8px',color:`${isLightMode?'#1E1E1E':'white'}`}}>Abdurehman Saeed</Typography>
               <Typography sx={style.adminPosition}>CEO</Typography>
          </Box>
          <div style={style.divider}/>
@@ -49,7 +48,7 @@ const SideBar = ({isDrawerOpen,closeDrawer,drawerWidth}) => {
               }} 
               sx={[
                 style.listIconContainer,
-                {backgroundColor:`${item.routeTo===navTitle?'white':`${isLightMode?'#D9D9D9':'#121212'}`}`},
+                {backgroundColor:`${item.routeTo===navTitle?'white':`${isLightMode?'#D9D9D9':'#1E1E1E'}`}`},
                 {color:`${item.routeTo===navTitle?'#121212':`${isLightMode?'#121212':'white'}`}`}
                 ]}>
               {item.icon}
