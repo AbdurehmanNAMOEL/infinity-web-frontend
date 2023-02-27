@@ -33,9 +33,9 @@ const HomePage = () => {
      <NavBar isScrolling={isScrolling}/>
       <Box sx={style.homeLandingPage}>
          <Box sx={style.homeLeftLadingPageContainer}>
-            <Box sx={{width:'80%', height:'50%'}}>
+            <Box sx={{width:'90%', height:'50%',display:'flex',flexDirection:'column'}}>
               <Box sx={{width:'100%'}}>
-               <Typography sx={{fontWeight:'bold',fontSize:handleResponsiveness('1.4rem','42px')}}>
+               <Typography sx={{fontWeight:'bold',width:'100%',fontSize:handleResponsiveness('24px','42px')}}>
                  Paid Online Surveys <span style={{color:'#1A6CE8'}}> Earn Money 
                  Online.Join Infinity Today!</span>
               </Typography>
@@ -162,7 +162,7 @@ const HomePage = () => {
               </Box>
            </Box>
            <Box sx={style.registrationInnerContainers}>
-             <Card sx={{width:'80%',height:'80%',borderRadius:'150px'}}>
+             <Card sx={{width:'80%',height:'100%',borderRadius:'150px'}}>
               <CardMedia image={CourseRegImage} sx={{width:'100%',height:'100%'}}/>
              </Card>
            </Box>
@@ -182,7 +182,7 @@ const style={
   },
   homeLeftLadingPageContainer:{
     width:handleResponsiveness('100%','50%'),
-    height:'100%',
+    height:handleResponsiveness('60%','100%'),
     display:'flex',
     justifyContent:'center',
     alignItems:'center'
@@ -279,11 +279,12 @@ const style={
     flexDirection:handleResponsiveness('column','row'),
     justifyContent:'center',
     alignItems:'center',
-    gap:'20px'
+    gap:'20px',
+    marginBottom:'50px'
   },
   registrationInnerContainers:{
     width:handleResponsiveness('100%','50%'),
-    height:handleResponsiveness('300px','100%'),
+    height:handleResponsiveness('200px','100%'),
     display:'flex',
     justifyContent:'center',
     alignItems:'center',

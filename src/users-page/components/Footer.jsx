@@ -25,7 +25,7 @@ const Footer = () => {
        <Box sx={style.footerTopContainer}>
            <Box sx={
             {
-              width:'250px',
+             width:handleResponsiveness('80%','250px'),
               height:handleResponsiveness('auto','60%'),
               display:'flex',
               justifyContent:handleResponsiveness('flex-Start','center'),
@@ -39,7 +39,7 @@ const Footer = () => {
 
              <Box sx={
             {
-              width:'250px',
+             width:handleResponsiveness('80%','250px'),
               height:handleResponsiveness('auto','80%'),
               }
               }>
@@ -62,7 +62,7 @@ const Footer = () => {
 
              <Box sx={
             {
-              width:'250px',
+              width:handleResponsiveness('80%','250px'),
               height:handleResponsiveness('auto','80%'),
               }
               }>
@@ -75,7 +75,7 @@ const Footer = () => {
                   <WhatsAppIcon sx={{color:'#1A6CE8'}}/>
                </Box>
            </Box>
-           <Box sx={{width:'250px',height:handleResponsiveness('auto','80%')}}>
+           <Box sx={{width:handleResponsiveness('80%','250px'),height:handleResponsiveness('auto','80%')}}>
             <Typography sx={{marginBottom:'16px',fontWeight:'bold'}}>Download Our app</Typography>
             <Box sx={{width:'100%',display:'flex',flexDirection:handleResponsiveness('column','row'),gap:'16px'}}>
               <Card sx={
@@ -93,10 +93,23 @@ const Footer = () => {
            </Box>
        </Box>
        <Box sx={style.footerBottomContainer}>
-          <Typography sx={{width:handleResponsiveness('100%','50%'),marginLeft:handleResponsiveness('20px','0px')}}>© 2023 -  Infinity. All Rights Reserved</Typography>
-          <Box sx={{width:handleResponsiveness('100%','20%'),marginLeft:handleResponsiveness('20px','0px'),display:'flex',gap:'30px'}}>
-            <Typography>Privacy policy</Typography>
-            <Typography>Term of services</Typography>
+          <Typography 
+             sx={{
+              fontSize:handleResponsiveness('14px','28px'),
+              width:handleResponsiveness('80%','50%')
+             ,marginLeft:handleResponsiveness('20px','0px')}}>© 2023 -  Infinity. All Rights Reserved</Typography>
+          <Box sx={
+            {   width:handleResponsiveness('80%','20%'),
+               marginLeft:handleResponsiveness('20px','0px'),
+               display:'flex',gap:'30px'
+            }}>
+            <Typography 
+              sx={{fontSize:handleResponsiveness('12px','28px')}}>
+                Privacy policy
+              </Typography>
+            <Typography sx={{fontSize:handleResponsiveness('12px','28px')}}>
+              Term of services
+            </Typography>
           </Box>
        </Box>
     </Box>
