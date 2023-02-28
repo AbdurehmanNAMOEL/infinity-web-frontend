@@ -16,19 +16,20 @@ import axios from 'axios'
 // })
 
 
-// export const signIn = createAsyncThunk('auth/signIn',async({userData,toast,navigate})=>{
-//     try {
-//          const response = await axios.post('https://infinity-api-oqlt.onrender.com/signIn',userData)
-//          if(response){
-//             toast.success('well come back')
-//             navigate('/')
-//             return response.data
-//          }
-//     } catch (error) {
+export const loginAdmin = createAsyncThunk('admin/loginAdmin',async({userData,toast,navigate})=>{
+    try {
+         const response = await axios.post('https://infinity-api-oqlt.onrender.com/loginAdmin',userData)
+         if(response){
+            toast.success('well come back')
+            navigate('/dashBoard')
+            return response.data
+         }
+    } catch (error) {
        
-//         toast.error(error.response.data.error)    
-//     }
-// })
+        toast.error(error.response.data.error)    
+    }
+})
+
 
 
 export const adminSlice= createSlice({
@@ -37,12 +38,11 @@ export const adminSlice= createSlice({
       admins:[],
       loading:false,
       isAdminLoggedIn:false,
-      isLightMode:true,
       navTitle:'dashboard/adminHome'
 },
   reducers:{
     logOut:(state,action)=>{
-       state.isLoggedIn=false
+       state.isAdminLoggedIn=false
     },
      setMode:(state,action)=>{
        state.isLightMode=!state.isLightMode
@@ -64,17 +64,19 @@ export const adminSlice= createSlice({
     //      state.loading=false
     // },
 
-    // [signIn.pending]:(state,action)=>{
-    //   state.loading=true
-    // },
-    // [signIn.fulfilled]:(state,action)=>{
-    //   state.users=action.payload
-    //   state.loading=false
-    //   state.isLoggedIn=true
-    // },
-    // [signIn.rejected]:(state,action)=>{
-    //      state.loading=false
-    // },
+    [loginAdmin.pending]:(state,action)=>{
+      state.loading=true
+      state.isAdminLoggedIn=false
+    },
+    [loginAdmin.fulfilled]:(state,action)=>{
+      state.users=action.payload
+      state.loading=false
+      state.isAdminLoggedIn=true
+    },
+    [loginAdmin.rejected]:(state,action)=>{
+      state.loading=false
+      state.isAdminLoggedIn=false
+    },
   }
 
 })

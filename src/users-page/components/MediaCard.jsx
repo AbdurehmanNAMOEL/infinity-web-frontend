@@ -15,8 +15,7 @@ const MediaCard = ({mediaWidth,mediaHeight,imgUrl}) => {
 const style={
  mediaContainer:{
     boxShadow:'none',
-    borderRadius:'0',
-    backgroundColor:'#D9D9D9'
+    borderRadius:'0'
     
  }
 }

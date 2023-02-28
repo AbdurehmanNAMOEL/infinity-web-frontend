@@ -2,10 +2,19 @@ import { Box, Typography } from '@mui/material'
 import React from 'react'
 import ButtonStyled from '../../components/ButtonStyled'
 import NavBar from '../../components/NavBar'
-
+import {useNavigate} from 'react-router-dom'
 const PrivacyPolicyHome = () => {
+   const navigate= useNavigate()
   return (
-    <Box sx={{width:'100%',height:'auto',display:'flex',flexDirection:'column',alignItems:'center'}}>
+    <Box sx={
+      {
+        width:'100%',
+        height:'auto',
+        display:'flex',
+        flexDirection:'column',
+        alignItems:'center'
+      }
+      }>
       <NavBar/>
       <Box sx={style.policyContainer}>
         <Typography variant='h3' sx={{color:'white',fontWeight:'bold'}}>Term of services & Privacy Policy </Typography>
@@ -139,6 +148,7 @@ const PrivacyPolicyHome = () => {
               <ButtonStyled
                label={'Agreed'}
                bgColor='#1A6CE8'
+               setValue={()=>navigate('/signUp')}
               />
             </Box>        
       </Box>

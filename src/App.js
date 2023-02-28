@@ -19,6 +19,8 @@ import AdminHome from './admin-page/pages/AdminHome';
 import PrivateRoute from './users-page/privateRoute/PrivateRoute';
 import { useSelector } from 'react-redux';
 import PrivacyPolicyHome from './users-page/pages/policy/PrivacyPolicyHome';
+import AdminLogin from './admin-page/pages/auth/pages/AdminLogin';
+import AdminPrivateRoute from './admin-page/privateRoute/AdminPrivateRoute';
 function App() {
    const [isDrawerOpen,setDrawerOpen]=useState(true)
    const {isLightMode}= useSelector(state=>state.auth)
@@ -34,6 +36,10 @@ function App() {
       <Router>
         <ToastContainer/>
        <Routes>
+        <Route 
+          path='adminLogin' 
+          element={<AdminLogin/>}/>
+        <Route element={<AdminPrivateRoute/>}>
         <Route path='/dashBoard' 
           element={<DashBoard 
           isDrawerOpen={isDrawerOpen} 
@@ -42,6 +48,7 @@ function App() {
         <Route 
           path='' 
           element={<AdminHome  closeDrawer={closeDrawer}/>}/>
+     
         <Route 
          path='users' 
          element={<Users 
@@ -66,6 +73,7 @@ function App() {
           closeDrawer={closeDrawer}
           drawerWidth={isDrawerOpen?200:0}/>}/>
         </Route>
+      </Route>
         <Route path='/login' element={<Login/>}/>
         <Route path='/signUp' element={<SignUp/>}/>
         <Route path='/policy' element={<PrivacyPolicyHome/>}/>

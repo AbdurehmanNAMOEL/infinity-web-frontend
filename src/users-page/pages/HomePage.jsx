@@ -9,7 +9,7 @@ import { whyUsData } from '../utils/data'
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import FactCheckIcon from '@mui/icons-material/FactCheck';
-import CourseRegImage from '../../assets/image/course.jpg'
+import CourseRegImage from '../../assets/image/course.png'
 import Footer from '../components/Footer'
 
 const HomePage = () => {
@@ -162,7 +162,7 @@ const HomePage = () => {
               </Box>
            </Box>
            <Box sx={style.registrationInnerContainers}>
-             <Card sx={{width:'80%',height:'100%',borderRadius:'150px'}}>
+             <Card sx={{width:'80%',height:'100%',backgroundColor:'#F6F6F6',boxShadow:'none'}}>
               <CardMedia image={CourseRegImage} sx={{width:'100%',height:'100%'}}/>
              </Card>
            </Box>

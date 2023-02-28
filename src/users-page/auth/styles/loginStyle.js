@@ -31,7 +31,7 @@ export const loginStyle={
     height:'85vh',
     display:'flex',
     justifyContent:'center',
-    marginTop:'30px'
+    marginTop:'70px'
   },
   loginCard:{
     width:'420px',

@@ -10,6 +10,7 @@ import {
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { setMode } from '../../redux/features/authSlice'
+import MenuPopupState from './MenuPopState'
 
 function Header({closeDrawer}) {
    const navigate = useNavigate()
@@ -35,9 +36,7 @@ function Header({closeDrawer}) {
           <IconButton onClick={()=>navigate('/')}>
             <HomeOutlined sx={{color:'#1977FC', fontweight:'bold'}}/>
         </IconButton>
-         <IconButton onClick={closeDrawer}>
-            <NotificationsOutlined sx={{color:'#1977FC', fontweight:'bold'}}/>
-        </IconButton>
+         <MenuPopupState/>
         </Box>
     </Paper>
   )

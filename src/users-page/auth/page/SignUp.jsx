@@ -6,7 +6,7 @@ import InputField from '../../components/InputField'
 import { handleResponsiveness, signUpStyle } from '../styles/signUpStyle'
 import AboutUs from '../../../assets/image/blog.svg'
 import MediaCard from '../../components/MediaCard'
-import DataBaseImage from '../../../assets/image/dataBase.svg'
+import DataBaseImage from '../../../assets/image/dataBase.png'
 import { useNavigate } from 'react-router-dom'
 import { motion } from "framer-motion";
 import {toast} from 'react-toastify'

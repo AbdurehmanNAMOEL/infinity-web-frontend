@@ -10,10 +10,11 @@ import TelegramIcon from '@mui/icons-material/Telegram';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import googlePlayImage from '../../assets/image/google.png'
-import LogoImage from '../../assets/image/logo.jpg'
-
+import LogoImage from '../../assets/image/logo.png'
+import {useNavigate} from 'react-router-dom'
 const Footer = () => {
 
+  const navigate = useNavigate()
   const handleCopyToClipBoard=(e)=>{
        e.stopPropagation()
        e.preventDefault()
@@ -24,7 +25,7 @@ const Footer = () => {
     <Box sx={style.footerStyle}>
        <Box sx={style.footerTopContainer}>
            <Box sx={style.footerTopInnerContainer}>
-              <Card sx={{width:'55%',height:'80px'}}>
+              <Card sx={{width:'55%',height:'80px',boxShadow:'none',backgroundColor:'#DFDFDF'}}>
                 <CardMedia image={LogoImage} sx={{width:'100%',height:'100%'}}/>
               </Card>
            </Box>
@@ -75,7 +76,7 @@ const Footer = () => {
        <Box sx={style.footerBottomContainer}>
           <Typography 
              sx={style.footerCopyRightText}>© 2023 -  Infinity. All Rights Reserved</Typography>
-          <Box sx={style.footerPolicyContainer}>
+          <Box onClick={()=>navigate('/policy')} sx={style.footerPolicyContainer}>
             <Typography 
               sx={{fontSize:handleResponsiveness('12px','16px')}}>
                 Privacy policy
@@ -153,7 +154,8 @@ const style={
     width:handleResponsiveness('80%','50%'),
     marginLeft:handleResponsiveness('20px','0px'),
     display:'flex',
-    gap:'50px'
+    gap:'50px',
+    cursor:'pointer'
   },
   contactUsContainer:{
     width:'100%',

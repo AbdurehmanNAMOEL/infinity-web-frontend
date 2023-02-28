@@ -6,7 +6,7 @@ import InputField from '../../components/InputField'
 import { handleResponsiveness, loginStyle } from '../styles/loginStyle'
 import AboutUs from '../../../assets/image/about-us.svg'
 import MediaCard from '../../components/MediaCard'
-import DataBaseImage from '../../../assets/image/dataBase.svg'
+import DataBaseImage from '../../../assets/image/dataBase.png'
 import SideBar from '../../components/SideBar'
 import { useNavigate } from 'react-router-dom'
 import { motion } from "framer-motion";
@@ -23,13 +23,11 @@ export const Login = ({isSideBarOpen,setIsSideBarOpen,handleSideBarNavigation,na
    const [userData,setUserData]= useState({email:'',password:'',})
    const handleSubmit=()=>{
     
-     if(userData.firstName!=='' && userData.lastName!==''
-       && userData.phoneNumber!=='' && userData.email!==''
-       &&userData.password!==''&&userData.confirmPassword!==''&& userData.address!==''){
+     if(userData.phoneNumber!==''&&userData.password!==''){
          alert(userData)
          dispatch(signIn({userData,toast,navigate}))
          setFormValidation(true)
-         setUserData({email:'',password:''})
+         setUserData({phoneNumber:'',password:''})
        }else setFormValidation(false)
        
    }
@@ -43,7 +41,9 @@ export const Login = ({isSideBarOpen,setIsSideBarOpen,handleSideBarNavigation,na
         navTitle={navTitle}
       />
         <Paper sx={loginStyle.loginLeftContainer}>
-             <Box onClick={()=>navigate('/')} sx={[loginStyle.companyLogo,{display:{xs:'none',md:'flex'}}]}>
+             <Box 
+                onClick={()=>navigate('/')} 
+                sx={[loginStyle.companyLogo,{display:{xs:'none',md:'flex'}}]}>
                <MediaCard
                  mediaHeight={'40px'}
                  mediaWidth={'80px'}
@@ -53,17 +53,20 @@ export const Login = ({isSideBarOpen,setIsSideBarOpen,handleSideBarNavigation,na
              <Box sx={loginStyle.loginCardContainer}>
                 <Paper sx={loginStyle.loginCard}>
                     <Box sx={loginStyle.loginTitleContainer}>
-                      <Typography 
-                         variant='h5' 
-                         sx={{color:'rgba(0,0,0,0.5)',fontWeight:'bold',fontFamily:'Poppins'}}>Login</Typography>
+                      <Typography variant='h5' 
+                        sx={
+                        {color:'rgba(0,0,0,0.5)',
+                          fontWeight:'bold',
+                          fontFamily:'Poppins'
+                        }}>Login</Typography>
                     </Box>
                     {/* <Divider/> */}
                     <Box sx={loginStyle.loginInputFieldContainer}>                    
                       <InputField 
-                      inputLabel={'Email/Phone Number'}
+                      inputLabel={'Phone Number'}
                       type='text'
-                      inputValaue={userData.email}
-                      setValue={(e)=>setUserData({...userData,"email":e.target.value})}
+                      inputValaue={userData.phoneNumber}
+                      setValue={(e)=>setUserData({...userData,"phoneNumber":e.target.value})}
                     />
                     </Box>
                       <Box sx={loginStyle.loginInputFieldContainer}>                    
@@ -101,7 +104,9 @@ export const Login = ({isSideBarOpen,setIsSideBarOpen,handleSideBarNavigation,na
      
         <Paper sx={loginStyle.loginRightContainer}>
            <Box sx={loginStyle.companyName}>
-              <Box onClick={()=>navigate('/')} sx={[loginStyle.companyLogo,{display:{xs:'flex',md:'none'}}]}>
+              <Box 
+               onClick={()=>navigate('/')} 
+               sx={[loginStyle.companyLogo,{display:{xs:'flex',md:'none'}}]}>
                <MediaCard
                  mediaHeight={'40px'}
                  mediaWidth={'80px'}

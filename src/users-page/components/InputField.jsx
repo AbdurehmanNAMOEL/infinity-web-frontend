@@ -7,8 +7,9 @@ import InputAdornment from '@mui/material/InputAdornment';
 import FormControl from '@mui/material/FormControl';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import { Typography } from '@mui/material';
 
-const InputField = ({inputLabel,type,setValue,inputValaue}) => {
+const InputField = ({inputLabel,type,setValue,inputValue}) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleClickShowPassword = () => setShowPassword(show => !show);
@@ -21,13 +22,16 @@ const InputField = ({inputLabel,type,setValue,inputValaue}) => {
   return (
    <FormControl sx={{ height:'20px', width: '80%' }} >
           <InputLabel   
-            htmlFor="outlined-adornment" sx={{backgroundColor:'white' }}>{inputLabel}</InputLabel>
+            color='success'
+            htmlFor="outlined-adornment" sx={{backgroundColor:'white',outline:'none' }}>{inputLabel}</InputLabel>
           <OutlinedInput
+    
+            color='success'
             id="outlined-adornment"
             sx={{ height:'50px', width: '96%',backgroundColor:'white' }}
             type={type==='password'?showPassword?'text':'password':type}
             onChange={setValue}
-            value={inputValaue}
+            value={inputValue}
             endAdornment={
               <InputAdornment position="start">
                 <IconButton
