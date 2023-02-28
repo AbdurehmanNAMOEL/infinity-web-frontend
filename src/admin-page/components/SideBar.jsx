@@ -1,7 +1,7 @@
 import React from 'react'
 import {Card, CardMedia, Drawer, IconButton, Typography} from '@mui/material'
 import { Box } from '@mui/system'
-import AdminImage from '../../assets/image/user.gif'
+import AdminImage from '../../assets/image/user.png'
 import { sideBarIconList } from '../utils/iconsList'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
