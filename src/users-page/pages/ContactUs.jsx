@@ -1,6 +1,6 @@
 import { Box, Card, CardMedia, Paper, Typography } from '@mui/material'
 import React from 'react'
-import LogoImage from '../../assets/image/logo.jpg'
+import LogoImage from '../../assets/image/logo.png'
 import ButtonStyled from '../components/ButtonStyled'
 import InputField from '../components/InputField'
 import TextArea from '../components/TextArea'

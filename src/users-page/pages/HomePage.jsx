@@ -107,8 +107,12 @@ const HomePage = () => {
         {
           width:'100%',
           height:handleResponsiveness('auto','350px'),
-          backgroundColor:'white',
-          marginBottom:handleResponsiveness('20px','0')
+          backgroundColor:'#F6F6F6',
+          marginBottom:handleResponsiveness('20px','0'),
+          display:'flex',
+          flexDirection:'column',
+          justifyContent:'center',
+          alignItems:'center'
           }}>
           <Typography variant='h4' sx={style.sectionMainTitle}>
             Survey Time
@@ -140,7 +144,7 @@ const HomePage = () => {
               complete!
             </Typography>
             <Box sx={
-              {width:'100%',
+              {width:'50%',
               display:'flex',
               justifyContent:'center',
               marginTop:'20px',
@@ -162,7 +166,7 @@ const HomePage = () => {
               </Box>
            </Box>
            <Box sx={style.registrationInnerContainers}>
-             <Card sx={{width:'80%',height:'100%',backgroundColor:'#F6F6F6',boxShadow:'none'}}>
+             <Card sx={{width:'80%',height:'100%',backgroundColor:'white',boxShadow:'none'}}>
               <CardMedia image={CourseRegImage} sx={{width:'100%',height:'100%'}}/>
              </Card>
            </Box>
@@ -274,7 +278,7 @@ const style={
   registrationContainer:{
     width:'100%',
     height:handleResponsiveness('auto','400px'),
-    backgroundColor:'#F6F6F6',
+    backgroundColor:'white',
     display:'flex',
     flexDirection:handleResponsiveness('column','row'),
     justifyContent:'center',
@@ -288,7 +292,7 @@ const style={
     display:'flex',
     justifyContent:'center',
     alignItems:'center',
-    backgroundColor:'#F6F6F6',
+    backgroundColor:'white',
   }
 }
 export default HomePage

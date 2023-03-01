@@ -18,13 +18,16 @@ export const signUpStyle={
     overflowX:'hidden'
   },
   companyLogo:{
-    width:'100%',
-    height:'60px',
+    width:handleResponsiveness('70%','50%'),
+    height:handleResponsiveness('30%','50%'),
     display:'flex',
     justifyContent:'space-between',
     alignItems:'center',
     padding:'20px',
     cursor:'pinter',
+    position:'absolute',
+    zIndex:400,
+    marginTop:handleResponsiveness('-500px','-340px')
   },
 
   signUpCardContainer:{

@@ -1,10 +1,10 @@
 import { Box, Card, CardMedia, Divider, Paper, Typography } from '@mui/material'
 import React, { useState } from 'react'
-import LogoImage from '../../../assets/image/logo.jpg'
+import LogoImage from '../../../assets/image/logo.png'
 import ActionButton from '../../components/ActionButton'
 import InputField from '../../components/InputField'
 import { handleResponsiveness, signUpStyle } from '../styles/signUpStyle'
-import AboutUs from '../../../assets/image/blog.svg'
+import signUpImage from '../../../assets/image/signUp.svg'
 import MediaCard from '../../components/MediaCard'
 import DataBaseImage from '../../../assets/image/dataBase.png'
 import { useNavigate } from 'react-router-dom'
@@ -89,13 +89,13 @@ import { signUp } from '../../../redux/features/authSlice'
                       <InputField 
                       inputLabel={'FirstName'}
                       type='text'
-                      inputValaue={userData.firstName}
+                      inputValue={userData.firstName}
                       setValue={(e)=>setUserData({...userData,"firstName":e.target.value})}
                     />
                      <InputField 
                       inputLabel={'LastName'}
                       type='text'
-                      inputValaue={userData.lastName}
+                      inputValue={userData.lastName}
                       setValue={(e)=>setUserData({...userData,"lastName":e.target.value})}
                     />
                     </Box>
@@ -103,7 +103,7 @@ import { signUp } from '../../../redux/features/authSlice'
                       <InputField 
                       inputLabel={'Phone Number'}
                       type='text'
-                      inputValaue={userData.phoneNumber}
+                      inputValue={userData.phoneNumber}
                       setValue={(e)=>setUserData({...userData,"phoneNumber":e.target.value})}
                     />
                     </Box>
@@ -111,7 +111,7 @@ import { signUp } from '../../../redux/features/authSlice'
                       <InputField 
                       inputLabel={'Email'}
                       type='text'
-                      inputValaue={userData.email}
+                      inputValue={userData.email}
                       setValue={(e)=>setUserData({...userData,"email":e.target.value})}
                     />
                     </Box>
@@ -119,7 +119,7 @@ import { signUp } from '../../../redux/features/authSlice'
                       <InputField 
                       inputLabel={'Address'}
                       type='text'
-                      inputValaue={userData.address}
+                      inputValue={userData.address}
                       setValue={(e)=>setUserData({...userData,"address":e.target.value})}
                     />
                     </Box>
@@ -127,7 +127,7 @@ import { signUp } from '../../../redux/features/authSlice'
                       <InputField 
                       inputLabel={'password'}
                       type='password'
-                      inputValaue={userData.password}
+                      inputValue={userData.password}
                       setValue={(e)=>setUserData({...userData,"password":e.target.value})}
                     />
                     </Box>
@@ -135,7 +135,7 @@ import { signUp } from '../../../redux/features/authSlice'
                       <InputField 
                       inputLabel={'ConfirmPassword'}
                       type='password'
-                      inputValaue={userData.confirmPassword}
+                      inputValue={userData.confirmPassword}
                       setValue={(e)=>setUserData({...userData,"confirmPassword":e.target.value})}
                     />
                     </Box>                
@@ -160,16 +160,7 @@ import { signUp } from '../../../redux/features/authSlice'
         </Paper>
      
         <Paper sx={signUpStyle.signUpRightContainer}>
-              <Box onClick={()=>navigate('/home')} sx={signUpStyle.companyLogo}>
-                 <MediaCard
-                 mediaHeight={'40px'}
-                 mediaWidth={'80px'}
-                 imgUrl={LogoImage}
-               />
-               {/* <IconButton onClick={()=>setIsSideBarOpen(prev=>!prev)}>
-                  <MenuOutlined/>
-               </IconButton> */}
-             </Box> 
+             
            <Box sx={
             {
               width:'100%',
@@ -177,23 +168,58 @@ import { signUp } from '../../../redux/features/authSlice'
               display:'flex',
               justifyContent:'center',
               alignItems:'center',
-              flexDirection:'column'
+              flexDirection:'column',
+              marginTop:'100px',
+           
               }
            }>
 
-    <Typography
-            animate={{ y: [-500,0] }} 
-            transition = {{ ease: "easeInOut", duration: 2 }} 
+      <Box onClick={()=>navigate('/home')} sx={signUpStyle.companyLogo}>
+                 <MediaCard
+                 mediaHeight={'100%'}
+                 mediaWidth={'90%'}
+                 imgUrl={LogoImage}
+               />
+               {/* <IconButton onClick={()=>setIsSideBarOpen(prev=>!prev)}>
+                  <MenuOutlined/>
+               </IconButton> */}
+             </Box> 
+               <Card 
+                 sx={
+                  {
+                    width:'100%',
+                    height:{xs:'40vh',md:'60vh'},
+                    display:'flex',
+                    justifyContent:'center',
+                    alignItems:'center',
+                    boxShadow:'none',
+                    borderRadius:'0',
+                    marginTop:handleResponsiveness('50px','100px'),
+                    zIndex:1000,
+                    backgroundColor:'rgba(0,0,0,0)',
+                    
+                    }}>
+                <CardMedia 
+                  image={signUpImage} 
+                   sx={{
+                    width:handleResponsiveness('80%','40%'),
+                    height:'100%'
+                  }}
+                   />
+               </Card>
+
+
+        <Typography
             sx={
                 {
                   textAlign:'center',
                   fontFamily:'Poppins',
                   color:'rgba(0,0,0,0.6)',
                   fontWeight:'bold',
-                  fontSize:{xs:'24px',md:'40px'}
+                  fontSize:{xs:'20px',md:'32px'}
                
                 }}>
-               We are the bridge  between 
+             Renovate the world of Data through 
                 </Typography>
               <Typography 
                variant='h4'
@@ -203,29 +229,13 @@ import { signUp } from '../../../redux/features/authSlice'
                   fontFamily:'Poppins',
                   color:'#1A6CE8',
                   fontWeight:'bold',
-                  fontSize:{xs:'24px',md:'40px'}
+                  marginBottom:'50px',
+                  fontSize:{xs:'20px',md:'32px'}
                
                 }}
-               >Information and Development!</Typography>
-               <Card 
-                 sx={
-                  {
-                    width:'100%',
-                    height:{xs:'40vh',md:'60vh'},
-                    display:'flex',
-                    justifyContent:'center',
-                    alignItems:'center',
-                    backgroundColor:'#D9D9D9',
-                    boxShadow:'none',
-                    borderRadius:'0',
-                    marginTop:'20px'
-                    }}>
-                <CardMedia 
-                  image={AboutUs} 
-                   sx={{width:'60%',height:'100%'}}
-                   />
-               </Card>
+               >intelligence for better decisions!</Typography>
            </Box>
+         
         </Paper>
     
     </Box>

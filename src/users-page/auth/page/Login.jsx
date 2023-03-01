@@ -1,10 +1,10 @@
 import { Box, Card, CardMedia, Divider,Paper, Typography } from '@mui/material'
 import React, { useState } from 'react'
-import LogoImage from '../../../assets/image/logo.jpg'
+import LogoImage from '../../../assets/image/logo.png'
 import ActionButton from '../../components/ActionButton'
 import InputField from '../../components/InputField'
 import { handleResponsiveness, loginStyle } from '../styles/loginStyle'
-import AboutUs from '../../../assets/image/about-us.svg'
+import LoginImage from '../../../assets/image/login.svg'
 import MediaCard from '../../components/MediaCard'
 import DataBaseImage from '../../../assets/image/dataBase.png'
 import SideBar from '../../components/SideBar'
@@ -65,7 +65,7 @@ export const Login = ({isSideBarOpen,setIsSideBarOpen,handleSideBarNavigation,na
                       <InputField 
                       inputLabel={'Phone Number'}
                       type='text'
-                      inputValaue={userData.phoneNumber}
+                      inputValue={userData.phoneNumber}
                       setValue={(e)=>setUserData({...userData,"phoneNumber":e.target.value})}
                     />
                     </Box>
@@ -73,7 +73,7 @@ export const Login = ({isSideBarOpen,setIsSideBarOpen,handleSideBarNavigation,na
                       <InputField 
                       inputLabel={'password'}
                       type='password'
-                      inputValaue={userData.password}
+                      inputValue={userData.password}
                       setValue={(e)=>setUserData({...userData,"password":e.target.value})}
                     />
                     </Box>
@@ -141,7 +141,7 @@ export const Login = ({isSideBarOpen,setIsSideBarOpen,handleSideBarNavigation,na
            <Box sx={
             {
               width:'100%',
-              height:handleResponsiveness('30vh','80vh'),
+              height:handleResponsiveness('auto','80vh'),
               display:'flex',
               justifyContent:'center',
               alignItems:'center',
@@ -152,13 +152,15 @@ export const Login = ({isSideBarOpen,setIsSideBarOpen,handleSideBarNavigation,na
     <Typography
             animate={{ y: [-500,0] }} 
             transition = {{ ease: "easeInOut", duration: 2 }} 
-            variant='h4' 
             sx={
                 {
                   textAlign:'center',
                   fontFamily:'Poppins',
                   color:'rgba(0,0,0,0.6)',
                   fontWeight:'bold',
+                  fontSize:handleResponsiveness('24px','40px'),
+                  marginTop:'-20px',
+             
                
                 }}>Welcome Back</Typography>
            
@@ -166,15 +168,20 @@ export const Login = ({isSideBarOpen,setIsSideBarOpen,handleSideBarNavigation,na
                  sx={
                   {
                     width:'100%',
-                    height:'60vh',
+                    height:handleResponsiveness('30vh','60vh'),
                     display:'flex',
                     justifyContent:'center',
                     alignItems:'center',
                     backgroundColor:'#D9D9D9',
                     boxShadow:'none',
-                    borderRadius:'0'
+                    borderRadius:'0',
+                    marginBottom:'50px'
                     }}>
-                <CardMedia image={AboutUs} sx={{width:'90%',height:'90%'}}/>
+                <CardMedia 
+                   image={LoginImage} 
+                   sx={{
+                   width:handleResponsiveness('60%','60%'),
+                   height:handleResponsiveness('100%','100%')}}/>
                </Card>
            </Box>
         </Paper>

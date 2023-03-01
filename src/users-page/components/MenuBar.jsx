@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { Header } from '../utils/genericComponents'
 import { MenuOutlined,CloseOutlined } from '@mui/icons-material'
 import { Box } from '@mui/system'
-import LogoImage from '../../assets/image/logo.jpg'
+import LogoImage from '../../assets/image/logo.png'
 import SideBar from './SideBar'
 import { useNavigate } from 'react-router-dom'
 const MenuBar = () => {
