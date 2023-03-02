@@ -45,8 +45,8 @@ const AdminLogin = () => {
         <Box sx={style.loginInputFieldContainer}>                    
           <InputField 
             inputLabel={'Phone Number'}
-            type='text'
-            inputValaue={userData.phoneNumber}
+            type='phoneNumber'
+            inputValue={userData.phoneNumber}
             setValue={(e)=>setUserData({...userData,"phoneNumber":e.target.value})}
            />
         </Box>
@@ -54,7 +54,7 @@ const AdminLogin = () => {
           <InputField 
             inputLabel={'password'}
             type='password'
-            inputValaue={userData.password}
+            inputValue={userData.password}
             setValue={(e)=>setUserData({...userData,"password":e.target.value})}
            />
         </Box>

@@ -16,11 +16,10 @@ import {toast} from 'react-toastify'
 
 
 export const Login = ({isSideBarOpen,setIsSideBarOpen,handleSideBarNavigation,navTitle}) => {
-    const navigate = useNavigate()
+   const navigate = useNavigate()
    const dispatch= useDispatch()
    const [isFormValid,setFormValidation]=useState(false)
-   const TypoGraphMotion = motion(Typography);
-   const [userData,setUserData]= useState({email:'',password:'',})
+   const [userData,setUserData]= useState({phoneNumber:'',password:'',})
    const handleSubmit=()=>{
     
      if(userData.phoneNumber!==''&&userData.password!==''){
@@ -64,7 +63,7 @@ export const Login = ({isSideBarOpen,setIsSideBarOpen,handleSideBarNavigation,na
                     <Box sx={loginStyle.loginInputFieldContainer}>                    
                       <InputField 
                       inputLabel={'Phone Number'}
-                      type='text'
+                      type='phoneNumber'
                       inputValue={userData.phoneNumber}
                       setValue={(e)=>setUserData({...userData,"phoneNumber":e.target.value})}
                     />

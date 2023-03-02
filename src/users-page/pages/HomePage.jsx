@@ -11,11 +11,15 @@ import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import FactCheckIcon from '@mui/icons-material/FactCheck';
 import CourseRegImage from '../../assets/image/course.png'
 import Footer from '../components/Footer'
+import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 const HomePage = () => {
 
   const [isScrolling,setIsScrolling]=useState(false)
- 
+  const {isLoggedIn} = useSelector(state=>state.auth)
+  const {isAdminLoggedIn}= useSelector(state=>state.admin)
+  const navigate = useNavigate()
   window.addEventListener('scroll',()=>{
     if(window.pageYOffset>0){
          setIsScrolling(true)
@@ -27,6 +31,13 @@ const HomePage = () => {
       
   })
 
+  const handleSurveyTime=()=>{
+    if(isLoggedIn||isAdminLoggedIn){
+      navigate('/survey')
+     }else {
+      navigate('/login')
+     }
+  }
 
   return (
     <Box sx={{width:'100%',height:'auto'}}>
@@ -45,6 +56,7 @@ const HomePage = () => {
                   btnWidth={'200px'} 
                   label={'JoinUs'} 
                   bgColor={'#1A6CE8'}
+                  setValue={()=>navigate('/signUp')}
                 />
               </Box>
             </Box>
@@ -152,6 +164,7 @@ const HomePage = () => {
                  <ButtonStyled 
                    label={'Start'}  
                    bgColor={'#1A6CE8'}
+                   setValue={handleSurveyTime}
                   />
             </Box>
             </Box>

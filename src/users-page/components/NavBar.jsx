@@ -13,6 +13,7 @@ const NavBar = ({isScrolling}) => {
     const navigate=useNavigate()
     const [navTitle,setNavTitle]= useState('Home')
     const {isLoggedIn} = useSelector(state=>state.auth)
+    const {isAdminLoggedIn}= useSelector(state=>state.admin)
     const dispatch = useDispatch()
     const handleNavigation=(title,navigateTo)=>{
        setNavTitle(title)
@@ -46,7 +47,7 @@ const NavBar = ({isScrolling}) => {
                 {item.title}
             </IconButton>
           )}
-          {!isLoggedIn?<IconButton 
+          {!isLoggedIn||(!isAdminLoggedIn)?<IconButton 
             onClick={()=>navigate('/login')} 
             sx={style.logoInIcon}>Login</IconButton>:
             <IconButton 

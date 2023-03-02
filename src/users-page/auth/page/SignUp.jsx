@@ -20,26 +20,26 @@ import { signUp } from '../../../redux/features/authSlice'
    const [isFormValid,setFormValidation]=useState(false)
    const TypoGraphMotion = motion(Typography);
    const [userData,setUserData]= useState({
-    firstName:'',
-    lastName:'',
-    phoneNumber:'',
-    email:'',
-    password:'',
-    confirmPassword:'',
-    address:''
+    firstName:"",
+    lastName:"",
+    email:"",
+    phoneNumber:"",
+    password:"",
+    gender:"",
+    confirmPassword:''
    })
 
 
    const handleSubmit=()=>{
     
-     if(userData.firstName!=='' && userData.lastName!==''
+     if(userData.firstName!=='' && userData.lastName!==''&& userData.confirmPassword!==''
        && userData.phoneNumber!=='' && userData.email!==''
-       &&userData.password!==''&&userData.confirmPassword!==''&& userData.address!==''){
-         alert(userData)
+       &&userData.password!==''&& userData.gender!==''){
+        
          dispatch(signUp({userData,toast,navigate}))
          setFormValidation(true)
-         setUserData({ firstName:'',lastName:'', phoneNumber:'',email:'',
-                    password:'',confirmPassword:'',address:''})
+         setUserData({ firstName:'',lastName:'',phoneNumber:'',email:'',
+                    password:'',gender:''})
 
        }else setFormValidation(false)
        
@@ -102,7 +102,7 @@ import { signUp } from '../../../redux/features/authSlice'
                     <Box sx={signUpStyle.signUpInputFieldContainer}>                    
                       <InputField 
                       inputLabel={'Phone Number'}
-                      type='text'
+                      type='phoneNumber'
                       inputValue={userData.phoneNumber}
                       setValue={(e)=>setUserData({...userData,"phoneNumber":e.target.value})}
                     />
@@ -110,17 +110,17 @@ import { signUp } from '../../../redux/features/authSlice'
                        <Box sx={signUpStyle.signUpInputFieldContainer}>                    
                       <InputField 
                       inputLabel={'Email'}
-                      type='text'
+                      type='email'
                       inputValue={userData.email}
                       setValue={(e)=>setUserData({...userData,"email":e.target.value})}
                     />
                     </Box>
                     <Box sx={signUpStyle.signUpInputFieldContainer}>                    
                       <InputField 
-                      inputLabel={'Address'}
+                      inputLabel={'Gender'}
                       type='text'
-                      inputValue={userData.address}
-                      setValue={(e)=>setUserData({...userData,"address":e.target.value})}
+                      inputValue={userData.gender}
+                      setValue={(e)=>setUserData({...userData,"gender":e.target.value})}
                     />
                     </Box>
                        <Box sx={signUpStyle.signUpInputFieldContainer}>                    
@@ -151,7 +151,14 @@ import { signUp } from '../../../redux/features/authSlice'
                       <Typography>Already have an account?</Typography>
                       <Typography 
                        onClick={()=>navigate('/login')}
-                       sx={{fontSize:'15px',marginLeft:'5px', color:'#1A6CE8',cursor:'pointer'}}>
+                       sx={
+                        {
+                          fontSize:'15px',
+                          marginLeft:'5px', 
+                          color:'#1A6CE8',
+                          cursor:'pointer'
+                          }
+                        }>
                          SignIn
                       </Typography>
                     </Box> 
