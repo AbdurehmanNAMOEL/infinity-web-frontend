@@ -21,16 +21,29 @@ import { useSelector } from 'react-redux';
 import PrivacyPolicyHome from './users-page/pages/policy/PrivacyPolicyHome';
 import AdminLogin from './admin-page/pages/auth/pages/AdminLogin';
 import AdminPrivateRoute from './admin-page/privateRoute/AdminPrivateRoute';
+import Registration from './users-page/pages/Registration';
 function App() {
    const [isDrawerOpen,setDrawerOpen]=useState(true)
    const {isLightMode}= useSelector(state=>state.auth)
    const [navText,setNavText]=useState('dashboard/adminHome')
+    const [isScrolling,setIsScrolling]=useState(false)
     const closeDrawer=()=>{
           setDrawerOpen(prev=>!prev)
     }
 
     useEffect(()=>{
     },[isDrawerOpen])
+
+    window.addEventListener('scroll',()=>{
+    if(window.pageYOffset>0){
+         setIsScrolling(true)
+         
+
+        }else{
+          setIsScrolling(false)
+        }
+      
+  })
   return (
     <Box sx={{width:'100%',display:'flex',backgroundColor:`${isLightMode?'white':'#1E1E1E'}`}}>
       <Router>
@@ -74,14 +87,15 @@ function App() {
           drawerWidth={isDrawerOpen?200:0}/>}/>
         </Route>
       </Route>
-        <Route path='/login' element={<Login/>}/>
-        <Route path='/signUp' element={<SignUp/>}/>
-        <Route path='/policy' element={<PrivacyPolicyHome/>}/>
-        <Route path='/' element={<HomePage/>}/>
-        <Route path='/aboutUs' element={<AboutUs/>}/>
-        <Route path='/contactUs' element={<ContactUs/>}/>
+        <Route  path='/login' element={<Login/>}/>
+        <Route  path='/signUp' element={<SignUp/>}/>
+        <Route  path='/registration' element={<Registration/>}/>
+        <Route isScrolling={isScrolling} path='/policy' element={<PrivacyPolicyHome/>}/>
+        <Route isScrolling={isScrolling} path='/' element={<HomePage/>}/>
+        <Route isScrolling={isScrolling} path='/aboutUs' element={<AboutUs/>}/>
+        <Route isScrolling={isScrolling} path='/contactUs' element={<ContactUs/>}/>
         <Route element={<PrivateRoute/>}>
-         <Route path='/survey' element={<SurveyHome/>}/>
+         <Route isScrolling={isScrolling} path='/survey' element={<SurveyHome/>}/>
         </Route>
        </Routes>
       </Router>

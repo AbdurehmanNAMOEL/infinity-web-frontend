@@ -22,15 +22,10 @@ const HomePage = () => {
   const {isAdminLoggedIn}= useSelector(state=>state.admin)
   const navigate = useNavigate()
   const BoxMotion = motion(Box);
+  
   window.addEventListener('scroll',()=>{
-    if(window.pageYOffset>0){
-         setIsScrolling(true)
-         
-
-        }else{
-          setIsScrolling(false)
-        }
-      
+    if(window.pageYOffset>0) setIsScrolling(true)
+    else setIsScrolling(false)       
   })
 
   const handleSurveyTime=()=>{
@@ -197,7 +192,11 @@ const HomePage = () => {
               <Box sx={{width:'70%',}}>
                   <Typography sx={{marginBottom:'10px',fontSize:handleResponsiveness('20px','42px')}}>
                     Do you want to learn on our campus </Typography>
-                  <ButtonStyled bgColor={'#1A6CE8'} label={'Register'}/>
+                  <ButtonStyled 
+                   bgColor={'#1A6CE8'} 
+                   label={'Register'}
+                   setValue={()=>navigate('/registration')}
+                   />
               </Box>
            </Box>
            <Box sx={style.registrationInnerContainers}>

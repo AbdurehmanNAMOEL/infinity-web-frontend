@@ -77,7 +77,7 @@ const NavBar = ({isScrolling}) => {
     </Header>
     </Box>
     <Box sx={{display:{md:'none',xs:'flex'}}}>
-      <MenuBar/>
+     <MenuBar/>
     </Box>
     </Box>
   )

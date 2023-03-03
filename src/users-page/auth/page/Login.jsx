@@ -13,6 +13,7 @@ import { motion } from "framer-motion";
 import { signIn } from '../../../redux/features/authSlice'
 import { useDispatch } from 'react-redux'
 import {toast} from 'react-toastify'
+import NavBar from '../../components/NavBar'
 
 
 export const Login = ({isSideBarOpen,setIsSideBarOpen,handleSideBarNavigation,navTitle}) => {
@@ -32,15 +33,21 @@ export const Login = ({isSideBarOpen,setIsSideBarOpen,handleSideBarNavigation,na
    }
 
   return (
-    <Box sx={loginStyle.loginMainContainer}>
-      <SideBar 
-        isSideBarOpen={isSideBarOpen}
-        setIsSideBarOpen={setIsSideBarOpen}
-        handleSideBarNavigation={handleSideBarNavigation}
-        navTitle={navTitle}
-      />
+    <Box sx={
+      {
+        width:'100%',
+        height:handleResponsiveness('auto','100vh'),
+        display:'flex',
+        flexDirection:'column',
+  
+        
+       
+        }
+      }>
+       <NavBar isScrolling={false}/>
+       <Box sx={loginStyle.loginMainContainer}>
         <Paper sx={loginStyle.loginLeftContainer}>
-             <Box 
+             {/* <Box 
                 onClick={()=>navigate('/')} 
                 sx={[loginStyle.companyLogo,{display:{xs:'none',md:'flex'}}]}>
                <MediaCard
@@ -48,7 +55,7 @@ export const Login = ({isSideBarOpen,setIsSideBarOpen,handleSideBarNavigation,na
                  mediaWidth={'80px'}
                  imgUrl={LogoImage}
                />
-             </Box>
+             </Box> */}
              <Box sx={loginStyle.loginCardContainer}>
                 <Paper sx={loginStyle.loginCard}>
                     <Box sx={loginStyle.loginTitleContainer}>
@@ -102,16 +109,56 @@ export const Login = ({isSideBarOpen,setIsSideBarOpen,handleSideBarNavigation,na
         </Paper>
      
         <Paper sx={loginStyle.loginRightContainer}>
-           <Box sx={loginStyle.companyName}>
-              <Box 
-               onClick={()=>navigate('/')} 
-               sx={[loginStyle.companyLogo,{display:{xs:'flex',md:'none'}}]}>
-               <MediaCard
-                 mediaHeight={'40px'}
-                 mediaWidth={'80px'}
-                 imgUrl={LogoImage}
-               />
-             </Box>
+          
+          
+           <Box sx={
+            {
+              width:'100%',
+              height:handleResponsiveness('auto','100%'),
+              display:'flex',
+              justifyContent:'center',
+              alignItems:'center',
+              flexDirection:'column',
+          
+              
+              }
+           }>
+
+    <Typography
+            sx={
+                {
+                  textAlign:'center',
+                  fontFamily:'Poppins',
+                  color:'rgba(0,0,0,0.6)',
+                  fontWeight:'bold',
+                  fontSize:handleResponsiveness('24px','40px'),
+                  marginTop:handleResponsiveness('0','-20px'),
+             
+               
+                }}>Welcome Back</Typography>
+           
+               <Card 
+                 sx={
+                  {
+                    width:'70%',
+                    height:handleResponsiveness('30vh','50%'),
+                    display:'flex',
+                    justifyContent:'center',
+                    alignItems:'center',
+                    boxShadow:'none',
+                    borderRadius:'0',
+                    marginBottom:'50px'
+                    }}>
+                <CardMedia 
+                   image={LoginImage} 
+                   sx={{
+                   width:handleResponsiveness('80%','60%'),
+                   height:handleResponsiveness('100%','100%')}}/>
+               </Card>
+
+
+                <Box sx={loginStyle.companyName}>
+             
               <Box onClick={()=>navigate('/')} sx={{display:{xs:'none',md:'flex'}}}>
                <MediaCard
                mediaWidth={'30px'} 
@@ -136,55 +183,12 @@ export const Login = ({isSideBarOpen,setIsSideBarOpen,handleSideBarNavigation,na
              </Typography>
            </Box>
            
-          
-           <Box sx={
-            {
-              width:'100%',
-              height:handleResponsiveness('auto','80vh'),
-              display:'flex',
-              justifyContent:'center',
-              alignItems:'center',
-              flexDirection:'column'
-              }
-           }>
-
-    <Typography
-            animate={{ y: [-500,0] }} 
-            transition = {{ ease: "easeInOut", duration: 2 }} 
-            sx={
-                {
-                  textAlign:'center',
-                  fontFamily:'Poppins',
-                  color:'rgba(0,0,0,0.6)',
-                  fontWeight:'bold',
-                  fontSize:handleResponsiveness('24px','40px'),
-                  marginTop:'-20px',
-             
-               
-                }}>Welcome Back</Typography>
-           
-               <Card 
-                 sx={
-                  {
-                    width:'100%',
-                    height:handleResponsiveness('30vh','60vh'),
-                    display:'flex',
-                    justifyContent:'center',
-                    alignItems:'center',
-                    backgroundColor:'#D9D9D9',
-                    boxShadow:'none',
-                    borderRadius:'0',
-                    marginBottom:'50px'
-                    }}>
-                <CardMedia 
-                   image={LoginImage} 
-                   sx={{
-                   width:handleResponsiveness('60%','60%'),
-                   height:handleResponsiveness('100%','100%')}}/>
-               </Card>
            </Box>
+
+
+           
         </Paper>
-    
+    </Box>
     </Box>
   )
 }

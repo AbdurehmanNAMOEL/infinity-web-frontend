@@ -5,10 +5,11 @@ export const handleResponsiveness=(xs,md)=>{
 export const loginStyle={
   loginMainContainer:{
     width:'100%',
-    height:handleResponsiveness('auto','100vh'),
+    height:handleResponsiveness('auto','90%'),
     display:'flex',
     flexDirection:handleResponsiveness('column-reverse','row'),
-    position:'relative'
+    position:'relative',
+    marginTop:'80px'
   },
   loginLeftContainer:{
     width:handleResponsiveness('100%','50%'),
@@ -31,7 +32,9 @@ export const loginStyle={
     height:'85vh',
     display:'flex',
     justifyContent:'center',
-    marginTop:'70px'
+  
+    
+    alignItems:'center'
   },
   loginCard:{
     width:'420px',
@@ -73,8 +76,9 @@ export const loginStyle={
   loginRightContainer:{
     width:handleResponsiveness('100%','50%'),
     height:handleResponsiveness('30%','100%'),
-    backgroundColor:'#D9D9D9',
-    borderRadius:'0'
+ 
+    borderRadius:'0',
+
   },
   companyName:{
       width:'100%',
