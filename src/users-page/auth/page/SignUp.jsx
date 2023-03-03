@@ -18,7 +18,6 @@ import { signUp } from '../../../redux/features/authSlice'
    const navigate = useNavigate()
    const dispatch= useDispatch()
    const [isFormValid,setFormValidation]=useState(false)
-   const TypoGraphMotion = motion(Typography);
    const [userData,setUserData]= useState({
     firstName:"",
     lastName:"",
@@ -223,7 +222,7 @@ import { signUp } from '../../../redux/features/authSlice'
                   fontFamily:'Poppins',
                   color:'rgba(0,0,0,0.6)',
                   fontWeight:'bold',
-                  fontSize:{xs:'20px',md:'32px'}
+                  fontSize:{xs:'20px',md:'27px'}
                
                 }}>
              Renovate the world of Data through 
@@ -237,7 +236,7 @@ import { signUp } from '../../../redux/features/authSlice'
                   color:'#1A6CE8',
                   fontWeight:'bold',
                   marginBottom:'50px',
-                  fontSize:{xs:'20px',md:'32px'}
+                  fontSize:{xs:'20px',md:'27px'}
                
                 }}
                >intelligence for better decisions!</Typography>

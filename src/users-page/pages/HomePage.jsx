@@ -13,6 +13,7 @@ import CourseRegImage from '../../assets/image/course.png'
 import Footer from '../components/Footer'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import { motion,useScroll } from 'framer-motion'
 
 const HomePage = () => {
 
@@ -20,6 +21,7 @@ const HomePage = () => {
   const {isLoggedIn} = useSelector(state=>state.auth)
   const {isAdminLoggedIn}= useSelector(state=>state.admin)
   const navigate = useNavigate()
+  const BoxMotion = motion(Box);
   window.addEventListener('scroll',()=>{
     if(window.pageYOffset>0){
          setIsScrolling(true)
@@ -40,11 +42,14 @@ const HomePage = () => {
   }
 
   return (
-    <Box sx={{width:'100%',height:'auto'}}>
+    <Box sx={{width:'100%',height:'auto',overflowX:'hidden'}}>
      <NavBar isScrolling={isScrolling}/>
       <Box sx={style.homeLandingPage}>
          <Box sx={style.homeLeftLadingPageContainer}>
-            <Box sx={{width:'90%', height:'50%',display:'flex',flexDirection:'column'}}>
+            <motion.div
+               animate={{x:[-800,0] ,opacity: [0.5,1] }}
+             transition={{ duration:1.5}} 
+              style={{width:'90%', height:'50%',display:'flex',flexDirection:'column'}}>
               <Box sx={{width:'100%'}}>
                <Typography sx={{fontWeight:'bold',width:'100%',fontSize:handleResponsiveness('24px','42px')}}>
                  Paid Online Surveys <span style={{color:'#1A6CE8'}}> Earn Money 
@@ -59,15 +64,19 @@ const HomePage = () => {
                   setValue={()=>navigate('/signUp')}
                 />
               </Box>
-            </Box>
+            </motion.div>
          </Box>
-         <Box sx={[style.homeRightLadingPageContainer]}>
-            <Card sx={style.homeLandingPageImageContainer}>
+         <Box
+            sx={[style.homeRightLadingPageContainer]}>
+            <motion.div
+             animate={{x:[800,0] ,opacity: [0.5,1] }}
+             transition={{ duration:1.5}} 
+             style={style.homeLandingPageImageContainer}>
                <CardMedia 
                  sx={{width:'100%',height:'80%'}}
                  image={HomePhoto}
                  />
-            </Card>
+            </motion.div>
          </Box>
       </Box>
 
@@ -77,26 +86,38 @@ const HomePage = () => {
           </Typography>
 
            <Box sx={[style.howSurveyWorkContainer]}>
-              <Box sx={style.howSurveyWorkIconContainer}>
+              <BoxMotion 
+                 initial={{ scale: 0.5 }}
+                 whileInView={{ scale: 1 }}
+                  transition={{ duration:1}} 
+                sx={style.howSurveyWorkIconContainer}>
                 <Paper sx={[style.howSurveyWorkIconInnerContainer]}>
                   <QuestionMarkIcon sx={[style.icons,{color:'white'}]}/>
                 </Paper>
                 <Typography>Answer a few questions</Typography>
-              </Box>
+              </BoxMotion>
 
-                <Box sx={style.howSurveyWorkIconContainer}>
+                <BoxMotion
+                initial={{ scale: 0.5 }}
+                 whileInView={{ scale: 1 }}
+                 transition={{ duration:1.5}} 
+                sx={style.howSurveyWorkIconContainer}>
                 <Paper sx={style.howSurveyWorkIconInnerContainer}>
                   <FactCheckIcon sx={[style.icons,{color:'rgb(16, 245, 207)'}]}/>
                 </Paper>
                 <Typography>Complete a survey</Typography>
-              </Box>
+              </BoxMotion>
 
-                <Box sx={style.howSurveyWorkIconContainer}>
+                <BoxMotion
+                initial={{ scale: 0.5 }}
+                 whileInView={{ scale: 1 }}
+                 transition={{ duration:2}} 
+                sx={style.howSurveyWorkIconContainer}>
                 <Paper sx={style.howSurveyWorkIconInnerContainer}>
                   <EmojiEventsIcon sx={[style.icons,{color:'goldenrod'}]}/>
                 </Paper>
                 <Typography>Get your reward</Typography>
-              </Box>
+              </BoxMotion>
            </Box>
        </Box>
         <Box sx={[style.whyShouldMainContainer]}>
@@ -107,6 +128,7 @@ const HomePage = () => {
             {whyUsData.map((item,index)=>
               <StyledCard 
                 key={index} 
+                animationDuration={index}
                 title={item.Title}
                 body={item.body}
                 icon={item.icon}
@@ -207,7 +229,6 @@ const style={
    homeRightLadingPageContainer:{
     width:handleResponsiveness('100%','50%'),
     height:'100%',
-    backgroundColor:'green',
     display:'flex',
     justifyContent:'center',
     alignItems:'center'

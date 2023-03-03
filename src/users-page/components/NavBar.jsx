@@ -1,6 +1,6 @@
 import {IconButton } from '@mui/material'
 import { Box } from '@mui/system'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Header } from '../utils/genericComponents'
 import { navList } from '../utils/navlist'
 import MenuBar from './MenuBar'
@@ -12,13 +12,31 @@ import { logOut } from '../../redux/features/authSlice'
 const NavBar = ({isScrolling}) => {
     const navigate=useNavigate()
     const [navTitle,setNavTitle]= useState('Home')
-    const {isLoggedIn} = useSelector(state=>state.auth)
-    const {isAdminLoggedIn}= useSelector(state=>state.admin)
+    let {isLoggedIn} = useSelector(state=>state.auth)
+    let {isAdminLoggedIn}= useSelector(state=>state.admin)
     const dispatch = useDispatch()
+    const [newNavList,setNewNavList]=useState()
+
     const handleNavigation=(title,navigateTo)=>{
        setNavTitle(title)
        navigate(`${navigateTo}`)
     }
+
+    // handle this on the redux
+
+    
+  useEffect(()=>{
+    
+    if(!isAdminLoggedIn){
+       setNewNavList(navList.filter(item=>item.title!=='DashBoard'))
+       console.log(navList,isAdminLoggedIn)
+    }else {
+      setNewNavList(navList)
+    }
+   
+    },[isAdminLoggedIn])
+    
+ 
   return (
     <Box 
       sx={{
@@ -39,22 +57,22 @@ const NavBar = ({isScrolling}) => {
          />
          </Box>
         <Box sx={style.navRightItemContainer}>
-          {navList.map((item,index)=>
+          {newNavList?.map((item,index)=>
             <IconButton
-                onClick={()=>handleNavigation(item.title,item.to)}
+               onClick={()=>handleNavigation(item.title,item.to)}
                sx={[style.navLists]} 
-               key={index}>
-                {item.title}
+               key={index}>{item.title}
             </IconButton>
           )}
-          {!isLoggedIn||(!isAdminLoggedIn)?<IconButton 
+          {(!isAdminLoggedIn||!isLoggedIn)?<IconButton 
             onClick={()=>navigate('/login')} 
             sx={style.logoInIcon}>Login</IconButton>:
             <IconButton 
             onClick={()=>dispatch(logOut())} 
             sx={style.logoInIcon}>LogOut</IconButton>
-            
-            }
+          }
+
+          
         </Box>
     </Header>
     </Box>
