@@ -45,7 +45,12 @@ function App() {
       
   })
   return (
-    <Box sx={{width:'100%',display:'flex',backgroundColor:`${isLightMode?'white':'#1E1E1E'}`}}>
+    <Box sx={
+      {
+        width:'100%',
+        display:'flex',
+        backgroundColor:`${isLightMode?'white':'#1E1E1E'}`
+        }}>
       <Router>
         <ToastContainer/>
        <Routes>

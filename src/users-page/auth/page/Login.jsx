@@ -33,29 +33,11 @@ export const Login = ({isSideBarOpen,setIsSideBarOpen,handleSideBarNavigation,na
    }
 
   return (
-    <Box sx={
-      {
-        width:'100%',
-        height:handleResponsiveness('auto','100vh'),
-        display:'flex',
-        flexDirection:'column',
-  
-        
-       
-        }
-      }>
+    <Box sx={loginStyle.loginMainWrapper}>
        <NavBar isScrolling={false}/>
        <Box sx={loginStyle.loginMainContainer}>
-        <Paper sx={loginStyle.loginLeftContainer}>
-             {/* <Box 
-                onClick={()=>navigate('/')} 
-                sx={[loginStyle.companyLogo,{display:{xs:'none',md:'flex'}}]}>
-               <MediaCard
-                 mediaHeight={'40px'}
-                 mediaWidth={'80px'}
-                 imgUrl={LogoImage}
-               />
-             </Box> */}
+         <Paper sx={loginStyle.loginLeftContainer}>
+          
              <Box sx={loginStyle.loginCardContainer}>
                 <Paper sx={loginStyle.loginCard}>
                     <Box sx={loginStyle.loginTitleContainer}>

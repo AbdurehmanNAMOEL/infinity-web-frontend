@@ -1,5 +1,5 @@
 import { Box, Card, CardMedia,Paper,Typography } from '@mui/material'
-import React, { useEffect, useState } from 'react'
+import React, {useState } from 'react'
 import NavBar from '../components/NavBar'
 import HomePhoto from '../../assets/image/home.svg'
 import { handleResponsiveness } from '../auth/styles/loginStyle'
@@ -10,18 +10,21 @@ import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import FactCheckIcon from '@mui/icons-material/FactCheck';
 import CourseRegImage from '../../assets/image/course.png'
+import HomePageDarkModeImage from '../../assets/image/home-darkmode.svg'
 import Footer from '../components/Footer'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { motion,useScroll } from 'framer-motion'
+import { motion} from 'framer-motion'
+import { homePageStyle } from './style/home'
 
 const HomePage = () => {
 
   const [isScrolling,setIsScrolling]=useState(false)
-  const {isLoggedIn} = useSelector(state=>state.auth)
+  const {isLoggedIn,isLightMode,modeColor} = useSelector(state=>state.auth)
   const {isAdminLoggedIn}= useSelector(state=>state.admin)
   const navigate = useNavigate()
   const BoxMotion = motion(Box);
+  const PaperMotion = motion(Paper);
   
   window.addEventListener('scroll',()=>{
     if(window.pageYOffset>0) setIsScrolling(true)
@@ -37,16 +40,23 @@ const HomePage = () => {
   }
 
   return (
-    <Box sx={{width:'100%',height:'auto',overflowX:'hidden'}}>
+    <Box sx={{width:'100%',height:'auto',overflowX:'hidden',backgroundColor:modeColor}}>
      <NavBar isScrolling={isScrolling}/>
-      <Box sx={style.homeLandingPage}>
-         <Box sx={style.homeLeftLadingPageContainer}>
+      <Box sx={homePageStyle.homeLandingPage}>
+         <Box sx={homePageStyle.homeLeftLadingPageContainer}>
             <motion.div
-               animate={{x:[-800,0] ,opacity: [0.5,1] }}
+             animate={{x:[-800,0] ,opacity: [0.5,1] }}
              transition={{ duration:1.5}} 
               style={{width:'90%', height:'50%',display:'flex',flexDirection:'column'}}>
               <Box sx={{width:'100%'}}>
-               <Typography sx={{fontWeight:'bold',width:'100%',fontSize:handleResponsiveness('24px','42px')}}>
+               <Typography 
+                sx={
+                {
+                  fontWeight:'bold',
+                  color:`${isLightMode?'#1E1E1E':'white'}`,
+                  width:'100%',
+                  fontSize:handleResponsiveness('24px','42px')
+                  }}>
                  Paid Online Surveys <span style={{color:'#1A6CE8'}}> Earn Money 
                  Online.Join Infinity Today!</span>
               </Typography>
@@ -62,64 +72,69 @@ const HomePage = () => {
             </motion.div>
          </Box>
          <Box
-            sx={[style.homeRightLadingPageContainer]}>
+            sx={[homePageStyle.homeRightLadingPageContainer]}>
             <motion.div
              animate={{x:[800,0] ,opacity: [0.5,1] }}
              transition={{ duration:1.5}} 
-             style={style.homeLandingPageImageContainer}>
+             style={homePageStyle.homeLandingPageImageContainer}>
                <CardMedia 
                  sx={{width:'100%',height:'80%'}}
-                 image={HomePhoto}
+                 image={isLightMode?HomePhoto:HomePageDarkModeImage}
                  />
             </motion.div>
          </Box>
       </Box>
 
-      <Box sx={style.howSurveyWorkMainContainer}>
-          <Typography variant='h4' sx={style.sectionMainTitle}>
+      <Box 
+        sx={[homePageStyle.howSurveyWorkMainContainer,{backgroundColor:modeColor}]}>
+          <Typography variant='h4'
+            sx={[homePageStyle.sectionMainTitle,{color:`${isLightMode?'#1e1e1e':'white'}`}]}>
             How does Infinity Survey work?
           </Typography>
 
-           <Box sx={[style.howSurveyWorkContainer]}>
+           <Box sx={[homePageStyle.howSurveyWorkContainer,
+             {backgroundColor:`${isLightMode?'white':'#1e1e1e'}`}]}>
               <BoxMotion 
                  initial={{ scale: 0.5 }}
                  whileInView={{ scale: 1 }}
                   transition={{ duration:1}} 
-                sx={style.howSurveyWorkIconContainer}>
-                <Paper sx={[style.howSurveyWorkIconInnerContainer]}>
-                  <QuestionMarkIcon sx={[style.icons,{color:'white'}]}/>
+                sx={[homePageStyle.howSurveyWorkIconContainer]}>
+                <Paper sx={[homePageStyle.howSurveyWorkIconInnerContainer]}>
+                  <QuestionMarkIcon sx={[homePageStyle.icons,{color:'white'}]}/>
                 </Paper>
-                <Typography>Answer a few questions</Typography>
+                <Typography sx={{color:`${isLightMode?'#1e1e1e':'white'}`}}>Answer a few questions</Typography>
               </BoxMotion>
 
                 <BoxMotion
                 initial={{ scale: 0.5 }}
                  whileInView={{ scale: 1 }}
                  transition={{ duration:1.5}} 
-                sx={style.howSurveyWorkIconContainer}>
-                <Paper sx={style.howSurveyWorkIconInnerContainer}>
-                  <FactCheckIcon sx={[style.icons,{color:'rgb(16, 245, 207)'}]}/>
+                sx={homePageStyle.howSurveyWorkIconContainer}>
+                <Paper sx={homePageStyle.howSurveyWorkIconInnerContainer}>
+                  <FactCheckIcon sx={[homePageStyle.icons,{color:'rgb(16, 245, 207)'}]}/>
                 </Paper>
-                <Typography>Complete a survey</Typography>
+                 <Typography sx={{color:`${isLightMode?'#1e1e1e':'white'}`}}>Complete a survey</Typography>
               </BoxMotion>
 
                 <BoxMotion
                 initial={{ scale: 0.5 }}
                  whileInView={{ scale: 1 }}
                  transition={{ duration:2}} 
-                sx={style.howSurveyWorkIconContainer}>
-                <Paper sx={style.howSurveyWorkIconInnerContainer}>
-                  <EmojiEventsIcon sx={[style.icons,{color:'goldenrod'}]}/>
+                sx={homePageStyle.howSurveyWorkIconContainer}>
+                <Paper sx={homePageStyle.howSurveyWorkIconInnerContainer}>
+                  <EmojiEventsIcon sx={[homePageStyle.icons,{color:'goldenrod'}]}/>
                 </Paper>
-                <Typography>Get your reward</Typography>
+                 <Typography sx={{color:`${isLightMode?'#1e1e1e':'white'}`}}>Get your reward</Typography>
               </BoxMotion>
            </Box>
        </Box>
-        <Box sx={[style.whyShouldMainContainer]}>
-          <Typography variant='h4' sx={style.sectionMainTitle}>
+        <Box sx={[homePageStyle.whyShouldMainContainer,{backgroundColor:modeColor}]}>
+          <Typography 
+            variant='h4' 
+            sx={[homePageStyle.sectionMainTitle,{color:`${isLightMode?"#1e1e1e":'white'}`}]}>
             Why should I use Infinity Survey?
            </Typography>
-           <Box sx={style.whyShouldInnerContainer}>
+           <Box sx={homePageStyle.whyShouldInnerContainer}>
             {whyUsData.map((item,index)=>
               <StyledCard 
                 key={index} 
@@ -136,26 +151,30 @@ const HomePage = () => {
         {
           width:'100%',
           height:handleResponsiveness('auto','350px'),
-          backgroundColor:'#F6F6F6',
+          // backgroundColor:'#F6F6F6',
           marginBottom:handleResponsiveness('20px','0'),
           display:'flex',
           flexDirection:'column',
           justifyContent:'center',
-          alignItems:'center'
+          alignItems:'center',
+          backgroundColor:modeColor
           }}>
-          <Typography variant='h4' sx={style.sectionMainTitle}>
-            Survey Time
+
+          <Typography 
+            variant='h4' 
+            sx={[homePageStyle.sectionMainTitle,{color:`${isLightMode?'#1e1e1e':'white'}`}]}
+            >Survey Time
           </Typography>
           <Box sx={
            { 
             width:'90%',
-             marginLeft:'5%',
+        
              height:'30%',
              display:'flex',
              justifyContent:'center',
              alignItems:'center',
-             flexDirection:'column'
-
+             flexDirection:'column',
+             backgroundColor:modeColor
              }
           }>
             <Box sx={
@@ -167,17 +186,17 @@ const HomePage = () => {
                 justifyContent:'center',
                 alignItems:'center'
                 }}>
-            <Typography sx={{width:'100%',textAlign:'center'}}>
+            <Typography sx={{width:'100%',textAlign:'center',color:`${isLightMode?'#1e1e1e':'white'}`}}>
               Where you take free paid surveys and 
               earn “X” birr for each one you successfully 
               complete!
             </Typography>
             <Box sx={
-              {width:'50%',
+              {
               display:'flex',
-              justifyContent:'center',
+            
               marginTop:'20px',
-              alignItems:'center'}}>
+            }}>
                  <ButtonStyled 
                    label={'Start'}  
                    bgColor={'#1A6CE8'}
@@ -187,11 +206,16 @@ const HomePage = () => {
             </Box>
           </Box>
       </Box>
-        <Box sx={style.registrationContainer}>
-           <Box sx={style.registrationInnerContainers}>
-              <Box sx={{width:'70%',}}>
-                  <Typography sx={{marginBottom:'10px',fontSize:handleResponsiveness('20px','42px')}}>
-                    Do you want to learn on our campus </Typography>
+        <Box sx={[homePageStyle.registrationContainer,{backgroundColor:modeColor}]}>
+           <Box sx={[homePageStyle.registrationInnerContainers,{backgroundColor:modeColor}]}>
+              <Box sx={{width:'70%',backgroundColor:modeColor}}>
+                  <Typography 
+                    sx={{
+                      marginBottom:'10px',fontSize:handleResponsiveness('20px','42px'),
+                      color:`${isLightMode?'#1e1e1e':'white'}`
+                      }}>
+                    Do you want to learn on our campus 
+                    </Typography>
                   <ButtonStyled 
                    bgColor={'#1A6CE8'} 
                    label={'Register'}
@@ -199,8 +223,8 @@ const HomePage = () => {
                    />
               </Box>
            </Box>
-           <Box sx={style.registrationInnerContainers}>
-             <Card sx={{width:'80%',height:'100%',backgroundColor:'white',boxShadow:'none'}}>
+           <Box sx={[homePageStyle.registrationInnerContainers,{backgroundColor:modeColor}]}>
+             <Card sx={{width:'80%',height:'100%',backgroundColor:modeColor}}>
               <CardMedia image={CourseRegImage} sx={{width:'100%',height:'100%'}}/>
              </Card>
            </Box>
@@ -209,123 +233,5 @@ const HomePage = () => {
     </Box>
   )
 }
-const style={
-  homeLandingPage:{
-    width:'100%',
-    height:'90vh',
-    display:'flex',
-    flexDirection:handleResponsiveness('column','row'),
-    marginTop:'70px',
-    backgroundColor:'white'
-  },
-  homeLeftLadingPageContainer:{
-    width:handleResponsiveness('100%','50%'),
-    height:handleResponsiveness('60%','100%'),
-    display:'flex',
-    justifyContent:'center',
-    alignItems:'center'
-  },
-   homeRightLadingPageContainer:{
-    width:handleResponsiveness('100%','50%'),
-    height:'100%',
-    display:'flex',
-    justifyContent:'center',
-    alignItems:'center'
-  },
-  howSurveyWorkIconContainer:{
-    width:handleResponsiveness('80%','20%'),
-    height:'100%',
-    display:'flex',
-    justifyContent:'center',
-    alignItems:'center',
-    flexDirection:'column',
-    gap:'20px',
-    marginBottom:handleResponsiveness('20px','0px')
-  },
-  howSurveyWorkIconInnerContainer:{
-    width:handleResponsiveness('80px','120px'),
-    height:handleResponsiveness('80px','120px'),
-    backgroundColor:'#1A6CE8',
-    borderRadius:'100%',
-    display:'flex',
-    justifyContent:'center',
-    alignItems:'center',
-  },
-  howSurveyWorkContainer:{
-    width:'95%',
-    height:handleResponsiveness('auto','50%'),
-    display:'flex',
-    flexDirection:handleResponsiveness('column','row'),
-    justifyContent:'center',
-    alignItems:'center',
-  },
-  icons:{
-    width:'60%',
-    height:'60%',
-  },
-  sectionMainTitle:{
-    textAlign:'center',
-    fontFamily:'Inter',
-    marginTop:'20px',
-    fontWeight:'bold',
-    marginBottom:handleResponsiveness('40px','0px'),
-    fontSize:handleResponsiveness('24px','42px')         
-  },
-  homeLandingPageImageContainer:{
-    width:'100%',
-    height:'100%',
-    display:'flex',
-    justifyContent:'center',
-    alignItems:'center',
-    boxShadow:'none'
-  },
- howSurveyWorkMainContainer:{
-    width:'100%',
-    height:handleResponsiveness('auto','400px'),
-    backgroundColor:'#F6F6F6',
-    display:'flex',
-    justifyContent:'center',
-    alignItems:'center',
-    flexDirection:'column',
-    gap:'50px',
-    marginBottom:'50px'
-  },
-  whyShouldMainContainer: {
-    width:'100%',
-    height:handleResponsiveness('auto','400px'),
-    backgroundColor:'white',
-    display:'flex',
-    justifyContent:'center',
-    flexDirection:'column',
-    alignItems:'center'
-  },
-  whyShouldInnerContainer:{
-    width:'95%',
-    height:handleResponsiveness('auto','80%'),
-    display:'flex',
-    flexDirection:handleResponsiveness('column','row'),
-    justifyContent:'center',
-    alignItems:'center',
-    gap:'40px'
-  },
-  registrationContainer:{
-    width:'100%',
-    height:handleResponsiveness('auto','400px'),
-    backgroundColor:'white',
-    display:'flex',
-    flexDirection:handleResponsiveness('column','row'),
-    justifyContent:'center',
-    alignItems:'center',
-    gap:'20px',
-    marginBottom:'50px'
-  },
-  registrationInnerContainers:{
-    width:handleResponsiveness('100%','50%'),
-    height:handleResponsiveness('200px','100%'),
-    display:'flex',
-    justifyContent:'center',
-    alignItems:'center',
-    backgroundColor:'white',
-  }
-}
+
 export default HomePage

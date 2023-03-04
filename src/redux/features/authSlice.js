@@ -37,7 +37,8 @@ export const authSlice= createSlice({
       users:[],
       loading:false,
       isLoggedIn:false,
-      isLightMode:true
+      isLightMode:true,
+      modeColor:'white'
 },
   reducers:{
     logOut:(state,action)=>{
@@ -45,6 +46,9 @@ export const authSlice= createSlice({
     },
      setMode:(state,action)=>{
        state.isLightMode=!state.isLightMode
+       if(!state.isLightMode){
+         state.modeColor='#1E1E1E'
+       }else state.modeColor='white'
     }
   },
   extraReducers:{

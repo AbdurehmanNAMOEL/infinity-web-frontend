@@ -8,14 +8,15 @@ import LogoImage from '../../assets/image/logo.png'
 import MediaCard from './MediaCard'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { logOut } from '../../redux/features/authSlice'
+import { logOut, setMode } from '../../redux/features/authSlice'
+import Mode from '../../shared/Components/Mode'
 const NavBar = ({isScrolling}) => {
-    const navigate=useNavigate()
-    const [navTitle,setNavTitle]= useState('Home')
-    let {isLoggedIn} = useSelector(state=>state.auth)
-    let {isAdminLoggedIn}= useSelector(state=>state.admin)
-    const dispatch = useDispatch()
-    const [newNavList,setNewNavList]=useState()
+  const navigate=useNavigate()
+  const [navTitle,setNavTitle]= useState('Home')
+  let {isLoggedIn,isLightMode,modeColor} = useSelector(state=>state.auth)
+  let {isAdminLoggedIn}= useSelector(state=>state.admin)
+  const dispatch = useDispatch()
+  const [newNavList,setNewNavList]=useState()
 
     const handleNavigation=(title,navigateTo)=>{
        setNavTitle(title)
@@ -43,7 +44,7 @@ const NavBar = ({isScrolling}) => {
         width:'100%',
         zIndex:300,
         position:'fixed',
-        backgroundColor:'white',
+        backgroundColor:modeColor,
         boxShadow:`${isScrolling?'2px 2px 10px 2px rgba(0,0,0,0.5)':''}`
       }}
       >
@@ -60,10 +61,12 @@ const NavBar = ({isScrolling}) => {
           {newNavList?.map((item,index)=>
             <IconButton
                onClick={()=>handleNavigation(item.title,item.to)}
-               sx={[style.navLists]} 
+               sx={[style.navLists,{color:`${isLightMode?"#1e1e1e":'white'}`}]} 
                key={index}>{item.title}
             </IconButton>
           )}
+          <Mode isLightMode={isLightMode} 
+           handleDispatch={()=>dispatch(setMode())}/>
           {(!isAdminLoggedIn||!isLoggedIn)?<IconButton 
             onClick={()=>navigate('/login')} 
             sx={style.logoInIcon}>Login</IconButton>:
@@ -77,7 +80,10 @@ const NavBar = ({isScrolling}) => {
     </Header>
     </Box>
     <Box sx={{display:{md:'none',xs:'flex'}}}>
-     <MenuBar/>
+     <MenuBar 
+     newNavList={newNavList} 
+     dispatch={dispatch}
+     handleNavigation={handleNavigation}/>
     </Box>
     </Box>
   )

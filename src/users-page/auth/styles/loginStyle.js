@@ -3,6 +3,12 @@ export const handleResponsiveness=(xs,md)=>{
 }
 
 export const loginStyle={
+  loginMainWrapper:{
+    width:'100%',
+    height:handleResponsiveness('auto','100vh'),
+    display:'flex',
+    flexDirection:'column',      
+  },
   loginMainContainer:{
     width:'100%',
     height:handleResponsiveness('auto','90%'),
@@ -93,5 +99,13 @@ export const loginStyle={
       display:'flex',
       justifyContent:'center',
       marginTop:'10px'
+  }
+}
+
+export const basicFlexStyle={
+  flexState:{
+    display:'flex',
+    justifyContent:'center',
+    alignItems:'center'
   }
 }
