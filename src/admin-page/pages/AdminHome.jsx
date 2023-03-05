@@ -10,8 +10,7 @@ const AdminHome = () => {
     const [isDrawerOpen,closeDrawer] = useState(true)
     const {isLightMode}= useSelector(state=>state.auth)
   return (
-     <div 
-        style={
+     <div style={
         {
             width:'100%',
             display:'flex',
