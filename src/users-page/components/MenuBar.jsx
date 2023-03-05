@@ -4,7 +4,6 @@ import { Header } from '../utils/genericComponents'
 import { MenuOutlined,CloseOutlined } from '@mui/icons-material'
 import { Box } from '@mui/system'
 import LogoImage from '../../assets/image/logo.png'
-import SideBar from './SideBar'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { setMode } from '../../redux/features/authSlice'
@@ -45,8 +44,9 @@ const MenuBar = ({newNavList,handleNavigation,dispatch}) => {
        </IconButton>
     </Header>
     </Box>
-    <Box sx={{width:'90%',height:'500px',display:'flex',flexDirection:'column',alignItems:'center'}}>
-           {newNavList?.map((item,index)=>
+    <Box 
+       sx={{width:'90%',height:'500px',display:'flex',flexDirection:'column',alignItems:'center'}}>
+        {newNavList?.map((item,index)=>
             <IconButton
                onClick={()=>handleNavigation(item.title,item.to)}
                sx={[style.navLists,{color:`${isLightMode?"#1e1e1e":'white'}`}]} 

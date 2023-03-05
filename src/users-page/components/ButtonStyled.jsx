@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Button from '@mui/material/Button'
 import LoadingAnimation from '../../shared/Components/LoadingAnimation'
-const ButtonStyled = ({bgColor,label,btnWidth,buttonIcon,shadow,setValue}) => {
+const ButtonStyled = ({bgColor,label,btnHeight,btnWidth,buttonIcon,shadow,setValue}) => {
   const [isButtonClicked,setButtonClicked]= useState(false)
 
   const handleButtonClicked = ()=>{
@@ -24,6 +24,7 @@ const ButtonStyled = ({bgColor,label,btnWidth,buttonIcon,shadow,setValue}) => {
       borderRadius:0,
       fontFamily:'sans-serif',
       width:`${btnWidth?btnWidth:'150px'}`,
+      height:`${btnHeight?btnHeight:'50px'}`,
       backgroundColor:`${bgColor?bgColor:'white'}`,
       color:`${bgColor==='white'?'#121212':'white'}`,
       boxShadow:`${shadow==='no'?'none':''}`,
