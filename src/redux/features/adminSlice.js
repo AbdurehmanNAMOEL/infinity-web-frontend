@@ -31,11 +31,27 @@ export const loginAdmin = createAsyncThunk('admin/loginAdmin',async({userData,to
 })
 
 
+export const createNewSurvey = createAsyncThunk('admin/createSurvey',async({surveyData,toast})=>{
+    try {
+         const response = await axios.post('https://infinity-api-oqlt.onrender.com/createQuestion',surveyData)
+         if(response){
+            toast.success('Question Created')
+            return response.data
+         }
+    } catch (error) {
+       
+        toast.error(error.response.data.error)    
+    }
+})
+
+
+
 
 export const adminSlice= createSlice({
     name:'admin',
     initialState:{
       admins:[],
+      survey:[],
       loading:false,
       isAdminLoggedIn:false,
       navTitle:'dashboard/adminHome'
@@ -76,6 +92,21 @@ export const adminSlice= createSlice({
     [loginAdmin.rejected]:(state,action)=>{
       state.loading=false
       state.isAdminLoggedIn=false
+    },
+
+
+    [createNewSurvey.pending]:(state,action)=>{
+      state.loading=true
+      state.isAdminLoggedIn=true
+    },
+    [createNewSurvey.fulfilled]:(state,action)=>{
+      state.survey=action.payload
+      state.loading=false
+      state.isAdminLoggedIn=true
+    },
+    [createNewSurvey.rejected]:(state,action)=>{
+      state.loading=false
+      state.isAdminLoggedIn=true
     },
   }
 

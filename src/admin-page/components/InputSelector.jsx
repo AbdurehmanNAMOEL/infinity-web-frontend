@@ -1,19 +1,33 @@
-import { Select } from '@mui/material'
+import { Box, FormControl, InputLabel, MenuItem, Select } from '@mui/material'
 import React, { useEffect } from 'react'
 
-const InputSelector = ({optionList,setValue,inputValue}) => {
+const InputSelector = ({optionList,setValue,inputValue,label}) => {
 
   useEffect(()=>{},[inputValue])  
   return (
-    <select 
-      onChange={(e)=>setValue(e.target.value)}
-      value={inputValue} 
-      style={style.selectStyle}>{optionList?.map((item,index)=>
-      <option 
-      key={index} 
-      value={item.value}>{item.title}</option>    
-    )}   
-    </select>
+    
+  
+    <Box sx={{ width: 120}}>
+      <FormControl fullWidth>
+        <InputLabel id="demo-simple-select-label">{label}</InputLabel>
+        <Select
+         sx={{height:'45px' }}
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={inputValue}
+          label={label}
+          onChange={(e)=>setValue(e.target.value)}
+        >
+         { optionList?.map((item,index)=>
+           <MenuItem 
+             value={item.value}>
+              {item.title}
+            </MenuItem>)
+          }
+        </Select>
+      </FormControl>
+    </Box>
+   
   )
 }
 

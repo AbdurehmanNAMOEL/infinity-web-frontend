@@ -22,11 +22,13 @@ import PrivacyPolicyHome from './users-page/pages/policy/PrivacyPolicyHome';
 import AdminLogin from './admin-page/pages/auth/pages/AdminLogin';
 import AdminPrivateRoute from './admin-page/privateRoute/AdminPrivateRoute';
 import Registration from './users-page/pages/Registration';
+import SurveyDetail from './users-page/pages/survey/SurveyDetail';
 function App() {
    const [isDrawerOpen,setDrawerOpen]=useState(true)
    const {isLightMode}= useSelector(state=>state.auth)
    const [navText,setNavText]=useState('dashboard/adminHome')
     const [isScrolling,setIsScrolling]=useState(false)
+    const [surveyData, setSurveyDetailData] = useState([])
     const closeDrawer=()=>{
           setDrawerOpen(prev=>!prev)
     }
@@ -100,7 +102,14 @@ function App() {
         <Route isScrolling={isScrolling} path='/aboutUs' element={<AboutUs/>}/>
         <Route isScrolling={isScrolling} path='/contactUs' element={<ContactUs/>}/>
         <Route element={<PrivateRoute/>}>
-         <Route isScrolling={isScrolling} path='/survey' element={<SurveyHome/>}/>
+         <Route 
+           isScrolling={isScrolling} 
+           path='/survey'
+           element={<SurveyHome  setSurveyDetailData={setSurveyDetailData} />}/>
+         <Route 
+            isScrolling={isScrolling} 
+            path='/takeSurvey' 
+            element={<SurveyDetail surveyData={surveyData}/>}/>
         </Route>
        </Routes>
       </Router>

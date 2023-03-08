@@ -1,4 +1,4 @@
-import { Button, Paper } from '@mui/material'
+import { Paper, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import React, { useEffect, useState } from 'react'
 import ButtonStyled from '../../users-page/components/ButtonStyled'
@@ -8,41 +8,78 @@ import InputSelector from '../components/InputSelector'
 import RadioInput from '../components/RadioInput'
 import SideBar from '../components/SideBar'
 import { choicesType,questionTypeList } from '../utils/selectorInputs'
-
+import { useDispatch, useSelector } from 'react-redux'
+import { createNewSurvey } from '../../redux/features/adminSlice'
+import {toast} from 'react-toastify'
 const QuestionnairePage = ({closeDrawer,isDrawerOpen}) => {
   const [questionTitle,setQuestionTitle]= useState('text')
   const [questionType,setQuestionType]= useState('userInput')
+  const {isLightMode,modeColor} = useSelector(state=>state.auth)
   const [questionData,setQuestionData]= useState([])
   const [question,setQuestion]= useState('')
-  const [choiceAnswer,setChoiceAnswer]=useState([])
   const [singleAnswer,setSingleAnswer]=useState('')
-  const [answerData,setAnswerData]=useState([{'title':'Enter Question','value':''}])
+  let dynamicIndex=Math.random()*10  
+  const [answerData,setAnswerData]=useState([{id:dynamicIndex,"answer":''}])
+  
+  const dispatch = useDispatch()
 
-  const handleData=()=>{
-    setAnswerData([...answerData,{'title':'Enter Question','value':''}])
-    setChoiceAnswer([...choiceAnswer,{'answer':singleAnswer}])
+  const handleData=(inputIndex)=>{ 
+    if(questionType === 'userInput') handleUserInput(inputIndex)
   }
 
-  const handleQuestion=()=>{
+  const createSurvey=()=>{
+     const surveyData={
+      'questionTitle':'Educational25555',
+      'questionType':'Mixed',
+      'questions':questionData
+     }
+     dispatch(createNewSurvey({surveyData,toast}))
+  }
+  
+
+  const handleUserInput=(inputIndex)=>{
+    setAnswerData(answerData.map((item,index)=>{
+      if(item.id===inputIndex){
+          return {'id':item.id,'answer':singleAnswer}
+      }else return item
+    }))
+  }
+
+ 
+  useEffect(()=>{
+    if(questionType!=='userInput'){
+        let value=questionType.split('/') 
+        setAnswerData(answerData.filter((item,index)=>index===0))
+        setAnswerData([{'answer':[value[0],value[1]]}])
+    }else {
+       setAnswerData([...answerData],answerData.filter((item,index)=>index))
+       
+    }
+  },[answerData,questionType])
+
+
+
+
+  const createQuestion=()=>{
     if(question!==''){
-      if(questionTitle==='choice'){
-        if(choiceAnswer!==''){
-        setQuestionData([...questionData,
-        {
-         "questionTitle":question,
-          questionType:questionTitle,
-         'choiceType':questionType,
-         'choiceAnswer':choiceAnswer
-        
-        }])}else alert('please enter answers')
-      }else {
-        setQuestionData([...questionData,
-        {
-          "questionTitle":question,
-          questionType:questionTitle
-        }])}
-     
+       if(questionData.find(item=>item.questionTitle===question)===undefined){
+         if(questionTitle==='choice'){
+          console.log(answerData.map((item,index)=>item.answer[index]!==''))
+           if(answerData.find((item,index)=>item.answer==='')===undefined){
+              setQuestionData([...questionData,{
+              "questionTitle":question,questionType:questionTitle,
+              'choiceType':questionType,
+              'choiceAnswer':answerData
+            }])}else alert('please enter answers')
+          }else {
+            setQuestionData([...questionData,
+            {"questionTitle":question,questionType:questionTitle}])
+          
+          }
+            
+        }else alert('the question already exists')
     }else alert('enter the question first')
+ 
   }
 
 
@@ -50,13 +87,17 @@ const QuestionnairePage = ({closeDrawer,isDrawerOpen}) => {
     setQuestionData (questionData?.filter(data=>data?.questionTitle!==questionTitle))
   }
 
+
   const editQuestion=(questionTitle)=>{
     setQuestionData (questionData?.filter(data=>data?.questionTitle!==questionTitle))
   }
+
+
+  useEffect(()=>{},[questionData])
+
+
   
 
-  console.log(questionData);
-  useEffect(()=>{},[questionData])
   return (
     <Box sx={{width:'100%',display:'flex',flexDirection:'row',height:{md:'100vh',sm:'auto'}}}>
         <SideBar
@@ -67,47 +108,57 @@ const QuestionnairePage = ({closeDrawer,isDrawerOpen}) => {
         <Box sx={{display:'flex',width:'100%',position:'relative',flexDirection:'column'}}>
         <Box sx={{position:'fixed',width:`${isDrawerOpen?100:100}%`,zIndex:200}}> 
          <Header closeDrawer={()=>closeDrawer(prev=>!prev)}/>
-         <Paper sx={style.questionMainTitle}>
-          <Box sx={{width:'50%'}}>
+         <Paper sx={[style.questionMainTitle,{backgroundColor:modeColor}]}>
+          <Box sx={{width:'30%',height:'50px'}}>
             <InputField
              inputLabel={'Question Title'}
-             setValue={(e)=>setQuestion(e.target.value)}
-             inputValue={question}
+            //  setValue={(e)=>setQuestion(e.target.value)}
+            //  inputValue={question}
              type='text'
             />
             </Box>
+            <Box sx={{width:'65%',display:'flex',gap:'50px',marginLeft:'-150px'}}>
            <InputSelector 
              setValue={setQuestionTitle}
              inputValue={questionTitle} 
              optionList={questionTypeList}
+             label='Question type'
             />
           {questionTitle!=='text'?
            <InputSelector 
              setValue={setQuestionType}
              inputValue={questionType} 
-             optionList={choicesType}/>
+             optionList={choicesType}
+             label={'Choice type'}
+             />
             
          :''}
+         </Box>
          </Paper>
        
          <Paper sx={style.questionDisplay}>
-           <Box sx={{width:'90%',display:'flex',marginTop:'10px'}}>
-        
+           <Box sx={{width:'90%',display:'flex',marginTop:'15px'}}>
+            <Typography variant='h4'>{`Q${questionData?.length+1}`}</Typography>
             <InputField
              inputLabel={'Enter your Question'}
              setValue={(e)=>setQuestion(e.target.value)}
              inputValue={question}
              type='text'
             />
-            <Box sx={{width:'120px'}}>
-            <ButtonStyled 
-              bgColor={'#1A6CE8'} 
-              label={'+'} 
-              setValue={handleQuestion} 
-              btnWidth='50px'
-              btnHeight={'50px'}
-            />
-            </Box>
+            <button 
+              onClick={createQuestion} 
+              style={
+              {
+                backgroundColor:'#1A6CE8',
+                width:'70px',
+                color:'white',
+                border:'none',
+                height:'50px',
+                cursor:'pointer',
+                marginLeft:'-32px',
+              
+                }}>Add</button>
+           
            
            </Box>
              <Box sx={{
@@ -124,23 +175,44 @@ const QuestionnairePage = ({closeDrawer,isDrawerOpen}) => {
               
               answerData.map((item,index)=>
               <RadioInput 
-                 setValue={setSingleAnswer} key={index} choiceType={questionType}/>)
-              :''
-            }
-            {questionTitle!=='text'&&questionType==='userInput'?
-             <button onClick={handleData}>+</button>:''}
+                key={item.id} 
+                setValue={setSingleAnswer} 
+                index={item.id}
+                choiceType={questionType}
+                setData={handleData}
+                answerData={answerData}
+                setAnswerData={setAnswerData}
+                inputValue={singleAnswer}
+              />):''}
             </Box>
          
          </Paper>
+            { questionData.length>0?<Box sx={{
+              width:'80%',
+              height:'auto',
+              display:'flex',
+              flexDirection:'column',
+              backgroundColor:'#DFDFDF',
+              marginLeft:'25px',
+              marginTop:'20px',
+              gap:'10px'
+              }
+            }>
 
+           
           {
             questionData?.map((item,index)=>
-              <label key={index} htmlFor="#">
-                {item.questionTitle}
-                <button onClick={()=>deleteQuestion(item.questionTitle)}>Delete</button>
-              </label>
-            )
+          
+              <Box sx={{width:'80%',height:'50px',display:'flex',alignItems:'center',justifyContent:'space-around',backgroundColor:'#1A6CE8'}} key={index} htmlFor="#">
+               <Typography sx={{width:'80%'}}>{item.questionTitle}</Typography> 
+                <button style={{width:'80px',height:'90%',border:'none'}} onClick={()=>deleteQuestion(item.questionTitle)}>Delete</button>
+              </Box>
+        )
           }
+         <Box sx={{width:'100%',display:'flex',justifyContent:'flex-end'}}>
+            <ButtonStyled setValue={createSurvey} label={'Create'} bgColor='#1A6CE8'/>
+        </Box>
+          </Box>:''}
          </Box>
          </Box>
     </Box>
@@ -151,20 +223,19 @@ const style={
     questionMainTitle:{
       width:'80%',
       marginLeft:'2%',
-      height:'100px',
+      height:'80px',
       backgroundColor:'#DFDFDF',
       marginTop:'20px',
       display:'flex',
-      justifyContent:'center',
+      justifyContent:'space-around',
       gap:'5px',
       alignItems:'center'
     },
-
-      questionDisplay:{
+ questionDisplay:{
       width:'80%',
       marginLeft:'2%',
       height:'auto',
-      backgroundColor:'#DFDFDF',
+      border:'dashed 2px #1e1e1e',
       marginTop:'20px',
       display:'flex',
       justifyContent:'center',

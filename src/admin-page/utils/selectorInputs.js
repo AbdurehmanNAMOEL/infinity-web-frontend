@@ -1,5 +1,6 @@
 export const  questionTypeList=[
-     {'title':'text','value':'text'},
+    {'title':'text','value':'text'},
+    {'title':'image','value':'image'},
     {'title':'Multiple Choice','value':'choice'},
    
 ]

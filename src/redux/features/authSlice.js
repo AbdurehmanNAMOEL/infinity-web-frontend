@@ -31,6 +31,19 @@ export const signIn = createAsyncThunk('auth/signIn',async({userData,toast,navig
 })
 
 
+export const getAllSurvey = createAsyncThunk('auth/getAllSurvey',async()=>{
+    try {
+         const response = await axios.get('https://infinity-api-oqlt.onrender.com/getAllQuestion')
+         if(response){
+            return response.data
+         }
+    } catch (error) {
+        console.log(error.response.data.error)  
+    }
+})
+
+
+
 export const authSlice= createSlice({
     name:'auth',
     initialState:{
@@ -38,7 +51,8 @@ export const authSlice= createSlice({
       loading:false,
       isLoggedIn:false,
       isLightMode:true,
-      modeColor:'white'
+      modeColor:'white',
+      survey:[],
 },
   reducers:{
     logOut:(state,action)=>{
@@ -73,6 +87,18 @@ export const authSlice= createSlice({
       state.isLoggedIn=true
     },
     [signIn.rejected]:(state,action)=>{
+         state.loading=false
+    },
+
+    [getAllSurvey.pending]:(state,action)=>{
+      state.loading=true
+    },
+    [getAllSurvey.fulfilled]:(state,action)=>{
+      state.survey=action.payload
+      state.loading=false
+      state.isLoggedIn=true
+    },
+    [getAllSurvey.rejected]:(state,action)=>{
          state.loading=false
     },
   }
