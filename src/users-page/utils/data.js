@@ -1,6 +1,8 @@
 import MoneyOffCsredIcon from '@mui/icons-material/MoneyOffCsred';
 import StarIcon from '@mui/icons-material/Star';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
+import MeresaHiluf from '../../assets/image/Meresa-Hiluf.jpg'
+import SamuelGebremariam from '../../assets/image/Samuel-Gebremariam.jpg'
 const iconStyle={
     icon:{
         color:'#1A6CE8'
@@ -35,4 +37,33 @@ export const whyUsData=[
     'icon':<NotificationsActiveIcon sx={iconStyle.icon}/>
  },
  
+]
+
+export const foundersData=[
+  {
+    'name':'Kiros Weldu',
+    'position':'Co-founder & CEO',
+    'facebookUrl':'',
+    'linkedInUrl':'',
+    'telegramUrl':'',
+    'imageUrl':MeresaHiluf
+},
+
+{
+    'name':'Meresa Hiluf ',
+    'position':'Co-founder & COO',
+    'facebookUrl':'',
+    'linkedInUrl':'',
+    'telegramUrl':'',
+    'imageUrl':MeresaHiluf 
+},
+
+{
+    'name':'Samuel-Gebremariam',
+    'position':'Co-Founder & CSO',
+    'facebookUrl':'',
+    'linkedInUrl':'',
+    'telegramUrl':'',
+    'imageUrl':SamuelGebremariam
+},
 ]

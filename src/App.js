@@ -23,6 +23,7 @@ import AdminLogin from './admin-page/pages/auth/pages/AdminLogin';
 import AdminPrivateRoute from './admin-page/privateRoute/AdminPrivateRoute';
 import Registration from './users-page/pages/Registration';
 import SurveyDetail from './users-page/pages/survey/SurveyDetail';
+import ScrollToTop from './shared/Components/ScrollToTop';
 function App() {
    const [isDrawerOpen,setDrawerOpen]=useState(true)
    const {isLightMode}= useSelector(state=>state.auth)
@@ -54,6 +55,7 @@ function App() {
         backgroundColor:`${isLightMode?'white':'#1E1E1E'}`
         }}>
       <Router>
+           <ScrollToTop/>
         <ToastContainer/>
        <Routes>
         <Route 

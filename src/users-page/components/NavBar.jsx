@@ -42,7 +42,7 @@ const NavBar = ({isScrolling}) => {
     <Box 
       sx={{
         width:'100%',
-        zIndex:300,
+        zIndex:3000,
         position:'fixed',
         backgroundColor:modeColor,
         boxShadow:`${isScrolling?'2px 2px 10px 2px rgba(0,0,0,0.5)':''}`

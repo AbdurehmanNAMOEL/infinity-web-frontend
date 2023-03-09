@@ -8,7 +8,7 @@ import TextField from '../../components/TextField'
 
 const SurveyDetail = ({surveyData}) => {
   return (
-    <Box sx={{width:'100%',display:'flex',flexDirection:'column',alignItems:'center'}}>
+    <Box sx={{width:'100%',height:'100vh',display:'flex',flexDirection:'column',alignItems:'center'}}>
       <NavBar/>
       <Box sx={{width:'100%',height:'auto',display:'flex',justifyContent:'center',marginTop:'80px'}}>
           <Paper sx={

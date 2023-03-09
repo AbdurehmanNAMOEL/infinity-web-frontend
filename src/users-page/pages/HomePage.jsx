@@ -157,26 +157,41 @@ const HomePage = () => {
           flexDirection:'column',
           justifyContent:'center',
           alignItems:'center',
-          backgroundColor:modeColor
+        
           }}>
+            <BoxMotion 
+                 initial={{ x: -900 }}
+                 whileInView={{ x: 0 }}
+                  transition={{ duration:4}}  
+                  sx={{zIndex:500,width:'50%',display:'flex',justifyContent:'flex-start',marginTop:'-10px',height:'100px'}}>
+                  
+                <div style={{width:'120px',position:'absolute',height:'120px',backgroundColor:'#80B2FF',borderRadius:'100%'}}>
 
-          <Typography 
-            variant='h4' 
-            sx={[homePageStyle.sectionMainTitle,{color:`${isLightMode?'#1e1e1e':'white'}`}]}
-            >Survey Time
-          </Typography>
-          <Box sx={
+              </div>
+            </BoxMotion>
+        
+           <BoxMotion 
+                 initial={{ scale: 0 }}
+                 whileInView={{ scale: 1 }}
+                  transition={{ duration:3}}   sx={
            { 
             width:'90%',
         
-             height:'30%',
+             height:'50%',
              display:'flex',
              justifyContent:'center',
              alignItems:'center',
              flexDirection:'column',
-             backgroundColor:modeColor
+             position:'absolute',
+             backgroundColor:`${isLightMode?'#DFDFDF':'#333333'}`
              }
           }>
+           
+              <Typography 
+            variant='h4' 
+            sx={[homePageStyle.sectionMainTitle,{color:`${isLightMode?'#1e1e1e':'white'}`}]}
+            >Survey Time
+          </Typography>
             <Box sx={
               {
                 width:handleResponsiveness('90%','30%'),
@@ -204,7 +219,15 @@ const HomePage = () => {
                   />
             </Box>
             </Box>
-          </Box>
+          </BoxMotion>
+            <BoxMotion 
+                 initial={{ x: 900 }}
+                 whileInView={{ x: 0 }}
+                  transition={{ duration:4}}   sx={{marginTop:'250px',width:'50%',height:'100px',display:'flex',justifyContent:'flex-end'}}>
+              <div style={{zIndex:500,width:'120px',marginTop:'-50px',position:'absolute',height:'120px',backgroundColor:'#6B6F75',borderRadius:'100%'}}>
+
+              </div>
+            </BoxMotion>
       </Box>
         <Box sx={[homePageStyle.registrationContainer,{backgroundColor:modeColor}]}>
            <Box sx={[homePageStyle.registrationInnerContainers,{backgroundColor:modeColor}]}>

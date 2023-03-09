@@ -11,18 +11,20 @@ import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import TelegramIcon from '@mui/icons-material/Telegram';
 import LocalPhoneOutlinedIcon from '@mui/icons-material/LocalPhoneOutlined';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
+import { useSelector } from 'react-redux'
 const responsive =(xs,md)=>{
     return {xs:xs,md:md}
 }
 
 const ContactUs = () => {
     const navigate = useNavigate()
+    const {modeColor}= useSelector(state=>state.auth)
   return (
    <Box sx={style.contactContainer}>
      <Box sx={style.contactLeftContainer}>
-        <Box sx={style.logoContainer}>
+        <Box sx={[style.logoContainer,{backgroundColor:modeColor}]}>
             <Card  onClick={()=>navigate('/')} 
-              sx={{cursor:'pointer',width:'200px',height:'150px',boxShadow:'none'}}>
+              sx={{backgroundColor:modeColor,cursor:'pointer',width:'200px',height:'150px',boxShadow:'none'}}>
                 <CardMedia
                    sx={{width:'100%',height:'100%'}}
                    image={LogoImage}

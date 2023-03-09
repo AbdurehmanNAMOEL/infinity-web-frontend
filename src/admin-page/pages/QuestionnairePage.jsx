@@ -187,22 +187,8 @@ const QuestionnairePage = ({closeDrawer,isDrawerOpen}) => {
             </Box>
          
          </Paper>
-            { questionData.length>0?<Box sx={{
-              width:'80%',
-              height:'auto',
-              display:'flex',
-              flexDirection:'column',
-              backgroundColor:'#DFDFDF',
-              marginLeft:'25px',
-              marginTop:'20px',
-              gap:'10px'
-              }
-            }>
-
-           
-          {
-            questionData?.map((item,index)=>
-          
+            { questionData.length>0?<Box sx={style.questionGeneratorContainer}>
+             {questionData?.map((item,index)=>
               <Box sx={{width:'80%',height:'50px',display:'flex',alignItems:'center',justifyContent:'space-around',backgroundColor:'#1A6CE8'}} key={index} htmlFor="#">
                <Typography sx={{width:'80%'}}>{item.questionTitle}</Typography> 
                 <button style={{width:'80px',height:'90%',border:'none'}} onClick={()=>deleteQuestion(item.questionTitle)}>Delete</button>
@@ -242,6 +228,16 @@ const style={
       gap:'5px',
       alignItems:'center',
       flexDirection:'column'
+    },
+    questionGeneratorContainer:{
+      width:'80%',
+      height:'auto',
+      display:'flex',
+      flexDirection:'column',
+      backgroundColor:'#DFDFDF',
+      marginLeft:'25px',
+      marginTop:'20px',
+      gap:'10px'
     }
 }
 export default QuestionnairePage

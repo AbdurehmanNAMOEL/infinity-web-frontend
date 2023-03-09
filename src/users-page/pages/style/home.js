@@ -110,7 +110,8 @@ export const homePageStyle={
     justifyContent:'center',
     alignItems:'center',
     gap:'20px',
-    marginBottom:'5px'
+    marginBottom:'5px',
+    marginTop:'50px'
   },
   registrationInnerContainers:{
     width:handleResponsiveness('100%','50%'),
