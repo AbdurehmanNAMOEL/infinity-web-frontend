@@ -7,6 +7,7 @@ import surveyHomeImage from '../../../assets/image/survey-home.svg'
 import SurveyCard from '../../components/SurveyCard'
 import Footer from '../../components/Footer'
 import { useNavigate } from 'react-router-dom'
+import { handleResponsiveness } from '../../auth/styles/loginStyle'
 const SurveyHome = ({setSurveyDetailData}) => {
     const dispatch = useDispatch()
     
@@ -21,13 +22,17 @@ const SurveyHome = ({setSurveyDetailData}) => {
       navigate('/takeSurvey')
     }
 
-    console.log(survey);
     return (
         <Box sx={{ width: '100%', display: 'flex',flexDirection:'column' }}>
             <NavBar />
-
             <Box sx={style.landingPage}>
-              <Box sx={{width:'50%',height:'80%',display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center'}}>
+              <Box sx={{
+                width:handleResponsiveness('100%','50%'),
+                height:handleResponsiveness('30%','80%'),
+                display:'flex',
+                flexDirection:'column',
+                justifyContent:'center',
+                alignItems:'center'}}>
                
                 <Typography 
                    variant='h2' 
@@ -37,7 +42,13 @@ const SurveyHome = ({setSurveyDetailData}) => {
                 <Typography>Paid Online Surveys  Earn Money instantly. </Typography>
               </Box>
 
-              <Box sx={{width:'50%',height:'100%',display:'flex',justifyContent:'center',alignItems:'center'}}>
+              <Box sx={{
+                width:handleResponsiveness('100%','50%'),
+                height:handleResponsiveness('70%','80%'),
+                display:'flex',
+                justifyContent:'center',
+                alignItems:'center'
+                }}>
                 <CardMedia image={surveyHomeImage} sx={{width:'100%',height:'100%'}}/>
               </Box>
             </Box>
@@ -60,7 +71,8 @@ const style = {
         height: '80vh',
         backgroundColor: '#DFDFDF',
         display:'flex',
-        marginTop:'80px'
+        marginTop:'80px',
+        flexDirection:handleResponsiveness('column','row')
     }
 }
 

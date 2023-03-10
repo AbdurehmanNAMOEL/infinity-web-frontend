@@ -60,7 +60,7 @@ const AboutUs = () => {
          <Box sx={{width:'90%',display:'flex'}}>
            <Typography variant='h5' sx={{fontWeight:'bold',marginBottom:'16px',color:'#1A6CE8'}}>Infinity</Typography> 
            </Box>
-         <Typography variant='h6' sx={{width:'90%',fontWeight:'400',color:`${isLightMode?'#1e1e1e':'white'}`}}>
+         <Typography  sx={{width:'90%',fontWeight:'400',color:`${isLightMode?'#1e1e1e':'white'}`}}>
             In this era and on the coming time to achieving your  
             goal information is the main key and getting this 
             information well organized high quality is very hard  

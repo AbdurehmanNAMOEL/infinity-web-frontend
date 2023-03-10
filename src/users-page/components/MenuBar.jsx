@@ -36,16 +36,30 @@ const MenuBar = ({newNavList,handleNavigation,dispatch}) => {
             sx={style.logoImage}
           />
         </Card>
+       {!isSideBarOpen?
        <IconButton 
            onClick={()=>setIsSideBarOpen(prev=>!prev)} 
            sx={{marginRight:'20px',color:`${isLightMode?'#1e1e1e':'white'}`}}
         >
          <MenuOutlined/>
+       </IconButton>:
+       <IconButton 
+           onClick={()=>setIsSideBarOpen(prev=>!prev)} 
+           sx={{marginRight:'20px',color:`${isLightMode?'#1e1e1e':'white'}`}}
+        >
+         <CloseOutlined/>
        </IconButton>
+       }
     </Header>
     </Box>
     <Box 
        sx={{width:'90%',height:'500px',display:'flex',flexDirection:'column',alignItems:'center'}}>
+       <Box sx={{width:'100%',display:'flex',justifyContent:'flex-end'}}>
+         <Mode
+          isLightMode={isLightMode} 
+           handleDispatch={()=>dispatch(setMode())}
+           />
+       </Box>
         {newNavList?.map((item,index)=>
             <IconButton
                onClick={()=>handleNavigation(item.title,item.to)}
@@ -54,10 +68,7 @@ const MenuBar = ({newNavList,handleNavigation,dispatch}) => {
             </IconButton>
           )}
 
-          <Mode
-          isLightMode={isLightMode} 
-           handleDispatch={()=>dispatch(setMode())}
-           />
+      
         
     </Box>
     </Box>
