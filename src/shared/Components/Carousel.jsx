@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux'
 import { handleResponsiveness } from '../../users-page/auth/styles/loginStyle'
 
 const Carousel = ({children,innerMargin,height}) => {
-    const {isLightMode,modeColor} = useSelector(state=>state.auth)
   return (
  <Box sx={[style.ourWorkCardContainerWrapper,{ height:`${height}vh`}]}>
     <Box sx={[style.ourWorkCardContainer, { marginLeft:handleResponsiveness(`${innerMargin}px`,'0')}]}>{children}</Box>
@@ -15,7 +14,6 @@ const Carousel = ({children,innerMargin,height}) => {
 const style ={
     ourWorkCardContainerWrapper:{
     width:'auto',
-    marginTop:'16px',
     display:'flex',
     justifyContent:'center',
     alignItems:'center',

@@ -72,7 +72,9 @@ const AboutUs = () => {
       <Container 
          sx={[style.ourWorkContainer,
           {backgroundColor:`${isLightMode?'#1A6CE8':'#333333'}`,
-          height:`${isLightMode?"70vh":'50vh'}`}]}>
+          height:`${isLightMode?"60vh":'50vh'}`,
+          borderRadius:`${isLightMode?'150px 50px 150px 50px':'10px'}`
+          }]}>
             <Carousel innerMargin={600} height={50}>
              <OurWorkCard image={Investment} Title={'Market Research'}/>
              <OurWorkCard image={development} Title={'Business Development Research'}/>
@@ -151,7 +153,8 @@ const style ={
    backgroundColor:'#F6F6F6',
    display:'flex',
    flexDirection:'column',
-   borderRadius:'10px',
+   
+
   },
   missionMainContainer:{
      width:handleResponsiveness('100%','45%'),
