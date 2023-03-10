@@ -24,9 +24,10 @@ import AdminPrivateRoute from './admin-page/privateRoute/AdminPrivateRoute';
 import Registration from './users-page/pages/Registration';
 import SurveyDetail from './users-page/pages/survey/SurveyDetail';
 import ScrollToTop from './shared/Components/ScrollToTop';
+import LoadingPage from './shared/Components/LoadingPage';
 function App() {
    const [isDrawerOpen,setDrawerOpen]=useState(true)
-   const {isLightMode}= useSelector(state=>state.auth)
+   const {isLightMode,loading}= useSelector(state=>state.auth)
    const [navText,setNavText]=useState('dashboard/adminHome')
     const [isScrolling,setIsScrolling]=useState(false)
     const [surveyData, setSurveyDetailData] = useState([])
@@ -54,6 +55,7 @@ function App() {
         display:'flex',
         backgroundColor:`${isLightMode?'white':'#1E1E1E'}`
         }}>
+        {loading?<LoadingPage/>:''}
       <Router>
            <ScrollToTop/>
         <ToastContainer/>

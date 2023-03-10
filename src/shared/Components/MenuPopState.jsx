@@ -6,17 +6,18 @@ import { IconButton } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useDispatch } from 'react-redux';
 import { logOut } from '../../redux/features/adminSlice';
-export default function MenuPopupState() {
+export default function MenuPopupState({handleLogOut}) {
     const dispatch = useDispatch()
   return (
-    <PopupState variant="popover" popupId="demo-popup-menu">
+    <PopupState sx={{zIndex:5000}} variant="popover" popupId="demo-popup-menu">
       {(popupState) => (
         <React.Fragment>
         <IconButton {...bindTrigger(popupState)}>
-            <AccountCircleIcon sx={{color:'#1977FC', fontweight:'bold'}}/>
+            <AccountCircleIcon sx={{color:'white', fontweight:'bold'}}/>
         </IconButton>
           <Menu {...bindMenu(popupState)}>
-            <MenuItem onClick={()=>dispatch(logOut())}>Logout</MenuItem>
+            <MenuItem onClick={()=>dispatch(logOut())}>Profile</MenuItem>
+             <MenuItem onClick={handleLogOut}>Logout</MenuItem>
           </Menu>
         </React.Fragment>
       )}

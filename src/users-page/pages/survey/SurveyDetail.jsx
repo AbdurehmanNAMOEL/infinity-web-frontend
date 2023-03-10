@@ -1,5 +1,5 @@
 import { Box, Paper, Typography } from '@mui/material'
-import React from 'react'
+import React, { useState } from 'react'
 import ButtonStyled from '../../components/ButtonStyled'
 import InputField from '../../components/InputField'
 import NavBar from '../../components/NavBar'
@@ -7,9 +7,14 @@ import RadioInput from '../../components/RadioInput'
 import TextField from '../../components/TextField'
 
 const SurveyDetail = ({surveyData}) => {
+    const [isScrolling,setIsScrolling]=useState(false)
+    window.addEventListener('scroll',()=>{
+    if(window.pageYOffset>0) setIsScrolling(true)
+    else setIsScrolling(false)       
+  })
   return (
     <Box sx={{width:'100%',height:'100vh',display:'flex',flexDirection:'column',alignItems:'center'}}>
-      <NavBar/>
+      <NavBar isScrolling={isScrolling}/>
       <Box sx={{width:'100%',height:'auto',display:'flex',justifyContent:'center',marginTop:'80px'}}>
           <Paper sx={
             {

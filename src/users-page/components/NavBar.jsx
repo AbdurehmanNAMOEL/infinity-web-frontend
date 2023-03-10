@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { logOut, setMode } from '../../redux/features/authSlice'
 import Mode from '../../shared/Components/Mode'
+import MenuPopupState from '../../shared/Components/MenuPopState'
 const NavBar = ({isScrolling}) => {
   const navigate=useNavigate()
   const [navTitle,setNavTitle]= useState('Home')
@@ -50,7 +51,7 @@ const NavBar = ({isScrolling}) => {
       >
      <Box sx={{width:'100%',display:{xs:'none',md:'flex'}}}>   
      <Header>
-       <Box sx={{marginLeft:'40px',marginTop:'5px'}}>
+       <Box onClick={()=>navigate('/')} sx={{marginLeft:'40px',marginTop:'5px'}}>
         <MediaCard
           mediaWidth={'120px'}
           mediaHeight={'60px'}
@@ -67,12 +68,13 @@ const NavBar = ({isScrolling}) => {
           )}
           <Mode isLightMode={isLightMode} 
            handleDispatch={()=>dispatch(setMode())}/>
-          {(!isAdminLoggedIn||!isLoggedIn)?<IconButton 
+          {(!isLoggedIn)?<IconButton 
             onClick={()=>navigate('/login')} 
             sx={style.logoInIcon}>Login</IconButton>:
-            <IconButton 
-            onClick={()=>dispatch(logOut())} 
-            sx={style.logoInIcon}>LogOut</IconButton>
+            <IconButton  
+            sx={style.logoInIcon}>
+              <MenuPopupState handleLogOut={()=>dispatch(logOut())}/>
+            </IconButton>
           }
 
           
@@ -128,7 +130,7 @@ const style = {
       '&:hover':{
         backgroundColor:'#1A6CE8'           
       },
-             
+      zIndex:5000       
      }
 }
 export default NavBar

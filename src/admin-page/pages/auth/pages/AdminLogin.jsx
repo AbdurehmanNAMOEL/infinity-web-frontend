@@ -21,7 +21,6 @@ const AdminLogin = () => {
    const handleSubmit=()=>{
     
      if(userData.phoneNumber!==''&&userData.password!==''){
-         alert(userData)
          dispatch(loginAdmin({userData,toast,navigate}))
          setUserData({phoneNumber:'',password:''})
      }
@@ -32,7 +31,7 @@ const AdminLogin = () => {
   return (
    <Box sx={style.adminLoginContainer}>  
       <Paper sx={style.adminLoginLogoContainer}>
-      <Card sx={{width:'150px',height:'60px',boxShadow:'none',marginLeft:'10px'}}>
+      <Card onClick={()=>navigate('/')} sx={{width:'150px',height:'60px',boxShadow:'none',marginLeft:'10px'}}>
         <CardMedia image={LogoImage} sx={{width:'80%',height:'100%'}}/>
       </Card>
       </Paper>

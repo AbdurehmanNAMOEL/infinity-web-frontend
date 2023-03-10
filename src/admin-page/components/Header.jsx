@@ -10,7 +10,7 @@ import {
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { setMode } from '../../redux/features/authSlice'
-import MenuPopupState from './MenuPopState'
+import MenuPopupState from '../../shared/Components/MenuPopState'
 
 function Header({closeDrawer}) {
    const navigate = useNavigate()

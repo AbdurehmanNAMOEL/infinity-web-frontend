@@ -13,6 +13,13 @@ const SurveyHome = ({setSurveyDetailData}) => {
     
     const { survey } = useSelector(state => state.auth)
     const navigate= useNavigate()
+
+    const [isScrolling,setIsScrolling]=useState(false)
+    window.addEventListener('scroll',()=>{
+    if(window.pageYOffset>0) setIsScrolling(true)
+    else setIsScrolling(false)       
+  })
+
     useEffect(() => {
         dispatch(getAllSurvey())
     }, [])
@@ -24,7 +31,7 @@ const SurveyHome = ({setSurveyDetailData}) => {
 
     return (
         <Box sx={{ width: '100%', display: 'flex',flexDirection:'column' }}>
-            <NavBar />
+            <NavBar isScrolling={isScrolling} />
             <Box sx={style.landingPage}>
               <Box sx={{
                 width:handleResponsiveness('100%','50%'),

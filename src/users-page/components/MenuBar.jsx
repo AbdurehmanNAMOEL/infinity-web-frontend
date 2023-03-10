@@ -5,14 +5,15 @@ import { MenuOutlined,CloseOutlined } from '@mui/icons-material'
 import { Box } from '@mui/system'
 import LogoImage from '../../assets/image/logo.png'
 import { useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux'
-import { setMode } from '../../redux/features/authSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { logOut, setMode } from '../../redux/features/authSlice'
 import Mode from '../../shared/Components/Mode'
+import MenuPopupState from '../../shared/Components/MenuPopState'
 const MenuBar = ({newNavList,handleNavigation,dispatch}) => {
    const navigate= useNavigate('/')
    const [navTitle,setNavTitle]= useState('Home')
    const [isSideBarOpen,setIsSideBarOpen]= useState(false)
-   const {modeColor,isLightMode} = useSelector(state=>state.auth)
+   const {modeColor,isLightMode,isLoggedIn} = useSelector(state=>state.auth)
    const handleSideBarNavigation=(name,navigateTo)=>{
        setNavTitle(name)
        navigate(`${navigateTo}`)
@@ -69,7 +70,14 @@ const MenuBar = ({newNavList,handleNavigation,dispatch}) => {
           )}
 
       
-        
+         {(!isLoggedIn)?<IconButton 
+            onClick={()=>navigate('/login')} 
+            sx={style.logoInIcon}>Login</IconButton>:
+            <IconButton  
+            sx={style.logoInIcon}>
+              <MenuPopupState handleLogOut={()=>dispatch(logOut())}/>
+            </IconButton>
+          }
     </Box>
     </Box>
   )
@@ -94,6 +102,18 @@ const style = {
       height:'50px',
       ml:'5px',
      },
-    
+    logoInIcon: {
+      fontSize:'14px',
+      borderRadius:'5px',
+      height:'40px',
+      width:'120px',
+      backgroundColor:'#1A6CE8',
+      color:'white',
+      fontWeight:'bold',
+      '&:hover':{
+        backgroundColor:'#1A6CE8'           
+      },
+      zIndex:5000       
+     }
 }
 export default MenuBar

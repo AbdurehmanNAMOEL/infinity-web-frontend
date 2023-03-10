@@ -24,7 +24,6 @@ export const Login = ({isSideBarOpen,setIsSideBarOpen,handleSideBarNavigation,na
    const handleSubmit=()=>{
     
      if(userData.phoneNumber!==''&&userData.password!==''){
-         alert(userData)
          dispatch(signIn({userData,toast,navigate}))
          setFormValidation(true)
          setUserData({phoneNumber:'',password:''})

@@ -59,9 +59,9 @@ export const homePageStyle={
   sectionMainTitle:{
     textAlign:'center',
     fontFamily:'Inter',
-    marginTop:'20px',
+    marginTop:handleResponsiveness('0px','20px'),
     fontWeight:'bold',
-    marginBottom:handleResponsiveness('40px','0px'),
+    marginBottom:handleResponsiveness('80px','0px'),
     fontSize:handleResponsiveness('24px','42px')         
   },
   homeLandingPageImageContainer:{

@@ -152,32 +152,21 @@ const HomePage = () => {
           width:'100%',
           height:handleResponsiveness('auto','350px'),
           // backgroundColor:'#F6F6F6',
-          marginBottom:handleResponsiveness('20px','0'),
+          marginBottom:handleResponsiveness('150px','0'),
           display:'flex',
           flexDirection:'column',
           justifyContent:'center',
           alignItems:'center',
-        
+          marginTop:handleResponsiveness('200px','0px')
           }}>
-            <BoxMotion 
-                 initial={{ x: -900 }}
-                 whileInView={{ x: 0 }}
-                  transition={{ duration:4}}  
-                  sx={{zIndex:500,width:'50%',display:'flex',justifyContent:'flex-start',marginTop:'-10px',height:'100px'}}>
-                  
-                <div style={{width:'120px',position:'absolute',height:'120px',backgroundColor:'#80B2FF',borderRadius:'100%'}}>
-
-              </div>
-            </BoxMotion>
+            <Box sx={{display:handleResponsiveness('none','flex'),zIndex:500,width:'50%',justifyContent:'flex-start',marginTop:'-10px',height:'100px'}}>
+             <div style={{width:'120px',position:'absolute',height:'120px',backgroundColor:'#80B2FF',borderRadius:'100%'}}>
+             </div>
+            </Box>
         
-           <BoxMotion 
-                 initial={{ scale: 0 }}
-                 whileInView={{ scale: 1 }}
-                  transition={{ duration:3}}   sx={
-           { 
-            width:'90%',
-        
-             height:'50%',
+           <Box sx={{ 
+             width:'90%',
+             height:handleResponsiveness('50vh','50%'),
              display:'flex',
              justifyContent:'center',
              alignItems:'center',
@@ -219,15 +208,11 @@ const HomePage = () => {
                   />
             </Box>
             </Box>
-          </BoxMotion>
-            <BoxMotion 
-                 initial={{ x: 900 }}
-                 whileInView={{ x: 0 }}
-                  transition={{ duration:4}}   sx={{marginTop:'250px',width:'50%',height:'100px',display:'flex',justifyContent:'flex-end'}}>
+          </Box>
+            <Box sx={{ display:handleResponsiveness('none','flex') ,marginTop:'250px',width:'50%',height:'100px',justifyContent:'flex-end'}}>
               <div style={{zIndex:500,width:'120px',marginTop:'-50px',position:'absolute',height:'120px',backgroundColor:'#6B6F75',borderRadius:'100%'}}>
-
               </div>
-            </BoxMotion>
+            </Box>
       </Box>
         <Box sx={[homePageStyle.registrationContainer,{backgroundColor:modeColor}]}>
            <Box sx={[homePageStyle.registrationInnerContainers,{backgroundColor:modeColor}]}>
