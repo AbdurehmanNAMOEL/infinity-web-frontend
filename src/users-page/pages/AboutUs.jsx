@@ -1,4 +1,4 @@
-import { Box, CardMedia, Divider, Typography } from '@mui/material'
+import { Box, CardMedia, Container, Divider, Paper, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { handleResponsiveness } from '../auth/styles/loginStyle'
@@ -7,7 +7,30 @@ import MemberCard from '../components/MemberCard'
 import NavBar from '../components/NavBar'
 import ResponsiveContainer from '../components/ResponsiveContainer'
 import { foundersData } from '../utils/data'
-import aboutUsImage from '../../assets/image/aboutUs.jpg'
+import Investment from '../../assets/image/Investment.svg'
+import development from '../../assets/image/development.svg'
+import product from '../../assets/image/product.svg'
+import Consultancy from '../../assets/image/Consultancy.svg'
+import Carousel from '../../shared/Components/Carousel'
+export const OurWorkCard=({image,Title})=>{
+   const {isLightMode,modeColor} = useSelector(state=>state.auth)
+  return (
+   <Paper sx={[style.ourWorkMainCardContainer,{backgroundColor:modeColor,border:`solid 1px ${isLightMode?'rgba(0,0,0,0.2)':'#ACACAC'}`}]}>
+      <Box sx={{width:'80%',height:'150px'}}>
+        <CardMedia image={image } sx={{width:'100%',height:'100%'}}/>
+        <Typography sx={{
+          textAlign:'center',
+          fontWeight:'bold',
+          marginTop:'10px',
+          fontSize:'12px',
+          color:`${isLightMode?'#1e1e1e':'white'}`
+        }}>{Title}</Typography>
+      </Box>
+   </Paper>
+  )
+}
+
+
 const AboutUs = () => {
   const {isLightMode,modeColor} = useSelector(state=>state.auth)
   const [isScrolling,setIsScrolling]=useState(false)
@@ -20,19 +43,12 @@ const AboutUs = () => {
   <Box sx={style.aboutMainContainer}>
       <NavBar isScrolling={isScrolling}/>
       <Box sx={style.aboutUsContainer}>
-       <CardMedia image={aboutUsImage} sx={{width:'100%',height:'100%'}}/>
+       {/* <CardMedia image={aboutUsImage} sx={{width:'100%',height:'100%'}}/> */}
+       <Typography variant='h2' sx={{fontWeight:'bold',color:'white'}}>About Us</Typography>
       </Box>
       <ResponsiveContainer>
-        <Box sx={
-          { width:handleResponsiveness('100%','40%'),
-            height:handleResponsiveness('auto','65%'),
-            display:'flex',
-            justifyContent:'center',
-            flexDirection:'column',
-            alignItems:'center',
-            backgroundColor:`${isLightMode?"white":'#333333'}`
-          }}>
-         <Divider sx={{width:'70%',marginLeft:'-130px',marginBottom:'16px',height:'10px',backgroundColor:'#1A6CE8'}}/>
+        <Box sx={[style.proverbContainer,{backgroundColor:`${isLightMode?"white":'#333333'}`}]}>
+         <Divider sx={style.divider}/>
          <Typography variant='h6' sx={{width:'90%',color:`${isLightMode?'#1e1e1e':'white'}`}}>
           "Knowledge is power. Information is liberating. 
           Education is the premise of progress, in every society, 
@@ -40,15 +56,7 @@ const AboutUs = () => {
           <Typography>.Kofi Annan</Typography>
           </Typography>
         </Box>
-        <Box sx={
-          { width:handleResponsiveness('100%','50%'),
-            height:handleResponsiveness('auto','65%'),
-            display:'flex',
-            justifyContent:'center',
-            flexDirection:'column',
-            alignItems:'center',
-            backgroundColor:`${isLightMode?"white":'#333333'}`
-          }}>
+        <Box sx={[style.infinityContainer,{backgroundColor:`${isLightMode?"white":'#333333'}`}]}>
          <Box sx={{width:'90%',display:'flex'}}>
            <Typography variant='h5' sx={{fontWeight:'bold',marginBottom:'16px',color:'#1A6CE8'}}>Infinity</Typography> 
            </Box>
@@ -60,10 +68,18 @@ const AboutUs = () => {
           </Typography>
         </Box>
       </ResponsiveContainer>
-
-      <Box sx={style.ourWorkContainer}>
-          <Typography variant='h3' sx={{textAlign:'center',fontWeight:'bold'}}>Our Work</Typography>
-      </Box>
+      <Typography variant='h3' sx={{width:'90%',marginBottom:'10px',fontWeight:'bold',color:'#1A6CE8'}}>Our Work</Typography>
+      <Container 
+         sx={[style.ourWorkContainer,
+          {backgroundColor:`${isLightMode?'#1A6CE8':'#333333'}`,
+          height:`${isLightMode?"70vh":'50vh'}`}]}>
+            <Carousel innerMargin={700} height={50}>
+             <OurWorkCard image={Investment} Title={'Market Research'}/>
+             <OurWorkCard image={development} Title={'Business Development Research'}/>
+             <OurWorkCard image={product} Title={'Product validitytes'}/> 
+             <OurWorkCard image={product} Title={'Product validitytes'}/> 
+        </Carousel>
+      </Container>
       <ResponsiveContainer>
         <Box sx={[style.missionMainContainer,{ backgroundColor:`${isLightMode?"white":'#333333'}`}]}>
         <Box sx={{width:'90%',display:'flex'}}>
@@ -96,7 +112,7 @@ const AboutUs = () => {
          variant='h4' 
          sx={{width:'90%',fontWeight:'bold',color:'#1A6CE8'}} >Meet Our Team</Typography>
       <Box sx={[style.meetOurTeamMainContainer,{backgroundColor:modeColor}]}>
-       
+        <Carousel innerMargin={700} height={80}>
         {foundersData?.map((item,index)=>
            <MemberCard 
              key={index}
@@ -106,7 +122,7 @@ const AboutUs = () => {
              />
        )}
        
-       
+       </Carousel>
       </Box>
       <Footer/>
     </Box>
@@ -132,8 +148,10 @@ const style ={
   },
   ourWorkContainer:{
    width:'100%',
-   height:'70vh',
-   backgroundColor:'#F6F6F6'
+   backgroundColor:'#F6F6F6',
+   display:'flex',
+   flexDirection:'column',
+   borderRadius:'10px',
   },
   missionMainContainer:{
      width:handleResponsiveness('100%','45%'),
@@ -159,10 +177,69 @@ const style ={
     flexDirection:'row',
     justifyContent:'center',
     alignItems:'center',
-    overflowX:handleResponsiveness('scroll','hidden'),
     gap:'80px',
+    marginBottom:'50px'
   
-  }
+  },
+  ourWorkCardContainer:{
+    width:handleResponsiveness('auto','100%'),
+    height:'80%',
+    marginTop:'16px',
+    display:'flex',
+    justifyContent:'center',
+    alignItems:'center',
+    flexDirection:'row',
+    gap:'50px',
+    borderRadius:'100px 50px 150px 50px',
+    marginLeft:'120px'
+    
+  },
+
+  ourWorkCardContainerWrapper:{
+    width:'100%',
+    height:'80%',
+    marginTop:'16px',
+    display:'flex',
+    justifyContent:'center',
+    alignItems:'center',
+    flexDirection:'row',
+    gap:'50px',
+    borderRadius:handleResponsiveness('none','100px 50px 150px 50px'),
+    overflowX:handleResponsiveness('scroll','hidden'),
+  },
+  ourWorkMainCardContainer:{
+    borderRadius:'5px',
+    width:'200px',
+    height:'250px',
+    justifyContent:'center',
+    alignItems:'center',
+    display:'flex',
+    flexDirection:'column',
+   
+  },
+  proverbContainer:{ 
+    width:handleResponsiveness('100%','40%'),
+    height:handleResponsiveness('auto','65%'),
+    display:'flex',
+    justifyContent:'center',
+    flexDirection:'column',
+    alignItems:'center',
+  },
+  divider:{
+    width:'70%',
+    marginLeft:'-130px',
+    marginBottom:'16px',
+    height:'10px',
+    backgroundColor:'#1A6CE8'
+  },
+  infinityContainer:{ 
+    width:handleResponsiveness('100%','50%'),
+    height:handleResponsiveness('auto','65%'),
+    display:'flex',
+    justifyContent:'center',
+    flexDirection:'column',
+    alignItems:'center',
+}
 }
 
 export default AboutUs

@@ -41,7 +41,7 @@ const MemberCard = ({facebookUrl,linkedInUrl,telegramUrl,name,imageUrl,position}
 
 const cardStyle={
     cardMainContainer:{
-       width:'300px',
+       width:'250px',
        height:'350px',
        borderRadius:'10px',
        display:'flex',
