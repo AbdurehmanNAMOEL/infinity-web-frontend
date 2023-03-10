@@ -14,11 +14,14 @@ import MenuPopupState from '../../shared/Components/MenuPopState'
 import LoginIcon from '@mui/icons-material/Login';
 const NavBar = ({isScrolling}) => {
   const navigate=useNavigate()
+   const dispatch = useDispatch()
+  const [newNavList,setNewNavList]=useState()
   const [navTitle,setNavTitle]= useState('Home')
+
+  // from the state 
   let {isLoggedIn,isLightMode,modeColor} = useSelector(state=>state.auth)
   let {isAdminLoggedIn}= useSelector(state=>state.admin)
-  const dispatch = useDispatch()
-  const [newNavList,setNewNavList]=useState()
+ 
 
     const handleNavigation=(title,navigateTo)=>{
        setNavTitle(title)
@@ -29,26 +32,17 @@ const NavBar = ({isScrolling}) => {
 
     
   useEffect(()=>{
-    
-    if(!isAdminLoggedIn){
-       setNewNavList(navList.filter(item=>item.title!=='DashBoard'))
-       console.log(navList,isAdminLoggedIn)
-    }else {
-      setNewNavList(navList)
-    }
-   
+     if(!isAdminLoggedIn) setNewNavList(navList.filter(item=>item.title!=='DashBoard'))
+     else setNewNavList(navList)
     },[isAdminLoggedIn])
     
  
   return (
     <Box 
-      sx={{
-        width:'100%',
-        zIndex:3000,
-        position:'fixed',
-        backgroundColor:modeColor,
-        boxShadow:`${isScrolling?'2px 2px 10px 2px rgba(0,0,0,0.5)':''}`
-      }}
+      sx={[style.navBarMainContainer,{
+       backgroundColor:modeColor,
+       boxShadow:`${isScrolling?'2px 2px 10px 2px rgba(0,0,0,0.5)':''}`
+      }]}
       >
      <Box sx={{width:'100%',display:{xs:'none',md:'flex'}}}>   
      <Header>
@@ -78,9 +72,7 @@ const NavBar = ({isScrolling}) => {
             sx={style.logoInIcon}>
               <MenuPopupState handleLogOut={()=>dispatch(logOut())}/>
             </IconButton>
-          }
-
-          
+          }  
         </Box>
     </Header>
     </Box>
@@ -134,6 +126,11 @@ const style = {
         backgroundColor:'#1A6CE8'           
       },
       zIndex:5000       
+     },
+    navBarMainContainer:{
+      width:'100%',
+      zIndex:3000,
+      position:'fixed',
      }
 }
 export default NavBar

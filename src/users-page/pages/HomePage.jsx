@@ -1,4 +1,4 @@
-import { Box, Card, CardMedia,Paper,Typography } from '@mui/material'
+import { Box, Card, CardMedia,Divider,Paper,Typography } from '@mui/material'
 import React, {useState } from 'react'
 import NavBar from '../components/NavBar'
 import HomePhoto from '../../assets/image/home.svg'
@@ -172,6 +172,7 @@ const HomePage = () => {
              alignItems:'center',
              flexDirection:'column',
              position:'absolute',
+             borderRadius:'10px',
              backgroundColor:`${isLightMode?'#DFDFDF':'#333333'}`
              }
           }>
@@ -181,6 +182,7 @@ const HomePage = () => {
             sx={[homePageStyle.sectionMainTitle,{color:`${isLightMode?'#1e1e1e':'white'}`}]}
             >Survey Time
           </Typography>
+          <Divider/>
             <Box sx={
               {
                 width:handleResponsiveness('90%','30%'),
@@ -195,18 +197,15 @@ const HomePage = () => {
               earn “X” birr for each one you successfully 
               complete!
             </Typography>
-            <Box sx={
-              {
-              display:'flex',
             
-              marginTop:'20px',
-            }}>
-                 <ButtonStyled 
-                   label={'Start'}  
-                   bgColor={'#1A6CE8'}
-                   setValue={handleSurveyTime}
-                  />
+            <Box sx={{display:'flex',marginTop:'20px'}}>
+              <ButtonStyled 
+                label={'Start'}  
+                bgColor={'#1A6CE8'}
+                setValue={handleSurveyTime}
+              />
             </Box>
+
             </Box>
           </Box>
             <Box sx={{ display:handleResponsiveness('none','flex') ,marginTop:'250px',width:'50%',height:'100px',justifyContent:'flex-end'}}>
