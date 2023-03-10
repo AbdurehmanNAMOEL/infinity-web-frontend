@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { logOut, setMode } from '../../redux/features/authSlice'
 import Mode from '../../shared/Components/Mode'
 import MenuPopupState from '../../shared/Components/MenuPopState'
+import LoginIcon from '@mui/icons-material/Login';
 const NavBar = ({isScrolling}) => {
   const navigate=useNavigate()
   const [navTitle,setNavTitle]= useState('Home')
@@ -70,7 +71,9 @@ const NavBar = ({isScrolling}) => {
            handleDispatch={()=>dispatch(setMode())}/>
           {(!isLoggedIn)?<IconButton 
             onClick={()=>navigate('/login')} 
-            sx={style.logoInIcon}>Login</IconButton>:
+            sx={style.logoInIcon}>
+              <LoginIcon sx={{marginRight:'10px'}}/> <p>Login</p> 
+              </IconButton>:
             <IconButton  
             sx={style.logoInIcon}>
               <MenuPopupState handleLogOut={()=>dispatch(logOut())}/>

@@ -5,10 +5,11 @@ import { MenuOutlined,CloseOutlined } from '@mui/icons-material'
 import { Box } from '@mui/system'
 import LogoImage from '../../assets/image/logo.png'
 import { useNavigate } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
+import {useSelector } from 'react-redux'
 import { logOut, setMode } from '../../redux/features/authSlice'
 import Mode from '../../shared/Components/Mode'
 import MenuPopupState from '../../shared/Components/MenuPopState'
+import LoginIcon from '@mui/icons-material/Login';
 const MenuBar = ({newNavList,handleNavigation,dispatch}) => {
    const navigate= useNavigate('/')
    const [navTitle,setNavTitle]= useState('Home')
@@ -72,7 +73,9 @@ const MenuBar = ({newNavList,handleNavigation,dispatch}) => {
       
          {(!isLoggedIn)?<IconButton 
             onClick={()=>navigate('/login')} 
-            sx={style.logoInIcon}>Login</IconButton>:
+            sx={style.logoInIcon}>
+            <LoginIcon sx={{marginRight:'10px'}}/> <p>Login</p> 
+            </IconButton>:
             <IconButton  
             sx={style.logoInIcon}>
               <MenuPopupState handleLogOut={()=>dispatch(logOut())}/>
