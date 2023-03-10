@@ -73,7 +73,7 @@ const AboutUs = () => {
          sx={[style.ourWorkContainer,
           {backgroundColor:`${isLightMode?'#1A6CE8':'#333333'}`,
           height:`${isLightMode?"70vh":'50vh'}`}]}>
-            <Carousel innerMargin={650} height={50}>
+            <Carousel innerMargin={600} height={50}>
              <OurWorkCard image={Investment} Title={'Market Research'}/>
              <OurWorkCard image={development} Title={'Business Development Research'}/>
              <OurWorkCard image={product} Title={'Product validitytes'}/> 
@@ -112,7 +112,7 @@ const AboutUs = () => {
          variant='h4' 
          sx={{width:'90%',fontWeight:'bold',color:'#1A6CE8'}} >Meet Our Team</Typography>
       <Box sx={[style.meetOurTeamMainContainer,{backgroundColor:modeColor}]}>
-        <Carousel innerMargin={650} height={80}>
+        <Carousel innerMargin={600} height={80}>
         {foundersData?.map((item,index)=>
            <MemberCard 
              key={index}
