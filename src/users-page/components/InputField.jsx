@@ -68,7 +68,7 @@ useEffect(()=>{
                   onMouseDown={handleMouseDownPassword}
                   edge="end"
                 >
-                 { type==='password'?showPassword?<VisibilityOff /> : <Visibility />:''}
+                 { type==='password'?!showPassword?<VisibilityOff /> : <Visibility />:''}
                 </IconButton>
               </InputAdornment>
             }
