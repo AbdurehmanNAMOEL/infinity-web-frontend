@@ -25,6 +25,9 @@ import Registration from './users-page/pages/Registration';
 import SurveyDetail from './users-page/pages/survey/SurveyDetail';
 import ScrollToTop from './shared/Components/ScrollToTop';
 import LoadingPage from './shared/Components/LoadingPage';
+import ForgotPassword from './users-page/auth/auth-rest/pages/ForgotPassword';
+import VerificationPage from './users-page/auth/auth-rest/pages/VerificationPage';
+import RestPassword from './users-page/auth/auth-rest/pages/RestPassword';
 function App() {
    const [isDrawerOpen,setDrawerOpen]=useState(true)
    const {isLightMode,loading}= useSelector(state=>state.auth)
@@ -99,6 +102,9 @@ function App() {
         </Route>
       </Route>
         <Route  path='/login' element={<Login/>}/>
+        <Route  path='/verify' element={<VerificationPage/>}/>
+         <Route  path='/rest' element={<RestPassword/>}/>
+        <Route path='/forgetPassWord' element={<ForgotPassword/>}/>
         <Route  path='/signUp' element={<SignUp/>}/>
         <Route  path='/registration' element={<Registration/>}/>
         <Route isScrolling={isScrolling} path='/policy' element={<PrivacyPolicyHome/>}/>

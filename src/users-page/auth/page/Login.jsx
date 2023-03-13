@@ -64,7 +64,7 @@ export const Login = ({isSideBarOpen,setIsSideBarOpen,handleSideBarNavigation,na
                       setValue={(e)=>setUserData({...userData,"password":e.target.value})}
                     />
                     </Box>
-                    <Box sx={loginStyle.forgotPasswordContainer}>
+                    <Box onClick={()=>navigate('/forgetpassword')} sx={loginStyle.forgotPasswordContainer}>
                       <Typography 
                        sx={{fontSize:'15px', color:'#1A6CE8',cursor:'pointer'}}>Forgot Password?
                       </Typography>
