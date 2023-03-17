@@ -3,7 +3,7 @@ import React from 'react'
 import {
  MenuOutlined,
  HomeOutlined,
- ModeNight,
+ ModeNightOutlined,
  LightMode,
 
 } from '@mui/icons-material/'
@@ -28,7 +28,7 @@ function Header({closeDrawer}) {
         </Box>
         <Box sx={{width:'50%',display:'flex',justifyContent:'center'}}>
         {isLightMode?<IconButton onClick={handleDispatch}>
-            <ModeNight sx={{color:'black', fontweight:'bold'}}/>
+            <ModeNightOutlined sx={{width:'20px',height:'20px',color:'black', fontweight:'bold'}}/>
         </IconButton>:
          <IconButton onClick={handleDispatch}>
             <LightMode sx={{color:'gold', fontweight:'bold'}}/>
@@ -52,7 +52,7 @@ const style ={
         alignItems:'center',
         zIndex:400,
         borderRadius:'0px',
-     
+        position:'fixed'
     }
 }
 export default Header

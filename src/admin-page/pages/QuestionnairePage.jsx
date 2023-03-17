@@ -13,6 +13,7 @@ import { createNewSurvey } from '../../redux/features/adminSlice'
 import {toast} from 'react-toastify'
 const QuestionnairePage = ({closeDrawer,isDrawerOpen}) => {
   const [questionTitle,setQuestionTitle]= useState('text')
+  const [questionMainTitle,setQuestionMainTitle]= useState('')
   const [questionType,setQuestionType]= useState('userInput')
   const {isLightMode,modeColor} = useSelector(state=>state.auth)
   const [questionData,setQuestionData]= useState([])
@@ -29,7 +30,7 @@ const QuestionnairePage = ({closeDrawer,isDrawerOpen}) => {
 
   const createSurvey=()=>{
      const surveyData={
-      'questionTitle':'Educational25555',
+      'questionTitle':questionMainTitle,
       'questionType':'Mixed',
       'questions':questionData
      }
@@ -112,8 +113,8 @@ const QuestionnairePage = ({closeDrawer,isDrawerOpen}) => {
           <Box sx={{width:'30%',height:'50px'}}>
             <InputField
              inputLabel={'Question Title'}
-            //  setValue={(e)=>setQuestion(e.target.value)}
-            //  inputValue={question}
+             setValue={(e)=>setQuestionMainTitle(e.target.value)}
+             inputValue={questionMainTitle}
              type='text'
             />
             </Box>

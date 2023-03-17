@@ -5,9 +5,9 @@ import companyLogoImage from '../../../../assets/image/logo.png'
 import OtpInput from 'react-otp-input';
 import { handleResponsiveness } from '../../styles/loginStyle';
 import { useNavigate } from 'react-router-dom';
-const VerificationPage = () => { 
-  const [verify,setVerify] = useState('')
+const VerificationPage = ({verify,setVerify,handleConfirmation}) => { 
   const navigate= useNavigate()
+
   return (
    <Box sx={style.verificationPasswordContainer}>
        <Box sx={style.companyLogoContainer}>
@@ -22,8 +22,8 @@ const VerificationPage = () => {
           containerStyle={{display:'flex',gap:'20px'}}
           inputStyle={{width:'30px',height:'30px'}}
          />
-          <Box sx={{width:'100%',display:'flex',justifyContent:'center',alignItems:'center'}}>
-             <IconButton onClick={()=>navigate('/rest')} sx={style.btnContainer}><p>Verify</p></IconButton>
+          <Box onClick={handleConfirmation} sx={{width:'100%',display:'flex',justifyContent:'center',alignItems:'center'}}>
+             <IconButton sx={style.btnContainer}><p>Verify</p></IconButton>
            </Box>
       </Paper>
     </Box>

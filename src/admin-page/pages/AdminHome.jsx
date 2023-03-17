@@ -9,6 +9,7 @@ import LineChart from './chart/LineChart'
 const AdminHome = () => {
     const [isDrawerOpen,closeDrawer] = useState(true)
     const {isLightMode}= useSelector(state=>state.auth)
+    const {users}= useSelector(state=>state.admin)
   return (
      <div style={
         {
@@ -29,9 +30,10 @@ const AdminHome = () => {
          <Header closeDrawer={()=>closeDrawer(prev=>!prev)}/>
          </Box>
          <Box sx={[style.topContainer,{backgroundColor:`${isLightMode?"white":'#1E1E1E'}`}]}>
-           <Card/>
-           <Card/>
-           <Card/>
+           <Card cardHeader={'Users'} cardBody={`${users?.length}`}/>
+           <Card cardHeader={'Survey Questions'} cardBody={'50+'}/>
+           <Card cardHeader={'Schedule course'} cardBody={'150+'}/>
+        
          </Box>
          <Box sx={[style.chartDisplay,{backgroundColor:`${isLightMode?"white":'#1E1E1E'}`}]}>
             <LineChart/>

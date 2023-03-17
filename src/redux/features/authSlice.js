@@ -1,16 +1,22 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
 import axios from 'axios'
 
+
+const testUrl='https://infinity-api-oqlt.onrender.com/signUp'
+
+const realBasicUrl='http://localhost:3000/users'
+
 export const signUp = createAsyncThunk('auth/signUp',async({userData,toast,navigate})=>{
     try {
     
-         const response = await axios.post('https://infinity-api-oqlt.onrender.com/signUp',userData)
+         const response = await axios.post(`${realBasicUrl}/signUp`,userData)
          if(response){
             toast.success('your account is successfully created')
             navigate('/')
             return response.data
          }
     } catch (error) {
+         navigate('/signUp')
         toast.error(error.response.data.error)    
     }
 })
@@ -18,7 +24,7 @@ export const signUp = createAsyncThunk('auth/signUp',async({userData,toast,navig
 
 export const signIn = createAsyncThunk('auth/signIn',async({userData,toast,navigate})=>{
     try {
-         const response = await axios.post('https://infinity-api-oqlt.onrender.com/signIn',userData)
+         const response = await axios.post(`${realBasicUrl}/login`,userData)
          if(response){
             toast.success('well come back')
             navigate('/')

@@ -8,54 +8,29 @@ import SendIcon from '@mui/icons-material/Send';
 import companyLogoImage from '../../../../assets/image/logo.png'
 import { handleResponsiveness } from '../../styles/loginStyle';
 import { useNavigate } from 'react-router-dom';
+import {toast} from 'react-toastify'
+const ForgotPassword = ({phoneNumber,setPhoneNumber,onSignUp}) => {
 
-const ForgotPassword = () => {
-
-  const [phoneNumber,setPhoneNumber] = useState('')
-  const navigate=useNavigate()
-  const onCapTchaVerify=()=>{
-    if(!window.recaptchaVerifier){
-      window.recaptchaVerifier = new RecaptchaVerifier(
-    'recaptcha-container', {
-      'size': 'invisible',
-        'callback': (response) => {
-          onSignUp()
-     },
-     'expired-callback': () => {
   
-  }
-}, auth);
-    }
-  }
+  const navigate=useNavigate()
 
-  const onSignUp=()=>{
-    onCapTchaVerify()
-   const appVerifier = window.recaptchaVerifier;
-
-    signInWithPhoneNumber(auth, phoneNumber, appVerifier)
-    .then((confirmationResult) => {
-      // SMS sent. Prompt user to type the code from the message, then sign the
-      // user in with confirmationResult.confirm(code).
-      window.confirmationResult = confirmationResult;
-      // ...
-    }).catch((error) => {
-      // Error; SMS not sent
-      // ...
-    });
-  }
   return (
     <Box sx={style.forgetPasswordContainer}>
+     
        <Box sx={style.companyLogoContainer}>
+         <div id='recaptcha-container'></div>
         <CardMedia image={companyLogoImage} sx={style.companyLogoImage}/>
        </Box>
        <Typography sx={{color:'#1A6CE8',fontWeight:'bold'}} variant='h6'>Rest Password</Typography>
       <Paper sx={style.forgetPasswordCard}>
-           <InputField
-             inputLabel={'Enter your phone number'}
+           <input
+             placeholder={'Enter your phone number'}
              type='text'
+             onChange={(e)=>setPhoneNumber(e.target.value)}
+             value={phoneNumber}
            />
-             <Box sx={{width:'100%',display:'flex',justifyContent:'center',alignItems:'center'}}>
-               <IconButton onClick={()=>navigate('/verify')} sx={style.btnContainer}>
+             <Box onClick={onSignUp} sx={{width:'100%',display:'flex',justifyContent:'center',alignItems:'center'}}>
+               <IconButton sx={style.btnContainer}>
                   <p>Request OTP</p>
                </IconButton>
            </Box>

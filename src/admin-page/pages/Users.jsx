@@ -1,18 +1,27 @@
 import { Box } from '@mui/material'
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { getAllUsers } from '../../redux/features/adminSlice'
 import GridTable from '../components/GridTable'
 import Header from '../components/Header'
 import SideBar from '../components/SideBar'
 import { mockDataTeam } from '../DummyData/data'
 
 const Users = ({closeDrawer,isDrawerOpen}) => {
+    const {users}= useSelector(state=>state.admin)
+    const dispatch = useDispatch()
+    useEffect(()=>{
+     
+       console.log(users)
+    },[users])
+      dispatch(getAllUsers())
     const column=[
-        {field:"id",headerName:"ID"},
-        {field:"name",headerName:"Name",flex:1,cellClassName:'name-column-cell'},
-        {field:"age",headerName:"Age",type:"number",headerAlign:'left',align:'left'},
-        {field:"phone",headerName:"Phone Number",flex:1},
+        {field:"id",headerName:"ID",flex:1.5},
+        {field:"firstName",headerName:"FirstName",flex:1,cellClassName:'name-column-cell'},
+        {field:"lastName",headerName:"LastName",flex:1,cellClassName:'name-column-cell'},
+        {field:"gender",headerName:"Gender",type:"number",headerAlign:'left',align:'left'},
+        {field:"phoneNumber",headerName:"Phone Number",flex:1},
         {field:"email",headerName:"Email",flex:1},
-        {field:"access",headerName:"Access"},
     ]
   return (
       <Box sx={{width:'100%',display:'flex',flexDirection:'row',height:{md:'100vh',sm:'auto'}}}>
@@ -26,11 +35,13 @@ const Users = ({closeDrawer,isDrawerOpen}) => {
           <Header closeDrawer={()=>closeDrawer(prev=>!prev)}/>
          </Box>
           <Box sx={{width:'90%',marginLeft:'5%',marginTop:'80px'}}>  
+          { users?.length>0?
           <GridTable 
             colors={'white'}
-            data={mockDataTeam}
+            data={users}
             columnFieldsList={column}
           />
+          :''}
           </Box>
         </Box>
     </Box>

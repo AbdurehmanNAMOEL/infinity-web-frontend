@@ -6,6 +6,7 @@ import {
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
 import PlaylistAddCheckOutlinedIcon from '@mui/icons-material/PlaylistAddCheckOutlined';
+
 const style={
     iconStyle:{
         color:'#1977FC',
@@ -33,7 +34,7 @@ export const sideBarIconList=[
    },
 
     {
-     "routeTo":'dashBoard/course-registration', 
+     "routeTo":'dashBoard/course', 
      "title":'Course',
      "icon":<HowToRegIcon sx={style.iconStyle}/>
     },

@@ -16,12 +16,26 @@ import axios from 'axios'
 // })
 
 
+axios.interceptors.request.use((req)=>{
+    if(localStorage.getItem("user")){
+        req.headers.authorization = `Bearer ${(JSON.parse(localStorage.getItem("user")).accessToken)}`
+    }
+  return req;
+})
+
+
+
+const testUrl='https://infinity-api-oqlt.onrender.com/loginAdmin'
+
+const realBasicUrl='http://localhost:3000/'
+
 export const loginAdmin = createAsyncThunk('admin/loginAdmin',async({userData,toast,navigate})=>{
     try {
-         const response = await axios.post('https://infinity-api-oqlt.onrender.com/loginAdmin',userData)
+         const response = await axios.post(`${realBasicUrl}/admins/login`,userData)
          if(response){
             toast.success('well come back')
             navigate('/dashBoard')
+            
             return response.data
          }
     } catch (error) {
@@ -29,6 +43,20 @@ export const loginAdmin = createAsyncThunk('admin/loginAdmin',async({userData,to
         toast.error(error.response.data.error)    
     }
 })
+
+export const getAllUsers = createAsyncThunk('admin/getAllUsers',async()=>{
+    try {
+         const response = await axios.get(`${realBasicUrl}/users`)
+         if(response){
+            console.log(response?.data)
+            return response.data
+         }
+    } catch (error) {
+        console.log(error.response.data.error)    
+    }
+})
+
+
 
 
 export const createNewSurvey = createAsyncThunk('admin/createSurvey',async({surveyData,toast})=>{
@@ -54,7 +82,8 @@ export const adminSlice= createSlice({
       survey:[],
       loading:false,
       isAdminLoggedIn:false,
-      navTitle:'dashboard/adminHome'
+      navTitle:'dashboard/adminHome',
+      users:[]
 },
   reducers:{
     logOut:(state,action)=>{
@@ -85,9 +114,10 @@ export const adminSlice= createSlice({
       state.isAdminLoggedIn=false
     },
     [loginAdmin.fulfilled]:(state,action)=>{
-      state.users=action.payload
+      state.admins=action.payload
       state.loading=false
       state.isAdminLoggedIn=true
+      localStorage.setItem('user',JSON.stringify({...action.payload}))
     },
     [loginAdmin.rejected]:(state,action)=>{
       state.loading=false
@@ -105,6 +135,21 @@ export const adminSlice= createSlice({
       state.isAdminLoggedIn=true
     },
     [createNewSurvey.rejected]:(state,action)=>{
+      state.loading=false
+      state.isAdminLoggedIn=true
+    },
+
+
+    [getAllUsers.pending]:(state,action)=>{
+      state.loading=true
+      state.isAdminLoggedIn=true
+    },
+    [getAllUsers.fulfilled]:(state,action)=>{
+      state.users=action.payload
+      state.loading=false
+      state.isAdminLoggedIn=true
+    },
+    [getAllUsers.rejected]:(state,action)=>{
       state.loading=false
       state.isAdminLoggedIn=true
     },

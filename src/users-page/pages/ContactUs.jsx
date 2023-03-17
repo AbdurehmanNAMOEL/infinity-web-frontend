@@ -55,10 +55,10 @@ const ContactUs = () => {
                 type='text'
                 width='75%'
                />
-                <InputField
+              <InputField
                 label='Email'
                 inputLabel={'Email'}
-                type='email'
+                type='text'
                />
                <Box sx={{width:'76.5%',marginLeft:'-18px'}}>
                 <TextArea

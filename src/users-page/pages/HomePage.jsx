@@ -39,6 +39,7 @@ const HomePage = () => {
      }
   }
 
+
   return (
     <Box sx={{width:'100%',height:'auto',overflowX:'hidden',backgroundColor:modeColor}}>
      <NavBar isScrolling={isScrolling}/>

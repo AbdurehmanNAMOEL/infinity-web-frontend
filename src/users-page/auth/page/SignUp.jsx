@@ -18,6 +18,7 @@ import { signUp } from '../../../redux/features/authSlice'
    const navigate = useNavigate()
    const dispatch= useDispatch()
    const [isFormValid,setFormValidation]=useState(false)
+   const [confirmPasswordData,setConfirmPasswordData]=useState({confirmPassword:''})
    const [userData,setUserData]= useState({
     firstName:"",
     lastName:"",
@@ -25,7 +26,6 @@ import { signUp } from '../../../redux/features/authSlice'
     phoneNumber:"",
     password:"",
     gender:"",
-    confirmPassword:''
    })
 
 
@@ -34,13 +34,15 @@ import { signUp } from '../../../redux/features/authSlice'
      if(userData.firstName!=='' && userData.lastName!==''&& userData.confirmPassword!==''
        && userData.phoneNumber!=='' && userData.email!==''
        &&userData.password!==''&& userData.gender!==''){
+
+        if(userData.password===confirmPasswordData.confirmPassword){
         
          dispatch(signUp({userData,toast,navigate}))
          setFormValidation(true)
          setUserData({ firstName:'',lastName:'',phoneNumber:'',email:'',
                     password:'',gender:''})
-
-       }else setFormValidation(false)
+       }else toast.error('password and confirmPassword must be the same')
+      }else setFormValidation(false)
        
    }
 
@@ -134,8 +136,8 @@ import { signUp } from '../../../redux/features/authSlice'
                       <InputField 
                       inputLabel={'ConfirmPassword'}
                       type='password'
-                      inputValue={userData.confirmPassword}
-                      setValue={(e)=>setUserData({...userData,"confirmPassword":e.target.value})}
+                      inputValue={confirmPasswordData.confirmPassword}
+                      setValue={(e)=>setConfirmPasswordData({"confirmPassword":e.target.value})}
                     />
                     </Box>                
                     <Box sx={signUpStyle.signUpButtonContainer}>    
