@@ -1,4 +1,4 @@
-import {IconButton } from '@mui/material'
+import {IconButton, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import React, { useEffect, useState } from 'react'
 import { Header } from '../utils/genericComponents'
@@ -12,6 +12,7 @@ import { logOut, setMode } from '../../redux/features/authSlice'
 import Mode from '../../shared/Components/Mode'
 import MenuPopupState from '../../shared/Components/MenuPopState'
 import LoginIcon from '@mui/icons-material/Login';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 const NavBar = ({isScrolling}) => {
   const navigate=useNavigate()
    const dispatch = useDispatch()
@@ -22,6 +23,12 @@ const NavBar = ({isScrolling}) => {
   let {isLoggedIn,isLightMode,modeColor} = useSelector(state=>state.auth)
   let {isAdminLoggedIn}= useSelector(state=>state.admin)
  
+    const [userData,setUserData]= useState([])
+    useEffect(()=>{
+    setUserData(JSON.parse(localStorage.getItem("user")))
+  },[])
+
+  
 
     const handleNavigation=(title,navigateTo)=>{
        setNavTitle(title)
@@ -69,8 +76,11 @@ const NavBar = ({isScrolling}) => {
               <LoginIcon sx={{marginRight:'10px'}}/> <p>Login</p> 
               </IconButton>:
             <IconButton  
-            sx={style.logoInIcon}>
-              <MenuPopupState handleLogOut={()=>dispatch(logOut())}/>
+            sx={{width:'200px',borderRadius:'0px'}}>
+                <MenuPopupState
+                children={<Typography sx={{fontSize:'14px'}}>{userData?.email}</Typography>} 
+                handleLogOut={()=>dispatch(logOut())}/>
+                <ExpandMoreIcon/>
             </IconButton>
           }  
         </Box>

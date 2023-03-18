@@ -1,11 +1,21 @@
 import { Box } from '@mui/material'
 import React from 'react'
+import { handleResponsiveness } from '../auth/styles/loginStyle'
 
-const TextField = ({title,questionNumber}) => {
+const TextField = ({title,questionNumber,setValue,id,inputValue}) => {
   return (
-    <Box sx={{display:'flex',flexDirection:'column',gap:'8px'}}>
-    <Box sx={{fontSize:'20px',gap:'10px',color:'#1e1e1e'}}><span>{`Q${questionNumber?questionNumber:'1'}.  `}</span><label  htmlFor={title}>{title}</label></Box>
-     <textarea placeholder='Enter your answer' style={{marginTop:'8px',marginLeft:'20px',textIndent:'10px',height:'40px'}} id={title} width='50%' height='30px'/>
+    <Box sx={{width:'80%',display:'flex',flexDirection:'column',gap:'8px'}}>
+    <Box sx={{fontSize:handleResponsiveness('14px','18px'),width:'100%',gap:'10px',color:'rgba(0,0,0,0.7)'}}>
+      <span>{`${questionNumber?questionNumber:'1'}.  `}</span>
+      <label style={{width:'100%'}} htmlFor={title}>{title}</label></Box>
+     <textarea 
+      title={id}
+      onChange={setValue} 
+      type={'text'} 
+      value={inputValue}
+      style={{marginTop:'8px',marginLeft:'35px',textIndent:'10px',height:'80px'}}  
+      width='100%' height='30px'
+      />
    </Box>
   )
 }

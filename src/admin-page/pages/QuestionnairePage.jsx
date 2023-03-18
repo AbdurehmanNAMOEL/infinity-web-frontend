@@ -212,7 +212,7 @@ const style={
       marginLeft:'2%',
       height:'80px',
       backgroundColor:'#DFDFDF',
-      marginTop:'20px',
+      marginTop:'80px',
       display:'flex',
       justifyContent:'space-around',
       gap:'5px',

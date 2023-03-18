@@ -1,35 +1,38 @@
 import { Box } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-
-const RadioInput = ({id,questionTitle}) => {
+import { handleResponsiveness } from '../auth/styles/loginStyle'
+import './style/radioButtonStyle.css'
+const RadioInput = ({id,isChecked,questionTitle,inputValue,setValue,answer}) => {
     const [change,setChange]=useState('')
-    const [isChecked,setIsChecked]= useState(false)
-    const handleChange=(e)=>{
-        setIsChecked(prev=>!prev)
-      if(!isChecked){
-        setChange(e.target.value)
-      }else setChange('')
-   
-    }
-    useEffect(()=>{},[change,isChecked])
+     console.log(id);
+
+    useEffect(()=>{},[id,isChecked])
   return (
+    <>
     <button 
-       onClick={handleChange} 
-       value={questionTitle} 
-       style={{width:'350px', height:'40px',backgroundColor:'white',display:'flex',justifyContent:'flex-start',alignItems:'center',gap:'8px',borderRadius:'15px',
-      marginBottom:'16px',
-      cursor:'pointer',
-      border:`${isChecked?'solid 1px #1A6CE8':'solid 1px rgba(0,0,0,0.2)'}`}}>
+      className='radioButtonContainer'
+      onClick={setValue}  
+      id={id}
+      value={questionTitle}
+      style={{width:handleResponsiveness('auto','350px'), height:'40px',backgroundColor:'white',
+       display:'flex',justifyContent:'flex-start',alignItems:'center',
+       gap:'8px',marginBottom:'16px',cursor:'pointer',
+
+      }
+      }>
         <input 
-         checked={change} 
-         value={change}  
+         checked={isChecked}
+         value={questionTitle} 
+         onChange={setValue} 
          type='radio' 
-         id={id}
+         title={id}
+         id={questionTitle}
          style={{width:'15px',height:'15px',marginLeft:'16px'}}/>
         <label 
-          style={{fontSize:'16px'}} 
+          style={{fontSize:'12px'}} 
           htmlFor={id}>{questionTitle}</label>
     </button>
+    </>
   )
 }
 

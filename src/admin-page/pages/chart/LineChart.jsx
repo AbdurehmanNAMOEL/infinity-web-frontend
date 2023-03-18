@@ -4,6 +4,7 @@ import { lineData } from '../../DummyData/data'
 import { useSelector } from 'react-redux'
 function LineChart() {
  const {isLightMode} = useSelector(state=>state.auth)
+ 
 // make sure parent container have a defined height when using
 // responsive component, otherwise height will be 0 and
 // no chart will be rendered.

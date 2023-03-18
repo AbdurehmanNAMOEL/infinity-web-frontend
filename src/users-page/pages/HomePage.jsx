@@ -1,5 +1,5 @@
 import { Box, Card, CardMedia,Divider,Paper,Typography } from '@mui/material'
-import React, {useState } from 'react'
+import React, {useEffect, useState } from 'react'
 import NavBar from '../components/NavBar'
 import HomePhoto from '../../assets/image/home.svg'
 import { handleResponsiveness } from '../auth/styles/loginStyle'
@@ -22,6 +22,7 @@ const HomePage = () => {
   const [isScrolling,setIsScrolling]=useState(false)
   const {isLoggedIn,isLightMode,modeColor} = useSelector(state=>state.auth)
   const {isAdminLoggedIn}= useSelector(state=>state.admin)
+
   const navigate = useNavigate()
   const BoxMotion = motion(Box);
   const PaperMotion = motion(Paper);
@@ -39,6 +40,7 @@ const HomePage = () => {
      }
   }
 
+  
 
   return (
     <Box sx={{width:'100%',height:'auto',overflowX:'hidden',backgroundColor:modeColor}}>

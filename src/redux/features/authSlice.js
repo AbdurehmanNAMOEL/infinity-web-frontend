@@ -79,6 +79,7 @@ export const authSlice= createSlice({
       state.users=action.payload
       state.loading=false
       state.isLoggedIn=true
+      localStorage.setItem('user',JSON.stringify({...action.payload}))
     },
     [signUp.rejected]:(state,action)=>{
          state.loading=false
@@ -91,6 +92,7 @@ export const authSlice= createSlice({
       state.users=action.payload
       state.loading=false
       state.isLoggedIn=true
+      localStorage.setItem('user',JSON.stringify({...action.payload}))
     },
     [signIn.rejected]:(state,action)=>{
          state.loading=false
