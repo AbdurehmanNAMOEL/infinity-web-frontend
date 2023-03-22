@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useEffect, useState} from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
@@ -9,7 +9,7 @@ import { Box, Card, CardMedia ,Paper, Typography } from '@mui/material'
 import InputField from '../../../../users-page/components/InputField'
 import ButtonStyled from '../../../../users-page/components/ButtonStyled'
 import LogoImage from '../../../../assets/image/logo.png'
-import { loginAdmin } from '../../../../redux/features/adminSlice'
+import { loginAdmin, signUpAdmin } from '../../../../redux/features/adminSlice'
 import LoadingAnimation from '../../../../shared/Components/LoadingAnimation'
 import { handleResponsiveness } from '../../../../users-page/auth/styles/loginStyle'
 const AdminLogin = () => {
@@ -27,6 +27,16 @@ const AdminLogin = () => {
        
    }
 
+
+// useEffect(()=>{
+//   const userData={
+//       firstName: "Abdurehman",
+//       lastName: "Saeed",
+//       phoneNumber: "0936970345",
+//       password: "hayatdjjjj123"
+//   }
+//       dispatch(signUpAdmin({userData,toast}))
+//     },[])
    
   return (
    <Box sx={style.adminLoginContainer}>  

@@ -6,15 +6,15 @@ import './App.css';
 import {BrowserRouter as Router ,Routes,Route} from 'react-router-dom'
 import DashBoard from './admin-page/pages/DashBoard';
 import Users from './admin-page/pages/Users';
-import QuestionnairePage from './admin-page/pages/QuestionnairePage';
+import QuestionnairePage from './admin-page/pages/question/QuestionnairePage';
 import ChartHomePage from './admin-page/pages/chart/chartHomepage/ChartHomePage';
-import Blog from './admin-page/pages/Course';
+// import Blog from './admin-page/pages/Course';
 import HomePage from './users-page/pages/HomePage';
 import { Login } from './users-page/auth/page/Login';
 import AboutUs from './users-page/pages/AboutUs';
 import SignUp from './users-page/auth/page/SignUp';
 import SurveyHome from './users-page/pages/survey/SurveyHome';
-import ContactUs from './users-page/pages/ContactUs';
+import ContactUs from './users-page/pages/UserFeedBack';
 import AdminHome from './admin-page/pages/AdminHome';
 import PrivateRoute from './users-page/privateRoute/PrivateRoute';
 import { useSelector } from 'react-redux';
@@ -31,6 +31,10 @@ import RestPassword from './users-page/auth/auth-rest/pages/RestPassword';
 import { RecaptchaVerifier,signInWithPhoneNumber } from 'firebase/auth';
 import { auth } from './config/firebase_config';
 import CourseRegistration from './admin-page/pages/Course';
+import FeedBackPage from './admin-page/pages/FeedBackPage';
+import QuestionList from './admin-page/pages/question/QuestionList';
+import { QuestionAnswer } from '@mui/icons-material';
+import QuestionAnswered from './admin-page/pages/question/QuestionAnswered';
 
 function App() {
    const [isDrawerOpen,setDrawerOpen]=useState(true)
@@ -144,6 +148,26 @@ function App() {
            closeDrawer={closeDrawer}
            drawerWidth={isDrawerOpen?200:0}
           />}/>
+        <Route path='questionList' 
+           element={<QuestionList  
+           isDrawerOpen={isDrawerOpen} 
+           closeDrawer={closeDrawer}
+           drawerWidth={isDrawerOpen?200:0}
+          />}/>
+
+        <Route path='answered' 
+           element={<QuestionAnswered  
+           isDrawerOpen={isDrawerOpen} 
+           closeDrawer={closeDrawer}
+           drawerWidth={isDrawerOpen?200:0}
+          />}/>
+
+        <Route path='feedback' 
+           element={<FeedBackPage  
+           isDrawerOpen={isDrawerOpen} 
+           closeDrawer={closeDrawer}
+           drawerWidth={isDrawerOpen?200:0}
+          />}/>
 
          <Route path='Chart' element={<ChartHomePage 
           isDrawerOpen={isDrawerOpen} 
@@ -175,7 +199,7 @@ function App() {
         <Route isScrolling={isScrolling} path='/policy' element={<PrivacyPolicyHome/>}/>
         <Route isScrolling={isScrolling} path='/' element={<HomePage/>}/>
         <Route isScrolling={isScrolling} path='/aboutUs' element={<AboutUs/>}/>
-        <Route isScrolling={isScrolling} path='/contactUs' element={<ContactUs/>}/>
+        <Route isScrolling={isScrolling} path='/feedBack' element={<ContactUs/>}/>
         <Route element={<PrivateRoute/>}>
          <Route 
            isScrolling={isScrolling} 

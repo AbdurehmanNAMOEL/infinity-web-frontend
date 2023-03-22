@@ -1,6 +1,7 @@
 import { Box} from '@mui/material'
-import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
+import React, { useEffect, useState } from 'react'
+import {  useSelector } from 'react-redux'
+
 import Card from '../components/Card'
 import Header from '../components/Header'
 import SideBar from '../components/SideBar'
@@ -10,6 +11,7 @@ const AdminHome = () => {
     const [isDrawerOpen,closeDrawer] = useState(true)
     const {isLightMode}= useSelector(state=>state.auth)
     const {users}= useSelector(state=>state.admin)
+  
   return (
      <div style={
         {
@@ -30,7 +32,7 @@ const AdminHome = () => {
          <Header closeDrawer={()=>closeDrawer(prev=>!prev)}/>
          </Box>
          <Box sx={[style.topContainer,{backgroundColor:`${isLightMode?"white":'#1E1E1E'}`}]}>
-           <Card cardHeader={'Users'} cardBody={`${users?.length}`}/>
+           <Card cardHeader={'Users'} cardBody={`${users?.length?users?.length:0}`}/>
            <Card cardHeader={'Survey Questions'} cardBody={'50+'}/>
            <Card cardHeader={'Schedule course'} cardBody={'150+'}/>
         

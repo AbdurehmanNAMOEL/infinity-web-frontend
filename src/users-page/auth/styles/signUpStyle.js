@@ -59,6 +59,15 @@ export const signUpStyle={
     alignItems:'center',
     marginTop:'20px'
   },
+  signUpGenderContainer:{
+    width:'80%',
+    height:'50px',
+    display:'flex',
+    justifyContent:'flex-start',
+    alignItems:'center',
+    marginTop:'40px',
+    marginLeft:'10%'
+  },
   signUpNameInputFieldContainer:{
     width:'80%',
     height:'50px',

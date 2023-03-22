@@ -1,5 +1,5 @@
 import { Box, Card, CardMedia, Paper, Typography } from '@mui/material'
-import React from 'react'
+import React, { useState } from 'react'
 import LogoImage from '../../assets/image/logo.png'
 import ButtonStyled from '../components/ButtonStyled'
 import InputField from '../components/InputField'
@@ -11,14 +11,29 @@ import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import TelegramIcon from '@mui/icons-material/Telegram';
 import LocalPhoneOutlinedIcon from '@mui/icons-material/LocalPhoneOutlined';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import InputSelector from '../../shared/Components/InputSelector'
+import { feedBackGroupList } from '../utils/selectorData'
+import { sendFeedBack } from '../../redux/features/authSlice'
 const responsive =(xs,md)=>{
     return {xs:xs,md:md}
 }
 
-const ContactUs = () => {
+const UserFeedBack = () => {
     const navigate = useNavigate()
     const {modeColor}= useSelector(state=>state.auth)
+    const [feedBack,setFeedBack] = useState('')
+    const [feedBackGroup,setFeedBackGroup] = useState('')
+    const dispatch = useDispatch()
+
+    const handleFeedBack=()=>{
+      let feedBackData={
+        "feedbackGroup":feedBackGroup,
+        "suggestion":feedBack
+      }
+
+      dispatch(sendFeedBack({feedBackData}))
+    }
   return (
    <Box sx={style.contactContainer}>
      <Box sx={style.contactLeftContainer}>
@@ -43,34 +58,34 @@ const ContactUs = () => {
         <Box sx={style.contactFormContainer}>
             <Paper sx={style.formContainer}>
                <Typography variant='h4' sx={{width:'80%',marginTop:'20px',marginBottom:'-40px'}}>
-                   ContactUs
+                   FeedBack
                </Typography>
                 <Typography variant='h8' sx={{width:'80%',marginBottom:'-20px'}}>
                    Feel free to contact us any time. We will get back to
                    you as soon as we can
                </Typography>
-               <InputField
-                label='Name'
-                inputLabel={'Name'}
-                type='text'
-                width='75%'
-               />
-              <InputField
-                label='Email'
-                inputLabel={'Email'}
-                type='text'
-               />
+                  <Box sx={style.feedBackGroupContainer}>                    
+                    <InputSelector 
+                      setValue={(e)=>setFeedBackGroup(e.target.value)}
+                      optionList={feedBackGroupList} 
+                      label={'your feed back on'} 
+                      inputValue={feedBackGroup}
+                      selectorWidth={'97%'}/>
+                    </Box>
                <Box sx={{width:'76.5%',marginLeft:'-18px'}}>
                 <TextArea
                  textAreaWidth={'100%'}
-                 textAreaHeight='50px'
+                 textAreaHeight='200px'
                  placeholder={'message'}
+                 setValue={(e)=>setFeedBack(e.target.value)}
+                 inputValue={feedBack}
                 />
                 </Box>
                 <ButtonStyled
                  label={'Send'}
                  btnWidth='60%'
                  bgColor={'#0971f1'}
+                 setValue={handleFeedBack}
                 />
             </Paper>
         </Box>
@@ -203,6 +218,9 @@ const style ={
     homeBtn:{
       display:responsive('block','none'),
       marginRight:'20px'
+    },
+    feedBackGroupContainer:{
+      width:'80%'
     }
 }
-export default ContactUs
+export default UserFeedBack

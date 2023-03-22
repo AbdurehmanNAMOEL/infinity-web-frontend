@@ -7,11 +7,13 @@ import { handleResponsiveness, signUpStyle } from '../styles/signUpStyle'
 import signUpImage from '../../../assets/image/signUp.svg'
 import MediaCard from '../../components/MediaCard'
 import DataBaseImage from '../../../assets/image/dataBase.png'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { motion } from "framer-motion";
 import {toast} from 'react-toastify'
 import { useDispatch } from 'react-redux'
 import { signUp } from '../../../redux/features/authSlice'
+import InputSelector from '../../../shared/Components/InputSelector'
+import { genderList } from '../../utils/selectorData'
  const SignUp = () => {
 
 
@@ -116,13 +118,13 @@ import { signUp } from '../../../redux/features/authSlice'
                       setValue={(e)=>setUserData({...userData,"email":e.target.value})}
                     />
                     </Box>
-                    <Box sx={signUpStyle.signUpInputFieldContainer}>                    
-                      <InputField 
-                      inputLabel={'Gender'}
-                      type='text'
-                      inputValue={userData.gender}
+                    <Box sx={signUpStyle.signUpGenderContainer}>                    
+                    <InputSelector 
                       setValue={(e)=>setUserData({...userData,"gender":e.target.value})}
-                    />
+                      optionList={genderList} 
+                      label={'Gender'} 
+                      inputValue={userData?.gender}
+                      selectorWidth={'97%'}/>
                     </Box>
                        <Box sx={signUpStyle.signUpInputFieldContainer}>                    
                       <InputField 
@@ -139,7 +141,12 @@ import { signUp } from '../../../redux/features/authSlice'
                       inputValue={confirmPasswordData.confirmPassword}
                       setValue={(e)=>setConfirmPasswordData({"confirmPassword":e.target.value})}
                     />
-                    </Box>                
+                    </Box>  
+                    <Box sx={{marginTop:'28px',fontSize:'14px', gap:'5px',width:'100%',display:'flex',justifyContent:'center',alignItems:'center'}}>
+                      <input type={'checkBox'}/>
+                      <p>Do you agree</p>
+                      <Link style={{textDecoration:'none',color:'#1A6CE8'}} to='/policy'>Privacy policy and term of service</Link>
+                    </Box>              
                     <Box sx={signUpStyle.signUpButtonContainer}>    
                      <ActionButton
                        btnLabel='signUp'

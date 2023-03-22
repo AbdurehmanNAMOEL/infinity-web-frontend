@@ -2,9 +2,11 @@ import Textarea from '@mui/joy/Textarea';
 import React from 'react'
 
 
-const TextArea = ({textAreaWidth,textAreaHeight,placeholder}) => {
+const TextArea = ({textAreaWidth,setValue,inputValue,textAreaHeight,placeholder}) => {
   return (
      <Textarea 
+      onChange={setValue}
+      value={inputValue}
        sx={
         {
          width:textAreaWidth,

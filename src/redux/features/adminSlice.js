@@ -17,9 +17,10 @@ import axios from 'axios'
 
 
 axios.interceptors.request.use((req)=>{
-    if(localStorage.getItem("user")){
-        req.headers.authorization = `Bearer ${(JSON.parse(localStorage.getItem("user")).accessToken)}`
+    if(localStorage.getItem("admin")){
+        req.headers.authorization = `Bearer ${(JSON.parse(localStorage.getItem("admin")).accessToken)}`
     }
+
   return req;
 })
 
@@ -28,6 +29,24 @@ axios.interceptors.request.use((req)=>{
 const testUrl='https://infinity-api-oqlt.onrender.com/loginAdmin'
 
 const realBasicUrl='http://localhost:3000/'
+
+
+export const signUpAdmin = createAsyncThunk('admin/signUpAdmin',async({userData,toast})=>{
+    try {
+         const response = await axios.post(`${realBasicUrl}admins/signUp`,userData)
+          console.log(response)
+         if(response){
+            toast.success('well come back')
+           
+            return response.data
+         }
+    } catch (error) {
+       
+        toast.error(error.response.data.error)    
+    }
+})
+
+
 
 export const loginAdmin = createAsyncThunk('admin/loginAdmin',async({userData,toast,navigate})=>{
     try {
@@ -73,6 +92,52 @@ export const createNewSurvey = createAsyncThunk('admin/createSurvey',async({surv
 })
 
 
+export const getAllSurveyQuestions = createAsyncThunk('admin/getAllSurveyQuestions',async()=>{
+    try {
+         const response = await axios.get('https://infinity-api-oqlt.onrender.com/getAllQuestion')
+         if(response){
+           
+            return response.data
+         }
+    } catch (error) {
+       
+        console.log(error.response.data.error)    
+    }
+})
+
+
+
+export const getAllFeedBacks = createAsyncThunk('admin/getAllFeedBack',async()=>{
+    try {
+         const response = await axios.get(`${realBasicUrl}feedbacks`)
+         if(response){
+            
+            return response.data
+         }
+    } catch (error) {
+       
+        console.log(error.response.data.error)    
+    }
+})
+
+
+export const deleteFeedBack = createAsyncThunk('admin/deleteFeedBack',async({id})=>{
+    try {
+         const response = await axios.delete(`${realBasicUrl}feedbacks/${id}`)
+         if(response){
+            
+            return response.data
+         }
+    } catch (error) {
+       
+        console.log(error.response.data.error)    
+    }
+})
+
+
+
+
+
 
 
 export const adminSlice= createSlice({
@@ -80,6 +145,8 @@ export const adminSlice= createSlice({
     initialState:{
       admins:[],
       survey:[],
+      usersFeedBacks:[],
+      generatedSurvey:[],     
       loading:false,
       isAdminLoggedIn:false,
       navTitle:'dashboard/adminHome',
@@ -94,21 +161,23 @@ export const adminSlice= createSlice({
     },
     setNavTitle:(state,action)=>{
         state.navTitle=action.payload
-    }
+    },
+
+
   },
   extraReducers:{
-    // [signUp.pending]:(state,action)=>{
-    //   state.loading=true
-    // },
-    // [signUp.fulfilled]:(state,action)=>{
-    //   state.users=action.payload
-    //   state.loading=false
-    //   state.isLoggedIn=true
-    // },
-    // [signUp.rejected]:(state,action)=>{
-    //      state.loading=false
-    // },
-
+    [signUpAdmin.pending]:(state,action)=>{
+      state.loading=true
+    },
+    [signUpAdmin.fulfilled]:(state,action)=>{
+      state.admins=action.payload
+      state.loading=false
+      state.isLoggedIn=true
+      localStorage.setItem('admin',JSON.stringify({...action.payload}))
+    },
+    [signUpAdmin.rejected]:(state,action)=>{
+         state.loading=false
+    },
     [loginAdmin.pending]:(state,action)=>{
       state.loading=true
       state.isAdminLoggedIn=false
@@ -117,7 +186,7 @@ export const adminSlice= createSlice({
       state.admins=action.payload
       state.loading=false
       state.isAdminLoggedIn=true
-      localStorage.setItem('user',JSON.stringify({...action.payload}))
+      localStorage.setItem('admin',JSON.stringify({...action.payload}))
     },
     [loginAdmin.rejected]:(state,action)=>{
       state.loading=false
@@ -153,6 +222,52 @@ export const adminSlice= createSlice({
       state.loading=false
       state.isAdminLoggedIn=true
     },
+
+    [getAllSurveyQuestions.pending]:(state,action)=>{
+      state.loading=true
+      state.isAdminLoggedIn=true
+    },
+    [getAllSurveyQuestions.fulfilled]:(state,action)=>{
+      state.generatedSurvey=action.payload
+      state.loading=false
+      state.isAdminLoggedIn=true
+    },
+    [getAllSurveyQuestions.rejected]:(state,action)=>{
+      state.loading=false
+      state.isAdminLoggedIn=true
+    },
+
+
+
+    [getAllFeedBacks.pending]:(state,action)=>{
+      state.loading=true
+      state.isAdminLoggedIn=true
+    },
+    [getAllFeedBacks.fulfilled]:(state,action)=>{
+      state.usersFeedBacks=action.payload
+      state.loading=false
+      state.isAdminLoggedIn=true
+    },
+    [getAllFeedBacks.rejected]:(state,action)=>{
+      state.loading=false
+      state.isAdminLoggedIn=true
+    },
+
+
+    [deleteFeedBack.pending]:(state,action)=>{
+      state.loading=true
+      state.isAdminLoggedIn=true
+    },
+    [deleteFeedBack.fulfilled]:(state,action)=>{
+      return{
+        ...state,usersFeedBacks:state.usersFeedBacks.filter(item=>item.id!==action.payload)
+      }
+    },
+    [deleteFeedBack.rejected]:(state,action)=>{
+      state.loading=false
+      state.isAdminLoggedIn=true
+    },
+
   }
 
 })

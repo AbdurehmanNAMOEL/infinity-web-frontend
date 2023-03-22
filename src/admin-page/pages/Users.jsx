@@ -16,7 +16,6 @@ const Users = ({closeDrawer,isDrawerOpen}) => {
     },[users])
       dispatch(getAllUsers())
     const column=[
-        {field:"id",headerName:"ID",flex:1.5},
         {field:"firstName",headerName:"FirstName",flex:1,cellClassName:'name-column-cell'},
         {field:"lastName",headerName:"LastName",flex:1,cellClassName:'name-column-cell'},
         {field:"gender",headerName:"Gender",type:"number",headerAlign:'left',align:'left'},

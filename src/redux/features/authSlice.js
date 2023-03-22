@@ -2,6 +2,15 @@ import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
 import axios from 'axios'
 
 
+
+axios.interceptors.request.use((req)=>{
+    if(localStorage.getItem("user")){
+        req.headers.authorization = `Bearer ${(JSON.parse(localStorage.getItem("user")).accessToken)}`
+    }
+
+  return req;
+})
+
 const testUrl='https://infinity-api-oqlt.onrender.com/signUp'
 
 const realBasicUrl='http://localhost:3000/users'
@@ -40,6 +49,18 @@ export const signIn = createAsyncThunk('auth/signIn',async({userData,toast,navig
 export const getAllSurvey = createAsyncThunk('auth/getAllSurvey',async()=>{
     try {
          const response = await axios.get('https://infinity-api-oqlt.onrender.com/getAllQuestion')
+         if(response){
+            return response.data
+         }
+    } catch (error) {
+        console.log(error.response.data.error)  
+    }
+})
+
+
+export const sendFeedBack = createAsyncThunk('auth/sendFeedBack',async({feedBackData})=>{
+    try {
+         const response =await axios.post(`http://localhost:3000/feedbacks`,feedBackData)
          if(response){
             return response.data
          }

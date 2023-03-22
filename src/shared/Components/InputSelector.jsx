@@ -1,13 +1,13 @@
 import { Box, FormControl, InputLabel, MenuItem, Select } from '@mui/material'
 import React, { useEffect } from 'react'
 
-const InputSelector = ({optionList,setValue,inputValue,label}) => {
+const InputSelector = ({optionList,selectorWidth,setValue,inputValue,label}) => {
 
   useEffect(()=>{},[inputValue])  
   return (
     
   
-    <Box sx={{ width: 120}}>
+    <Box sx={{ width:selectorWidth?selectorWidth:'120px'}}>
       <FormControl fullWidth>
         <InputLabel id="demo-simple-select-label">{label}</InputLabel>
         <Select
@@ -16,7 +16,7 @@ const InputSelector = ({optionList,setValue,inputValue,label}) => {
           id="demo-simple-select"
           value={inputValue}
           label={label}
-          onChange={(e)=>setValue(e.target.value)}
+          onChange={setValue}
         >
          { optionList?.map((item,index)=>
            <MenuItem 
@@ -34,7 +34,7 @@ const InputSelector = ({optionList,setValue,inputValue,label}) => {
 const style={
   selectStyle:{
     width:'200px',
-    height:'30px',
+    height:'50px',
     textIndent:'10px'   
 }
 }

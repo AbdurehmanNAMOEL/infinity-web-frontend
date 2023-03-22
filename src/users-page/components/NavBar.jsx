@@ -78,7 +78,7 @@ const NavBar = ({isScrolling}) => {
             <IconButton  
             sx={{width:'200px',borderRadius:'0px'}}>
                 <MenuPopupState
-                children={<Typography sx={{fontSize:'14px'}}>{userData?.email}</Typography>} 
+                children={<Typography sx={{fontSize:'14px',color:isLightMode?'#1e1e1e':'white'}}>{userData?.email}</Typography>} 
                 handleLogOut={()=>dispatch(logOut())}/>
                 <ExpandMoreIcon/>
             </IconButton>

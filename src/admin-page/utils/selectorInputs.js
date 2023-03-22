@@ -13,3 +13,10 @@ export const  choicesType=[
     {'title':'true/false','value':'true/false'},
     {'title':'satisfied/dissatisfied','value':'satisfied/dissatisfied'}
 ]
+
+export const surveyAccessingFilterList=[
+    {'title':'All Users','value':'all'},
+    {'title':'Females','value':'Females'},
+    {'title':'married','value':'married'},
+    {'title':'age>18','value':'18'}
+]

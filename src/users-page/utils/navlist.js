@@ -3,5 +3,5 @@ export const navList=[
     {'title':"DashBoard",'to':'/dashboard'},
     {'title':"Survey",'to':'/survey'},
     {'title':"AboutUs",'to':'/aboutUs'},
-    {'title':"ContactUs",'to':'/contactUs'},
+    {'title':"FeedBack",'to':'/feedBack'},
 ]

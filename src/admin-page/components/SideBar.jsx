@@ -1,25 +1,37 @@
 import React from 'react'
-import {Card, CardMedia, Drawer, IconButton, Typography} from '@mui/material'
+import {Card, CardMedia, Collapse, Divider, Drawer, IconButton, List, ListItem, ListItemIcon, ListItemText, Paper, Typography} from '@mui/material'
 import { Box } from '@mui/system'
 import AdminImage from '../../assets/image/user.png'
 import { sideBarIconList } from '../utils/iconsList'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { setNavTitle } from '../../redux/features/adminSlice'
-
+import DropDown from './DropDown'
+import Logo from '../../assets/image/logo.png'
+import { ExpandLess, ExpandMore, Settings } from '@mui/icons-material'
+import PlaylistAddCheckOutlinedIcon from '@mui/icons-material/PlaylistAddCheckOutlined';
 const SideBar = ({isDrawerOpen,closeDrawer,drawerWidth}) => {
    
-  const {navTitle}= useSelector(state=>state.admin)
+  const {navTitle,admins}= useSelector(state=>state.admin)
   const navigate = useNavigate()
   const {isLightMode}= useSelector(state=>state.auth)
+  const [openCollapse, setOpenCollapse] = React.useState(false);    
+
+ function handleOpenSettings(){
+    setOpenCollapse(!openCollapse);
+    navigate(`/dashboard/question`)
+
+ }
   const dispatch= useDispatch()
   
+  console.log()
   return (
     <Drawer
      open={{xs:!isDrawerOpen,md:isDrawerOpen}}
      onClose={closeDrawer}   
      variant='persistent' 
      sx={{
+      height:'auto',
           width:{xs:!isDrawerOpen?200:0,md:drawerWidth},
           color:'white',
           "& .MuiDrawer-paper":{
@@ -28,16 +40,20 @@ const SideBar = ({isDrawerOpen,closeDrawer,drawerWidth}) => {
           }
          }}>
          <Box sx={style.drawerHeader}>
-              <Box sx={style.topHeaderContainer}>
-                <Typography sx={{color:'white',fontWeight:'bold'}}>Infinity</Typography>
-              </Box>
+             
               <Card sx={style.adminImageContainer}>
-                <CardMedia sx={{width:'90%',height:'90%'}} image={AdminImage}/>
+                <Typography variant='h4'>{admins.firstName.split('')[0]}</Typography>
+                <Typography variant='h4'>{admins.lastName.split('')[0]}</Typography>
               </Card>
-              <Typography sx={{mt:'8px',color:`${isLightMode?'#1E1E1E':'white'}`}}>Abdurehman Saeed</Typography>
+              <Typography 
+                variant='h8' 
+                sx={{display:'flex',gap:'4px',mt:'8px',color:`${isLightMode?'#1E1E1E':'white'}`}}>
+               <Typography>{admins.firstName}</Typography>
+                <Typography>{admins.lastName}</Typography>
+              </Typography>
               <Typography sx={style.adminPosition}>CEO</Typography>
          </Box>
-         <div style={style.divider}/>
+         <Divider />
          {
            sideBarIconList.map((item,index)=>
             <IconButton 
@@ -56,6 +72,38 @@ const SideBar = ({isDrawerOpen,closeDrawer,drawerWidth}) => {
             </IconButton>
            )
          }
+
+          <ListItem onClick={handleOpenSettings} 
+          sx={
+            {
+              marginTop:'10px',
+              width:'100%',
+              display:'flex',
+              gap:'2px',
+              cursor:'pointer',
+              transition:'all 0.7s'
+              }} >
+              <ListItemIcon  sx={{marginLeft:'10px'}}>
+                 <PlaylistAddCheckOutlinedIcon sx={{ color:'#1977FC'}}/> 
+              </ListItemIcon>
+              <ListItemText sx={{marginLeft:'-25px'}} primary="Question" />
+              {openCollapse ? <ExpandLess /> : <ExpandMore />}
+            </ListItem>
+            <Collapse sx={{marginLeft:'10%'}} in={openCollapse} timeout="auto" unmountOnExit>
+             <IconButton onClick={()=>navigate('/dashboard/questionList')} sx={{width:'80%',gap:'10px',borderRadius:'0px'}}>
+              <PlaylistAddCheckOutlinedIcon sx={{ color:'#1977FC'}}/> 
+                  <Typography>Question</Typography>
+            </IconButton>
+              <IconButton  onClick={()=>navigate('/dashboard/answered')}  sx={{width:'80%',gap:'10px',borderRadius:'0px'}}>
+              <PlaylistAddCheckOutlinedIcon sx={{ color:'#1977FC'}}/> 
+                  <Typography>Answered</Typography>
+            </IconButton>
+          </Collapse>
+
+          {/* <Paper sx={style.topHeaderContainer}>
+               <CardMedia image={Logo} sx={{width:'50%',height:'90%'}}/>
+          </Paper> */}
+        
     </Drawer>
   )
 }
@@ -75,6 +123,9 @@ const style ={
     justifyContent:'center',
     alignItems:'center',
     borderRadius:'100%',
+    backgroundColor:'#1977FC',
+    marginTop:'20px',
+    color:'white'
   },
   adminPosition:{
     fontSize:'14px',
@@ -82,13 +133,15 @@ const style ={
     fontWeight:'bold'
   },
   topHeaderContainer:{
-    width:'100%',
+    width:'70%',
     height:'60px',
     marginBottom:'10px',
-    backgroundColor:'#1977FC',
+    backgroundColor:'white',
     display:'flex',
     justifyContent:'center',
-    alignItems:'center'
+    alignItems:'center',
+    marginLeft:'15%',
+    marginTop:'20px'
   },
   listIconContainer:{
     width:'100%',

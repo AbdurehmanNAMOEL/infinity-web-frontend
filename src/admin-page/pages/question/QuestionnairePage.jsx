@@ -1,16 +1,17 @@
 import { Paper, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import React, { useEffect, useState } from 'react'
-import ButtonStyled from '../../users-page/components/ButtonStyled'
-import InputField from '../../users-page/components/InputField'
-import Header from '../components/Header'
-import InputSelector from '../components/InputSelector'
-import RadioInput from '../components/RadioInput'
-import SideBar from '../components/SideBar'
-import { choicesType,questionTypeList } from '../utils/selectorInputs'
+import ButtonStyled from '../../../users-page/components/ButtonStyled'
+import InputField from '../../../users-page/components/InputField'
+import Header from '../../components/Header'
+import InputSelector from '../../../shared/Components/InputSelector'
+import RadioInput from '../../components/RadioInput'
+import SideBar from '../../components/SideBar'
+import { choicesType,questionTypeList, surveyAccessingFilterList } from '../../utils/selectorInputs'
 import { useDispatch, useSelector } from 'react-redux'
-import { createNewSurvey } from '../../redux/features/adminSlice'
+import { createNewSurvey } from '../../../redux/features/adminSlice'
 import {toast} from 'react-toastify'
+import DropDown from '../../components/DropDown'
 const QuestionnairePage = ({closeDrawer,isDrawerOpen}) => {
   const [questionTitle,setQuestionTitle]= useState('text')
   const [questionMainTitle,setQuestionMainTitle]= useState('')
@@ -120,14 +121,21 @@ const QuestionnairePage = ({closeDrawer,isDrawerOpen}) => {
             </Box>
             <Box sx={{width:'65%',display:'flex',gap:'50px',marginLeft:'-150px'}}>
            <InputSelector 
-             setValue={setQuestionTitle}
+             setValue={(e)=>setQuestionTitle(e.target.value)}
              inputValue={questionTitle} 
              optionList={questionTypeList}
              label='Question type'
             />
+            <InputSelector 
+             setValue={(e)=>setQuestionType(e.target.value)}
+             inputValue={questionType} 
+             optionList={surveyAccessingFilterList}
+             label={'Can access'}
+             />
+      
           {questionTitle!=='text'?
            <InputSelector 
-             setValue={setQuestionType}
+             setValue={(e)=>setQuestionType(e.target.value)}
              inputValue={questionType} 
              optionList={choicesType}
              label={'Choice type'}
@@ -135,6 +143,7 @@ const QuestionnairePage = ({closeDrawer,isDrawerOpen}) => {
             
          :''}
          </Box>
+         
          </Paper>
        
          <Paper sx={style.questionDisplay}>
@@ -200,8 +209,11 @@ const QuestionnairePage = ({closeDrawer,isDrawerOpen}) => {
             <ButtonStyled setValue={createSurvey} label={'Create'} bgColor='#1A6CE8'/>
         </Box>
           </Box>:''}
+               
          </Box>
+        
          </Box>
+         
     </Box>
 
   )
