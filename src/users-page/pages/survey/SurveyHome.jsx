@@ -12,6 +12,7 @@ const SurveyHome = ({setSurveyDetailData}) => {
     const dispatch = useDispatch()
     
     const { survey } = useSelector(state => state.auth)
+    const { generatedSurvey,isLightMode } = useSelector(state => state.auth)
     const navigate= useNavigate()
 
     const [isScrolling,setIsScrolling]=useState(false)
@@ -56,10 +57,16 @@ const SurveyHome = ({setSurveyDetailData}) => {
                 justifyContent:'center',
                 alignItems:'center'
                 }}>
-                <CardMedia image={surveyHomeImage} sx={{width:'100%',height:'100%'}}/>
+                <CardMedia image={surveyHomeImage} sx={{width:'80%',height:'90%'}}/>
               </Box>
             </Box>
            <Grid container spacing={2} sx={{marginTop:'20px',width:'80%',marginLeft:'10%',marginBottom:'20px',diaplay:'flex',placeItems:'center'}}>
+            {!survey?.length>0?
+              <Typography 
+                variant='h5' 
+                sx={{color:isLightMode?'#1e1e1e':'white',width:'100%',textAlign:'center'}}>
+                  Survey is not Prepared Yet
+                </Typography>:null}
             {
               survey?.map((item,index)=>
                <Grid onClick={()=>handleSurvey([item])} on item xs={8} md={3}>

@@ -10,7 +10,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { Typography } from '@mui/material';
 import { pattern } from '../../validator/patternVerifier';
 
-const InputField = ({inputLabel,type,setValue,inputValue}) => {
+const InputField = ({inputLabel,type,setValue,inputValue,width}) => {
   const [showPassword, setShowPassword] = useState(false);
   const [newInputLabel, setNewInputLabel] = useState(inputLabel);
   const [isValid,setValid] = useState(false)
@@ -46,12 +46,12 @@ useEffect(()=>{
 },[inputValue,inputLabel,type,newInputLabel,])
 
   return (
-   <FormControl sx={{ height:'20px', width: '80%' }} >
+   <FormControl sx={{ height:'auto', width: width?width:'80%' }} >
           <InputLabel   
             color={`${isValid && !isEmpity?'success':'error'}`}
             htmlFor={inputLabel} 
             sx={{backgroundColor:'white',outline:'none' }}>
-             {newInputLabel}
+             {inputLabel?newInputLabel:''}
             </InputLabel>
           <OutlinedInput
             color={`${isValid&&!isEmpity? 'success':'error'}`}
@@ -72,8 +72,9 @@ useEffect(()=>{
                 </IconButton>
               </InputAdornment>
             }
-            label={inputLabel}
+             label={inputLabel?inputLabel:null}
           />
+          {!isValid&&!inputLabel?<Typography sx={{marginBottom:'20px',color:'red' }}>{isEmpity}</Typography>:null}
         </FormControl>
   )
 }

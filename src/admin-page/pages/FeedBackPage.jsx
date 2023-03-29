@@ -8,25 +8,27 @@ import UserFeedBackCard from '../components/UserFeedBackCard'
 
 const FeedBackPage = ({isDrawerOpen,closeDrawer}) => {
     const dispatch = useDispatch()
-    const {usersFeedBacks}= useSelector(state=>state.admin)
-    const {isLightMode}= useSelector(state=>state.auth)
+    const {usersFeedBacks}= useSelector(state=>state?.admin)
+    const {isLightMode}= useSelector(state=>state?.auth)
     useEffect(()=>{
         dispatch(getAllFeedBacks())
+         console.log(usersFeedBacks)
     },[usersFeedBacks])
 
-    console.log(usersFeedBacks)
+   
   return (
-      <Box sx={{ width: '100%', display: 'flex', flexDirection: 'row', height: { md: '100vh', sm: 'auto' } }}>
+      <Box sx={{ width: '100%', display: 'flex', flexDirection: 'row', height: { md: 'auto', sm: 'auto' } }}>
             <SideBar
                 isDrawerOpen={isDrawerOpen}
                 closeDrawer={closeDrawer}
                 drawerWidth={isDrawerOpen ? 200 : 0}
             />
-            <Box sx={{ display: 'flex', width: '100%', position: 'relative', flexDirection: 'column' }}>
+            <Box sx={{ display: 'flex', width: '100%', position: 'relative', flexDirection: 'column',height:'auto' }}>
                 <Box sx={{ position: 'fixed', width: `${isDrawerOpen ? 100 : 100}%`, zIndex: 200 }}>
                     <Header closeDrawer={() => closeDrawer(prev => !prev)} />
                 </Box>
-          {usersFeedBacks.length>0? <Grid sx={{marginLeft:'5%',height:'auto',marginTop:'80px',width:'90%',justifyContent:'center',placeItems:'center'}} container spacing={2}>
+          {usersFeedBacks?.length>0? 
+          <Grid sx={{marginLeft:'5%',height:'auto',marginTop:'80px',width:'90%',justifyContent:'center',placeItems:'center'}} container spacing={2}>
             {
                 usersFeedBacks?.map((data,index)=>
                   <Grid item xs={8} md={5}>

@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import InputSelector from '../../shared/Components/InputSelector'
 import { feedBackGroupList } from '../utils/selectorData'
 import { sendFeedBack } from '../../redux/features/authSlice'
+import {toast} from 'react-toastify'
 const responsive =(xs,md)=>{
     return {xs:xs,md:md}
 }
@@ -32,7 +33,7 @@ const UserFeedBack = () => {
         "suggestion":feedBack
       }
 
-      dispatch(sendFeedBack({feedBackData}))
+      dispatch(sendFeedBack({feedBackData,toast}))
     }
   return (
    <Box sx={style.contactContainer}>

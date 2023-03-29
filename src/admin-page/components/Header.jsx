@@ -1,5 +1,5 @@
 import { Box, IconButton, Paper, Typography } from '@mui/material'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
  MenuOutlined,
  HomeOutlined,
@@ -11,15 +11,25 @@ import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { setMode } from '../../redux/features/authSlice'
 import MenuPopupState from '../../shared/Components/MenuPopState'
-
+import { logOut } from '../../redux/features/adminSlice'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 function Header({closeDrawer,headerTitle}) {
    const navigate = useNavigate()
    const dispatch = useDispatch()
    const {isLightMode}= useSelector(state=>state.auth)
    const {navTitle}= useSelector(state=>state.admin)
+   const [adminData,setAdminData]= useState([])
+   
    const handleDispatch=()=>{
     dispatch(setMode())
    }
+
+   
+  useEffect(()=>{
+    setAdminData(JSON.parse(localStorage.getItem("admin")))
+  },[])
+
+
   return (
     <Paper sx={[style.headerContainer,{backgroundColor:`${isLightMode?"#D9D9D9":"#1E1E1E"}`,}]}>
        <Box sx={{width:'60%',display:'flex',justifyContent:'flex-start',alignItems:'center',gap:'20px'}}>
@@ -30,7 +40,7 @@ function Header({closeDrawer,headerTitle}) {
             {!headerTitle?navTitle?.split('/')[1]:headerTitle}
        </Typography>
         </Box>
-        <Box sx={{width:'30%',display:'flex',justifyContent:'center'}}>
+        <Box sx={{width:'40%',display:'flex',justifyContent:'center',gap:'20px'}}>
         {isLightMode?<IconButton onClick={handleDispatch}>
             <ModeNightOutlined sx={{width:'20px',height:'20px',color:'black', fontweight:'bold'}}/>
         </IconButton>:
@@ -40,7 +50,16 @@ function Header({closeDrawer,headerTitle}) {
           <IconButton onClick={()=>navigate('/')}>
             <HomeOutlined sx={{color:'#1977FC', fontweight:'bold'}}/>
         </IconButton>
-         <MenuPopupState/>
+        <Box sx={{width:'40%'}}>
+          <MenuPopupState
+                handleLogOut={()=>dispatch(logOut())}>
+                 <Typography 
+                   sx={{fontSize:'14px',color:isLightMode?'#1e1e1e':'white'}}>
+                    {adminData?.firstName}
+                  </Typography>
+                 <ExpandMoreIcon sx={{borderRadius:'0px'}}/>
+           </MenuPopupState>
+           </Box>
         </Box>
     </Paper>
   )

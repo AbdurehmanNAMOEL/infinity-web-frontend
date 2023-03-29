@@ -2,17 +2,18 @@ import { Box } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { handleResponsiveness } from '../auth/styles/loginStyle'
 import './style/radioButtonStyle.css'
-const RadioInput = ({id,isChecked,questionTitle,inputValue,setValue,answer}) => {
+const RadioInput = ({id,checkedValue,questionTitle,data,inputValue,setValue,answer}) => {
     const [change,setChange]=useState('')
-     console.log(id);
+     console.log(data,'hello');
 
-    useEffect(()=>{},[id,isChecked])
+    useEffect(()=>{},[id,checkedValue])
   return (
     <>
     <button 
       className='radioButtonContainer'
       onClick={setValue}  
       id={id}
+      title={data}
       value={questionTitle}
       style={{width:handleResponsiveness('auto','350px'), height:'40px',backgroundColor:'white',
        display:'flex',justifyContent:'flex-start',alignItems:'center',
@@ -21,7 +22,7 @@ const RadioInput = ({id,isChecked,questionTitle,inputValue,setValue,answer}) => 
       }
       }>
         <input 
-         checked={isChecked}
+         checked={checkedValue===id}
          value={questionTitle} 
          onChange={setValue} 
          type='radio' 

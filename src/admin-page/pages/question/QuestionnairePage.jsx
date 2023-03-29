@@ -147,8 +147,8 @@ const QuestionnairePage = ({closeDrawer,isDrawerOpen}) => {
          </Paper>
        
          <Paper sx={style.questionDisplay}>
-           <Box sx={{width:'90%',display:'flex',marginTop:'15px'}}>
-            <Typography variant='h4'>{`Q${questionData?.length+1}`}</Typography>
+           <Box sx={{width:'90%',display:'flex',justifyContent:'center',flexDirection:'row',marginTop:'15px',alignItems:'center'}}>
+            <Typography sx={{marginTop:'26px',marginRight:'10px'}} variant='h4'>{`Q${questionData?.length+1}`}</Typography>
             <InputField
              inputLabel={'Enter your Question'}
              setValue={(e)=>setQuestion(e.target.value)}
@@ -166,6 +166,7 @@ const QuestionnairePage = ({closeDrawer,isDrawerOpen}) => {
                 height:'50px',
                 cursor:'pointer',
                 marginLeft:'-32px',
+                marginTop:'31px'
               
                 }}>Add</button>
            
@@ -199,10 +200,10 @@ const QuestionnairePage = ({closeDrawer,isDrawerOpen}) => {
          </Paper>
             { questionData.length>0?<Box sx={style.questionGeneratorContainer}>
              {questionData?.map((item,index)=>
-              <Box sx={{width:'80%',height:'50px',display:'flex',alignItems:'center',justifyContent:'space-around',backgroundColor:'#1A6CE8'}} key={index} htmlFor="#">
+              <Paper sx={{width:'80%',marginLeft:'20px',marginTop:'20px',height:'50px',display:'flex',alignItems:'center',justifyContent:'space-around',backgroundColor:'white'}} key={index} htmlFor="#">
                <Typography sx={{width:'80%'}}>{item.questionTitle}</Typography> 
-                <button style={{width:'80px',height:'90%',border:'none'}} onClick={()=>deleteQuestion(item.questionTitle)}>Delete</button>
-              </Box>
+                <button style={{width:'80px',cursor:'pointer',height:'90%',border:'none',backgroundColor:'white',color:'red'}} onClick={()=>deleteQuestion(item.questionTitle)}>Delete</button>
+              </Paper>
         )
           }
          <Box sx={{width:'100%',display:'flex',justifyContent:'flex-end'}}>

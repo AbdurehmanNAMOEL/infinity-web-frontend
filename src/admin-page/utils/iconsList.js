@@ -33,11 +33,11 @@ export const sideBarIconList=[
     "icon":<PersonSearchOutlined sx={style.iconStyle}/>
    },
 
-    {
-     "routeTo":'dashBoard/course', 
-     "title":'Course',
-     "icon":<HowToRegIcon sx={style.iconStyle}/>
-    },
+    // {
+    //  "routeTo":'dashBoard/course', 
+    //  "title":'Course',
+    //  "icon":<HowToRegIcon sx={style.iconStyle}/>
+    // },
 
     // {
     //     "routeTo":'dashBoard/Question', 

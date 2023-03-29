@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {Card, CardMedia, Collapse, Divider, Drawer, IconButton, List, ListItem, ListItemIcon, ListItemText, Paper, Typography} from '@mui/material'
 import { Box } from '@mui/system'
 import AdminImage from '../../assets/image/user.png'
@@ -15,16 +15,23 @@ const SideBar = ({isDrawerOpen,closeDrawer,drawerWidth}) => {
   const {navTitle,admins}= useSelector(state=>state.admin)
   const navigate = useNavigate()
   const {isLightMode}= useSelector(state=>state.auth)
-  const [openCollapse, setOpenCollapse] = React.useState(false);    
+  const [questionCollapse, setQuestionCollapse] =useState(false);    
+  const [appointmentCollapse, setAppointmentCollapse] =useState(false);    
 
- function handleOpenSettings(){
-    setOpenCollapse(!openCollapse);
+ const  handleOpenQuestion=()=>{
+    setQuestionCollapse(!questionCollapse);
+    navigate(`/dashboard/question`)
+
+ }
+
+ const handleOpenAppointment=()=>{
+    setAppointmentCollapse(!appointmentCollapse);
     navigate(`/dashboard/question`)
 
  }
   const dispatch= useDispatch()
   
-  console.log()
+
   return (
     <Drawer
      open={{xs:!isDrawerOpen,md:isDrawerOpen}}
@@ -42,8 +49,8 @@ const SideBar = ({isDrawerOpen,closeDrawer,drawerWidth}) => {
          <Box sx={style.drawerHeader}>
              
               <Card sx={style.adminImageContainer}>
-                <Typography variant='h4'>{admins.firstName.split('')[0]}</Typography>
-                <Typography variant='h4'>{admins.lastName.split('')[0]}</Typography>
+                <Typography variant='h4'>{admins?.firstName?.split('')[0]}</Typography>
+                <Typography variant='h4'>{admins?.lastName?.split('')[0]}</Typography>
               </Card>
               <Typography 
                 variant='h8' 
@@ -73,7 +80,36 @@ const SideBar = ({isDrawerOpen,closeDrawer,drawerWidth}) => {
            )
          }
 
-          <ListItem onClick={handleOpenSettings} 
+
+         <ListItem onClick={handleOpenAppointment} 
+          sx={
+            {
+              marginTop:'10px',
+              width:'100%',
+              display:'flex',
+              gap:'2px',
+              cursor:'pointer',
+              transition:'all 0.7s'
+              }} >
+              <ListItemIcon  sx={{marginLeft:'10px'}}>
+                 <PlaylistAddCheckOutlinedIcon sx={{ color:'#1977FC'}}/> 
+              </ListItemIcon>
+              <ListItemText sx={{marginLeft:'-25px'}} primary="Appointment" />
+              {appointmentCollapse ? <ExpandLess /> : <ExpandMore />}
+            </ListItem>
+            <Collapse sx={{marginLeft:'10%'}} in={appointmentCollapse} timeout="auto" unmountOnExit>
+             <IconButton onClick={()=>navigate('/dashboard/questionList')} sx={{width:'80%',gap:'10px',borderRadius:'0px'}}>
+              <PlaylistAddCheckOutlinedIcon sx={{ color:'#1977FC'}}/> 
+                  <Typography>Question</Typography>
+            </IconButton>
+              <IconButton  onClick={()=>navigate('/dashboard/answered')}  sx={{width:'80%',gap:'10px',borderRadius:'0px'}}>
+              <PlaylistAddCheckOutlinedIcon sx={{ color:'#1977FC'}}/> 
+                  <Typography>Answered</Typography>
+            </IconButton>
+          </Collapse>
+
+
+          <ListItem onClick={handleOpenQuestion} 
           sx={
             {
               marginTop:'10px',
@@ -87,9 +123,9 @@ const SideBar = ({isDrawerOpen,closeDrawer,drawerWidth}) => {
                  <PlaylistAddCheckOutlinedIcon sx={{ color:'#1977FC'}}/> 
               </ListItemIcon>
               <ListItemText sx={{marginLeft:'-25px'}} primary="Question" />
-              {openCollapse ? <ExpandLess /> : <ExpandMore />}
+              {questionCollapse ? <ExpandLess /> : <ExpandMore />}
             </ListItem>
-            <Collapse sx={{marginLeft:'10%'}} in={openCollapse} timeout="auto" unmountOnExit>
+            <Collapse sx={{marginLeft:'10%'}} in={questionCollapse} timeout="auto" unmountOnExit>
              <IconButton onClick={()=>navigate('/dashboard/questionList')} sx={{width:'80%',gap:'10px',borderRadius:'0px'}}>
               <PlaylistAddCheckOutlinedIcon sx={{ color:'#1977FC'}}/> 
                   <Typography>Question</Typography>

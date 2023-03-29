@@ -82,7 +82,7 @@ export const createNewSurvey = createAsyncThunk('admin/createSurvey',async({surv
     try {
          const response = await axios.post('https://infinity-api-oqlt.onrender.com/createQuestion',surveyData)
          if(response){
-            toast.success('Question Created')
+            toast.success('Survey Created successfully')
             return response.data
          }
     } catch (error) {
@@ -135,6 +135,33 @@ export const deleteFeedBack = createAsyncThunk('admin/deleteFeedBack',async({id}
 })
 
 
+export const deleteSurvey = createAsyncThunk('admin/deleteSurvey',async({id})=>{
+      console.log(id);
+    try {
+         const response = await axios.delete(`https://infinity-api-oqlt.onrender.com/deleteSurvey/${id}`)
+         if(response){
+            
+            return response.data
+         }
+    } catch (error) {
+       
+        console.log(error.response.data.error)    
+    }
+})
+
+export const getAllAnsweredSurvey = createAsyncThunk('admin/getAllAnsweredSurvey',async()=>{
+    try {
+         const response = await axios.get(`https://infinity-api-oqlt.onrender.com/getAllAnswer`)
+         if(response){
+            
+            return response.data
+         }
+    } catch (error) {
+       
+        console.log(error.response.data.error)    
+    }
+})
+
 
 
 
@@ -146,15 +173,19 @@ export const adminSlice= createSlice({
       admins:[],
       survey:[],
       usersFeedBacks:[],
-      generatedSurvey:[],     
+      generatedSurvey:[], 
+      answeredSurvey:[],    
       loading:false,
       isAdminLoggedIn:false,
       navTitle:'dashboard/adminHome',
-      users:[]
+      users:[],
+      isAdmin:false
 },
   reducers:{
     logOut:(state,action)=>{
        state.isAdminLoggedIn=false
+       state.isAdmin=false
+       localStorage.removeItem('admin')
     },
      setMode:(state,action)=>{
        state.isLightMode=!state.isLightMode
@@ -181,16 +212,19 @@ export const adminSlice= createSlice({
     [loginAdmin.pending]:(state,action)=>{
       state.loading=true
       state.isAdminLoggedIn=false
+      state.isAdmin=false
     },
     [loginAdmin.fulfilled]:(state,action)=>{
       state.admins=action.payload
       state.loading=false
       state.isAdminLoggedIn=true
+      state.isAdmin=true
       localStorage.setItem('admin',JSON.stringify({...action.payload}))
     },
     [loginAdmin.rejected]:(state,action)=>{
       state.loading=false
       state.isAdminLoggedIn=false
+      state.isAdmin=false
     },
 
 
@@ -254,6 +288,20 @@ export const adminSlice= createSlice({
     },
 
 
+    [getAllAnsweredSurvey.pending]:(state,action)=>{
+      state.loading=true
+      state.isAdminLoggedIn=true
+    },
+    [getAllAnsweredSurvey.fulfilled]:(state,action)=>{
+      state.answeredSurvey=action.payload
+      state.loading=false
+      state.isAdminLoggedIn=true
+    },
+    [getAllAnsweredSurvey.rejected]:(state,action)=>{
+      state.loading=false
+      state.isAdminLoggedIn=true
+    },
+
     [deleteFeedBack.pending]:(state,action)=>{
       state.loading=true
       state.isAdminLoggedIn=true
@@ -268,6 +316,20 @@ export const adminSlice= createSlice({
       state.isAdminLoggedIn=true
     },
 
+
+    [deleteSurvey.pending]:(state,action)=>{
+      state.loading=true
+      state.isAdminLoggedIn=true
+    },
+    [deleteSurvey.fulfilled]:(state,action)=>{
+      return{
+        ...state,generatedSurvey:state.generatedSurvey.filter(item=>item.id!==action.payload)
+      }
+    },
+    [deleteSurvey.rejected]:(state,action)=>{
+      state.loading=false
+      state.isAdminLoggedIn=true
+    },
   }
 
 })

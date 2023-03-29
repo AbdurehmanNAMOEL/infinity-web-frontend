@@ -30,11 +30,12 @@ import VerificationPage from './users-page/auth/auth-rest/pages/VerificationPage
 import RestPassword from './users-page/auth/auth-rest/pages/RestPassword';
 import { RecaptchaVerifier,signInWithPhoneNumber } from 'firebase/auth';
 import { auth } from './config/firebase_config';
-import CourseRegistration from './admin-page/pages/Course';
 import FeedBackPage from './admin-page/pages/FeedBackPage';
 import QuestionList from './admin-page/pages/question/QuestionList';
-import { QuestionAnswer } from '@mui/icons-material';
 import QuestionAnswered from './admin-page/pages/question/QuestionAnswered';
+import Appointment from './admin-page/pages/appointment/Appointment';
+import ProfilePage from './users-page/user_info_pages/pages/profile/ProfilePage';
+import UserProfileSubmissionPage from './users-page/auth/page/UserProfileSubmissionPage';
 
 function App() {
    const [isDrawerOpen,setDrawerOpen]=useState(true)
@@ -174,8 +175,8 @@ function App() {
           closeDrawer={closeDrawer}
           drawerWidth={isDrawerOpen?200:0}
          />}/>
-        <Route path='course' 
-          element={<CourseRegistration 
+        <Route path='appointment' 
+          element={<Appointment 
           isDrawerOpen={isDrawerOpen} 
           closeDrawer={closeDrawer}
           drawerWidth={isDrawerOpen?200:0}/>}/>
@@ -196,10 +197,12 @@ function App() {
           }/>
         <Route  path='/signUp' element={<SignUp/>}/>
         <Route  path='/registration' element={<Registration/>}/>
+        <Route  path='/userProfileFiller' element={<UserProfileSubmissionPage/>}/>
         <Route isScrolling={isScrolling} path='/policy' element={<PrivacyPolicyHome/>}/>
         <Route isScrolling={isScrolling} path='/' element={<HomePage/>}/>
         <Route isScrolling={isScrolling} path='/aboutUs' element={<AboutUs/>}/>
         <Route isScrolling={isScrolling} path='/feedBack' element={<ContactUs/>}/>
+       
         <Route element={<PrivateRoute/>}>
          <Route 
            isScrolling={isScrolling} 
@@ -209,6 +212,10 @@ function App() {
             isScrolling={isScrolling} 
             path='/takeSurvey' 
             element={<SurveyDetail surveyData={surveyData}/>}/>
+          <Route 
+            isScrolling={isScrolling} 
+            path='/profile' 
+            element={<ProfilePage/>}/>
         </Route>
        </Routes>
       </Router>

@@ -1,31 +1,40 @@
 import { Box, Paper, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { sendSurveyAnswer } from '../../../redux/features/authSlice'
 import { handleResponsiveness } from '../../auth/styles/loginStyle'
 import ButtonStyled from '../../components/ButtonStyled'
-import InputField from '../../components/InputField'
 import NavBar from '../../components/NavBar'
 import RadioInput from '../../components/RadioInput'
 import TextField from '../../components/TextField'
-
+import {toast} from 'react-toastify'
 const SurveyDetail = ({surveyData}) => {
   console.log(surveyData);
     const [isScrolling,setIsScrolling]=useState(false)
     const [surveyAnswer,setSurveyAnswer]= useState([])
     const [surveyAnswer2,setSurveyAnswer2]= useState([])
+    const [surveyFinalAnswer,setSurveyFinalAnswer]=useState([])
     const [choiceAnswer,setChoiceAnswer]= useState('')
-     const [isChecked,setIsChecked]= useState(false)
+    const [checkedValue,setCheckedValue]= useState('')
   
+    const [userData,setUserData]= useState([])
+    const dispatch = useDispatch()
+    useEffect(()=>{
+    setUserData(JSON.parse(localStorage.getItem("user")))
+  },[])
+
+
   window.addEventListener('scroll',()=>{
     if(window.pageYOffset>0) setIsScrolling(true)
     else setIsScrolling(false)       
   })
 
-  const handleInputField=(e)=>{
+  const handleInputField=(e,id)=>{
       let isFound= surveyAnswer.find(data=>(data.questionTitle===e.target.title))===undefined
       if(isFound){
         setSurveyAnswer(
           [...surveyAnswer,
-          {"questionTitle":e.target.title,"answer":e.target.value}
+          {'id':id,"query":e.target.title,"answer":e.target.value}
         ])
       }else{
         surveyAnswer.map(question=>{
@@ -39,27 +48,54 @@ const SurveyDetail = ({surveyData}) => {
   }
 
    const handleChange=(e,id)=>{
-      console.log(id,e.target.value);
-      if(e.target.value===id){
-         setIsChecked(prev=>!prev)
-      }else setIsChecked(false)
-      let isFound= surveyAnswer2?.find(data=>data.title===e.target.id)===undefined
-      if(isFound){
-        setSurveyAnswer2([...surveyAnswer2,{"title":e.target.id,"answer":e.target.value}])
-      }else{
-           surveyAnswer2?.map(data=>{
-            if(data.title===e.target.id){
+   
+        handleChoiceAnswer(id)
+        if(e.target.id===id&& e.target.value){
+          setCheckedValue(id)
+        }else setCheckedValue('')
         
+      let isNotFound = surveyAnswer2?.find(data=>data.title===e.target.title)===undefined
+      if(isNotFound){
+    
+        setSurveyAnswer2([...surveyAnswer2,{"id":id,"query":e.target.title,"answer":e.target.value}])
+      }else{
+        
+           surveyAnswer2?.map(data=>{
+            if(data.query===e.target.title){
                return data.answer = e.target.value
             }else return data
-          
+            
           })
       }
       console.log(surveyAnswer2)
     }
 
+    const handleChoiceAnswer=(id)=>{
+         const isFound= surveyData.map(data=>data?.questions)       
+         console.log(isFound,'hellllllll')
+    }
 
-    useEffect(()=>{},[surveyAnswer2])
+    useEffect(()=>{},[surveyAnswer2,surveyAnswer,surveyFinalAnswer])
+
+
+    const handleSurveyAnswer=()=>{
+
+      setSurveyAnswer2([...surveyAnswer2,surveyAnswer])
+      setSurveyFinalAnswer([...surveyFinalAnswer,surveyAnswer2])
+  
+      if(surveyFinalAnswer!==[]){
+      const userSurveyAnswerData={
+        "ClientId":userData?.id,
+        'questionId':(surveyData?.map(data=>data._id))[0],
+        'answers':surveyFinalAnswer
+      }
+
+      console.log(userSurveyAnswerData.answers);
+      dispatch(sendSurveyAnswer({userSurveyAnswerData,toast}))
+    }else alert('survey answer is needed')
+  }
+
+    console.log('final answer',surveyFinalAnswer)
   
   return (
     <Box sx={{width:'100%',height:'100vh',display:'flex',flexDirection:'column',alignItems:'center'}}>
@@ -78,7 +114,7 @@ const SurveyDetail = ({surveyData}) => {
                       <Box sx={{width:'100%',marginTop:'16px'}}>
                         <TextField 
                           id={question.questionTitle} 
-                          setValue={handleInputField} 
+                          setValue={(e)=>handleInputField(e,item.id)} 
                           key={index} 
                           inputValue={surveyAnswer?.answer}
                           questionNumber={index+1} 
@@ -102,30 +138,27 @@ const SurveyDetail = ({surveyData}) => {
                             {question.choiceType==="userInput"?
                               question?.choiceAnswer?.map((item,index)=>
                                 <RadioInput 
-                                    key={index}  
+                                    key={item.answer}  
                                     setValue={(e)=>handleChange(e,item.answer)}
                                     inputValue={item.answer}
-                                    id={question.questionTitle} 
+                                    id={item.answer} 
                                     questionTitle={item.answer}
-                                    isChecked={isChecked}
+                                    data={question.questionTitle}
+                                    checkedValue={checkedValue}
                                   />)
                         : question?.choiceAnswer?.map((data,index)=>
                                   data?.answer.map((data,index)=>
                                     <RadioInput 
-                                    key={index} 
+                                    key={item.answer} 
                                     setValue={(e)=>handleChange(e,data)}
                                     inputValue={item.answer}
-                                    id={question.questionTitle} 
-                                    data={data}
+                                    id={item.answer} 
+                                     data={data}
                                      questionTitle={data}
-                                     isChecked={isChecked}
+                                     checkedValue={checkedValue}
                                     
                                   />
-                                  )
-                                 
-                                  )
-                        
-                        }
+                                  )) }
                          </Box>
                       </Box>}
                   </Box>  
@@ -137,7 +170,9 @@ const SurveyDetail = ({surveyData}) => {
              <Box sx={style.buttonContainer}>
              <ButtonStyled 
                label={'Submit'} 
-               bgColor='#1A6CE8'/>
+               bgColor='#1A6CE8'
+               setValue={handleSurveyAnswer}
+               />
              </Box>
           </Paper>
           </Box>

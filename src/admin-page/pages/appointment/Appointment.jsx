@@ -1,11 +1,11 @@
 import { Box } from '@mui/material'
 import React from 'react'
-import GridTable from '../components/GridTable'
-import Header from '../components/Header'
-import SideBar from '../components/SideBar'
-import { mockDataTeam } from '../DummyData/data'
+import GridTable from '../../components/GridTable'
+import Header from '../../components/Header'
+import SideBar from '../../components/SideBar'
+import { mockDataTeam } from '../../DummyData/data'
 
-const CourseRegistration = ({ closeDrawer, isDrawerOpen }) => {
+const Appointment = ({ closeDrawer, isDrawerOpen }) => {
     const column = [
         { field: "id", headerName: "ID" },
         { field: "name", headerName: "Name", flex: 1, cellClassName: 'name-column-cell' },
@@ -40,4 +40,4 @@ const CourseRegistration = ({ closeDrawer, isDrawerOpen }) => {
 }
 
 
-export default CourseRegistration
+export default Appointment
