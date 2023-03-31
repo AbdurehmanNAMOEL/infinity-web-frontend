@@ -8,42 +8,42 @@ import ButtonStyled from '../../../components/ButtonStyled'
 import SelectorInput from '../../../components/SelectorInput'
 const ProfilePage = ({isScrolling}) => {
   const {modeColor,userStaticData,userProfileData}= useSelector(state=>state.auth)
-
+  const [isFormValid,setFormValidation]= useState(false)
   const [userProfileEditedData,setUserProfileEditedData]=useState({
+    'id':userProfileData?.map(data=>data?.id)[0],
     'firstName':userProfileData?.map(data=>data?.firstName)[0],
     'lastName':userProfileData?.map(data=>data?.lastName)[0],
     'phoneNumber':userProfileData?.map(data=>data?.phoneNumber)[0],
     'email':userProfileData?.map(data=>data?.email)[0],
     'gender':userProfileData?.map(data=>data?.gender)[0],
-    'birthPlaceId':userProfileData?.map(data=>data?.birthPlaceId),
-    'educationalLevelId':userProfileData?.map(data=>data?.educationLevelId),
-    'incomeLevelId':userProfileData?.map(data=>data?.incomeLevelId),
-    'professionId':userProfileData?.map(data=>data?.professionId),
-    'religionId':userProfileData?.map(data=>data?.religionId),
-    'residenceCityId':userProfileData?.map(data=>data?.residenceCityId)
+    'birthPlaceId':userProfileData?.map(data=>data?.birthPlaceId)[0]?.id,
+    // 'educationalLevelId':userProfileData?.map(data=>data?.educationLevelId)[0]?.id,
+    'incomeLevelId':userProfileData?.map(data=>data?.incomeLevelId)[0]?.id,
+    'professionId':userProfileData?.map(data=>data?.professionId)[0]?.id,
+    'religionId':userProfileData?.map(data=>data?.religionId)[0]?.id,
+    'residenceCityId':userProfileData?.map(data=>data?.residenceCityId)[0]?.id
 
   })
-    const [userData,setUserData]= useState([])
+
     useEffect(()=>{
-    setUserData(JSON.parse(localStorage.getItem("user")))
+    let id = JSON.parse(localStorage.getItem("user"))?.id
+     dispatch(getUserStaticData())
+     dispatch(getUserProfileData({id}))
+
   },[])
 
   const dispatch = useDispatch()
 
-  useEffect(()=>{
-    let id = userData?.id
-   dispatch(getUserStaticData())
-   dispatch(getUserProfileData({id}))
-  },[userData])
-
+   console.log(userProfileEditedData)
 
   
   const handleProfileEdit=()=>{
-     let id = userData?.id
+       let id = JSON.parse(localStorage.getItem("user"))?.id
+       console.log(userProfileEditedData);
      dispatch(editUserProfile({id,userProfileEditedData}))
   }
 
-  console.log(userProfileData)
+  console.log(userProfileData?.map(data=>data?.id)[0])
 
   // const setInitialValue=()=>{
   //     userStaticData?.birthPlaces?.map(data=>
@@ -71,19 +71,21 @@ const ProfilePage = ({isScrolling}) => {
           }}>
          <Box sx={{display:'flex'}}>
           <InputField
-            type='text'
+            type='name'
             width='80%'
-            setValue={(e)=>setUserProfileEditedData({'firstName':e.target.value})}
+            setValidation={setFormValidation}
             inputValue={userProfileEditedData?.firstName}
+            setValue={(e)=>setUserProfileEditedData({...userProfileEditedData,'firstName':e.target.value})}
           />
         </Box> 
 
          <Box sx={{display:'flex'}}>
           <InputField
-            type='text'
+            type='name'
             width='80%'
-            setValue={(e)=>setUserProfileEditedData({'lastName':e.target.value})}
+            setValidation={setFormValidation}
             inputValue={userProfileEditedData?.lastName}
+            setValue={(e)=>setUserProfileEditedData({...userProfileEditedData,'lastName':e.target.value})}
           />
       
         </Box> 
@@ -91,8 +93,9 @@ const ProfilePage = ({isScrolling}) => {
           <InputField
             type='phoneNumber'
             width='80%'  
-            setValue={(e)=>setUserProfileEditedData({'phoneNumber':e.target.value})}
+            setValidation={setFormValidation}
             inputValue={userProfileEditedData?.phoneNumber}
+            setValue={(e)=>setUserProfileEditedData({...userProfileEditedData,'phoneNumber':e.target.value})}
           />
       
         </Box>  
@@ -101,8 +104,9 @@ const ProfilePage = ({isScrolling}) => {
           <InputField
             type='email'
             width='80%'
-            setValue={(e)=>setUserProfileEditedData({'email':e.target.value})}
+            setValidation={setFormValidation}
             inputValue={userProfileEditedData?.email}
+            setValue={(e)=>setUserProfileEditedData({...userProfileEditedData,'email':e.target.value})}
           />
      
         </Box> 
@@ -111,7 +115,7 @@ const ProfilePage = ({isScrolling}) => {
           <InputField
             type='text'
             width='80%'
-            setValue={(e)=>setUserProfileEditedData({'gender':e.target.value})}
+            setValue={(e)=>setUserProfileEditedData({...userProfileEditedData,'gender':e.target.value})}
             inputValue={userProfileEditedData?.gender}
           />
         
@@ -121,7 +125,7 @@ const ProfilePage = ({isScrolling}) => {
           selectorWidth={'77%'}
           optionList={userStaticData?.birthPlaces}
           inputValue={userProfileEditedData?.birthPlaceId}
-          setValue={(e)=>setUserProfileEditedData({'birthPlaceId':e.target.value})}
+          setValue={(e)=>setUserProfileEditedData({...userProfileEditedData,'birthPlaceId':e.target.value})}
          />
 
           <SelectorInput
@@ -129,23 +133,23 @@ const ProfilePage = ({isScrolling}) => {
           selectorWidth={'77%'}
           optionList={userStaticData?.incomeLevels}
           inputValue={userProfileEditedData?.incomeLevelId}
-          setValue={(e)=>setUserProfileEditedData({'incomeLevelId':e.target.value})}
+          setValue={(e)=>setUserProfileEditedData({...userProfileEditedData,'incomeLevelId':e.target.value})}
          />
 
-          <SelectorInput
+          {/* <SelectorInput
           label={'Educational Level'}
           selectorWidth={'77%'}
           optionList={userStaticData?.educationLevels}
           inputValue={userProfileEditedData?.educationalLevelId}
-          setValue={(e)=>setUserProfileEditedData({'educationalLevelId':e.target.value})}
-         />
+          setValue={(e)=>setUserProfileEditedData({...userProfileEditedData,'educationalLevelId':e.target.value})}
+         /> */}
 
           <SelectorInput
           label={'Profession'}
           selectorWidth={'77%'}
           optionList={userStaticData?.professions}
           inputValue={userProfileEditedData?.professionId}
-          setValue={(e)=>setUserProfileEditedData({'professionId':e.target.value})}
+          setValue={(e)=>setUserProfileEditedData({...userProfileEditedData,'professionId':e.target.value})}
          />
 
         <SelectorInput
@@ -153,7 +157,7 @@ const ProfilePage = ({isScrolling}) => {
           selectorWidth={'77%'}
           optionList={userStaticData?.martialStatuses}
           inputValue={userProfileEditedData?.martialStatusId}
-          setValue={(e)=>setUserProfileEditedData({'martialStatusId':e.target.value})}
+          setValue={(e)=>setUserProfileEditedData({...userProfileEditedData,'martialStatusId':e.target.value})}
          />
 
           <SelectorInput
@@ -161,7 +165,7 @@ const ProfilePage = ({isScrolling}) => {
           selectorWidth={'77%'}
           optionList={userStaticData?.religions}
           inputValue={userProfileEditedData?.religionId}
-          setValue={(e)=>setUserProfileEditedData({'religionId':e.target.value})}
+          setValue={(e)=>setUserProfileEditedData({...userProfileEditedData,'religionId':e.target.value})}
          />
 
          <SelectorInput
@@ -169,7 +173,7 @@ const ProfilePage = ({isScrolling}) => {
           selectorWidth={'77%'}
           optionList={userStaticData?.residenceCities}
           inputValue={userProfileEditedData?.residenceCityId}
-          setValue={(e)=>setUserProfileEditedData({'residenceCityId':e.target.value})}
+          setValue={(e)=>setUserProfileEditedData({...userProfileEditedData,'residenceCityId':e.target.value})}
          />
 
          <ButtonStyled

@@ -20,13 +20,13 @@ const SideBar = ({isDrawerOpen,closeDrawer,drawerWidth}) => {
 
  const  handleOpenQuestion=()=>{
     setQuestionCollapse(!questionCollapse);
-    navigate(`/dashboard/question`)
+  
 
  }
 
  const handleOpenAppointment=()=>{
     setAppointmentCollapse(!appointmentCollapse);
-    navigate(`/dashboard/question`)
+ 
 
  }
   const dispatch= useDispatch()
@@ -98,13 +98,13 @@ const SideBar = ({isDrawerOpen,closeDrawer,drawerWidth}) => {
               {appointmentCollapse ? <ExpandLess /> : <ExpandMore />}
             </ListItem>
             <Collapse sx={{marginLeft:'10%'}} in={appointmentCollapse} timeout="auto" unmountOnExit>
-             <IconButton onClick={()=>navigate('/dashboard/questionList')} sx={{width:'80%',gap:'10px',borderRadius:'0px'}}>
+             <IconButton onClick={()=>navigate('/dashboard/appointment')} sx={{width:'80%',gap:'10px',borderRadius:'0px'}}>
               <PlaylistAddCheckOutlinedIcon sx={{ color:'#1977FC'}}/> 
-                  <Typography>Question</Typography>
+                  <Typography>Appointment</Typography>
             </IconButton>
-              <IconButton  onClick={()=>navigate('/dashboard/answered')}  sx={{width:'80%',gap:'10px',borderRadius:'0px'}}>
+              <IconButton  onClick={()=>navigate('/dashboard/consultant')}  sx={{width:'80%',gap:'10px',borderRadius:'0px'}}>
               <PlaylistAddCheckOutlinedIcon sx={{ color:'#1977FC'}}/> 
-                  <Typography>Answered</Typography>
+                  <Typography>Consultant</Typography>
             </IconButton>
           </Collapse>
 

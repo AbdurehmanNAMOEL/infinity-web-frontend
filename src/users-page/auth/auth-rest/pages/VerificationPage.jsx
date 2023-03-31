@@ -1,20 +1,47 @@
-import { Box, CardMedia, IconButton, Paper, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import { Box, CardMedia, Divider, IconButton, Paper, Typography } from '@mui/material'
+import React, { useEffect, useState } from 'react'
 import InputField from '../../../components/InputField'
 import companyLogoImage from '../../../../assets/image/logo.png'
 import OtpInput from 'react-otp-input';
 import { handleResponsiveness } from '../../styles/loginStyle';
 import { useNavigate } from 'react-router-dom';
-const VerificationPage = ({verify,setVerify,handleConfirmation}) => { 
-  const navigate= useNavigate()
+import {toast} from 'react-toastify'
+import { useSelector } from 'react-redux';
+import ActionButton from '../../../components/ActionButton';
+const VerificationPage = ({navigateTo,handleAction}) => { 
+   const navigate=useNavigate()
+   const {isUserVerified}= useSelector(state=>state.auth)
+   const [isBtnDisabled,setIsBtnDisabled]= useState(true)
+   const [verify,setVerify] = useState('')
+ 
+    const handleConfirmation = async()=>{
+    try {
+       const response=await window.confirmationResult.confirm(verify);
+         if(response?.user){
+           console.log(response?.user?.expirationTime);
+        
+         }  
+    } catch (error) {
+      toast.error(error.message)
+    }
+    
+  }
 
+   useEffect(()=>{
+      if(verify.length===6){
+        setIsBtnDisabled(false)
+      }else setIsBtnDisabled(true)
+   },[verify])
+   
   return (
    <Box sx={style.verificationPasswordContainer}>
        <Box sx={style.companyLogoContainer}>
         <CardMedia image={companyLogoImage} sx={style.companyLogoImage}/>
        </Box>
-       <Typography sx={{color:'#1A6CE8',fontWeight:'bold'}} variant='h6'>Rest Password</Typography>
+      <Box sx={style.cardContainer}> 
       <Paper sx={style.verificationPasswordCard}>
+         <Typography sx={{color:'#1A6CE8',fontWeight:'bold'}} variant='h6'>Rest Password</Typography>
+         <Divider sx={{width:'100%'}}/>
          <OtpInput
           numInputs={6}
           value={verify}
@@ -23,9 +50,14 @@ const VerificationPage = ({verify,setVerify,handleConfirmation}) => {
           inputStyle={{width:'30px',height:'30px'}}
          />
           <Box onClick={handleConfirmation} sx={{width:'100%',display:'flex',justifyContent:'center',alignItems:'center'}}>
-             <IconButton sx={style.btnContainer}><p>Verify</p></IconButton>
+            <ActionButton
+             btnLabel={'Verify'}
+             btnWidth={'70%'}
+             isBtnDisabled={isBtnDisabled}
+            />
            </Box>
       </Paper>
+      </Box>
     </Box>
   )
 }
@@ -38,25 +70,27 @@ const style={
     display:'flex',
     flexDirection:'column',
     backgroundColor:'white',
-    justifyContent:'center',
-    alignItems:'center',
+   
     gap:'20px'
   },
  verificationPasswordCard:{
     width:handleResponsiveness('95%','400px'),
-    height:'200px',
+    height:'250px',
     borderRadius:'5px',
     border:'solid 1px rgba(0,0,0,0.4)',
     display:'flex',
     flexDirection:'column',
     justifyContent:'center',
     alignItems:'center',
-    gap:'50px'
+    gap:'25px',
+    marginTop:'30px'
   },
 
   companyLogoContainer:{
    width:'120px',
-   height:'60px'
+   height:'70px',
+   marginLeft:'40px',
+   marginTop:'40px'
   },
   companyLogoImage:{
     width:'100%',
@@ -76,8 +110,13 @@ const style={
     display:'flex',
     gap:'10px',
     cursor:'pointer',
-    marginLeft:'-4%'   
-    
+    marginLeft:'-4%'     
+  },
+  cardContainer:{
+    width:'100%',
+    height:'90%',
+    display:'flex',
+    justifyContent:'center'
   }
 }
 

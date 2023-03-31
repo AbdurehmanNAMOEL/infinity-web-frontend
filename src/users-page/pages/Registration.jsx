@@ -1,5 +1,5 @@
 import { Box, Card, CardMedia, Divider, Paper, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import NavBar from '../components/NavBar'
 import CourseRegistration from '../../assets/image/course.jpg'
 import { signUpStyle } from '../auth/styles/signUpStyle'
@@ -13,9 +13,14 @@ import { motion } from 'framer-motion'
 import { useDispatch } from 'react-redux'
 import { createAppointment, createPersonalAppointment } from '../../redux/features/authSlice'
 import {toast} from 'react-toastify'
+import ActionButton from '../components/ActionButton'
 const Registration = () => {
   const [isItPersonal,setIsItPerson]=useState(true)
   const [personalAppointmentType,setPersonalAppointmentType]=useState('')
+  const [isValid,setIsValid] = useState(false)
+  const [isCompanyFormValid,setIsCompanyFormValid] = useState(false)
+  const [isBtnDisabled,setIsBtnDisabled]= useState(true)
+  const [isPersonalBtnDisabled,setIsPersonalBtnDisabled]= useState(true)
   const dispatch = useDispatch()
 
   const BoxMotion = motion(Box);
@@ -53,6 +58,21 @@ const Registration = () => {
          dispatch(createPersonalAppointment({toast,userData}))
          setUserData({type: "",name: "",phoneNumber: "", email: "",officeLocationId: "123456"})
    }
+
+   useEffect(()=>{
+
+     if(userData.name!==''&&userData.email!==''&userData.phoneNumber!==''
+        &&userData.type!==''&&userData.officeLocationId!==''&& isValid){
+          setIsPersonalBtnDisabled(false)
+        }else setIsPersonalBtnDisabled(true)
+
+    if(appointmentData.appointmentDate!=='' && appointmentData.description!==''&&
+     appointmentData.title!==''&& isCompanyFormValid){
+          setIsBtnDisabled(false)
+        }else setIsBtnDisabled(true)   
+
+   },[userData,isValid,appointmentData,isCompanyFormValid])
+
   return (
     <Box 
       sx={{
@@ -70,8 +90,8 @@ const Registration = () => {
          <Box sx={
           {
             width:'100%',
-            height:handleResponsiveness('auto','87.5%'),
-            marginTop:'80px',
+            height:handleResponsiveness('100%','87.5%'),
+            marginTop:handleResponsiveness('60px','80px'),
             position:'absolute',
             backgroundColor:'rgba(0,0,0,0.5)',
             display:'flex',
@@ -81,7 +101,7 @@ const Registration = () => {
            <Paper sx={
           {
            width:handleResponsiveness('95%','450px'),
-           height:handleResponsiveness('500px','500px'),
+           height:handleResponsiveness('auto','auto'),
            marginTop:'80px',
            borderRadius:'0px',
            marginBottom:'100px'
@@ -99,7 +119,8 @@ const Registration = () => {
                 <Box sx={signUpStyle.signUpNameInputFieldContainer}>                    
                   <InputField 
                       inputLabel={'Name'}
-                      type='text'
+                       type='name'
+                       setValidation={setIsValid}
                        width={'100%'}
                       inputValue={userData.name}
                       setValue={(e)=>setUserData({...userData,"name":e.target.value})}
@@ -111,6 +132,7 @@ const Registration = () => {
                       <InputField 
                       inputLabel={'Phone Number'}
                       type='phoneNumber'
+                      setValidation={setIsValid}
                       inputValue={userData?.phoneNumber}
                       setValue={(e)=>setUserData({...userData,"phoneNumber":e.target.value})}
                     />
@@ -120,6 +142,7 @@ const Registration = () => {
                       <InputField 
                       inputLabel={'Email'}
                       type='email'
+                      setValidation={setIsValid}
                       inputValue={userData?.email}
                       setValue={(e)=>setUserData({...userData,"email":e.target.value})}
                     />
@@ -128,34 +151,38 @@ const Registration = () => {
                     <Box sx={signUpStyle.signUpInputFieldContainer}>                    
                       <InputField 
                       inputLabel={'Type'}
-                      type='text'
+                      type='name'
+                      setValidation={setIsValid}
                       inputValue={userData?.type}
                       setValue={(e)=>setUserData({...userData,"type":e.target.value})}
                     />
                     </Box>
                     <Box sx={
                       {
-                        width:'100%',
+                        width:'90%',
                         height:'80px',
                         display:'flex',
                         justifyContent:'center',
                         alignItems:'center',
-                        marginTop:'20px'
+                        marginTop:'20px',
+                        marginLeft:'3%'
                       }}>
-                       <ButtonStyled
-                        label={'Submit'}
-                        bgColor='#1A6CE8'
-                        btnWidth={'70%'}
-                        setValue={handlePersonalAppointmentSubmission}
-                       />
+                        <ActionButton
+                          btnLabel={'Submit'}
+                          btnWidth={'87%'}
+                          onClick={handlePersonalAppointmentSubmission}
+                          isBtnDisabled={isPersonalBtnDisabled}
+                         />
+                    
                        </Box>
                     </Box>:
-           <Box sx={{marginTop:!isItPersonal?'0px':'200px',transition:'all 2s'}}>
+           <Box sx={{marginTop:!isItPersonal?'0px':'200px',height:'auto',transition:'all 2s'}}>
             <Paper sx={style.formContainer}>
               <Box sx={signUpStyle.signUpInputFieldContainer}>                    
                 <InputField 
                  inputLabel={'Title'}
-                 type='text'
+                 type='name'
+                 setValidation={setIsCompanyFormValid}
                  inputValue={appointmentData.title}
                  setValue={(e)=>setAppointmentData({...appointmentData,"title":e.target.value})}
                 />
@@ -178,13 +205,13 @@ const Registration = () => {
                  inputValue={appointmentData.description}
                 />
                 </Box>
-                <Box sx={{width:'80%'}}>
-                  <ButtonStyled
-                    label={'Send'}
-                    btnWidth='95%'
-                    bgColor={'#0971f1'}
-                    setValue={handleCompanyAppointmentSubmission}
-                  />
+                <Box sx={{width:'80%',marginBottom:'20px'}}>
+                 <ActionButton
+                   btnLabel={'Send'}
+                   btnWidth={'95%'}
+                   isBtnDisabled={isBtnDisabled}
+                   onClick={handleCompanyAppointmentSubmission}
+                 />
                 </Box>
             </Paper>
         </Box>      
@@ -224,7 +251,7 @@ const style={
 
        formContainer:{
         width:handleResponsiveness('95%','100%'),
-        height:handleResponsiveness('400px','100%'),
+        height:handleResponsiveness('auto','auto'),
         display:'flex',
         flexDirection:'column',
         alignItems:'center',

@@ -1,5 +1,5 @@
 import { Box, Card, CardMedia, Divider,Paper, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import LogoImage from '../../../assets/image/logo.png'
 import ActionButton from '../../components/ActionButton'
 import InputField from '../../components/InputField'
@@ -20,16 +20,23 @@ export const Login = ({isSideBarOpen,setIsSideBarOpen,handleSideBarNavigation,na
    const navigate = useNavigate()
    const dispatch= useDispatch()
    const [isFormValid,setFormValidation]=useState(false)
+   const [isBtnDisabled,setIsBtnDisabled]=useState(false)
    const [userData,setUserData]= useState({phoneNumber:'',password:'',})
    const handleSubmit=()=>{
     
-     if(userData.phoneNumber!==''&&userData.password!==''){
+   if(userData.phoneNumber!==''&&userData.password!==''){
          dispatch(signIn({userData,toast,navigate}))
          setFormValidation(true)
          setUserData({phoneNumber:'',password:''})
        }else setFormValidation(false)
        
    }
+
+   useEffect(()=>{
+       if(userData.phoneNumber!==''&& userData.password!==''&& isFormValid){
+              setIsBtnDisabled(false)
+       } else setIsBtnDisabled(true) 
+   },[isFormValid,userData])
 
   return (
     <Box sx={loginStyle.loginMainWrapper}>
@@ -52,6 +59,7 @@ export const Login = ({isSideBarOpen,setIsSideBarOpen,handleSideBarNavigation,na
                       <InputField 
                       inputLabel={'Phone Number'}
                       type='phoneNumber'
+                      setValidation={setFormValidation}
                       inputValue={userData.phoneNumber}
                       setValue={(e)=>setUserData({...userData,"phoneNumber":e.target.value})}
                     />
@@ -60,6 +68,7 @@ export const Login = ({isSideBarOpen,setIsSideBarOpen,handleSideBarNavigation,na
                       <InputField 
                       inputLabel={'password'}
                       type='password'
+                      setValidation={setFormValidation}
                       inputValue={userData.password}
                       setValue={(e)=>setUserData({...userData,"password":e.target.value})}
                     />
@@ -72,6 +81,7 @@ export const Login = ({isSideBarOpen,setIsSideBarOpen,handleSideBarNavigation,na
                     <Box sx={loginStyle.loginButtonContainer}>    
                      <ActionButton
                        btnLabel='Login'
+                       isBtnDisabled={isBtnDisabled}
                        btnWidth={'80%'}
                        onClick={handleSubmit}
                       />

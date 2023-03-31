@@ -45,7 +45,6 @@ const style={
       display:'flex',
       justifyContent:'flex-start',
       alignItems:'center',
-
       gap:'8px',
       borderRadius:'10px',
       marginBottom:'16px',

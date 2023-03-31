@@ -36,7 +36,9 @@ import QuestionAnswered from './admin-page/pages/question/QuestionAnswered';
 import Appointment from './admin-page/pages/appointment/Appointment';
 import ProfilePage from './users-page/user_info_pages/pages/profile/ProfilePage';
 import UserProfileSubmissionPage from './users-page/auth/page/UserProfileSubmissionPage';
-
+import {toast} from 'react-toastify'
+import ConsultantSechdulingPage from './admin-page/pages/appointment/ConsultantSechdulingPage';
+import UserFeedBack from './users-page/pages/UserFeedBack';
 function App() {
    const [isDrawerOpen,setDrawerOpen]=useState(true)
    const [phoneNumber,setPhoneNumber] = useState('')
@@ -65,48 +67,10 @@ function App() {
   })
 
 
-    const onCapTchaVerify=()=>{
-    if(!window.recaptchaVerifier){
-      window.recaptchaVerifier = new RecaptchaVerifier(
-    'recaptcha-container', {
-      'size': 'invisible',
-        'callback': (response) => {
-          onSignUp()
-     },
-     'expired-callback': () => {
-  
-  }
-}, auth);
-    }
-  }
-
-  const onSignUp=()=>{
-    onCapTchaVerify()
-   const appVerifier = window.recaptchaVerifier;
-   const ph= '+251'+phoneNumber
-    signInWithPhoneNumber(auth, ph, appVerifier)
-    .then((confirmationResult) => {
-      window.confirmationResult = confirmationResult;
-       console.log('successfully sent')
-    }).catch((error) => {
-       console.log(error)
-    });
-
-   
-  }
-
-
+ 
+ 
 
   
-  const handleConfirmation = async()=>{
-    try {
-       const response=await result.confirm(verify);
-        console.log(response)  
-    } catch (error) {
-      console.log(error)
-    }
-    
-  }
 
 
   
@@ -122,6 +86,7 @@ function App() {
       <Router>
            <ScrollToTop/>
         <ToastContainer/>
+        
        <Routes>
         <Route 
           path='adminLogin' 
@@ -180,20 +145,29 @@ function App() {
           isDrawerOpen={isDrawerOpen} 
           closeDrawer={closeDrawer}
           drawerWidth={isDrawerOpen?200:0}/>}/>
+         
+         <Route path='appointment' 
+           element={<Appointment  
+           isDrawerOpen={isDrawerOpen} 
+           closeDrawer={closeDrawer}
+           drawerWidth={isDrawerOpen?200:0}
+          />}/>
+
+          <Route path='consultant' 
+           element={<ConsultantSechdulingPage  
+           isDrawerOpen={isDrawerOpen} 
+           closeDrawer={closeDrawer}
+           drawerWidth={isDrawerOpen?200:0}
+          />}/>
+
         </Route>
       </Route>
         <Route  path='/login' element={<Login/>}/>
-        <Route  
-         path='/verify' 
-         element={
-         <VerificationPage verify={verify} setVerify={setVerify} handleConfirmation={handleConfirmation}/>}/>
+        <Route  path='/verify' element={<VerificationPage/>}/>
          <Route  path='/rest' element={<RestPassword/>}/>
         <Route path='/forgetPassWord' 
           element={
-          <ForgotPassword 
-            phoneNumber={phoneNumber} 
-            setPhoneNumber={setPhoneNumber} 
-            onSignUp={onSignUp}/>
+          <ForgotPassword />
           }/>
         <Route  path='/signUp' element={<SignUp/>}/>
         <Route  path='/registration' element={<Registration/>}/>
@@ -201,9 +175,16 @@ function App() {
         <Route isScrolling={isScrolling} path='/policy' element={<PrivacyPolicyHome/>}/>
         <Route isScrolling={isScrolling} path='/' element={<HomePage/>}/>
         <Route isScrolling={isScrolling} path='/aboutUs' element={<AboutUs/>}/>
-        <Route isScrolling={isScrolling} path='/feedBack' element={<ContactUs/>}/>
+    
        
-        <Route element={<PrivateRoute/>}>
+      <Route element={<PrivateRoute/>}>
+        
+        <Route 
+          isScrolling={isScrolling} 
+          path='/feedBack' 
+          element={<UserFeedBack/>}
+        />
+
          <Route 
            isScrolling={isScrolling} 
            path='/survey'

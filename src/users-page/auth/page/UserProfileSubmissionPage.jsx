@@ -14,21 +14,15 @@ const UserProfileSubmissionPage = () => {
     const [userPersonData,setUserPersonalData]=useState({})
     const dispatch = useDispatch()
 
-    useEffect(()=>{
-          dispatch(getUserStaticData())
-    },[])
-   const [userData,setUserData]= useState([])
-    useEffect(()=>{
-    setUserData(JSON.parse(localStorage.getItem("user")))
-  },[])
-      useEffect(()=>{
-    let id = userData?.id
+  useEffect(()=>{
+    let id = JSON.parse(localStorage.getItem("user"))?.id
    dispatch(getUserStaticData())
+    dispatch(getUserStaticData())
    dispatch(getUserProfileData({id}))
-  },[userData])
+  },[])
 
  const handleProfileEdit=()=>{
-     let id = userData?.id
+     let id = JSON.parse(localStorage.getItem("user"))?.id
      let userProfileEditedData={
      "id":id,
      "birthPlaceId": userPersonData.birthPlaceId,

@@ -57,7 +57,7 @@ export const signUpStyle={
     display:'flex',
     justifyContent:'center',
     alignItems:'center',
-    marginTop:'20px'
+    marginTop:'30px'
   },
   signUpGenderContainer:{
     width:'80%',
@@ -65,8 +65,9 @@ export const signUpStyle={
     display:'flex',
     justifyContent:'flex-start',
     alignItems:'center',
-    marginTop:'40px',
-    marginLeft:'10%'
+    marginTop:'25px',
+    marginLeft:'10%',
+    marginBottom:'40px'
   },
   signUpNameInputFieldContainer:{
     width:'80%',
@@ -75,7 +76,8 @@ export const signUpStyle={
     marginLeft:'10%',
     justifyContent:'center',
     alignItems:'center',
-    marginTop:'20px'
+    marginTop:'50px',
+    marginBottom:'20px'
   },
   signUpButtonContainer:{
     width:'96%',

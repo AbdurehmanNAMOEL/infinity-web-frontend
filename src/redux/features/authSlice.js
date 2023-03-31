@@ -25,8 +25,7 @@ export const signUp = createAsyncThunk('auth/signUp',async({userData,toast,navig
             return response.data
          }
     } catch (error) {
-         navigate('/signUp')
-        toast.error(error.response.data.error)    
+         toast.error(error.response.data.error.message)      
     }
 })
 
@@ -40,8 +39,7 @@ export const signIn = createAsyncThunk('auth/signIn',async({userData,toast,navig
             return response.data
          }
     } catch (error) {
-       
-        toast.error(error.response.data.error)    
+        toast.error(error.response.data.error.message)    
     }
 })
 
@@ -117,7 +115,7 @@ export const getUserProfileData = createAsyncThunk('auth/getUserProfileData',asy
 
 
 export const editUserProfile = createAsyncThunk('auth/editUserProfile',async({id,toast,userProfileEditedData,navigate})=>{
-  console.log(typeof(id),userProfileEditedData);
+   console.log(userProfileEditedData,'edited')
   try {
          const response = await axios.patch(`http://localhost:3000/users/${id}`,userProfileEditedData)
          if(response){
@@ -162,6 +160,36 @@ export const createPersonalAppointment = createAsyncThunk('auth/createPersonalAp
     }
 })
 
+export const restPassword = createAsyncThunk('auth/restPassWord',async({toast,navigate,newPasswordData})=>{
+  
+  try {
+         const response = await axios.post(`http://localhost:3000/users/resetPassword`,newPasswordData)
+         if(response){
+            toast.success('your password successfully rested')
+            navigate('/login') 
+            return response.data
+         }
+    } catch (error) {
+       
+        console.log(error.response.data.error)    
+    }
+})
+
+
+
+export const findPhoneNumber = createAsyncThunk('auth/findPhoneNumber',async({toast,phoneNumber})=>{
+  
+  try {
+         const response = await axios.get(`http://localhost:3000/users/phoneNumberExists/${phoneNumber}`)
+         if(!response?.data){   
+            return response.data
+         }else {
+            toast.error('user already exist by this phone number')
+         }
+    } catch (error) {
+        toast.error(error.response.data)    
+    }
+})
 
 
 
@@ -171,12 +199,22 @@ export const authSlice= createSlice({
       users:[],
       userSurveyAnswer:[],
       userStaticData:[],
+      userSignUpData:{
+         firstName:"",
+         lastName:"",
+         email:"",
+         phoneNumber:"",
+         password:"",
+         gender:"",
+      },
       loading:false,
       isLoggedIn:false,
       isLightMode:true,
       modeColor:'white',
       survey:[],
-      userProfileData:[]
+      userProfileData:[],
+      isUserExist:false,
+      isUserVerified:false
 },
   reducers:{
     logOut:(state,action)=>{
@@ -195,6 +233,16 @@ export const authSlice= createSlice({
        if(!state.isLightMode){
          state.modeColor='#1E1E1E'
        }else state.modeColor='white'
+    },
+    
+     setUserLoginState:(state,action)=>{
+      if(localStorage.getItem("user")){
+         state.isLoggedIn=true
+    } else state.isLoggedIn=false
+    },
+
+     setUserSignUpData:(state,action)=>{
+       return {...state,userSignUpData:{...state.userSignUpData,"value":action.payload}}
     }
   },
   extraReducers:{
@@ -211,16 +259,15 @@ export const authSlice= createSlice({
     },
 
     [signIn.pending]:(state,action)=>{
-      state.loading=true
+   
+      state.isLoggedIn=false
     },
     [signIn.fulfilled]:(state,action)=>{
       state.users=action.payload
-      state.loading=false
-      state.isLoggedIn=true
       localStorage.setItem('user',JSON.stringify({...action.payload}))
     },
     [signIn.rejected]:(state,action)=>{
-         state.loading=false
+         state.isLoggedIn=false
     },
 
     [getAllSurvey.pending]:(state,action)=>{
@@ -276,8 +323,19 @@ export const authSlice= createSlice({
     },
     [editUserProfile.fulfilled]:(state,action)=>{
       state.userProfileData=[action.payload]
-      state.loading=false
       state.isLoggedIn=true
+    },
+    [editUserProfile.rejected]:(state,action)=>{
+         state.loading=false
+    },
+
+
+    [findPhoneNumber.pending]:(state,action)=>{
+      state.loading=true
+    },
+    [findPhoneNumber.fulfilled]:(state,action)=>{
+      state.isUserExist=action.payload
+      state.loading=false
     },
     [editUserProfile.rejected]:(state,action)=>{
          state.loading=false
@@ -287,6 +345,6 @@ export const authSlice= createSlice({
 
 })
 
-  export const {logOut,setMode}=authSlice.actions
+  export const {logOut,setMode,setUserLoginState,setUserSignUpData}=authSlice.actions
 
  export const authReducer=authSlice.reducer

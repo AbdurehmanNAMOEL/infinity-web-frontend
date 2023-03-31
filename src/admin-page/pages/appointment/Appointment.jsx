@@ -1,19 +1,26 @@
-import { Box } from '@mui/material'
-import React from 'react'
-import GridTable from '../../components/GridTable'
+import { Box, Grid, Typography } from '@mui/material'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { getAllAppointments} from '../../../redux/features/adminSlice'
 import Header from '../../components/Header'
 import SideBar from '../../components/SideBar'
-import { mockDataTeam } from '../../DummyData/data'
+import UserFeedBackCard from '../../components/UserFeedBackCard'
+
 
 const Appointment = ({ closeDrawer, isDrawerOpen }) => {
-    const column = [
-        { field: "id", headerName: "ID" },
-        { field: "name", headerName: "Name", flex: 1, cellClassName: 'name-column-cell' },
-        { field: "age", headerName: "Age", type: "number", headerAlign: 'left', align: 'left' },
-        { field: "phone", headerName: "Phone Number", flex: 1 },
-        { field: "email", headerName: "Email", flex: 1 },
-        { field: "access", headerName: "Access" },
-    ]
+  
+      const dispatch = useDispatch()
+
+    const {appointmentList}= useSelector(state=>state.admin)
+    const {isLightMode} = useSelector(state=>state.auth)
+    useEffect(()=>{
+        dispatch(getAllAppointments())
+    },[])
+
+    console.log(appointmentList)
+
+  
+ 
     return (
         <Box sx={{ width: '100%', display: 'flex', flexDirection: 'row', height: { md: '100vh', sm: 'auto' } }}>
             <SideBar
@@ -27,12 +34,32 @@ const Appointment = ({ closeDrawer, isDrawerOpen }) => {
                 </Box>
                 <Box sx={{ width: '90%', marginLeft: '5%', marginTop: '80px' }}>
 
-                    <GridTable
-                        colors={'white'}
-                        data={mockDataTeam}
-                        columnFieldsList={column}
-                    />
-
+       { appointmentList.length>0? <Grid sx={{
+            marginLeft:'5%',
+            height:'auto',
+            marginTop:'40px',
+            width:'90%',
+         
+            
+        }} container spacing={2}>
+            {
+                appointmentList?.map((data,index)=>
+                  <Grid item xs={8} md={5}>
+                   <UserFeedBackCard 
+                     key={data.id} 
+                     name={data.title} 
+                     feedBackGroup={data.appointmentDate}
+                     suggestion={data.description}
+                     
+                     />
+                  </Grid>
+  
+                  
+                )
+            }
+            </Grid>:<Typography 
+               sx={{marginTop:'80px',textAlign:'center',color:isLightMode?'#1e1e1e':'white'}} 
+               variant='h5'>There is no feedBack Yet</Typography>}
                 </Box>
             </Box>
         </Box>

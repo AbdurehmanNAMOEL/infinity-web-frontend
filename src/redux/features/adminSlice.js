@@ -162,6 +162,33 @@ export const getAllAnsweredSurvey = createAsyncThunk('admin/getAllAnsweredSurvey
     }
 })
 
+export const getConsultantAppointment = createAsyncThunk('admin/getConsultantAppointment',async()=>{
+    try {
+         const response = await axios.get(`${realBasicUrl}consultees`)
+         if(response){
+            
+            return response.data
+         }
+    } catch (error) {
+       
+        console.log(error.response.data.error)    
+    }
+})
+
+
+export const getAllAppointments = createAsyncThunk('admin/getAllAppointments',async()=>{
+    try {
+         const response = await axios.get(`${realBasicUrl}appointments`)
+         if(response){
+            
+            return response.data
+         }
+    } catch (error) {
+       
+        console.log(error.response.data.error)    
+    }
+})
+
 
 
 
@@ -174,7 +201,9 @@ export const adminSlice= createSlice({
       survey:[],
       usersFeedBacks:[],
       generatedSurvey:[], 
-      answeredSurvey:[],    
+      answeredSurvey:[],   
+      consultantUserList:[],
+      appointmentList:[],
       loading:false,
       isAdminLoggedIn:false,
       navTitle:'dashboard/adminHome',
@@ -298,6 +327,35 @@ export const adminSlice= createSlice({
       state.isAdminLoggedIn=true
     },
     [getAllAnsweredSurvey.rejected]:(state,action)=>{
+      state.loading=false
+      state.isAdminLoggedIn=true
+    },
+
+    
+    [getConsultantAppointment.pending]:(state,action)=>{
+      state.loading=true
+      state.isAdminLoggedIn=true
+    },
+    [getConsultantAppointment.fulfilled]:(state,action)=>{
+      state.consultantUserList=action.payload
+      state.loading=false
+      state.isAdminLoggedIn=true
+    },
+    [getConsultantAppointment.rejected]:(state,action)=>{
+      state.loading=false
+      state.isAdminLoggedIn=true
+    },
+
+    [getAllAppointments.pending]:(state,action)=>{
+      state.loading=true
+      state.isAdminLoggedIn=true
+    },
+    [getAllAppointments.fulfilled]:(state,action)=>{
+      state.appointmentList=action.payload
+      state.loading=false
+      state.isAdminLoggedIn=true
+    },
+    [getAllAppointments.rejected]:(state,action)=>{
       state.loading=false
       state.isAdminLoggedIn=true
     },

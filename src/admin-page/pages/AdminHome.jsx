@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import {  useSelector } from 'react-redux'
 
 import Card from '../components/Card'
+import GridTable from '../components/GridTable'
 import Header from '../components/Header'
 import SideBar from '../components/SideBar'
 import LineChart from './chart/LineChart'
@@ -10,8 +11,14 @@ import LineChart from './chart/LineChart'
 const AdminHome = () => {
     const [isDrawerOpen,closeDrawer] = useState(true)
     const {isLightMode}= useSelector(state=>state.auth)
-    const {users,generatedSurvey}= useSelector(state=>state.admin)
-  
+    const {users,generatedSurvey,appointmentList}= useSelector(state=>state.admin)
+   const column=[
+        {field:"firstName",headerName:"FirstName",flex:1,cellClassName:'name-column-cell'},
+        {field:"lastName",headerName:"LastName",flex:1,cellClassName:'name-column-cell'},
+        {field:"gender",headerName:"Gender",type:"number",headerAlign:'left',align:'left'},
+        {field:"phoneNumber",headerName:"Phone Number",flex:1},
+        {field:"email",headerName:"Email",flex:1},
+    ]
   return (
      <div style={
         {
@@ -39,18 +46,24 @@ const AdminHome = () => {
            <Card 
              cardHeader={'Survey Questions'} 
              cardBody={`${generatedSurvey?.length?generatedSurvey?.length:0}`}/>
-           <Card cardHeader={'Schedule course'} cardBody={'150+'}/>
+           <Card 
+             cardHeader={'Appointments'} 
+             cardBody={`${appointmentList?.length>0?appointmentList?.length:0}`}
+            />
         
          </Box>
          <Box sx={[style.chartDisplay,{backgroundColor:`${isLightMode?"white":'#1E1E1E'}`}]}>
             <LineChart/>
          </Box>
-         <Box sx={style.chartDisplay}>
-            <LineChart/>
-         </Box>
-         <Box sx={style.chartDisplay}>
-            <LineChart/>
-         </Box>
+         <Box sx={{width:'90%',marginLeft:'5%',height:'auto',marginBottom:'10px'}}>
+         { users?.length>0?
+          <GridTable 
+            colors={'white'}
+            data={users}
+            columnFieldsList={column}
+          />
+          :''}
+          </Box>
          </Box>
       </div>
   )

@@ -11,7 +11,7 @@ const InputSelector = ({optionList,selectorWidth,setValue,inputValue,label}) => 
       <FormControl fullWidth>
         <InputLabel id="demo-simple-select-label">{label}</InputLabel>
         <Select
-         sx={{height:'45px' }}
+         sx={{height:'50px' }}
           labelId="demo-simple-select-label"
           id="demo-simple-select"
           value={inputValue}

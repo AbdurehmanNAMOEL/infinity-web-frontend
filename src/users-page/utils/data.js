@@ -3,6 +3,7 @@ import StarIcon from '@mui/icons-material/Star';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import MeresaHiluf from '../../assets/image/Meresa-Hiluf.jpg'
 import SamuelGebremariam from '../../assets/image/Samuel-Gebremariam.jpg'
+import KirosWelduImage from '../../assets/image/KirosWeldu.jpg'
 const iconStyle={
     icon:{
         color:'#1A6CE8'
@@ -46,7 +47,7 @@ export const foundersData=[
     'facebookUrl':'',
     'linkedInUrl':'',
     'telegramUrl':'',
-    'imageUrl':MeresaHiluf
+    'imageUrl':KirosWelduImage
 },
 
 {

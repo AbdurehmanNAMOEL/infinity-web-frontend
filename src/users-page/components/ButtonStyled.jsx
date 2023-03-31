@@ -17,6 +17,7 @@ const ButtonStyled = ({bgColor,label,btnHeight,btnWidth,buttonIcon,shadow,setVal
     <Button 
     onClick={handleClick}
     variant="contained"
+   
     sx={{
       display:'flex',
       gap:2,

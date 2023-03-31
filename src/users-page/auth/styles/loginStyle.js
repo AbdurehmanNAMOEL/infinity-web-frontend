@@ -60,7 +60,7 @@ export const loginStyle={
     display:'flex',
     justifyContent:'center',
     alignItems:'center',
-    marginTop:'20px'
+    marginTop:'30px'
   },
   loginButtonContainer:{
     width:'96%',

@@ -18,7 +18,7 @@ const NavBar = ({isScrolling}) => {
    const dispatch = useDispatch()
   const [newNavList,setNewNavList]=useState()
   const [navTitle,setNavTitle]= useState('Home')
-
+  
   // from the state 
   let {isLoggedIn,isLightMode,modeColor} = useSelector(state=>state.auth)
   let {isAdminLoggedIn}= useSelector(state=>state.admin)
@@ -70,7 +70,7 @@ const NavBar = ({isScrolling}) => {
           )}
           <Mode isLightMode={isLightMode} 
            handleDispatch={()=>dispatch(setMode())}/>
-          {(!isLoggedIn)?<IconButton 
+          {!isLoggedIn?<IconButton 
             onClick={()=>navigate('/login')} 
             sx={style.logoInIcon}>
               <LoginIcon sx={{marginRight:'10px'}}/> <p>Login</p> 
