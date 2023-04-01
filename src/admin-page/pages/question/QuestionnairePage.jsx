@@ -11,7 +11,6 @@ import { choicesType,questionTypeList, surveyAccessingFilterList } from '../../u
 import { useDispatch, useSelector } from 'react-redux'
 import { createNewSurvey } from '../../../redux/features/adminSlice'
 import {toast} from 'react-toastify'
-import DropDown from '../../components/DropDown'
 const QuestionnairePage = ({closeDrawer,isDrawerOpen}) => {
   const [questionTitle,setQuestionTitle]= useState('text')
   const [questionMainTitle,setQuestionMainTitle]= useState('')
@@ -22,7 +21,7 @@ const QuestionnairePage = ({closeDrawer,isDrawerOpen}) => {
   const [singleAnswer,setSingleAnswer]=useState('')
   let dynamicIndex=Math.random()*10  
   const [answerData,setAnswerData]=useState([{id:dynamicIndex,"answer":''}])
-  
+  const [isValid,setIsValid]= useState(false)
   const dispatch = useDispatch()
 
   const handleData=(inputIndex)=>{ 
@@ -107,9 +106,10 @@ const QuestionnairePage = ({closeDrawer,isDrawerOpen}) => {
           closeDrawer={closeDrawer}
           drawerWidth={isDrawerOpen?200:0}
         />
-        <Box sx={{display:'flex',width:'100%',position:'relative',flexDirection:'column'}}>
-        <Box sx={{position:'fixed',width:`${isDrawerOpen?100:100}%`,zIndex:200}}> 
+        <Box sx={{display:'flex',height:'100vh',width:'100%',position:'relative',flexDirection:'column'}}>
+          <Box sx={{position:'fixed',height:'100vh',width:`${isDrawerOpen?100:100}%`,zIndex:200}}> 
          <Header closeDrawer={()=>closeDrawer(prev=>!prev)}/>
+         <Box sx={{height:'auto'}}>
          <Paper sx={[style.questionMainTitle,{backgroundColor:modeColor}]}>
           <Box sx={{width:'30%',height:'50px'}}>
             <InputField
@@ -117,14 +117,16 @@ const QuestionnairePage = ({closeDrawer,isDrawerOpen}) => {
              setValue={(e)=>setQuestionMainTitle(e.target.value)}
              inputValue={questionMainTitle}
              type='text'
+             setValidation={setIsValid}
             />
             </Box>
-            <Box sx={{width:'65%',display:'flex',gap:'50px',marginLeft:'-150px'}}>
+          <Box sx={{width:'65%',display:'flex',gap:'50px',marginLeft:'-150px'}}>
            <InputSelector 
              setValue={(e)=>setQuestionTitle(e.target.value)}
              inputValue={questionTitle} 
              optionList={questionTypeList}
              label='Question type'
+             setValidation={setIsValid}
             />
             <InputSelector 
              setValue={(e)=>setQuestionType(e.target.value)}
@@ -154,6 +156,7 @@ const QuestionnairePage = ({closeDrawer,isDrawerOpen}) => {
              setValue={(e)=>setQuestion(e.target.value)}
              inputValue={question}
              type='text'
+             setValidation={setIsValid}
             />
             <button 
               onClick={createQuestion} 
@@ -212,7 +215,7 @@ const QuestionnairePage = ({closeDrawer,isDrawerOpen}) => {
           </Box>:''}
                
          </Box>
-        
+        </Box>
          </Box>
          
     </Box>
@@ -223,7 +226,7 @@ const style={
     questionMainTitle:{
       width:'80%',
       marginLeft:'2%',
-      height:'80px',
+      height:'120px',
       backgroundColor:'#DFDFDF',
       marginTop:'80px',
       display:'flex',

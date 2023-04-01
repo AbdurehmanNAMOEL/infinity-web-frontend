@@ -1,0 +1,94 @@
+import { handleResponsiveness } from "../../auth/styles/loginStyle";
+
+export const style={
+
+  registrationMainContainer:{
+       width:'100%',
+       height:handleResponsiveness('auto','100vh'),
+       display:'flex',
+       flexDirection:'column'
+  },
+  registrationCardMainContainer:{
+    width:'100%',
+    height:handleResponsiveness('100vh','100vh')
+  },
+  registrationInnerContainer: {
+    width:'100%',
+    height:handleResponsiveness('100%','87.5%'),
+    marginTop:handleResponsiveness('60px','80px'),
+    position:'absolute',
+    backgroundColor:'rgba(0,0,0,0.5)',
+    display:'flex',
+    justifyContent:'center',
+    alignItems:'center',
+  },
+  cardsMainContainer:  {
+    width:handleResponsiveness('95%','450px'),
+    height:handleResponsiveness('auto','auto'),
+    marginTop:'80px',
+    borderRadius:'0px',
+    marginBottom:'100px'
+  },
+  cardTitlesContainer:{
+    width:'100%',
+    gap:'50px',
+    height:'80px',
+    display:'flex',
+    justifyContent:'center',
+    alignItems:'center'
+  },
+  personalInputFieldContainer:{  
+    width:'80%',
+    height:'50px',
+    display:'flex',
+    marginLeft:'10%',
+    justifyContent:'center',
+    alignItems:'center',
+    marginTop:'30px',
+    marginBottom:'20px'
+  },
+  personalSubmissionBtnContainer: {
+    width:'90%',
+    height:'80px',
+    display:'flex',
+    justifyContent:'center',
+    alignItems:'center',
+    marginTop:'20px',
+    marginLeft:'3%'
+  },
+  selectorText:{
+    fontSize:'24px',
+    width:'40%',
+    display:'flex',
+    justifyContent:'center',
+    alignItems:'center',
+    cursor:'pointer',
+    height:'50px',
+    color:'#1A6CE8',
+    fontWeight:'bold',
+  },
+   contactFormContainer:{
+        width:'100%',
+        height:'80%',
+        display:'flex',     
+   },
+   formContainer:{
+        width:handleResponsiveness('95%','100%'),
+        height:handleResponsiveness('auto','auto'),
+        display:'flex',
+        flexDirection:'column',
+        alignItems:'center',
+        gap:handleResponsiveness('40px','20px'),
+        boxShadow:'none',
+    },
+
+  companyInputFieldContainer:{
+       width:'80%',
+       height:'50px',
+       display:'flex',
+       justifyContent:'center',
+       alignItems:'center',
+       marginTop:'30px',
+       marginBottom:'20px'
+  }
+}

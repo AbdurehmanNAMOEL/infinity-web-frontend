@@ -39,6 +39,8 @@ import UserProfileSubmissionPage from './users-page/auth/page/UserProfileSubmiss
 import {toast} from 'react-toastify'
 import ConsultantSechdulingPage from './admin-page/pages/appointment/ConsultantSechdulingPage';
 import UserFeedBack from './users-page/pages/UserFeedBack';
+import Wallet from './users-page/user_info_pages/pages/wallet/MyWallet';
+import MyWallet from './users-page/user_info_pages/pages/wallet/MyWallet';
 function App() {
    const [isDrawerOpen,setDrawerOpen]=useState(true)
    const [phoneNumber,setPhoneNumber] = useState('')
@@ -108,7 +110,7 @@ function App() {
           closeDrawer={closeDrawer}
           drawerWidth={isDrawerOpen?200:0}/>}/>
 
-        <Route path='question' 
+        <Route path='question-Generator' 
            element={<QuestionnairePage  
            isDrawerOpen={isDrawerOpen} 
            closeDrawer={closeDrawer}
@@ -170,12 +172,10 @@ function App() {
           <ForgotPassword />
           }/>
         <Route  path='/signUp' element={<SignUp/>}/>
-        <Route  path='/registration' element={<Registration/>}/>
         <Route  path='/userProfileFiller' element={<UserProfileSubmissionPage/>}/>
         <Route isScrolling={isScrolling} path='/policy' element={<PrivacyPolicyHome/>}/>
         <Route isScrolling={isScrolling} path='/' element={<HomePage/>}/>
         <Route isScrolling={isScrolling} path='/aboutUs' element={<AboutUs/>}/>
-    
        
       <Route element={<PrivateRoute/>}>
         
@@ -183,6 +183,16 @@ function App() {
           isScrolling={isScrolling} 
           path='/feedBack' 
           element={<UserFeedBack/>}
+        />
+
+        <Route  
+          path='/registration' 
+          element={<Registration/>}
+        />
+
+        <Route  
+          path='/myWallet' 
+          element={<MyWallet/>}
         />
 
          <Route 

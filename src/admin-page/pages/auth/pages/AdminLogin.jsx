@@ -17,6 +17,8 @@ const AdminLogin = () => {
    const navigate = useNavigate()
    const dispatch = useDispatch()
    const {loading} = useSelector(state=>state.admin)
+   const [isValid,setIsValid]= useState(false)
+   const [isBtnDisabled,setIsBtnDisabled]= useState(true) 
    const [userData,setUserData]= useState({phoneNumber:'',password:'',})
    const handleSubmit=()=>{
     
@@ -55,6 +57,7 @@ const AdminLogin = () => {
           <InputField 
             inputLabel={'Phone Number'}
             type='phoneNumber'
+            setValidation={setIsValid}
             inputValue={userData.phoneNumber}
             setValue={(e)=>setUserData({...userData,"phoneNumber":e.target.value})}
            />
@@ -63,6 +66,7 @@ const AdminLogin = () => {
           <InputField 
             inputLabel={'password'}
             type='password'
+            setValidation={setIsValid}
             inputValue={userData.password}
             setValue={(e)=>setUserData({...userData,"password":e.target.value})}
            />

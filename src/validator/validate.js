@@ -27,5 +27,12 @@ export const validateEmail=(inputValue)=>{
     if(!pattern['email'].test(inputValue)) return ' email must be like helen1@gmail.com '
     else return ''
 } 
+export const validateText=(inputValue)=>{
+    if(inputValue ==='') return "text can't  be empty"
+    if(inputValue.length<4) return 'text length must be at least 4'
+    if(!pattern['text'].test(inputValue)) return 'text input required'
+    else return ''
+} 
+
 
   

@@ -13,6 +13,7 @@ const TextArea = ({textAreaWidth,setValue,inputValue,textAreaHeight,placeholder}
          height:textAreaHeight,
          borderRadius:'5px',
          borderColor:'rgba(0,0,0,0.3)',
+         backgroundColor:'white'
         }
       } 
        placeholder={placeholder} 

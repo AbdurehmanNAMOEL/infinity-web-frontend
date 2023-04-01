@@ -1,5 +1,5 @@
 import { Box, Card, CardMedia, Paper, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import LogoImage from '../../assets/image/logo.png'
 import ButtonStyled from '../components/ButtonStyled'
 import InputField from '../components/InputField'
@@ -16,6 +16,7 @@ import InputSelector from '../../shared/Components/InputSelector'
 import { feedBackGroupList } from '../utils/selectorData'
 import { sendFeedBack } from '../../redux/features/authSlice'
 import {toast} from 'react-toastify'
+import ActionButton from '../components/ActionButton'
 const responsive =(xs,md)=>{
     return {xs:xs,md:md}
 }
@@ -25,8 +26,8 @@ const UserFeedBack = () => {
     const {modeColor}= useSelector(state=>state.auth)
     const [feedBack,setFeedBack] = useState('')
     const [feedBackGroup,setFeedBackGroup] = useState('')
+    const [isBtnDisabled,setIsBtnDisabled] = useState(false)
     const dispatch = useDispatch()
-
     const handleFeedBack=()=>{
       let feedBackData={
         "feedbackGroup":feedBackGroup,
@@ -34,7 +35,17 @@ const UserFeedBack = () => {
       }
 
       dispatch(sendFeedBack({feedBackData,toast}))
+
+      setFeedBack('')
+      setFeedBackGroup('')
     }
+
+    useEffect(()=>{
+      if(feedBackGroup !=='' && feedBack!==''){
+        setIsBtnDisabled(false)
+      }else setIsBtnDisabled(true)
+    },[feedBack,feedBackGroup])
+
   return (
    <Box sx={style.contactContainer}>
      <Box sx={style.contactLeftContainer}>
@@ -76,18 +87,20 @@ const UserFeedBack = () => {
                <Box sx={{width:'76.5%',marginLeft:'-18px'}}>
                 <TextArea
                  textAreaWidth={'100%'}
-                 textAreaHeight='200px'
+                 textAreaHeight='100px'
                  placeholder={'message'}
                  setValue={(e)=>setFeedBack(e.target.value)}
                  inputValue={feedBack}
                 />
                 </Box>
-                <ButtonStyled
-                 label={'Send'}
-                 btnWidth='60%'
-                 bgColor={'#0971f1'}
-                 setValue={handleFeedBack}
+                <Box sx={{width:'80%'}}>
+                  <ActionButton
+                   btnLabel={'Send'}
+                   btnWidth={'96%'}
+                   onClick={handleFeedBack}
+                   isBtnDisabled={isBtnDisabled}
                 />
+                </Box>
             </Paper>
         </Box>
      </Box>

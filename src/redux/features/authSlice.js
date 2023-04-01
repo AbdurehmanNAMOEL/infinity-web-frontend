@@ -191,6 +191,19 @@ export const findPhoneNumber = createAsyncThunk('auth/findPhoneNumber',async({to
     }
 })
 
+export const getMyWalletBalance = createAsyncThunk('auth/getMyWalletBalance',async()=>{
+  
+  try {
+         const response = await axios.get(`http://localhost:3000/wallets/myStats`)
+          
+         return response.data
+        
+    } catch (error) {
+        console.log(error.response.data)    
+    }
+})
+
+
 
 
 export const authSlice= createSlice({
@@ -214,7 +227,8 @@ export const authSlice= createSlice({
       survey:[],
       userProfileData:[],
       isUserExist:false,
-      isUserVerified:false
+      isUserVerified:false,
+      myWalletBalance:[]
 },
   reducers:{
     logOut:(state,action)=>{
@@ -338,6 +352,17 @@ export const authSlice= createSlice({
       state.loading=false
     },
     [editUserProfile.rejected]:(state,action)=>{
+         state.loading=false
+    },
+
+    [getMyWalletBalance.pending]:(state,action)=>{
+      state.loading=true
+    },
+    [getMyWalletBalance.fulfilled]:(state,action)=>{
+      state.myWalletBalance=action.payload
+      state.loading=false
+    },
+    [getMyWalletBalance.rejected]:(state,action)=>{
          state.loading=false
     },
     

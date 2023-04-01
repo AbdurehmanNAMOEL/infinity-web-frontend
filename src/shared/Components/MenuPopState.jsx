@@ -22,7 +22,7 @@ export default function MenuPopupState({handleLogOut,children}) {
             <MenuItem onClick={()=>dispatch(logOut())}></MenuItem>
              <MenuItem onClick={handleLogOut}>Logout</MenuItem>
              <MenuItem onClick={()=>navigate('/profile')}>My Profile</MenuItem>
-              <MenuItem onClick={handleLogOut}>My Wallet</MenuItem>
+              <MenuItem onClick={()=>navigate('/myWallet')}>My Wallet</MenuItem>
           </Menu>
        </Box>
       )}

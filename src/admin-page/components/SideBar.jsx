@@ -126,6 +126,10 @@ const SideBar = ({isDrawerOpen,closeDrawer,drawerWidth}) => {
               {questionCollapse ? <ExpandLess /> : <ExpandMore />}
             </ListItem>
             <Collapse sx={{marginLeft:'10%'}} in={questionCollapse} timeout="auto" unmountOnExit>
+             <IconButton onClick={()=>navigate('/dashboard/question-Generator')} sx={{width:'80%',gap:'10px',borderRadius:'0px'}}>
+              <PlaylistAddCheckOutlinedIcon sx={{ color:'#1977FC'}}/> 
+                  <Typography>Generate</Typography>
+            </IconButton>
              <IconButton onClick={()=>navigate('/dashboard/questionList')} sx={{width:'80%',gap:'10px',borderRadius:'0px'}}>
               <PlaylistAddCheckOutlinedIcon sx={{ color:'#1977FC'}}/> 
                   <Typography>Question</Typography>

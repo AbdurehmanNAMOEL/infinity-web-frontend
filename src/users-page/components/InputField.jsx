@@ -11,7 +11,8 @@ import {
   validateEmail, 
   validateName, 
   validatePassword, 
-  validatePhoneNumber
+  validatePhoneNumber,
+  validateText
 } from '../../validator/validate';
 
 const InputField = ({inputLabel,type,setValue,inputValue,width,setValidation}) => {
@@ -41,6 +42,12 @@ const validate = ()=>{
   }else if(type ==='email'){ 
       if(validateEmail(inputValue)!==''){
          setEmpty(validateEmail(inputValue))
+         setValid(false)      
+     }else  setValid(true)
+  }
+    else if(type ==='text'){ 
+      if(validateText(inputValue)!==''){
+         setEmpty(validateText(inputValue))
          setValid(false)      
      }else  setValid(true)
   }
