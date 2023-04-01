@@ -1,24 +1,23 @@
 import React,{useEffect, useState} from 'react'
-import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import {toast} from 'react-toastify'
 import { FaUserAstronaut } from 'react-icons/fa'
-
 import { Box, Card, CardMedia ,Paper, Typography } from '@mui/material'
 import InputField from '../../../../users-page/components/InputField'
 import ButtonStyled from '../../../../users-page/components/ButtonStyled'
 import LogoImage from '../../../../assets/image/logo.png'
-import { loginAdmin, signUpAdmin } from '../../../../redux/features/adminSlice'
+import { loginAdmin} from '../../../../redux/features/adminSlice'
 import LoadingAnimation from '../../../../shared/Components/LoadingAnimation'
 import { handleResponsiveness } from '../../../../users-page/auth/styles/loginStyle'
+import ActionButton from '../../../../users-page/components/ActionButton'
 const AdminLogin = () => {
  
    const navigate = useNavigate()
    const dispatch = useDispatch()
    const {loading} = useSelector(state=>state.admin)
    const [isValid,setIsValid]= useState(false)
-   const [isBtnDisabled,setIsBtnDisabled]= useState(true) 
+   const [isBtnDisabled,setIsBtnDisabled]= useState(true)
    const [userData,setUserData]= useState({phoneNumber:'',password:'',})
    const handleSubmit=()=>{
     
@@ -30,15 +29,12 @@ const AdminLogin = () => {
    }
 
 
-// useEffect(()=>{
-//   const userData={
-//       firstName: "Abdurehman",
-//       lastName: "Saeed",
-//       phoneNumber: "0936970345",
-//       password: "hayatdjjjj123"
-//   }
-//       dispatch(signUpAdmin({userData,toast}))
-//     },[])
+useEffect(()=>{
+  
+      if(userData.phoneNumber!==''&&userData.password!==''&& isValid){
+         setIsBtnDisabled(false)
+      }else setIsBtnDisabled(true)
+    },[userData,isValid])
    
   return (
    <Box sx={style.adminLoginContainer}>  
@@ -78,13 +74,12 @@ const AdminLogin = () => {
             justifyContent:'flex-start',
             alignItems:'center',
           }}>
-            {!loading?'':<LoadingAnimation/>}
-            <ButtonStyled 
-               label={'Login'} 
-               bgColor='#1A6CE8' 
+             <ActionButton
+               btnLabel={'Login'}
                btnWidth={'95%'}
-               setValue={handleSubmit}
-               />
+               onClick={handleSubmit}
+               isBtnDisabled={isBtnDisabled}
+             />  
         </Box>
   </Paper>
 </Box>

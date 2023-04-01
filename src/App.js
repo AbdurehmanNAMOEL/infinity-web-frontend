@@ -8,13 +8,11 @@ import DashBoard from './admin-page/pages/DashBoard';
 import Users from './admin-page/pages/Users';
 import QuestionnairePage from './admin-page/pages/question/QuestionnairePage';
 import ChartHomePage from './admin-page/pages/chart/chartHomepage/ChartHomePage';
-// import Blog from './admin-page/pages/Course';
 import HomePage from './users-page/pages/HomePage';
 import { Login } from './users-page/auth/page/Login';
 import AboutUs from './users-page/pages/AboutUs';
 import SignUp from './users-page/auth/page/SignUp';
 import SurveyHome from './users-page/pages/survey/SurveyHome';
-import ContactUs from './users-page/pages/UserFeedBack';
 import AdminHome from './admin-page/pages/AdminHome';
 import PrivateRoute from './users-page/privateRoute/PrivateRoute';
 import { useSelector } from 'react-redux';
@@ -28,54 +26,30 @@ import LoadingPage from './shared/Components/LoadingPage';
 import ForgotPassword from './users-page/auth/auth-rest/pages/ForgotPassword';
 import VerificationPage from './users-page/auth/auth-rest/pages/VerificationPage';
 import RestPassword from './users-page/auth/auth-rest/pages/RestPassword';
-import { RecaptchaVerifier,signInWithPhoneNumber } from 'firebase/auth';
-import { auth } from './config/firebase_config';
 import FeedBackPage from './admin-page/pages/FeedBackPage';
 import QuestionList from './admin-page/pages/question/QuestionList';
 import QuestionAnswered from './admin-page/pages/question/QuestionAnswered';
 import Appointment from './admin-page/pages/appointment/Appointment';
 import ProfilePage from './users-page/user_info_pages/pages/profile/ProfilePage';
 import UserProfileSubmissionPage from './users-page/auth/page/UserProfileSubmissionPage';
-import {toast} from 'react-toastify'
 import ConsultantSechdulingPage from './admin-page/pages/appointment/ConsultantSechdulingPage';
 import UserFeedBack from './users-page/pages/UserFeedBack';
-import Wallet from './users-page/user_info_pages/pages/wallet/MyWallet';
 import MyWallet from './users-page/user_info_pages/pages/wallet/MyWallet';
 function App() {
    const [isDrawerOpen,setDrawerOpen]=useState(true)
-   const [phoneNumber,setPhoneNumber] = useState('')
-   const [verify,setVerify] = useState('')
    const {isLightMode,loading}= useSelector(state=>state.auth)
-   const [navText,setNavText]=useState('dashboard/adminHome')
    const [isScrolling,setIsScrolling]=useState(false)
    const [surveyData, setSurveyDetailData] = useState([])
-   const [result,setResult]= useState()
-    const closeDrawer=()=>{
-          setDrawerOpen(prev=>!prev)
-    }
-
-    useEffect(()=>{
+   const closeDrawer=()=>setDrawerOpen(prev=>!prev)
+    
+   useEffect(()=>{
     },[isDrawerOpen])
 
     window.addEventListener('scroll',()=>{
-    if(window.pageYOffset>0){
-         setIsScrolling(true)
-         
+     if(window.pageYOffset>0)setIsScrolling(true)
+     else setIsScrolling(false)
+   })
 
-        }else{
-          setIsScrolling(false)
-        }
-      
-  })
-
-
- 
- 
-
-  
-
-
-  
 
   return (
     <Box sx={
