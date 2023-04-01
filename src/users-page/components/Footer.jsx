@@ -12,8 +12,9 @@ import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import googlePlayImage from '../../assets/image/google.png'
 import LogoImage from '../../assets/image/logo.png'
 import {useNavigate} from 'react-router-dom'
+import { useSelector } from 'react-redux';
 const Footer = () => {
-
+  const {modeColor,isLightMode}= useSelector(state=>state.auth)
   const navigate = useNavigate()
   const handleCopyToClipBoard=(e)=>{
        e.stopPropagation()
@@ -22,33 +23,48 @@ const Footer = () => {
   }
 
   return (
-    <Box sx={style.footerStyle}>
+    <Box sx={[style.footerStyle,{backgroundColor:isLightMode?'#DFDFDF':'#333'}]}>
        <Box sx={style.footerTopContainer}>
            <Box sx={style.footerTopInnerContainer}>
-              <Card sx={{width:'55%',height:'80px',boxShadow:'none',backgroundColor:'#DFDFDF'}}>
+              <Card sx={{
+                width:'55%',
+                height:'80px',
+                boxShadow:'none',
+                backgroundColor:isLightMode?'#DFDFDF':'#333'
+                }}>
                 <CardMedia image={LogoImage} sx={{width:'100%',height:'100%'}}/>
               </Card>
            </Box>
              <Box sx={style.footerSectionContainer}>
-               <Typography sx={{marginBottom:'16px',fontWeight:'bold'}}>Contact Us</Typography>
+               <Typography sx={{marginBottom:'16px',fontWeight:'bold',color:isLightMode?'#1e1e1e':'white'}}>
+                  Contact Us
+               </Typography>
                <Box sx={{width:'100%',display:'flex',flexDirection:'column',gap:'16px'}}>
                   <Box onClick={(e)=>handleCopyToClipBoard(e)} 
                     sx={style.footerContactIconContainer}>
                     <PhoneForwardedIcon sx={{color:'#1A6CE8'}}/>
-                    <span style={{fontSize:'14px'}}>+2510936970345</span>
+                    <Typography sx={{fontSize:'14px',color:isLightMode?'#1e1e1e':'white'}}>
+                      +2510936970345
+                    </Typography>
                   </Box>
                   <Box sx={style.footerContactIconContainer}>
                     <MailIcon sx={{color:'#1A6CE8'}}/>
-                    <span style={{fontSize:'14px'}}>asaeed526@gmail.com</span>
+                    <span style={{fontSize:'14px',color:isLightMode?'#1e1e1e':'white'}}>
+                      asaeed526@gmail.com
+                    </span>
                   </Box>
                   <Box sx={style.footerContactIconContainer}>
                     <LocationOnIcon sx={{color:'#1A6CE8'}}/>
-                    <span style={{fontSize:'14px'}}>Addis Ababa</span>
+                    <span style={{fontSize:'14px',color:isLightMode?'#1e1e1e':'white'}}>
+                      Addis Ababa
+                    </span>
                   </Box>
                </Box>
            </Box>
           <Box sx={style.footerSectionContainer}>
-             <Typography sx={{marginBottom:'10px',fontWeight:'bold'}}>Follow Us</Typography>
+              <Typography sx={{marginBottom:'10px',fontWeight:'bold',color:isLightMode?'#1e1e1e':'white'}}>
+                 Follow Us
+              </Typography>
               {/* <span>Feel free to contact</span> */}
                <Box sx={style.contactUsContainer}>
                   <FacebookOutlinedIcon sx={{color:'#1A6CE8'}}/>
@@ -59,12 +75,12 @@ const Footer = () => {
            </Box>
            <Box sx={style.footerSectionContainer}>
             <Typography 
-               sx={{marginBottom:'16px',fontWeight:'bold'}}>
+               sx={{marginBottom:'16px',fontWeight:'bold',color:isLightMode?'#1e1e1e':'white'}}>
                 Download Our app
              </Typography>
             <Box 
-               sx={style.googleIconMainContainer}>
-              <Card sx={style.googleIconContainer}>
+               sx={[style.googleIconMainContainer]}>
+              <Card sx={[style.googleIconContainer]}>
                 <CardMedia 
                   image={googlePlayImage} 
                   sx={{width:'100%',height:'90%'}}
@@ -73,9 +89,9 @@ const Footer = () => {
             </Box>
            </Box>
        </Box>
-       <Box sx={style.footerBottomContainer}>
+       <Box sx={[style.footerBottomContainer,{color:isLightMode?'#1e1e1e':'white'}]}>
           <Typography 
-             sx={style.footerCopyRightText}>© 2023 -  Infinity. All Rights Reserved</Typography>
+             sx={[style.footerCopyRightText,{color:isLightMode?'#1e1e1e':'white'}]}>© 2023 -  Infinity. All Rights Reserved</Typography>
           <Box onClick={()=>navigate('/policy')} sx={style.footerPolicyContainer}>
             <Typography 
               sx={{fontSize:handleResponsiveness('12px','16px')}}>
@@ -96,7 +112,7 @@ const style={
       height:handleResponsiveness('auto','50vh'),   
       backgroundColor:'#DFDFDF',
       display:'flex',
-      flexDirection:'column'
+      flexDirection:'column',
     },
     footerTopContainer:{
        width:'100%',
@@ -131,7 +147,6 @@ const style={
       height:'40px',
       boxShadow:'none',
       cursor:'pointer',
-      backgroundColor:'#DFDFDF'
     },
     googleIconMainContainer:{
       width:'100%',
