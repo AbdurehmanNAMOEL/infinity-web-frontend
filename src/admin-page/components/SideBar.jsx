@@ -31,7 +31,9 @@ const SideBar = ({isDrawerOpen,closeDrawer,drawerWidth}) => {
  }
   const dispatch= useDispatch()
   
-
+  const handleTextModeDependentColor=(isLightMode)=>{
+      return {color:isLightMode?'#1e1e1e':'white'}
+  }
   return (
     <Drawer
      open={{xs:!isDrawerOpen,md:isDrawerOpen}}
@@ -55,8 +57,8 @@ const SideBar = ({isDrawerOpen,closeDrawer,drawerWidth}) => {
               <Typography 
                 variant='h8' 
                 sx={{display:'flex',gap:'4px',mt:'8px',color:`${isLightMode?'#1E1E1E':'white'}`}}>
-               <Typography>{admins.firstName}</Typography>
-                <Typography>{admins.lastName}</Typography>
+               <Typography>{admins?.firstName}</Typography>
+                <Typography>{admins?.lastName}</Typography>
               </Typography>
               <Typography sx={style.adminPosition}>CEO</Typography>
          </Box>
@@ -94,17 +96,26 @@ const SideBar = ({isDrawerOpen,closeDrawer,drawerWidth}) => {
               <ListItemIcon  sx={{marginLeft:'10px'}}>
                  <PlaylistAddCheckOutlinedIcon sx={{ color:'#1977FC'}}/> 
               </ListItemIcon>
-              <ListItemText sx={{marginLeft:'-25px'}} primary="Appointment" />
-              {appointmentCollapse ? <ExpandLess /> : <ExpandMore />}
+              <ListItemText sx={[{marginLeft:'-25px'},handleTextModeDependentColor(isLightMode)]} primary="Appointment" />
+              {appointmentCollapse ? 
+                <ExpandLess sx={handleTextModeDependentColor(isLightMode)}/> : 
+                <ExpandMore sx={handleTextModeDependentColor(isLightMode)}/>}
             </ListItem>
-            <Collapse sx={{marginLeft:'10%'}} in={appointmentCollapse} timeout="auto" unmountOnExit>
-             <IconButton onClick={()=>navigate('/dashboard/appointment')} sx={{width:'80%',gap:'10px',borderRadius:'0px'}}>
+            <Collapse sx={[{marginLeft:'10%'},handleTextModeDependentColor(isLightMode)]} 
+              in={appointmentCollapse} 
+              timeout="auto" 
+              unmountOnExit
+            >
+             <IconButton onClick={()=>navigate('/dashboard/appointment')}
+                sx={{width:'80%',gap:'10px',borderRadius:'0px'}}>
               <PlaylistAddCheckOutlinedIcon sx={{ color:'#1977FC'}}/> 
-                  <Typography>Appointment</Typography>
+                  <Typography sx={handleTextModeDependentColor(isLightMode)}>Appointment</Typography>
             </IconButton>
-              <IconButton  onClick={()=>navigate('/dashboard/consultant')}  sx={{width:'80%',gap:'10px',borderRadius:'0px'}}>
+              <IconButton  
+                 onClick={()=>navigate('/dashboard/consultant')}  
+                 sx={{width:'80%',gap:'10px',borderRadius:'0px'}}>
               <PlaylistAddCheckOutlinedIcon sx={{ color:'#1977FC'}}/> 
-                  <Typography>Consultant</Typography>
+                  <Typography sx={handleTextModeDependentColor(isLightMode)}>Consultant</Typography>
             </IconButton>
           </Collapse>
 
@@ -119,24 +130,30 @@ const SideBar = ({isDrawerOpen,closeDrawer,drawerWidth}) => {
               cursor:'pointer',
               transition:'all 0.7s'
               }} >
-              <ListItemIcon  sx={{marginLeft:'10px'}}>
+              <ListItemIcon  sx={[{marginLeft:'10px'},]}>
                  <PlaylistAddCheckOutlinedIcon sx={{ color:'#1977FC'}}/> 
               </ListItemIcon>
-              <ListItemText sx={{marginLeft:'-25px'}} primary="Question" />
-              {questionCollapse ? <ExpandLess /> : <ExpandMore />}
+              <ListItemText 
+                sx={[{marginLeft:'-25px'},handleTextModeDependentColor(isLightMode)]} 
+                primary="Question" 
+              />
+              {questionCollapse ? 
+                <ExpandLess sx={handleTextModeDependentColor(isLightMode)}/> : 
+                <ExpandMore sx={handleTextModeDependentColor(isLightMode)}/>
+              }
             </ListItem>
             <Collapse sx={{marginLeft:'10%'}} in={questionCollapse} timeout="auto" unmountOnExit>
              <IconButton onClick={()=>navigate('/dashboard/question-Generator')} sx={{width:'80%',gap:'10px',borderRadius:'0px'}}>
               <PlaylistAddCheckOutlinedIcon sx={{ color:'#1977FC'}}/> 
-                  <Typography>Generate</Typography>
+                  <Typography sx={handleTextModeDependentColor(isLightMode)}>Generate</Typography>
             </IconButton>
              <IconButton onClick={()=>navigate('/dashboard/questionList')} sx={{width:'80%',gap:'10px',borderRadius:'0px'}}>
               <PlaylistAddCheckOutlinedIcon sx={{ color:'#1977FC'}}/> 
-                  <Typography>Question</Typography>
+                  <Typography sx={handleTextModeDependentColor(isLightMode)}>Question</Typography>
             </IconButton>
               <IconButton  onClick={()=>navigate('/dashboard/answered')}  sx={{width:'80%',gap:'10px',borderRadius:'0px'}}>
               <PlaylistAddCheckOutlinedIcon sx={{ color:'#1977FC'}}/> 
-                  <Typography>Answered</Typography>
+                  <Typography sx={handleTextModeDependentColor(isLightMode)}>Answered</Typography>
             </IconButton>
           </Collapse>
 

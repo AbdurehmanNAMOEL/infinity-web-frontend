@@ -35,6 +35,7 @@ import UserProfileSubmissionPage from './users-page/auth/page/UserProfileSubmiss
 import ConsultantSechdulingPage from './admin-page/pages/appointment/ConsultantSechdulingPage';
 import UserFeedBack from './users-page/pages/UserFeedBack';
 import MyWallet from './users-page/user_info_pages/pages/wallet/MyWallet';
+import Modal from './admin-page/components/Modal';
 function App() {
    const [isDrawerOpen,setDrawerOpen]=useState(true)
    const {isLightMode,loading}= useSelector(state=>state.auth)
@@ -62,7 +63,7 @@ function App() {
       <Router>
            <ScrollToTop/>
         <ToastContainer/>
-        
+      
        <Routes>
         <Route 
           path='adminLogin' 

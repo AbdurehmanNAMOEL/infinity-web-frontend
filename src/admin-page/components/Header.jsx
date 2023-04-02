@@ -13,7 +13,9 @@ import { setMode } from '../../redux/features/authSlice'
 import MenuPopupState from '../../shared/Components/MenuPopState'
 import { logOut } from '../../redux/features/adminSlice'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-function Header({closeDrawer,headerTitle}) {
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import LogoutIcon from '@mui/icons-material/Logout';
+function Header({closeDrawer,headerTitle,openModal}) {
    const navigate = useNavigate()
    const dispatch = useDispatch()
    const {isLightMode}= useSelector(state=>state.auth)
@@ -40,25 +42,26 @@ function Header({closeDrawer,headerTitle}) {
             {!headerTitle?navTitle?.split('/')[1]:headerTitle}
        </Typography>
         </Box>
-        <Box sx={{width:'40%',display:'flex',justifyContent:'center',gap:'20px'}}>
+        <Box sx={{width:'50%',display:'flex',justifyContent:'center',gap:'20px'}}>
         {isLightMode?<IconButton onClick={handleDispatch}>
             <ModeNightOutlined sx={{width:'20px',height:'20px',color:'black', fontweight:'bold'}}/>
         </IconButton>:
          <IconButton onClick={handleDispatch}>
             <LightMode sx={{color:'gold', fontweight:'bold'}}/>
         </IconButton>}
+           <IconButton onClick={openModal}>
+            <PersonAddIcon sx={{color:'#1977FC', fontweight:'bold'}}/>
+        </IconButton>
           <IconButton onClick={()=>navigate('/')}>
             <HomeOutlined sx={{color:'#1977FC', fontweight:'bold'}}/>
         </IconButton>
         <Box sx={{width:'40%'}}>
-          <MenuPopupState
-                handleLogOut={()=>dispatch(logOut())}>
-                 <Typography 
-                   sx={{fontSize:'14px',color:isLightMode?'#1e1e1e':'white'}}>
-                    {adminData?.firstName}
-                  </Typography>
-                 <ExpandMoreIcon sx={{borderRadius:'0px'}}/>
-           </MenuPopupState>
+         <IconButton  
+          sx={style.logoutBtnContainer} 
+          onClick={()=>dispatch(logOut())}>
+            <LogoutIcon sx={{color:'white', fontweight:'bold'}}/>
+            <Typography sx={{fontSize:'14px',fontWeight:'bolder',color:'white'}}>LogOut</Typography>
+        </IconButton>
            </Box>
         </Box>
     </Paper>
@@ -76,6 +79,17 @@ const style ={
         zIndex:400,
         borderRadius:'0px',
         position:'fixed'
+    },
+    logoutBtnContainer:{
+      width:'120px',
+      height:'40px',
+      backgroundColor:'#1977FC',
+      borderRadius:'5px',
+      gap:'6px',
+      '&:hover':{
+        backgroundColor:'#1977FC'
+      }
+  
     }
 }
 export default Header

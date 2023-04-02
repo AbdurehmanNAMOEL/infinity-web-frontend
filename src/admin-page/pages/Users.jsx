@@ -23,7 +23,7 @@ const Users = ({closeDrawer,isDrawerOpen}) => {
         {field:"email",headerName:"Email",flex:1},
     ]
   return (
-      <Box sx={{width:'100%',display:'flex',flexDirection:'row',height:{md:'100vh',sm:'auto'}}}>
+      <Box sx={{width:'100%',display:'flex',flexDirection:'row'}}>
         <SideBar
           isDrawerOpen={isDrawerOpen} 
           closeDrawer={closeDrawer}

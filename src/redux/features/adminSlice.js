@@ -31,12 +31,11 @@ const testUrl='https://infinity-api-oqlt.onrender.com/loginAdmin'
 const realBasicUrl='http://localhost:3000/'
 
 
-export const signUpAdmin = createAsyncThunk('admin/signUpAdmin',async({userData,toast})=>{
+export const signUpAdmin = createAsyncThunk('admin/signUpAdmin',async({adminSignUpData,toast})=>{
     try {
-         const response = await axios.post(`${realBasicUrl}admins/signUp`,userData)
-          console.log(response)
+         const response = await axios.post(`${realBasicUrl}admins`,adminSignUpData)
          if(response){
-            toast.success('well come back')
+            toast.success('new Admin SuccessFully created')
            
             return response.data
          }
@@ -80,7 +79,7 @@ export const getAllUsers = createAsyncThunk('admin/getAllUsers',async()=>{
 
 export const createNewSurvey = createAsyncThunk('admin/createSurvey',async({surveyData,toast})=>{
     try {
-         const response = await axios.post('https://infinity-api-oqlt.onrender.com/createQuestion',surveyData)
+         const response = await axios.post(`${realBasicUrl}/survey/submitSurvey`,surveyData)
          if(response){
             toast.success('Survey Created successfully')
             return response.data
@@ -94,7 +93,7 @@ export const createNewSurvey = createAsyncThunk('admin/createSurvey',async({surv
 
 export const getAllSurveyQuestions = createAsyncThunk('admin/getAllSurveyQuestions',async()=>{
     try {
-         const response = await axios.get('https://infinity-api-oqlt.onrender.com/getAllQuestion')
+         const response = await axios.get(`${realBasicUrl}/questions`)
          if(response){
            
             return response.data
@@ -190,10 +189,6 @@ export const getAllAppointments = createAsyncThunk('admin/getAllAppointments',as
 })
 
 
-
-
-
-
 export const adminSlice= createSlice({
     name:'admin',
     initialState:{
@@ -204,6 +199,7 @@ export const adminSlice= createSlice({
       answeredSurvey:[],   
       consultantUserList:[],
       appointmentList:[],
+      isDrawerOpened:false,
       loading:false,
       isAdminLoggedIn:false,
       navTitle:'dashboard/adminHome',
@@ -212,9 +208,17 @@ export const adminSlice= createSlice({
 },
   reducers:{
     logOut:(state,action)=>{
-       state.isAdminLoggedIn=false
-       state.isAdmin=false
-       localStorage.removeItem('admin')
+      state.isAdminLoggedIn=false
+      state.isAdmin=false
+      localStorage.removeItem('admin')
+      state.survey=[]
+      state.usersFeedBacks=[]
+      state.generatedSurvey=[] 
+      state.answeredSurvey=[]   
+      state.consultantUserList=[]
+      state.appointmentList=[]
+      state.loading=false
+      state.isAdminLoggedIn=false
     },
      setMode:(state,action)=>{
        state.isLightMode=!state.isLightMode
@@ -233,7 +237,6 @@ export const adminSlice= createSlice({
       state.admins=action.payload
       state.loading=false
       state.isLoggedIn=true
-      localStorage.setItem('admin',JSON.stringify({...action.payload}))
     },
     [signUpAdmin.rejected]:(state,action)=>{
          state.loading=false

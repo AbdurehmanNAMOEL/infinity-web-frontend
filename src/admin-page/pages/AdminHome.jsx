@@ -1,4 +1,4 @@
-import { Box} from '@mui/material'
+import { Box, Paper} from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import {  useSelector } from 'react-redux'
 
@@ -7,10 +7,13 @@ import GridTable from '../components/GridTable'
 import Header from '../components/Header'
 import SideBar from '../components/SideBar'
 import LineChart from './chart/LineChart'
+import Modal from '../components/Modal'
+import AdminSignUp from './auth/pages/AdminSignUp'
 
 const AdminHome = () => {
     const [isDrawerOpen,closeDrawer] = useState(true)
     const {isLightMode}= useSelector(state=>state.auth)
+    const [isNewAdminModalOpened,setIsNewAdminModalOpened]= useState(false)
     const {users,generatedSurvey,appointmentList}= useSelector(state=>state.admin)
    const column=[
         {field:"firstName",headerName:"FirstName",flex:1,cellClassName:'name-column-cell'},
@@ -19,24 +22,40 @@ const AdminHome = () => {
         {field:"phoneNumber",headerName:"Phone Number",flex:1},
         {field:"email",headerName:"Email",flex:1},
     ]
+
+    const handleModalOpen=(e)=>{
+        setIsNewAdminModalOpened(prev=>!prev)
+    }
   return (
-     <div style={
+    <>  
+     {isNewAdminModalOpened? 
+       <Modal closeModal={(e)=>handleModalOpen(e)}>
+        <AdminSignUp/>
+       </Modal>:null
+    }
+     <Box sx={
         {
             width:'100%',
             display:'flex',
             position:'relative',
             flexDirection:'row',
-            height:{md:'100vh',sm:'auto'}
+            height:{md:'auto',xs:'auto'},
+            zIndex:3000
             }
         }>
+     
          <SideBar 
           isDrawerOpen={isDrawerOpen} 
           closeDrawer={closeDrawer}
           drawerWidth={isDrawerOpen?200:0}
         />
+     
         <Box sx={{display:'flex',width:'100%',position:'relative',flexDirection:'column'}}>
          <Box sx={{position:'fixed',width:`${isDrawerOpen?100:100}%`,zIndex:200}}> 
-         <Header closeDrawer={()=>closeDrawer(prev=>!prev)}/>
+         <Header 
+            openModal={()=>setIsNewAdminModalOpened(prev=>!prev)} 
+            closeDrawer={()=>closeDrawer(prev=>!prev)}
+          />
          </Box>
          <Box sx={[style.topContainer,{backgroundColor:`${isLightMode?"white":'#1E1E1E'}`}]}>
            <Card 
@@ -65,7 +84,8 @@ const AdminHome = () => {
           :''}
           </Box>
          </Box>
-      </div>
+      </Box>
+      </>
   )
 }
 

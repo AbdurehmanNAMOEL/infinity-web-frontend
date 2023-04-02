@@ -10,7 +10,7 @@ const SurveyDisplayCard = ({id,questionTitle,questions,index}) => {
   return (
       <Paper key={id} sx={style.surveyDisplayContainer}>
          <Box sx={style.surveyTitleContainer}>
-           <Typography sx={style.surveyNumber}>{`Q${index+1}`}</Typography>
+           <Typography sx={style.surveyNumber}>{`S${index+1}`}</Typography>
              {questionTitle}         
          </Box>
          <Box sx={style.surveyQuestionNumber}>

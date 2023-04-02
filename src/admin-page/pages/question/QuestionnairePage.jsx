@@ -30,10 +30,11 @@ const QuestionnairePage = ({closeDrawer,isDrawerOpen}) => {
 
   const createSurvey=()=>{
      const surveyData={
-      'questionTitle':questionMainTitle,
-      'questionType':'Mixed',
+      'title':questionMainTitle,
+      'endAt':'0',
       'questions':questionData
      }
+      console.log(surveyData)
      dispatch(createNewSurvey({surveyData,toast}))
   }
   
@@ -56,25 +57,32 @@ const QuestionnairePage = ({closeDrawer,isDrawerOpen}) => {
        setAnswerData([...answerData],answerData.filter((item,index)=>index))
        
     }
-  },[answerData,questionType])
+  },[questionType])
 
 
-
+  console.log(answerData)
 
   const createQuestion=()=>{
     if(question!==''){
-       if(questionData.find(item=>item.questionTitle===question)===undefined){
+       if(questionData.find(item=>item.query===question)===undefined){
          if(questionTitle==='choice'){
           console.log(answerData.map((item,index)=>item.answer[index]!==''))
+           
            if(answerData.find((item,index)=>item.answer==='')===undefined){
-              setQuestionData([...questionData,{
-              "questionTitle":question,questionType:questionTitle,
-              'choiceType':questionType,
-              'choiceAnswer':answerData
-            }])}else alert('please enter answers')
+             let optionData=[]
+              if(questionType==='userInput'){
+                optionData=answerData.map(answersValue=>answersValue.answer)
+                setQuestionData([...questionData,{"query":question,"type":questionTitle,
+                'options':optionData}])
+              }else{
+                optionData=answerData.map(answersValue=>answersValue.answer)[0]
+                setQuestionData([...questionData,{"query":question,"type":questionTitle,
+                'options':optionData}])
+              }
+              }else alert('please enter answers')
           }else {
             setQuestionData([...questionData,
-            {"questionTitle":question,questionType:questionTitle}])
+            {"query":question,"type":questionTitle}])
           
           }
             
@@ -83,14 +91,14 @@ const QuestionnairePage = ({closeDrawer,isDrawerOpen}) => {
  
   }
 
-
+  
   const deleteQuestion=(questionTitle)=>{
-    setQuestionData (questionData?.filter(data=>data?.questionTitle!==questionTitle))
+    setQuestionData (questionData?.filter(data=>data?.query!==questionTitle))
   }
 
 
   const editQuestion=(questionTitle)=>{
-    setQuestionData (questionData?.filter(data=>data?.questionTitle!==questionTitle))
+    setQuestionData (questionData?.filter(data=>data?.query!==questionTitle))
   }
 
 
@@ -135,7 +143,7 @@ const QuestionnairePage = ({closeDrawer,isDrawerOpen}) => {
              label={'Can access'}
              />
       
-          {questionTitle!=='text'?
+          {questionTitle!=='text' && questionTitle!=='image'?
            <InputSelector 
              setValue={(e)=>setQuestionType(e.target.value)}
              inputValue={questionType} 
@@ -150,7 +158,7 @@ const QuestionnairePage = ({closeDrawer,isDrawerOpen}) => {
        
          <Paper sx={style.questionDisplay}>
            <Box sx={{width:'90%',display:'flex',justifyContent:'center',flexDirection:'row',marginTop:'15px',alignItems:'center'}}>
-            <Typography sx={{marginTop:'26px',marginRight:'10px'}} variant='h4'>{`Q${questionData?.length+1}`}</Typography>
+            <Typography sx={{marginRight:'10px'}} variant='h4'>{`Q${questionData?.length+1}`}</Typography>
             <InputField
              inputLabel={'Enter your Question'}
              setValue={(e)=>setQuestion(e.target.value)}
@@ -169,7 +177,7 @@ const QuestionnairePage = ({closeDrawer,isDrawerOpen}) => {
                 height:'50px',
                 cursor:'pointer',
                 marginLeft:'-32px',
-                marginTop:'31px'
+                marginTop:'0px'
               
                 }}>Add</button>
            
@@ -185,7 +193,7 @@ const QuestionnairePage = ({closeDrawer,isDrawerOpen}) => {
               marginBottom:'10px'
             }}>
             {
-              questionTitle!=='text'?
+              questionTitle!=='text'&& questionTitle!=='image'?
               
               answerData.map((item,index)=>
               <RadioInput 
@@ -204,8 +212,8 @@ const QuestionnairePage = ({closeDrawer,isDrawerOpen}) => {
             { questionData.length>0?<Box sx={style.questionGeneratorContainer}>
              {questionData?.map((item,index)=>
               <Paper sx={{width:'80%',marginLeft:'20px',marginTop:'20px',height:'50px',display:'flex',alignItems:'center',justifyContent:'space-around',backgroundColor:'white'}} key={index} htmlFor="#">
-               <Typography sx={{width:'80%'}}>{item.questionTitle}</Typography> 
-                <button style={{width:'80px',cursor:'pointer',height:'90%',border:'none',backgroundColor:'white',color:'red'}} onClick={()=>deleteQuestion(item.questionTitle)}>Delete</button>
+               <Typography sx={{width:'80%'}}>{item.query}</Typography> 
+                <button style={{width:'80px',cursor:'pointer',height:'90%',border:'none',backgroundColor:'white',color:'red'}} onClick={()=>deleteQuestion(item.query)}>Delete</button>
               </Paper>
         )
           }

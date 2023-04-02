@@ -15,13 +15,13 @@ const QuestionList = ({isDrawerOpen,closeDrawer}) => {
 
     useEffect(()=>{
       dispatch(getAllSurveyQuestions())
-    },[generatedSurvey])
+    },[])
 
     console.log(generatedSurvey)
 
 
   return (
-      <Box sx={{ width: '100%', display: 'flex', flexDirection: 'row', height: { md: '100vh', sm: 'auto' } }}>
+      <Box sx={{ width: '100%', display: 'flex', flexDirection: 'row' }}>
             <SideBar
                 isDrawerOpen={isDrawerOpen}
                 closeDrawer={closeDrawer}
@@ -45,8 +45,8 @@ const QuestionList = ({isDrawerOpen,closeDrawer}) => {
                        key={data._id} 
                        id={data._id} 
                        index={index}
-                       questions={data.questions}
-                       questionTitle={data.questionTitle}
+                       questions={generatedSurvey}
+                       questionTitle={data.query}
                        />
                     )
                  }
