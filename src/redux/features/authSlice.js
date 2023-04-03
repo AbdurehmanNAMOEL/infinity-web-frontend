@@ -46,7 +46,7 @@ export const signIn = createAsyncThunk('auth/signIn',async({userData,toast,navig
 
 export const getAllSurvey = createAsyncThunk('auth/getAllSurvey',async()=>{
     try {
-         const response = await axios.get('https://infinity-api-oqlt.onrender.com/getAllQuestion')
+         const response = await axios.get(`http://localhost:3000/questions`)
          if(response){
             return response.data
          }

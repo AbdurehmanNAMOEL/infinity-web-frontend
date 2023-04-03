@@ -195,7 +195,7 @@ const QuestionnairePage = ({closeDrawer,isDrawerOpen}) => {
             {
               questionTitle!=='text'&& questionTitle!=='image'?
               
-              answerData.map((item,index)=>
+              answerData?.map((item,index)=>
               <RadioInput 
                 key={item.id} 
                 setValue={setSingleAnswer} 

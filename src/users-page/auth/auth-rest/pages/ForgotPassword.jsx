@@ -1,8 +1,9 @@
+import { auth } from '../../../../config/firebase_config';
 import { CardMedia, Divider, IconButton, Paper, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { RecaptchaVerifier,signInWithPhoneNumber } from 'firebase/auth';
 import React, { useEffect, useState } from 'react'
-import { auth } from '../../../../config/firebase_config';
+
 import InputField from '../../../components/InputField';
 
 import companyLogoImage from '../../../../assets/image/logo.png'
@@ -10,20 +11,27 @@ import { handleResponsiveness } from '../../styles/loginStyle';
 import { useNavigate } from 'react-router-dom';
 import {toast} from 'react-toastify'
 import ActionButton from '../../../components/ActionButton';
+import VerificationPage from './VerificationPage';
 const ForgotPassword = () => {
   const navigate=useNavigate()
   const [phoneNumber,setPhoneNumber]=useState('')
   const [isBtnDisabled,setIsBtnDisabled]=useState(true)
   const [isFormValid,setFormValidation]= useState(false)
+  const [isOTPCodeSent,setOTPSetIsCodeSent] = useState('')
+  const [verify,setVerify] = useState('')
   const   onCapTchaVerify=()=>{
     if(!window.recaptchaVerifier){
        window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {
        'size': 'invisible',
        'callback': (response) => {
         // reCAPTCHA solved, allow signInWithPhoneNumber.
-            onSignUp()
-                  toast.success('successfully sent');
-       navigate('/verify')
+          setTimeout(()=>{
+             onSignUp()
+             console.log('hellooooo');
+             toast.success('successfully sent');
+             navigate('/verify')
+          },[1000])
+      
         },
        'expired-callback': () => {
        // Response expired. Ask user to solve reCAPTCHA again.
@@ -41,11 +49,16 @@ const ForgotPassword = () => {
     
     .then((confirmationResult) => {
       window.confirmationResult = confirmationResult;
+       setOTPSetIsCodeSent(true)
  
-    }).catch((error) => console.log(error));
+    }).catch((error) => {
+      console.log(error)
+      setOTPSetIsCodeSent(false)
+    });
 
    
   }
+
 
 
   useEffect(()=>{
@@ -56,10 +69,12 @@ const ForgotPassword = () => {
 
 
   return (
+    <>
+    {isOTPCodeSent?<VerificationPage />:
     <Box sx={style.forgetPasswordContainer}>
      
        <Box sx={style.companyLogoContainer}>
-         <div id='recaptcha-container'></div>
+      
         <CardMedia image={companyLogoImage} sx={style.companyLogoImage}/>
        </Box>
        <Box sx={style.cardContainer}>
@@ -85,7 +100,8 @@ const ForgotPassword = () => {
            </Box>
       </Paper>
       </Box>
-    </Box>
+    </Box>}
+    </>
   )
 }
 

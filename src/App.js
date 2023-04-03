@@ -59,6 +59,7 @@ function App() {
         display:'flex',
         backgroundColor:`${isLightMode?'white':'#1E1E1E'}`
         }}>
+             <div id='recaptcha-container'></div>
         {loading?<LoadingPage/>:''}
       <Router>
            <ScrollToTop/>

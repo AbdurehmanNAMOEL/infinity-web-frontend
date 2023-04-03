@@ -2,7 +2,7 @@ import { Box } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { handleResponsiveness } from '../auth/styles/loginStyle'
 import './style/radioButtonStyle.css'
-const RadioInput = ({id,checkedValue,questionTitle,data,inputValue,setValue,answer}) => {
+const RadioInput = ({id,checkedValue,optionValue,data,setValue,answer}) => {
     const [change,setChange]=useState('')
      console.log(data,'hello');
 
@@ -14,7 +14,7 @@ const RadioInput = ({id,checkedValue,questionTitle,data,inputValue,setValue,answ
       onClick={setValue}  
       id={id}
       title={data}
-      value={questionTitle}
+      value={optionValue}
       style={{width:handleResponsiveness('auto','350px'), height:'40px',backgroundColor:'white',
        display:'flex',justifyContent:'flex-start',alignItems:'center',
        gap:'8px',marginBottom:'16px',cursor:'pointer',
@@ -23,15 +23,15 @@ const RadioInput = ({id,checkedValue,questionTitle,data,inputValue,setValue,answ
       }>
         <input 
          checked={checkedValue===id}
-         value={questionTitle} 
+         value={optionValue} 
          onChange={setValue} 
          type='radio' 
          title={id}
-         id={questionTitle}
+         id={optionValue}
          style={{width:'15px',height:'15px',marginLeft:'16px'}}/>
         <label 
           style={{fontSize:'12px'}} 
-          htmlFor={id}>{questionTitle}</label>
+          htmlFor={id}>{optionValue}</label>
     </button>
     </>
   )

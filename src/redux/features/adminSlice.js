@@ -137,7 +137,7 @@ export const deleteFeedBack = createAsyncThunk('admin/deleteFeedBack',async({id}
 export const deleteSurvey = createAsyncThunk('admin/deleteSurvey',async({id})=>{
       console.log(id);
     try {
-         const response = await axios.delete(`https://infinity-api-oqlt.onrender.com/deleteSurvey/${id}`)
+         const response = await axios.delete(`${realBasicUrl}questions/${id}`)
          if(response){
             
             return response.data

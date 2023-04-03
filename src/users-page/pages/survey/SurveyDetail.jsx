@@ -8,12 +8,14 @@ import NavBar from '../../components/NavBar'
 import RadioInput from '../../components/RadioInput'
 import TextField from '../../components/TextField'
 import {toast} from 'react-toastify'
+import UploadImage from '../../../shared/Components/UploadImage'
 const SurveyDetail = ({surveyData}) => {
   console.log(surveyData);
     const [isScrolling,setIsScrolling]=useState(false)
     const [surveyAnswer,setSurveyAnswer]= useState([])
     const [surveyAnswer2,setSurveyAnswer2]= useState([])
     const [surveyFinalAnswer,setSurveyFinalAnswer]=useState([])
+    const [imageUrl,setImageUrl]=useState('')
     const [choiceAnswer,setChoiceAnswer]= useState('')
     const [checkedValue,setCheckedValue]= useState('')
   
@@ -29,26 +31,43 @@ const SurveyDetail = ({surveyData}) => {
     else setIsScrolling(false)       
   })
 
-  const handleInputField=(e,id)=>{
-      let isFound= surveyAnswer.find(data=>(data.questionTitle===e.target.title))===undefined
+  const handleInputField=(e,type)=>{
+   
+      let isFound= surveyAnswer.find(data=>(data.query===e.target.title))===undefined
+   
       if(isFound){
-        setSurveyAnswer(
+        if(type==='text'){
+         setSurveyAnswer(
           [...surveyAnswer,
-          {'id':id,"query":e.target.title,"answer":e.target.value}
+          {"query":e.target.title,"answer":e.target.value}
         ])
       }else{
+         setImageUrl(URL.createObjectURL(e.target.files[0]))
+         setSurveyAnswer(
+          [...surveyAnswer,
+          {"query":e.target.title,"answer":URL.createObjectURL(e.target.files[0])}
+        ])
+       
+      }
+      }else{
         surveyAnswer.map(question=>{
-        if(question.questionTitle===e.target.title){
-          return question.answer=e.target.value
+        if(question.query===e.target.title){
+            console.log(e.target.title);
+           if(type==='text'){
+            return question.answer=e.target.value
+          }else {
+             setImageUrl(URL.createObjectURL(e.target.files[0]))
+            return question.answer=URL.createObjectURL(e.target.files[0])
+          }
       }else return question
     })
   }
 
-  console.log(surveyAnswer);
+ 
   }
-
+ console.log(surveyAnswer,'helloooooooooooooooo');
    const handleChange=(e,id)=>{
-   
+     
         handleChoiceAnswer(id)
         if(e.target.id===id&& e.target.value){
           setCheckedValue(id)
@@ -104,21 +123,22 @@ const SurveyDetail = ({surveyData}) => {
         <Box sx={style.questionDisplayMainContainer}>
           <Paper sx={style.questionDisplayContainer}>
              {
-              surveyData?.map((item,index)=>
+              surveyData?.map((data,index)=>
                 <Typography key={index} variant='h4' sx={style.questionMainTitle}>
-                  {item.questionTitle}
+                  {'educational'}
                   {
-                    item?.questions?.map((question,index)=>
+                    data?.map((questions,index)=>
                     <Box sx={{display:'flex',flexDirection:'column',gap:'20px'}}>
-                    { question?.questionType ==='text'?
+                    {questions?.type ==='text'|| questions?.type ==='image'?
                       <Box sx={{width:'100%',marginTop:'16px'}}>
-                        <TextField 
-                          id={question.questionTitle} 
-                          setValue={(e)=>handleInputField(e,item.id)} 
+                        <TextField  
+                          setValue={(e)=>handleInputField(e,questions.type)} 
                           key={index} 
                           inputValue={surveyAnswer?.answer}
                           questionNumber={index+1} 
-                          title={question.questionTitle}
+                          questionType={questions?.type}
+                          title={questions.query}
+                          imageUrl={imageUrl}
                         />
                        </Box> 
                     :<Box sx={{display:'flex',width:'100%',flexDirection:'column',gap:'20px',marginTop:'20px'}}>
@@ -126,7 +146,7 @@ const SurveyDetail = ({surveyData}) => {
                             <label style={{fontSize:'16px'}}>{`${index+1}.`}</label>
                             <Typography 
                             sx={{fontSize:handleResponsiveness('14px','16px')}}
-                            >{question.questionTitle}</Typography>
+                            >{questions.query}</Typography>
                           </Box>
                           }
                          <Box sx={
@@ -135,30 +155,17 @@ const SurveyDetail = ({surveyData}) => {
                            flexDirection:'column',
                            marginLeft:handleResponsiveness('0px','20px')}}>
                             
-                            {question.choiceType==="userInput"?
-                              question?.choiceAnswer?.map((item,index)=>
+                           
+                            {  questions?.options?.map((item,index)=>
                                 <RadioInput 
-                                    key={item.answer}  
-                                    setValue={(e)=>handleChange(e,item.answer)}
-                                    inputValue={item.answer}
-                                    id={item.answer} 
-                                    questionTitle={item.answer}
-                                    data={question.questionTitle}
+                                    key={item}  
+                                    setValue={(e)=>handleChange(e,item)}
+                                    id={item} 
+                                    optionValue={item}
+                                    data={item}
                                     checkedValue={checkedValue}
                                   />)
-                        : question?.choiceAnswer?.map((data,index)=>
-                                  data?.answer.map((data,index)=>
-                                    <RadioInput 
-                                    key={item.answer} 
-                                    setValue={(e)=>handleChange(e,data)}
-                                    inputValue={item.answer}
-                                    id={item.answer} 
-                                     data={data}
-                                     questionTitle={data}
-                                     checkedValue={checkedValue}
-                                    
-                                  />
-                                  )) }
+                            } 
                          </Box>
                       </Box>}
                   </Box>  

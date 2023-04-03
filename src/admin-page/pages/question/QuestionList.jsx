@@ -9,15 +9,15 @@ import SurveyDisplayCard from '../../components/SurveyDisplayCard'
 const QuestionList = ({isDrawerOpen,closeDrawer}) => {
 
     const {users,generatedSurvey}= useSelector(state=>state.admin)
-    const {isLightMode}= useSelector(state=>state.auth)
+    const {isLightMode,modeColor}= useSelector(state=>state.auth)
     const dispatch = useDispatch()
 
 
     useEffect(()=>{
       dispatch(getAllSurveyQuestions())
-    },[])
+    },[generatedSurvey])
 
-    console.log(generatedSurvey)
+  
 
 
   return (
@@ -40,10 +40,10 @@ const QuestionList = ({isDrawerOpen,closeDrawer}) => {
                     </Typography>:null
                   }
                  {
-                  generatedSurvey.map((data,index)=>
+                  generatedSurvey?.map((data,index)=>
                      <SurveyDisplayCard 
-                       key={data._id} 
-                       id={data._id} 
+                       key={data.id} 
+                       id={data.id} 
                        index={index}
                        questions={generatedSurvey}
                        questionTitle={data.query}

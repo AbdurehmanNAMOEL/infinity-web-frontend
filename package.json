@@ -38,7 +38,8 @@
     "react-toastify": "^9.1.1",
     "redux-persist": "^6.0.0",
     "styled-components": "^5.3.6",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "react-error-overlay": "6.0.9"
   },
   "scripts": {
     "start": "react-scripts start",

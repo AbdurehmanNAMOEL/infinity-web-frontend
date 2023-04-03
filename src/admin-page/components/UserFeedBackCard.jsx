@@ -27,7 +27,7 @@ const UserFeedBackCard = ({name,feedBackGroup,suggestion,id}) => {
 
 const style={
     feedBackContainer:{
-        width:'300px',
+        width:'100%',
         height:'200px',
         display:'flex',
         flexDirection:'column',

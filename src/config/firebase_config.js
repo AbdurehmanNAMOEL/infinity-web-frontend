@@ -9,14 +9,15 @@ import {getAuth} from 'firebase/auth'
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBZS-b992jDfhgoYj1Wmp0pyL80zpg96f8",
-  authDomain: "otp-infinity-de50d.firebaseapp.com",
-  projectId: "otp-infinity-de50d",
-  storageBucket: "otp-infinity-de50d.appspot.com",
-  messagingSenderId: "251270942679",
-  appId: "1:251270942679:web:1a3463a3db4fff9b330592"
+  apiKey:process.env.REACT_APP_API_KEY,
+  authDomain:process.env.AUTH_DOMAIN,
+  projectId:process.env.PROJECT_ID,
+  storageBucket:process.env.STORAGE_BUCKET,
+  messagingSenderId:process.env.MESSAGING_SENDER_ID,
+  appId:process.env.APP_ID
 };
 
+console.log(process.env.REACT_APP_API_KEY,'hello api')
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app)

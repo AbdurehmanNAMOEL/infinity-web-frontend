@@ -17,7 +17,7 @@ const Appointment = ({ closeDrawer, isDrawerOpen }) => {
         dispatch(getAllAppointments())
     },[])
 
-    console.log(appointmentList)
+    // console.log(appointmentList)
 
   
  
@@ -34,7 +34,7 @@ const Appointment = ({ closeDrawer, isDrawerOpen }) => {
                 </Box>
                 <Box sx={{ width: '90%', marginLeft: '5%', marginTop: '80px' }}>
 
-       { appointmentList.length>0? <Grid sx={{
+       { appointmentList?.length? <Grid sx={{
             marginLeft:'5%',
             height:'auto',
             marginTop:'40px',

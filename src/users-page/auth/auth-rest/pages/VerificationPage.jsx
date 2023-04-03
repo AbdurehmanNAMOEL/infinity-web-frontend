@@ -18,7 +18,7 @@ const VerificationPage = ({navigateTo,handleAction}) => {
     try {
        const response=await window.confirmationResult.confirm(verify);
          if(response?.user){
-           console.log(response?.user?.expirationTime);
+           console.log(response);
         
          }  
     } catch (error) {
