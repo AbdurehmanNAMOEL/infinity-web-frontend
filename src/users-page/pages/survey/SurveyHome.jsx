@@ -1,7 +1,7 @@
 import { Box, CardMedia, Grid, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllSurvey } from '../../../redux/features/authSlice'
+import { getAllSurvey, getSurveyValue } from '../../../redux/features/authSlice'
 import NavBar from '../../components/NavBar'
 import surveyHomeImage from '../../../assets/image/survey-home.svg'
 import SurveyCard from '../../components/SurveyCard'
@@ -26,7 +26,7 @@ const SurveyHome = ({setSurveyDetailData}) => {
     }, [])
 
     const handleSurvey=(data)=>{
-      setSurveyDetailData(data)
+      dispatch(getSurveyValue(data))
       navigate('/takeSurvey')
     }
 
@@ -72,7 +72,7 @@ const SurveyHome = ({setSurveyDetailData}) => {
             {
               [survey]?.map((item,index)=>
                <Grid onClick={()=>handleSurvey([item])} on item xs={8} md={3}>
-                 <SurveyCard key={index} title={item.title}/>
+                 <SurveyCard key={index} title={item?.title}/>
                </Grid>
              )}
       </Grid>

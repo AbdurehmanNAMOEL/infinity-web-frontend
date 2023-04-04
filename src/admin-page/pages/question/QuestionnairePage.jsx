@@ -108,16 +108,16 @@ const QuestionnairePage = ({closeDrawer,isDrawerOpen}) => {
   
 
   return (
-    <Box sx={{width:'100%',display:'flex',flexDirection:'row',height:{md:'100vh',sm:'auto'}}}>
+    <Box sx={{width:'100%',display:'flex',flexDirection:'row',height:'auto'}}>
         <SideBar
           isDrawerOpen={isDrawerOpen} 
           closeDrawer={closeDrawer}
           drawerWidth={isDrawerOpen?200:0}
         />
         <Box sx={{display:'flex',height:'100vh',width:'100%',position:'relative',flexDirection:'column'}}>
-          <Box sx={{position:'fixed',height:'100vh',width:`${isDrawerOpen?100:100}%`,zIndex:200}}> 
+        <Box sx={{position:'fixed',height:'auto',width:`${isDrawerOpen?100:100}%`,zIndex:200}}> 
          <Header closeDrawer={()=>closeDrawer(prev=>!prev)}/>
-         <Box sx={{height:'auto'}}>
+         <Box sx={{height:'90vh',overflowY:'scroll',marginTop:'80px'}}>
          <Paper sx={[style.questionMainTitle,{backgroundColor:modeColor}]}>
           <Box sx={{width:'30%',height:'50px'}}>
             <InputField
@@ -209,16 +209,31 @@ const QuestionnairePage = ({closeDrawer,isDrawerOpen}) => {
             </Box>
          
          </Paper>
-            { questionData.length>0?<Box sx={style.questionGeneratorContainer}>
+            { questionData.length>0?
+            <Box sx={style.questionGeneratorContainer}>
              {questionData?.map((item,index)=>
-              <Paper sx={{width:'80%',marginLeft:'20px',marginTop:'20px',height:'50px',display:'flex',alignItems:'center',justifyContent:'space-around',backgroundColor:'white'}} key={index} htmlFor="#">
+              <Paper sx={{width:'80%',marginTop:'20px',height:'50px',display:'flex',alignItems:'center',justifyContent:'space-around',backgroundColor:'white'}} key={index} htmlFor="#">
                <Typography sx={{width:'80%'}}>{item.query}</Typography> 
                 <button style={{width:'80px',cursor:'pointer',height:'90%',border:'none',backgroundColor:'white',color:'red'}} onClick={()=>deleteQuestion(item.query)}>Delete</button>
               </Paper>
         )
           }
-         <Box sx={{width:'100%',display:'flex',justifyContent:'flex-end'}}>
-            <ButtonStyled setValue={createSurvey} label={'Create'} bgColor='#1A6CE8'/>
+         <Box sx={{width:'80%',marginTop:'20px',marginBottom:'30px',height:'50px',display:'flex',justifyContent:'space-between'}}>
+            <ButtonStyled 
+               sx={{marginRight:'60px'}} 
+               setValue={createSurvey} 
+               label={'Create'} 
+               btnHeight={'40px'}
+               btnWidth={'120px'}
+               bgColor='#1A6CE8'/>
+              
+              <ButtonStyled 
+               sx={{marginRight:'60px'}} 
+               setValue={createSurvey} 
+               label={'Delete'} 
+               btnHeight={'40px'}
+               btnWidth={'120px'}
+               bgColor='red'/>
         </Box>
           </Box>:''}
                
@@ -252,7 +267,8 @@ const style={
       justifyContent:'center',
       gap:'5px',
       alignItems:'center',
-      flexDirection:'column'
+      flexDirection:'column',
+      
     },
     questionGeneratorContainer:{
       width:'80%',
@@ -262,7 +278,10 @@ const style={
       backgroundColor:'#DFDFDF',
       marginLeft:'25px',
       marginTop:'20px',
-      gap:'10px'
+      gap:'10px',
+      marginBottom:'40px',
+      justifyContent:'center',
+      alignItems:'center'
     }
 }
 export default QuestionnairePage

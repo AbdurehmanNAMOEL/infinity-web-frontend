@@ -1,6 +1,6 @@
 import { Box, Paper, Typography } from '@mui/material'
-import React, { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import React, { useEffect, useMemo, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { sendSurveyAnswer } from '../../../redux/features/authSlice'
 import { handleResponsiveness } from '../../auth/styles/loginStyle'
 import ButtonStyled from '../../components/ButtonStyled'
@@ -9,18 +9,18 @@ import RadioInput from '../../components/RadioInput'
 import TextField from '../../components/TextField'
 import {toast} from 'react-toastify'
 import UploadImage from '../../../shared/Components/UploadImage'
-const SurveyDetail = ({surveyData}) => {
-  console.log(surveyData);
+const SurveyDetail = () => {
+  
     const [isScrolling,setIsScrolling]=useState(false)
     const [surveyAnswer,setSurveyAnswer]= useState([])
     const [surveyAnswer2,setSurveyAnswer2]= useState([])
     const [surveyFinalAnswer,setSurveyFinalAnswer]=useState([])
-    const [imageUrl,setImageUrl]=useState('')
+    const [imageUrl,setImageUrl]=useState({})
     const [choiceAnswer,setChoiceAnswer]= useState('')
     const [checkedValue,setCheckedValue]= useState('')
-  
     const [userData,setUserData]= useState([])
     const dispatch = useDispatch()
+    const {surveyDetailValue,isLightMode}= useSelector(state=>state.auth) 
     useEffect(()=>{
     setUserData(JSON.parse(localStorage.getItem("user")))
   },[])
@@ -31,121 +31,105 @@ const SurveyDetail = ({surveyData}) => {
     else setIsScrolling(false)       
   })
 
-  const handleInputField=(e,type)=>{
-   
-      let isFound= surveyAnswer.find(data=>(data.query===e.target.title))===undefined
-   
+  // choice input handler function logic
+
+ 
+ // textField input handler function
+
+   const handleInputTextFieldValue=(e,id)=>{
+     let isFound= surveyAnswer.find(data=>(data.query===e.target.title))===undefined
       if(isFound){
-        if(type==='text'){
          setSurveyAnswer(
           [...surveyAnswer,
           {"query":e.target.title,"answer":e.target.value}
-        ])
-      }else{
-         setImageUrl(URL.createObjectURL(e.target.files[0]))
-         setSurveyAnswer(
-          [...surveyAnswer,
-          {"query":e.target.title,"answer":URL.createObjectURL(e.target.files[0])}
-        ])
-       
-      }
+       ]) 
       }else{
         surveyAnswer.map(question=>{
         if(question.query===e.target.title){
-            console.log(e.target.title);
-           if(type==='text'){
-            return question.answer=e.target.value
-          }else {
-             setImageUrl(URL.createObjectURL(e.target.files[0]))
-            return question.answer=URL.createObjectURL(e.target.files[0])
-          }
+           return question.answer=e.target.value    
       }else return question
     })
   }
+}
 
- 
-  }
- console.log(surveyAnswer,'helloooooooooooooooo');
-   const handleChange=(e,id)=>{
+// image input handler function
+
+
+
+  const handleSurveyAnswer=()=>{
+   if(surveyAnswer.find(data=>data)!==undefined){ 
      
-        handleChoiceAnswer(id)
-        if(e.target.id===id&& e.target.value){
-          setCheckedValue(id)
-        }else setCheckedValue('')
-        
-      let isNotFound = surveyAnswer2?.find(data=>data.title===e.target.title)===undefined
-      if(isNotFound){
-    
-        setSurveyAnswer2([...surveyAnswer2,{"id":id,"query":e.target.title,"answer":e.target.value}])
-      }else{
-        
-           surveyAnswer2?.map(data=>{
-            if(data.query===e.target.title){
-               return data.answer = e.target.value
-            }else return data
-            
-          })
-      }
-      console.log(surveyAnswer2)
-    }
-
-    const handleChoiceAnswer=(id)=>{
-         const isFound= surveyData.map(data=>data?.questions)       
-         console.log(isFound,'hellllllll')
-    }
-
-    useEffect(()=>{},[surveyAnswer2,surveyAnswer,surveyFinalAnswer])
-
-
-    const handleSurveyAnswer=()=>{
-
-      setSurveyAnswer2([...surveyAnswer2,surveyAnswer])
-      setSurveyFinalAnswer([...surveyFinalAnswer,surveyAnswer2])
-  
-      if(surveyFinalAnswer!==[]){
       const userSurveyAnswerData={
-        "ClientId":userData?.id,
-        'questionId':(surveyData?.map(data=>data._id))[0],
-        'answers':surveyFinalAnswer
+        "surveyId": "123gg5",
+        "responses": [responseData()]
       }
 
-      console.log(userSurveyAnswerData.answers);
+      console.log(userSurveyAnswerData);
       dispatch(sendSurveyAnswer({userSurveyAnswerData,toast}))
     }else alert('survey answer is needed')
+
+  
   }
 
-    console.log('final answer',surveyFinalAnswer)
+ useEffect(()=>{
+      console.log(surveyAnswer,'surveyAnswer')
   
+    },[surveyAnswer,imageUrl])
+
+    
+  
+  const responseData=()=>{
+          return{
+            "answer":surveyAnswer.map(data=>data.answer),
+            "questionId":`333333333333333`
+    }
+  }
+
+
+  //   const visibleTodos = useMemo(
+  //  handleSurveyAnswer(),
+  //   [surveyAnswer, surveyAnswer2]
+  // );
+
+  // console.log(visibleTodos);
+
   return (
     <Box sx={{width:'100%',height:'100vh',display:'flex',flexDirection:'column',alignItems:'center'}}>
       <NavBar isScrolling={isScrolling}/>
       <Box sx={{width:'100%',height:'auto',display:'flex',justifyContent:'center',marginTop:'80px'}}>
         <Box sx={style.questionDisplayMainContainer}>
-          <Paper sx={style.questionDisplayContainer}>
+          <Paper sx={[style.questionDisplayContainer,
+              {backgroundColor:isLightMode?'white':'#333'}]}>
              {
-              surveyData?.map((data,index)=>
+              surveyDetailValue?.map((data,index)=>
                 <Typography key={index} variant='h4' sx={style.questionMainTitle}>
-                  {'educational'}
-                  {
-                    data?.map((questions,index)=>
-                    <Box sx={{display:'flex',flexDirection:'column',gap:'20px'}}>
-                    {questions?.type ==='text'|| questions?.type ==='image'?
+                  {'Educational'}
+                  {data?.map((questions,index)=>
+                  <Box sx={{display:'flex',flexDirection:'column',gap:'20px'}}>
+                    {questions?.type!=='choice'?
                       <Box sx={{width:'100%',marginTop:'16px'}}>
-                        <TextField  
-                          setValue={(e)=>handleInputField(e,questions.type)} 
+                      {questions?.type==='text'?
+                        <TextField 
+                          setValue={(e)=>handleInputTextFieldValue(e,questions?.query)} 
                           key={index} 
                           inputValue={surveyAnswer?.answer}
                           questionNumber={index+1} 
-                          questionType={questions?.type}
+                          title={questions.query} 
+                        />:
+                        <UploadImage
+                          key={index}
+                          questionNumber={index}
                           title={questions.query}
-                          imageUrl={imageUrl}
+                          surveyAnswer={surveyAnswer}
+                          setSurveyAnswer={setSurveyAnswer}
                         />
+                        }
                        </Box> 
                     :<Box sx={{display:'flex',width:'100%',flexDirection:'column',gap:'20px',marginTop:'20px'}}>
-                         {<Box sx={{width:'100%',display:'flex',gap:'8px',color:'#1e1e1e',alignItems:'center'}}>
-                            <label style={{fontSize:'16px'}}>{`${index+1}.`}</label>
-                            <Typography 
-                            sx={{fontSize:handleResponsiveness('14px','16px')}}
+                      {<Box sx={{width:'100%',display:'flex',gap:'8px',color:'#1e1e1e',alignItems:'center'}}>
+                        <label style={{fontSize:'16px',color:isLightMode?'#1e1e1e':'white'}}>{`${index+1}.`}</label>
+                          <Typography sx={{fontSize:handleResponsiveness('14px','16px'),
+                            color:isLightMode?'#1e1e1e':'white'}}
                             >{questions.query}</Typography>
                           </Box>
                           }
@@ -159,11 +143,14 @@ const SurveyDetail = ({surveyData}) => {
                             {  questions?.options?.map((item,index)=>
                                 <RadioInput 
                                     key={item}  
-                                    setValue={(e)=>handleChange(e,item)}
                                     id={item} 
-                                    optionValue={item}
-                                    data={item}
                                     checkedValue={checkedValue}
+                                    setCheckedValue={setCheckedValue}
+                                    surveyAnswer={surveyAnswer}
+                                    setSurveyAnswer={setSurveyAnswer}
+                                    choice={item}
+                                    title={questions.query}
+                                   
                                   />)
                             } 
                          </Box>

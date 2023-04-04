@@ -71,14 +71,14 @@ export const sendFeedBack = createAsyncThunk('auth/sendFeedBack',async({feedBack
 export const sendSurveyAnswer = createAsyncThunk('auth/sendSurveyAnswer',async({userSurveyAnswerData,toast})=>{
     console.log(userSurveyAnswerData);  
   try {
-         const response = await axios.post(`https://infinity-api-oqlt.onrender.com/newAnswer`,userSurveyAnswerData)
+         const response = await axios.post(`http://localhost:3000/surveyResponses/fillSurvey`,userSurveyAnswerData)
          if(response){
             toast.success('Your answer successfully submitted')
             return response.data
          }
     } catch (error) {
        
-        toast.error(error.response.data.error)    
+        toast.error(error.response.data.error.message)      
     }
 })
 
@@ -218,6 +218,7 @@ export const authSlice= createSlice({
       modeColor:'white',
       survey:[],
       userProfileData:[],
+      surveyDetailValue:[],
       isUserExist:false,
       isUserVerified:false,
       myWalletBalance:[]
@@ -249,6 +250,9 @@ export const authSlice= createSlice({
 
      setUserSignUpData:(state,action)=>{
        return {...state,userSignUpData:{...state.userSignUpData,"value":action.payload}}
+    },
+    getSurveyValue:(state,action)=>{
+          state.surveyDetailValue=action.payload
     }
   },
   extraReducers:{
@@ -362,6 +366,12 @@ export const authSlice= createSlice({
 
 })
 
-  export const {logOut,setMode,setUserLoginState,setUserSignUpData}=authSlice.actions
+  export const {
+    logOut,
+    setMode,
+    setUserLoginState,
+    setUserSignUpData,
+    getSurveyValue
+  }=authSlice.actions
 
  export const authReducer=authSlice.reducer

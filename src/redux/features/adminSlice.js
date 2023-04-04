@@ -41,7 +41,7 @@ export const signUpAdmin = createAsyncThunk('admin/signUpAdmin',async({adminSign
          }
     } catch (error) {
        
-        toast.error(error.response.data.error)    
+        toast.error(error.response.data.message)    
     }
 })
 
@@ -58,7 +58,7 @@ export const loginAdmin = createAsyncThunk('admin/loginAdmin',async({userData,to
          }
     } catch (error) {
        
-        toast.error(error.response.data.error)    
+        toast.error(error.response.data.message)    
     }
 })
 
@@ -70,7 +70,7 @@ export const getAllUsers = createAsyncThunk('admin/getAllUsers',async()=>{
             return response.data
          }
     } catch (error) {
-        console.log(error.response.data.error)    
+        console.log(error.response.data.message)    
     }
 })
 
@@ -86,7 +86,7 @@ export const createNewSurvey = createAsyncThunk('admin/createSurvey',async({surv
          }
     } catch (error) {
        
-        toast.error(error.response.data.error)    
+        toast.error(error.response.data.message)    
     }
 })
 
@@ -100,7 +100,7 @@ export const getAllSurveyQuestions = createAsyncThunk('admin/getAllSurveyQuestio
          }
     } catch (error) {
        
-        console.log(error.response.data.error)    
+        console.log(error.response.data.message)    
     }
 })
 
@@ -115,7 +115,7 @@ export const getAllFeedBacks = createAsyncThunk('admin/getAllFeedBack',async()=>
          }
     } catch (error) {
        
-        console.log(error.response.data.error)    
+        console.log(error.response.data.message)    
     }
 })
 
@@ -129,7 +129,7 @@ export const deleteFeedBack = createAsyncThunk('admin/deleteFeedBack',async({id}
          }
     } catch (error) {
        
-        console.log(error.response.data.error)    
+        console.log(error.response.data.message)    
     }
 })
 
@@ -144,7 +144,7 @@ export const deleteSurvey = createAsyncThunk('admin/deleteSurvey',async({id})=>{
          }
     } catch (error) {
        
-        console.log(error.response.data.error)    
+        console.log(error.response.data.message)    
     }
 })
 
@@ -157,7 +157,7 @@ export const getAllAnsweredSurvey = createAsyncThunk('admin/getAllAnsweredSurvey
          }
     } catch (error) {
        
-        console.log(error.response.data.error)    
+        console.log(error.response.data.message)    
     }
 })
 
@@ -170,7 +170,7 @@ export const getConsultantAppointment = createAsyncThunk('admin/getConsultantApp
          }
     } catch (error) {
        
-        console.log(error.response.data.error)    
+        console.log(error.response.data.message)    
     }
 })
 
@@ -184,7 +184,7 @@ export const getAllAppointments = createAsyncThunk('admin/getAllAppointments',as
          }
     } catch (error) {
        
-        console.log(error.response.data.error)    
+        console.log(error.response.data.message)    
     }
 })
 
