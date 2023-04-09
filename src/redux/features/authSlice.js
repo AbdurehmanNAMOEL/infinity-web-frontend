@@ -46,9 +46,23 @@ export const signIn = createAsyncThunk('auth/signIn',async({userData,toast,navig
 
 export const getAllSurvey = createAsyncThunk('auth/getAllSurvey',async()=>{
     try {
-         const response = await axios.get(`http://localhost:3000/questions`)
+         const response = await axios.get(`http://localhost:3000/surveys`,
+         {params:{filter:{where:{},include: ["questions"]}}})
          if(response){
-            return response.data
+           return response.data
+         }
+    } catch (error) {
+        console.log(error.response.data.error)  
+    }
+})
+
+
+export const uploadImage = createAsyncThunk('auth/uploadImage',async({formData})=>{
+    try {
+         const response = await axios.post(`http://localhost:3000/files/uploadFiles`,formData)
+         if(response){
+           console.log(response.data)
+           return response.data
          }
     } catch (error) {
         console.log(error.response.data.error)  
@@ -221,7 +235,9 @@ export const authSlice= createSlice({
       surveyDetailValue:[],
       isUserExist:false,
       isUserVerified:false,
-      myWalletBalance:[]
+      myWalletBalance:[],
+      uploadImageUrl:{},
+      isImageLoading:false
 },
   reducers:{
     logOut:(state,action)=>{
@@ -305,15 +321,14 @@ export const authSlice= createSlice({
     },
 
     [getUserStaticData.pending]:(state,action)=>{
-      state.loading=true
+        state.isLoggedIn=false
     },
     [getUserStaticData.fulfilled]:(state,action)=>{
       state.userStaticData=action.payload
-      state.loading=false
       state.isLoggedIn=true
     },
     [getUserStaticData.rejected]:(state,action)=>{
-         state.loading=false
+      state.isLoggedIn=false
     },
 
     [getUserProfileData.pending]:(state,action)=>{
@@ -360,6 +375,17 @@ export const authSlice= createSlice({
     },
     [getMyWalletBalance.rejected]:(state,action)=>{
          state.loading=false
+    },
+
+    [uploadImage.pending]:(state,action)=>{
+      state.isImageLoading=true
+    },
+    [uploadImage.fulfilled]:(state,action)=>{
+      state.uploadImageUrl=action.payload
+      state.isImageLoading=false
+    },
+    [uploadImage.rejected]:(state,action)=>{
+         state.isImageLoading=false
     },
     
   }

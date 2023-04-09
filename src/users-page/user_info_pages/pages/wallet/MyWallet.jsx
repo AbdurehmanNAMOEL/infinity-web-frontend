@@ -44,7 +44,7 @@ const MyWallet = ({isScrolling}) => {
                <Typography>{'Balance:'}</Typography>
             </Box>
             <Box sx={{width:'20%',display:'flex',justifyContent:'center',alignItems:'center'}}>
-               <Typography>{`${myWalletBalance?.balance}EB`}</Typography>
+               <Typography>{`${myWalletBalance?.balance?myWalletBalance?.balance:0}EB`}</Typography>
             </Box>
          </Paper>
 
@@ -55,7 +55,9 @@ const MyWallet = ({isScrolling}) => {
               </Typography>
             </Box>
             <Box sx={{width:'20%',display:'flex',justifyContent:'center',alignItems:'center'}}>
-               <Typography>{`${myWalletBalance?.minAmountForCashOut}EB`}</Typography>
+               <Typography>{`${myWalletBalance?.minAmountForCashOut?
+                 myWalletBalance?.minAmountForCashOut:0}EB`}
+              </Typography>
             </Box>
          </Paper>
          <Typography sx={style.checkoutErrorText}>

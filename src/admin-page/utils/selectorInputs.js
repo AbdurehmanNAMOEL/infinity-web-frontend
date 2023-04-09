@@ -15,8 +15,21 @@ export const  choicesType=[
 ]
 
 export const surveyAccessingFilterList=[
-    {'title':'All Users','value':'all'},
-    {'title':'Females','value':'Females'},
-    {'title':'married','value':'married'},
-    {'title':'age>18','value':'18'}
+    {'title':'BirthPlaces','value':'birthPlaces'},
+    {'title':'EmploymentStatuses','value':'employmentStatuses'},
+    {'title':'IncomeLevels','value':'incomeLevels'},
+    {'title':'MaritalStatuses','value':'maritalStatuses'},
+    {'title':'EducationLevels','value':'educationLevels'},
+    {'title':'Professions','value':'professions'},
+    {'title':'Religions','value':'religions'},
+    {'title':'ResidenceCities','value':'residenceCities'},
 ]
+
+
+
+
+
+
+
+
+

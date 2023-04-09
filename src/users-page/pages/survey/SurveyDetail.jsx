@@ -5,25 +5,29 @@ import { sendSurveyAnswer } from '../../../redux/features/authSlice'
 import { handleResponsiveness } from '../../auth/styles/loginStyle'
 import ButtonStyled from '../../components/ButtonStyled'
 import NavBar from '../../components/NavBar'
-import RadioInput from '../../components/RadioInput'
+import RadioInput from '../../../shared/Components/RadioInput'
 import TextField from '../../components/TextField'
 import {toast} from 'react-toastify'
 import UploadImage from '../../../shared/Components/UploadImage'
+import ChoiceCard from '../../../shared/Components/ChoiceCard'
+import MultipleAnswerCard from '../../../shared/Components/MultipleAnswerCard'
+
 const SurveyDetail = () => {
   
+    const [answerCount,setAnswerCount]=useState(4)
     const [isScrolling,setIsScrolling]=useState(false)
     const [surveyAnswer,setSurveyAnswer]= useState([])
-    const [surveyAnswer2,setSurveyAnswer2]= useState([])
-    const [surveyFinalAnswer,setSurveyFinalAnswer]=useState([])
+    const [surveyChoiceAnswer,setSurveyChoiceAnswer]= useState([])
+    const [surveyImageAnswer,setSurveyImageAnswer]=useState([])
     const [imageUrl,setImageUrl]=useState({})
-    const [choiceAnswer,setChoiceAnswer]= useState('')
-    const [checkedValue,setCheckedValue]= useState('')
     const [userData,setUserData]= useState([])
     const dispatch = useDispatch()
+
     const {surveyDetailValue,isLightMode}= useSelector(state=>state.auth) 
+
     useEffect(()=>{
-    setUserData(JSON.parse(localStorage.getItem("user")))
-  },[])
+     setUserData(JSON.parse(localStorage.getItem("user")))
+    },[])
 
 
   window.addEventListener('scroll',()=>{
@@ -36,20 +40,22 @@ const SurveyDetail = () => {
  
  // textField input handler function
 
-   const handleInputTextFieldValue=(e,id)=>{
-     let isFound= surveyAnswer.find(data=>(data.query===e.target.title))===undefined
+   const handleInputTextFieldValue=(e,id,type)=>{
+     if(type==='text'){
+     let isFound= surveyAnswer.find(data=>(data.questionId===id))===undefined
       if(isFound){
          setSurveyAnswer(
           [...surveyAnswer,
-          {"query":e.target.title,"answer":e.target.value}
+          {"questionId":id,"answer":[e.target.value]}
        ]) 
       }else{
         surveyAnswer.map(question=>{
-        if(question.query===e.target.title){
-           return question.answer=e.target.value    
+        if(question.questionId===id){
+           return question.answer=[e.target.value]    
       }else return question
     })
   }
+}
 }
 
 // image input handler function
@@ -60,39 +66,31 @@ const SurveyDetail = () => {
    if(surveyAnswer.find(data=>data)!==undefined){ 
      
       const userSurveyAnswerData={
-        "surveyId": "123gg5",
-        "responses": [responseData()]
+        "surveyId":[surveyDetailValue].map(data=>data.id)[0],
+        "responses":surveyAnswer
       }
-
-      console.log(userSurveyAnswerData);
       dispatch(sendSurveyAnswer({userSurveyAnswerData,toast}))
     }else alert('survey answer is needed')
-
-  
   }
 
  useEffect(()=>{
       console.log(surveyAnswer,'surveyAnswer')
   
-    },[surveyAnswer,imageUrl])
+    },[surveyAnswer,imageUrl,answerCount])
 
     
   
   const responseData=()=>{
-          return{
-            "answer":surveyAnswer.map(data=>data.answer),
-            "questionId":`333333333333333`
+    return{
+      surveyAnswer,surveyChoiceAnswer,surveyImageAnswer,
+      "questionId":surveyDetailValue.map(data=>data.id)[0]
     }
   }
 
 
-  //   const visibleTodos = useMemo(
-  //  handleSurveyAnswer(),
-  //   [surveyAnswer, surveyAnswer2]
-  // );
+  console.log(surveyDetailValue);
 
-  // console.log(visibleTodos);
-
+  
   return (
     <Box sx={{width:'100%',height:'100vh',display:'flex',flexDirection:'column',alignItems:'center'}}>
       <NavBar isScrolling={isScrolling}/>
@@ -101,16 +99,16 @@ const SurveyDetail = () => {
           <Paper sx={[style.questionDisplayContainer,
               {backgroundColor:isLightMode?'white':'#333'}]}>
              {
-              surveyDetailValue?.map((data,index)=>
+              [surveyDetailValue]?.map((data,index)=>
                 <Typography key={index} variant='h4' sx={style.questionMainTitle}>
-                  {'Educational'}
-                  {data?.map((questions,index)=>
+                  {data.title}
+                  {data?.questions?.map((questions,index)=>
                   <Box sx={{display:'flex',flexDirection:'column',gap:'20px'}}>
                     {questions?.type!=='choice'?
                       <Box sx={{width:'100%',marginTop:'16px'}}>
                       {questions?.type==='text'?
                         <TextField 
-                          setValue={(e)=>handleInputTextFieldValue(e,questions?.query)} 
+                          setValue={(e)=>handleInputTextFieldValue(e,questions?.id,questions.type)} 
                           key={index} 
                           inputValue={surveyAnswer?.answer}
                           questionNumber={index+1} 
@@ -120,41 +118,34 @@ const SurveyDetail = () => {
                           key={index}
                           questionNumber={index}
                           title={questions.query}
+                          id={questions?.id}
+                          type={questions?.type}
                           surveyAnswer={surveyAnswer}
                           setSurveyAnswer={setSurveyAnswer}
                         />
                         }
                        </Box> 
-                    :<Box sx={{display:'flex',width:'100%',flexDirection:'column',gap:'20px',marginTop:'20px'}}>
-                      {<Box sx={{width:'100%',display:'flex',gap:'8px',color:'#1e1e1e',alignItems:'center'}}>
-                        <label style={{fontSize:'16px',color:isLightMode?'#1e1e1e':'white'}}>{`${index+1}.`}</label>
-                          <Typography sx={{fontSize:handleResponsiveness('14px','16px'),
-                            color:isLightMode?'#1e1e1e':'white'}}
-                            >{questions.query}</Typography>
-                          </Box>
-                          }
-                         <Box sx={
-                          { width:handleResponsiveness('auto','350px'),
-                           display:'flex',
-                           flexDirection:'column',
-                           marginLeft:handleResponsiveness('0px','20px')}}>
-                            
-                           
-                            {  questions?.options?.map((item,index)=>
-                                <RadioInput 
-                                    key={item}  
-                                    id={item} 
-                                    checkedValue={checkedValue}
-                                    setCheckedValue={setCheckedValue}
-                                    surveyAnswer={surveyAnswer}
-                                    setSurveyAnswer={setSurveyAnswer}
-                                    choice={item}
-                                    title={questions.query}
-                                   
-                                  />)
-                            } 
-                         </Box>
-                      </Box>}
+                    :answerCount>1?
+                      <ChoiceCard 
+                       key={index}
+                       index={index}
+                       id={questions?.id}
+                       type={questions?.type}
+                       questions={questions}
+                       surveyAnswer={surveyAnswer}
+                       setSurveyAnswer={setSurveyAnswer}
+                      />:
+                     <MultipleAnswerCard 
+                       key={index}
+                       index={index}
+                       id={questions?.id}
+                       type={questions?.type}
+                       questions={questions}
+                       surveyAnswer={surveyAnswer}
+                       setSurveyAnswer={setSurveyAnswer}
+                      />
+                    }
+                      
                   </Box>  
                     )
                   }

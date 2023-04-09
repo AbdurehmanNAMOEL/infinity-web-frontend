@@ -9,6 +9,7 @@ import SideBar from '../components/SideBar'
 import LineChart from './chart/LineChart'
 import Modal from '../components/Modal'
 import AdminSignUp from './auth/pages/AdminSignUp'
+import { handleResponsiveness } from '../../users-page/auth/styles/signUpStyle'
 
 const AdminHome = () => {
     const [isDrawerOpen,closeDrawer] = useState(true)
@@ -97,14 +98,14 @@ const AdminHome = () => {
         flexDirection:{xs:'column',md:'row'},
         justifyContent:'center',
         alignItems:'center',
-        marginTop:'80px',
+        marginTop:handleResponsiveness('240px','80px'),
         gap:'60px'
     },
     
     chartDisplay:{
-        width:{xs:'100%',md:'90%'},
+        width:'90%',
         height:{xs:'350px',md:'300px'},
-        marginTop:'20px',
+        marginTop:handleResponsiveness('200px','20px'),
         marginLeft:'5%',
         border:'solid 1px #acacac69',
         borderRadius:'15px'

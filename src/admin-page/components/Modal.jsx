@@ -4,7 +4,7 @@ import React from 'react'
 const Modal = ({children,closeModal}) => {
    const handleModalClose=(e)=>{
      e.stopPropagation();
-     closeModal()
+
    }
   return (
     <Box onClick={handleModalClose} sx={style.modalMainContainer}>

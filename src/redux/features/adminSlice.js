@@ -93,7 +93,8 @@ export const createNewSurvey = createAsyncThunk('admin/createSurvey',async({surv
 
 export const getAllSurveyQuestions = createAsyncThunk('admin/getAllSurveyQuestions',async()=>{
     try {
-         const response = await axios.get(`${realBasicUrl}/questions`)
+         const response = await axios.get(`http://localhost:3000/surveys`,
+         {params:{filter:{where:{},include: ["questions"]}}})
          if(response){
            
             return response.data
@@ -134,12 +135,12 @@ export const deleteFeedBack = createAsyncThunk('admin/deleteFeedBack',async({id}
 })
 
 
-export const deleteSurvey = createAsyncThunk('admin/deleteSurvey',async({id})=>{
-      console.log(id);
+export const deleteSurvey = createAsyncThunk('admin/deleteSurvey',async({id,toast})=>{
+        console.log('please delete',id)
     try {
-         const response = await axios.delete(`${realBasicUrl}questions/${id}`)
+         const response = await axios.delete(`${realBasicUrl}surveys/${id}`)
          if(response){
-            
+            toast.success('Successfully deleted')
             return response.data
          }
     } catch (error) {
@@ -150,7 +151,9 @@ export const deleteSurvey = createAsyncThunk('admin/deleteSurvey',async({id})=>{
 
 export const getAllAnsweredSurvey = createAsyncThunk('admin/getAllAnsweredSurvey',async()=>{
     try {
-         const response = await axios.get(`https://infinity-api-oqlt.onrender.com/getAllAnswer`)
+         const response = await axios.get(`${realBasicUrl}surveyResponses`,
+          {params:{filter:{include: ["responses"]}}})
+         
          if(response){
             
             return response.data
@@ -189,6 +192,30 @@ export const getAllAppointments = createAsyncThunk('admin/getAllAppointments',as
 })
 
 
+export const verifySurveyResponse=createAsyncThunk('admin/verifySurveyResponse',async({surveyId,toast})=>{
+    try {
+         const response = await axios.post(`${realBasicUrl}surveyResponses/verifySurveyResponse`,surveyId)
+         if(response){
+            toast.success('successfully verified')
+            return response.data
+         }
+    } catch (error) {
+        console.log(error.response.data.message)    
+    }
+})
+
+export const deleteSurveyResponse=createAsyncThunk('admin/deleteSurveyResponse',async({id,toast})=>{
+    try {
+         const response = await axios.delete(`${realBasicUrl}surveyResponses/${id}`)
+         if(response){
+            toast.success('successfully Deleted')
+            return response.data
+         }
+    } catch (error) {
+        console.log(error.response.data.message)    
+    }
+})
+
 export const adminSlice= createSlice({
     name:'admin',
     initialState:{
@@ -204,7 +231,8 @@ export const adminSlice= createSlice({
       isAdminLoggedIn:false,
       navTitle:'dashboard/adminHome',
       users:[],
-      isAdmin:false
+      isAdmin:false,
+      modeColor:'white'
 },
   reducers:{
     logOut:(state,action)=>{
@@ -226,7 +254,6 @@ export const adminSlice= createSlice({
     setNavTitle:(state,action)=>{
         state.navTitle=action.payload
     },
-
 
   },
   extraReducers:{
@@ -387,7 +414,21 @@ export const adminSlice= createSlice({
         ...state,generatedSurvey:state.generatedSurvey.filter(item=>item.id!==action.payload)
       }
     },
-    [deleteSurvey.rejected]:(state,action)=>{
+    [deleteSurveyResponse.rejected]:(state,action)=>{
+      state.loading=false
+      state.isAdminLoggedIn=true
+    },
+
+     [deleteSurveyResponse.pending]:(state,action)=>{
+      state.loading=true
+      state.isAdminLoggedIn=true
+    },
+    [deleteSurveyResponse.fulfilled]:(state,action)=>{
+      return{
+        ...state,answeredSurvey:state.answeredSurvey.filter(item=>item.id!==action.payload)
+      }
+    },
+    [deleteSurveyResponse.rejected]:(state,action)=>{
       state.loading=false
       state.isAdminLoggedIn=true
     },

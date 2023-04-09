@@ -1,31 +1,39 @@
 import { Box } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import { handleResponsiveness } from '../auth/styles/loginStyle'
+import { handleResponsiveness } from '../../users-page/auth/styles/loginStyle'
 import './style/radioButtonStyle.css'
 import { useSelector } from 'react-redux'
-const RadioInput = ({id,title,checkedValue,setCheckedValue,optionValue,data,choice,setValue,surveyAnswer,setSurveyAnswer}) => {
-    const [change,setChange]=useState('')
-    const {isLightMode}= useSelector(state=>state.auth)
 
+const CheckBoxInput = ({id,type,title,optionValue,data,choice,setValue,surveyAnswer,setSurveyAnswer}) => {
+
+    const {isLightMode}= useSelector(state=>state.auth)
+    const [checkedValue,setCheckedValue]= useState(false)
+    
 
     const handleInputValue=(e)=>{
-      let isFound= surveyAnswer.find(data=>(data.query===e.target.title))===undefined
-      setCheckedValue(e.target.value)
-      if(isFound){
-           setSurveyAnswer([...surveyAnswer,{"query":e.target.title,"answer":e.target.value}])
-        }else{
+    
+      let isFound = surveyAnswer.find(data=>(data.questionId===e.target.id))===undefined
+      setCheckedValue(prev=>!prev)
+       if(type){
+       if(isFound){
+          setSurveyAnswer([...surveyAnswer,{"questionId":id,"answer":[e.target.value]}])
+        }
+        else{
            surveyAnswer?.map(data=>{
-            if(data.query===e.target.title){
-               return data.answer = e.target.value
-            }else return data
-            
-          })
+              if(data.answer.find(data=>data===e.target.value)===undefined
+                &&data.questionId===e.target.id){
+               return data.answer=[...data.answer,e.target.value]
+            }else return data.answer=data.answer.filter(data=>data!==e.target.value)
+
+      })   
       }
+    }
   }
- 
-    useEffect(()=>{
-      console.log(surveyAnswer)
-    },[id,surveyAnswer,checkedValue])
+
+useEffect(()=>{
+
+},[checkedValue])
+console.log(surveyAnswer)
   return (
     <>
     <button 
@@ -42,16 +50,16 @@ const RadioInput = ({id,title,checkedValue,setCheckedValue,optionValue,data,choi
        color:isLightMode?'#1e1e1e':'white',
       }}>
         <input 
-         checked={checkedValue===id}
+         checked={checkedValue}
          value={choice} 
          onChange={handleInputValue} 
-         type='radio' 
+         type='checkbox' 
          title={id}
          id={optionValue}
          style={{width:'15px',height:'15px',marginLeft:'16px'}}/>
         <label 
-          style={{fontSize:'12px'}} 
-          htmlFor={id}>{choice}</label>
+          style={{fontSize:'12px',cursor:'pointer'}} 
+          htmlFor={`#${id}`}>{choice}</label>
     </button>
     </>
   )
@@ -72,4 +80,4 @@ const style={
     }
     
 }
-export default RadioInput
+export default CheckBoxInput

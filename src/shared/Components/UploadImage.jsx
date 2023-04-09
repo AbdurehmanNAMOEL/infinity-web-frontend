@@ -1,32 +1,45 @@
 import React, { useEffect, useState } from 'react'
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
-import { Box, Button, Typography } from '@mui/material';
-import { useSelector } from 'react-redux';
+import { Box, Button, CardMedia, Typography } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
+import {useForm} from 'react-hook-form'
+import { uploadImage } from '../../redux/features/authSlice';
+import { handleResponsiveness } from '../../users-page/auth/styles/loginStyle';
+import LoadingAnimation from './LoadingAnimation';
 
-const UploadImage = ({title,inputValue,questionNumber,surveyAnswer,setSurveyAnswer}) => {
-  const {modeColor,isLightMode}= useSelector(state=>state.auth)
+const UploadImage = ({title,id,inputValue,type,questionNumber,surveyAnswer,setSurveyAnswer}) => {
+  const {uploadImageUrl,isImageLoading,isLightMode}= useSelector(state=>state.auth)
   const [imageUrl,setImageUrl]=useState('')
+  const dispatch = useDispatch()
 
 
-  const handleImageInputFieldValue=(e)=>{
-        let isFound= surveyAnswer.find(data=>(data.query===e.target.title))===undefined
+
+  const handleImageInputFieldValue=async(e)=>{
+       const formData = new FormData();
+       formData.append("file",e.target.files[0]);
+       dispatch(uploadImage({formData})) 
+            
+       if(type==='image'){
+        let isFound= surveyAnswer.find(data=>(data.questionId===id))===undefined
        if(isFound){  
-          setSurveyAnswer(
+          if(uploadImageUrl?.urls[0]!==undefined){
+       setSurveyAnswer(
           [...surveyAnswer,
-          {"query":e.target.title,"answer":URL.createObjectURL(e.target.files[0])}
-        ])
+          {"questionId":id,"answer":[`${uploadImageUrl?.urls[0]}`]}
+          
+        ])}
          setImageUrl(URL.createObjectURL(e.target.files[0]))
          
       }else{
         surveyAnswer.map(question=>{
-        if(question.query===e.target.title){
+        if(question.questionId===id){
           setImageUrl(URL.createObjectURL(e.target.files[0]))
-          return question.answer=URL.createObjectURL(e.target.files[0])     
+          return question.answer=[`${uploadImageUrl?.urls[0]}`]    
       }else return question
     })
   }
-      
-  }
+}
+}
 
   useEffect(()=>{
     console.log(surveyAnswer)
@@ -49,16 +62,22 @@ const UploadImage = ({title,inputValue,questionNumber,surveyAnswer,setSurveyAnsw
     <Box sx={[style.imageUploaderContainer,{backgroundColor:isLightMode?'white':'#333'}]}>
      <Button 
        variant="contained"  
-       component="label" 
-      sx={[style.imageBtnContainer,{backgroundImage:`url(${`${imageUrl}`})`}]}>
-      <AddPhotoAlternateIcon sx={style.imageUploadIcon}/>
+       component="label"   
+      sx={[style.imageBtnContainer]}>
+        {isImageLoading?<LoadingAnimation/>:
+        !imageUrl?
+        <Typography>Upload</Typography>:
+       <img style={{width:'80%',heigh:'80%',position:'absolute'}} alt='' src={imageUrl}/>
+       }
+        
         <input 
           id={title}
           title={title} 
-          value={imageUrl?.answer}
-          onChange={handleImageInputFieldValue} 
+          value={surveyAnswer?.answer}
+          onChange={handleImageInputFieldValue}
           hidden accept="image/png" 
-          multiple type="file" />
+          multiple type="file"
+          />    
       </Button>
     </Box>
     </Box>
@@ -66,15 +85,16 @@ const UploadImage = ({title,inputValue,questionNumber,surveyAnswer,setSurveyAnsw
 }
 
 const style={
-    imageUploaderContainer:{
-        width:'60%',
+  imageUploaderContainer:{
+        width:'40%',
         height:'300px',
         border:'dashed 1px black',
         display:'flex',
         justifyContent:'center',
         alignItems:'center',
         position:'relative',
-        marginTop:'20px'
+        marginTop:'20px',
+        flexDirection:'column'
     },
     imageUploadIcon:{
         width:'20%',
@@ -93,11 +113,11 @@ const style={
 
     imageBtnContainer:{
      width:'90%',
-     height:'90%',
+     height:'95%',
      backgroundColor:'white',
      zIndex:1000,   
      backgroundSize:'cover',
-     backgroundPosition:'center',
+    
      color:'#1A6CE8',
         '&:hover':{
           backgroundColor:'white'

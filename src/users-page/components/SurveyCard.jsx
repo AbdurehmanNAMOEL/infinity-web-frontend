@@ -8,7 +8,7 @@ const SurveyCard = ({title}) => {
     <Paper sx={[style.surveyCardContainer,
     {backgroundColor:isLightMode?'white':'#333',
     border:`solid 1px ${isLightMode?'rgba(0,0,0,0.5)':'#ACACAC'}`}]}>
-      <Typography>{title}</Typography>
+      <Typography sx={{color:isLightMode?"#1e1e1e":'white'}}>{title}</Typography>
     </Paper>
   )
 }

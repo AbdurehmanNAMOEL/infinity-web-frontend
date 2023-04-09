@@ -10,6 +10,7 @@ import DropDown from './DropDown'
 import Logo from '../../assets/image/logo.png'
 import { ExpandLess, ExpandMore, Settings } from '@mui/icons-material'
 import PlaylistAddCheckOutlinedIcon from '@mui/icons-material/PlaylistAddCheckOutlined';
+import SettingsIcon from '@mui/icons-material/Settings';
 const SideBar = ({isDrawerOpen,closeDrawer,drawerWidth}) => {
    
   const {navTitle,admins}= useSelector(state=>state.admin)
@@ -160,7 +161,10 @@ const SideBar = ({isDrawerOpen,closeDrawer,drawerWidth}) => {
           {/* <Paper sx={style.topHeaderContainer}>
                <CardMedia image={Logo} sx={{width:'50%',height:'90%'}}/>
           </Paper> */}
-        
+        <IconButton sx={style.listIconContainer}>
+          <SettingsIcon sx={style.iconStyle}/>
+          <Typography>Setting</Typography>
+        </IconButton>
     </Drawer>
   )
 }
@@ -216,8 +220,14 @@ const style ={
     marginTop:'10px', 
     backgroundColor:'rgba(0, 0, 0, 0.277)',
  
+  },
+  iconStyle:{
+    color:'#1977FC',
+    fontWeight:'bold',
+    marginLeft:'20px'
   }
   
 }
+
 
 export default SideBar

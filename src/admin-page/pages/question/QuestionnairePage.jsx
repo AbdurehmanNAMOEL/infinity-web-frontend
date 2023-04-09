@@ -11,12 +11,19 @@ import { choicesType,questionTypeList, surveyAccessingFilterList } from '../../u
 import { useDispatch, useSelector } from 'react-redux'
 import { createNewSurvey } from '../../../redux/features/adminSlice'
 import {toast} from 'react-toastify'
+import { getUserStaticData } from '../../../redux/features/authSlice'
+import { handleResponsiveness } from '../../../users-page/auth/styles/signUpStyle'
+
 const QuestionnairePage = ({closeDrawer,isDrawerOpen}) => {
   const [questionTitle,setQuestionTitle]= useState('text')
   const [questionMainTitle,setQuestionMainTitle]= useState('')
   const [questionType,setQuestionType]= useState('userInput')
-  const {isLightMode,modeColor} = useSelector(state=>state.auth)
+  const [surveyFilteringValue,setSurveyFilteringValue]= useState('')
+  const [surveyFilterValue,setSurveyFilterValue]= useState(' ')
+  const [surveyFilteredOptionValue,setSurveyFilteredOptionValue]= useState([])
+  const {isLightMode,modeColor,userStaticData} = useSelector(state=>state.auth)
   const [questionData,setQuestionData]= useState([])
+  
   const [question,setQuestion]= useState('')
   const [singleAnswer,setSingleAnswer]=useState('')
   let dynamicIndex=Math.random()*10  
@@ -28,16 +35,7 @@ const QuestionnairePage = ({closeDrawer,isDrawerOpen}) => {
     if(questionType === 'userInput') handleUserInput(inputIndex)
   }
 
-  const createSurvey=()=>{
-     const surveyData={
-      'title':questionMainTitle,
-      'endAt':'0',
-      'questions':questionData
-     }
-      console.log(surveyData)
-     dispatch(createNewSurvey({surveyData,toast}))
-  }
-  
+ 
 
   const handleUserInput=(inputIndex)=>{
     setAnswerData(answerData.map((item,index)=>{
@@ -60,7 +58,9 @@ const QuestionnairePage = ({closeDrawer,isDrawerOpen}) => {
   },[questionType])
 
 
-  console.log(answerData)
+ 
+  
+   console.log(userStaticData)
 
   const createQuestion=()=>{
     if(question!==''){
@@ -102,10 +102,35 @@ const QuestionnairePage = ({closeDrawer,isDrawerOpen}) => {
   }
 
 
-  useEffect(()=>{},[questionData])
+  const handleSurveyFilter=(e)=>{
+       setSurveyFilteringValue(e.target.value)
+       let data=userStaticData[`${surveyFilteringValue}`]
+       setSurveyFilteredOptionValue(data) 
+  }
 
-
+   useEffect(()=>{
+    dispatch(getUserStaticData())
   
+  },[questionData,surveyFilterValue,surveyFilteredOptionValue])
+
+console.log(questionData);
+    const createSurvey=()=>{
+     const surveyData={
+      'title':questionMainTitle,
+      'endAt':'0',
+      'questions':questionData,
+       "hasImageQuestion": questionData.find(data=>data.type==='image')!==undefined,
+     }
+      console.log(surveyData)
+     dispatch(createNewSurvey({surveyData,toast}))
+     setQuestionMainTitle('')
+     setQuestionType('userInput')
+     setSurveyFilteringValue('')
+     setSurveyFilterValue(' ')
+     setSurveyFilteredOptionValue([])
+     setQuestionData([])
+  }
+
 
   return (
     <Box sx={{width:'100%',display:'flex',flexDirection:'row',height:'auto'}}>
@@ -119,39 +144,66 @@ const QuestionnairePage = ({closeDrawer,isDrawerOpen}) => {
          <Header closeDrawer={()=>closeDrawer(prev=>!prev)}/>
          <Box sx={{height:'90vh',overflowY:'scroll',marginTop:'80px'}}>
          <Paper sx={[style.questionMainTitle,{backgroundColor:modeColor}]}>
-          <Box sx={{width:'30%',height:'50px'}}>
+          <Box sx={{width:handleResponsiveness('100%','15%'),height:'50px'}}>
             <InputField
              inputLabel={'Question Title'}
              setValue={(e)=>setQuestionMainTitle(e.target.value)}
              inputValue={questionMainTitle}
              type='text'
+             width={'100%'}
              setValidation={setIsValid}
             />
             </Box>
-          <Box sx={{width:'65%',display:'flex',gap:'50px',marginLeft:'-150px'}}>
+          <Box sx={{
+            width:handleResponsiveness('95%','65%'),
+            display:'flex',
+            marginTop:'20px',
+            marginBottom:handleResponsiveness('20px','0px'),
+            flexDirection:handleResponsiveness('column','row'),
+            gap:handleResponsiveness('20px','50px'),
+            marginLeft:handleResponsiveness('-5%','-150px')}}>
            <InputSelector 
              setValue={(e)=>setQuestionTitle(e.target.value)}
              inputValue={questionTitle} 
              optionList={questionTypeList}
              label='Question type'
+             optionValue={'value'}
+             optionTitle={'title'}
+             selectorWidth={'100%'}
              setValidation={setIsValid}
             />
-            <InputSelector 
-             setValue={(e)=>setQuestionType(e.target.value)}
-             inputValue={questionType} 
-             optionList={surveyAccessingFilterList}
-             label={'Can access'}
-             />
-      
           {questionTitle!=='text' && questionTitle!=='image'?
            <InputSelector 
              setValue={(e)=>setQuestionType(e.target.value)}
              inputValue={questionType} 
              optionList={choicesType}
+             optionValue={'value'}
+             optionTitle={'title'}
+             selectorWidth={'100%'}
              label={'Choice type'}
+             />:''}
+            <InputSelector 
+             setValue={handleSurveyFilter}
+             inputValue={surveyFilteringValue} 
+             optionList={surveyAccessingFilterList}
+             label={'SurveyFilter'}
+             selectorWidth={'100%'}
+             optionValue={'value'}             
+             optionTitle={'title'} 
              />
-            
-         :''}
+            {surveyFilteredOptionValue?.length?
+             <InputSelector 
+              setValue={(e)=>setSurveyFilterValue(e.target.value)}
+              inputValue={surveyFilterValue} 
+              optionList={surveyFilteredOptionValue}
+              label={`${surveyFilteringValue}`}
+              selectorWidth={'100%'}
+              optionValue={'id'}
+              optionTitle={'en'}
+              />
+             :''}
+      
+         
          </Box>
          
          </Paper>
@@ -247,15 +299,17 @@ const QuestionnairePage = ({closeDrawer,isDrawerOpen}) => {
 }
 const style={
     questionMainTitle:{
-      width:'80%',
+      width:handleResponsiveness('100%','80%'),
       marginLeft:'2%',
-      height:'120px',
+      height:handleResponsiveness('auto','120px'),
       backgroundColor:'#DFDFDF',
       marginTop:'80px',
       display:'flex',
       justifyContent:'space-around',
       gap:'5px',
-      alignItems:'center'
+      alignItems:'center',
+      flexDirection:handleResponsiveness('column','row'),
+      marginBottom:'20px'
     },
  questionDisplay:{
       width:'80%',

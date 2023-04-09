@@ -1,9 +1,9 @@
 import { Box, FormControl, InputLabel, MenuItem, Select } from '@mui/material'
-import React, { useEffect } from 'react'
+import React from 'react'
 
-const InputSelector = ({optionList,selectorWidth,setValue,inputValue,label}) => {
+const InputSelector = ({optionList,optionValue,optionTitle,selectorWidth,setValue,inputValue,label}) => {
 
-  useEffect(()=>{},[inputValue])  
+
   return (
     
   
@@ -20,8 +20,8 @@ const InputSelector = ({optionList,selectorWidth,setValue,inputValue,label}) => 
         >
          { optionList?.map((item,index)=>
            <MenuItem 
-             value={item.value}>
-              {item.title}
+             value={item[`${optionValue}`]}>
+              {item[optionTitle]}
             </MenuItem>)
           }
         </Select>

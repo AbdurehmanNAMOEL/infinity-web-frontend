@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { Box, Divider, IconButton, Paper, Typography } from '@mui/material';
-import { useSelector } from 'react-redux';
-const DropDown = ({title,data}) => {
-  console.log(data[0].map(data=>data.id));
+import { Box, CardMedia, Divider, IconButton, Paper, Typography } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteSurveyResponse, verifySurveyResponse } from '../../redux/features/adminSlice';
+import {toast} from 'react-toastify'
+const DropDown = ({title,data,isModalOpen,setModalOpen,isRejected}) => {
   const [isExpanded,setIsExpanded]= useState(false)
   const [height,setHeight]= useState('50px')
   const {modeColor,isLightMode}= useSelector(state=>state.auth)
-
+  let dataTest=data.map(data=>data.answer[0].includes('files'))
+  const dispatch = useDispatch()
+  let id = data.map(surveyResponse=>surveyResponse.surveyResponseId)[0];
+  console.log(dataTest);
   const handleExpand=()=>{
     setIsExpanded(prev=>!prev)
   }
@@ -17,6 +21,21 @@ const DropDown = ({title,data}) => {
         setHeight('auto')
     }else setHeight('40px')
   },[height,isExpanded])
+
+  const handleVerifySurveyResponse=()=>{
+    const surveyId={
+     "surveyResponseId":id
+    }
+    dispatch(verifySurveyResponse({surveyId,toast}))
+  }
+
+
+  const handleRejecting=()=>{
+    setModalOpen(true)
+    if(isRejected){
+      dispatch(deleteSurveyResponse({id,toast}))
+    }
+  }
 
   return (
     <Paper sx={[
@@ -30,36 +49,59 @@ const DropDown = ({title,data}) => {
         <IconButton onClick={handleExpand}><ExpandMoreIcon/></IconButton>}
      </Paper>
      <Divider/>
-     <Box sx={{width:'100%'}}>
+     <Box sx={{width:'100%',display:'flex',flexDirection:'column',alignItems:'center'}}>
     
-      {data[0].map((data,index)=>
-      <Box sx={{width:'100%',height:'60%',display:'flex',flexDirection:'column'}}>
-      <Typography 
-         sx={{padding:'15px',color:isLightMode?'#1e1e1e':'white'}}>{`Q${index+1}.  ${data.query}`}</Typography>
-      <Typography sx={{padding:'2px',display:'flex',marginLeft:'38px',color:isLightMode?'#1e1e1e':'white'}}>
-        <Typography sx={{color:'#1977FC',marginRight:'10px'}}>Answer</Typography>{` :  ${data.answer}`}</Typography>
-      </Box>
-      
+      {data?.map((answers,index)=>
+         answers.answer.map(data=>
+           data.includes('files')?  
+            <img 
+               alt=''
+              style={{width:'40%',height:'40%'}} 
+              src={`http://localhost:3000/${data}`}/>:
+           
+           <Typography sx={{padding:'6px',width:'80%'}}>{data}</Typography>
+          )
+     
+         
       )}
       
      </Box>
-     <Box sx={{width:'100%', height:'40px',display:'flex',justifyContent:'space-between',alignItems:'center'}}>
-      <Typography sx={{marginLeft:'20px',fontWeight:'bolder',color:'red',cursor:"pointer"}}>Reject</Typography>
-      <Typography sx={{marginRight:'20px',fontWeight:'bolder',color:'green',cursor:"pointer"}}>Approve</Typography>
+     <Box sx={style.btnContainer}>
+      <Typography  onClick={handleRejecting}  sx={style.rejectBtn}>Reject</Typography>
+      <Typography 
+         onClick={handleVerifySurveyResponse} 
+         sx={style.approveBtn}>Approve</Typography>
      </Box>
     </Paper>
   )
 }
 
 const style = {
-    DropDownComponentContainer:{
-          display:'flex',
-          flexDirection:'column',
-          transition:'all 0.7s',
-          width:'100%',
-          overflowY:'hidden'
-          
-         
-    }
+  DropDownComponentContainer:{
+    display:'flex',
+    flexDirection:'column',
+    transition:'all 0.7s',
+    width:'100%',
+    overflowY:'hidden'      
+  },
+  approveBtn:{
+    marginRight:'20px',
+    fontWeight:'bolder',
+    color:'green',
+    cursor:"pointer"
+  },
+  rejectBtn:{
+    marginLeft:'20px',
+    fontWeight:'bolder',
+    color:'red',
+    cursor:"pointer"
+  },
+  btnContainer:{
+    width:'100%', 
+    height:'40px',
+    display:'flex',
+    justifyContent:'space-between',
+    alignItems:'center'
+  }
 }
 export default DropDown

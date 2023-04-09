@@ -146,7 +146,10 @@ import { useNavigate } from 'react-router-dom'
                     <InputSelector 
                       setValue={(e)=>setUserData({...userData,"gender":e.target.value})}
                       optionList={genderList} 
+                      optionTitle={'title'}
+                      optionValue={'value'}
                       label={'Gender'} 
+                      
                       inputValue={userData?.gender}
                       selectorWidth={'97%'}/>
                     </Box>

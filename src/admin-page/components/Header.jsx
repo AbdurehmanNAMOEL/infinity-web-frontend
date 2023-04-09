@@ -34,15 +34,15 @@ function Header({closeDrawer,headerTitle,openModal}) {
 
   return (
     <Paper sx={[style.headerContainer,{backgroundColor:`${isLightMode?"#D9D9D9":"#1E1E1E"}`,}]}>
-       <Box sx={{width:'60%',display:'flex',justifyContent:'flex-start',alignItems:'center',gap:'20px'}}>
+       <Box sx={{width:{xs:'30%',md:'50%'},display:'flex',justifyContent:'flex-start',alignItems:'center',gap:'20px'}}>
         <IconButton onClick={closeDrawer}>
             <MenuOutlined sx={{color:'#1977FC', fontweight:'bold'}}/>
         </IconButton>
-        <Typography sx={{fontSize:'20px',fontWeight:'bolder',color:isLightMode?'#1e1e1e':'white'}}>
+        <Typography sx={{fontSize:'20px',display:{xs:'none',md:'flex'},fontWeight:'bolder',color:isLightMode?'#1e1e1e':'white'}}>
             {!headerTitle?navTitle?.split('/')[1]:headerTitle}
        </Typography>
         </Box>
-        <Box sx={{width:'50%',display:'flex',justifyContent:'center',gap:'20px'}}>
+        <Box sx={{width:{xs:'95%',md:'50%'},display:'flex',justifyContent:'center',gap:'20px'}}>
         {isLightMode?<IconButton onClick={handleDispatch}>
             <ModeNightOutlined sx={{width:'20px',height:'20px',color:'black', fontweight:'bold'}}/>
         </IconButton>:
@@ -52,15 +52,13 @@ function Header({closeDrawer,headerTitle,openModal}) {
            <IconButton onClick={openModal}>
             <PersonAddIcon sx={{color:'#1977FC', fontweight:'bold'}}/>
         </IconButton>
-          <IconButton onClick={()=>navigate('/')}>
-            <HomeOutlined sx={{color:'#1977FC', fontweight:'bold'}}/>
-        </IconButton>
         <Box sx={{width:'40%'}}>
          <IconButton  
-          sx={style.logoutBtnContainer} 
+          sx={[style.logoutBtnContainer,{width:{xs:'60px',md:'120px'}}]} 
           onClick={()=>dispatch(logOut())}>
             <LogoutIcon sx={{color:'white', fontweight:'bold'}}/>
-            <Typography sx={{fontSize:'14px',fontWeight:'bolder',color:'white'}}>LogOut</Typography>
+            <Typography 
+            sx={{fontSize:'14px',display:{xs:'none',md:'flex'},fontWeight:'bolder',color:'white'}}>LogOut</Typography>
         </IconButton>
            </Box>
         </Box>
@@ -81,7 +79,6 @@ const style ={
         position:'fixed'
     },
     logoutBtnContainer:{
-      width:'120px',
       height:'40px',
       backgroundColor:'#1977FC',
       borderRadius:'5px',
