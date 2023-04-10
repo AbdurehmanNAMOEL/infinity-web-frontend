@@ -55,10 +55,7 @@ export const sideBarIconList=[
     //     "title":'Setting',
     //     "icon":<ManageAccountsIcon sx={style.iconStyle}/>
     // },
-
-
-
-    
+   
 ]
 
 

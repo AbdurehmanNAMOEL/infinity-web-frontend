@@ -4,6 +4,9 @@ import {combineReducers} from '@reduxjs/toolkit'
 import storage from "redux-persist/lib/storage"
 import {authReducer} from "./features/authSlice";
 import { adminReducer } from "./features/adminSlice";
+import { questionReducer } from "./features/QuestionSlice";
+import { feedbackReducer } from "./features/feedbackSlice";
+import { settingReducer } from "./features/setting";
 
 const persistConfig={
     key:'persistCollection',
@@ -12,7 +15,10 @@ const persistConfig={
 
 const reducer = combineReducers({
     auth:authReducer,
-    admin:adminReducer
+    admin:adminReducer,
+    question:questionReducer,
+    feedback:feedbackReducer,
+    setting:settingReducer
 })
 
 const persistedReducer = persistReducer(persistConfig,reducer);

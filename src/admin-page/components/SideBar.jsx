@@ -161,7 +161,7 @@ const SideBar = ({isDrawerOpen,closeDrawer,drawerWidth}) => {
           {/* <Paper sx={style.topHeaderContainer}>
                <CardMedia image={Logo} sx={{width:'50%',height:'90%'}}/>
           </Paper> */}
-        <IconButton sx={style.listIconContainer}>
+        <IconButton onClick={()=>navigate('/dashboard/setting')} sx={style.listIconContainer}>
           <SettingsIcon sx={style.iconStyle}/>
           <Typography>Setting</Typography>
         </IconButton>

@@ -74,73 +74,12 @@ export const getAllUsers = createAsyncThunk('admin/getAllUsers',async()=>{
     }
 })
 
-
-
-
-export const createNewSurvey = createAsyncThunk('admin/createSurvey',async({surveyData,toast})=>{
-    try {
-         const response = await axios.post(`${realBasicUrl}/survey/submitSurvey`,surveyData)
-         if(response){
-            toast.success('Survey Created successfully')
-            return response.data
-         }
-    } catch (error) {
-       
-        toast.error(error.response.data.message)    
-    }
-})
-
-
 export const getAllSurveyQuestions = createAsyncThunk('admin/getAllSurveyQuestions',async()=>{
     try {
          const response = await axios.get(`http://localhost:3000/surveys`,
          {params:{filter:{where:{},include: ["questions"]}}})
          if(response){
            
-            return response.data
-         }
-    } catch (error) {
-       
-        console.log(error.response.data.message)    
-    }
-})
-
-
-
-export const getAllFeedBacks = createAsyncThunk('admin/getAllFeedBack',async()=>{
-    try {
-         const response = await axios.get(`${realBasicUrl}feedbacks`)
-         if(response){
-            
-            return response.data
-         }
-    } catch (error) {
-       
-        console.log(error.response.data.message)    
-    }
-})
-
-
-export const deleteFeedBack = createAsyncThunk('admin/deleteFeedBack',async({id})=>{
-    try {
-         const response = await axios.delete(`${realBasicUrl}feedbacks/${id}`)
-         if(response){
-            
-            return response.data
-         }
-    } catch (error) {
-       
-        console.log(error.response.data.message)    
-    }
-})
-
-
-export const deleteSurvey = createAsyncThunk('admin/deleteSurvey',async({id,toast})=>{
-        console.log('please delete',id)
-    try {
-         const response = await axios.delete(`${realBasicUrl}surveys/${id}`)
-         if(response){
-            toast.success('Successfully deleted')
             return response.data
          }
     } catch (error) {
@@ -287,21 +226,6 @@ export const adminSlice= createSlice({
     },
 
 
-    [createNewSurvey.pending]:(state,action)=>{
-      state.loading=true
-      state.isAdminLoggedIn=true
-    },
-    [createNewSurvey.fulfilled]:(state,action)=>{
-      state.survey=action.payload
-      state.loading=false
-      state.isAdminLoggedIn=true
-    },
-    [createNewSurvey.rejected]:(state,action)=>{
-      state.loading=false
-      state.isAdminLoggedIn=true
-    },
-
-
     [getAllUsers.pending]:(state,action)=>{
       state.loading=true
       state.isAdminLoggedIn=true
@@ -329,23 +253,6 @@ export const adminSlice= createSlice({
       state.loading=false
       state.isAdminLoggedIn=true
     },
-
-
-
-    [getAllFeedBacks.pending]:(state,action)=>{
-      state.loading=true
-      state.isAdminLoggedIn=true
-    },
-    [getAllFeedBacks.fulfilled]:(state,action)=>{
-      state.usersFeedBacks=action.payload
-      state.loading=false
-      state.isAdminLoggedIn=true
-    },
-    [getAllFeedBacks.rejected]:(state,action)=>{
-      state.loading=false
-      state.isAdminLoggedIn=true
-    },
-
 
     [getAllAnsweredSurvey.pending]:(state,action)=>{
       state.loading=true
@@ -390,30 +297,6 @@ export const adminSlice= createSlice({
       state.isAdminLoggedIn=true
     },
 
-    [deleteFeedBack.pending]:(state,action)=>{
-      state.loading=true
-      state.isAdminLoggedIn=true
-    },
-    [deleteFeedBack.fulfilled]:(state,action)=>{
-      return{
-        ...state,usersFeedBacks:state.usersFeedBacks.filter(item=>item.id!==action.payload)
-      }
-    },
-    [deleteFeedBack.rejected]:(state,action)=>{
-      state.loading=false
-      state.isAdminLoggedIn=true
-    },
-
-
-    [deleteSurvey.pending]:(state,action)=>{
-      state.loading=true
-      state.isAdminLoggedIn=true
-    },
-    [deleteSurvey.fulfilled]:(state,action)=>{
-      return{
-        ...state,generatedSurvey:state.generatedSurvey.filter(item=>item.id!==action.payload)
-      }
-    },
     [deleteSurveyResponse.rejected]:(state,action)=>{
       state.loading=false
       state.isAdminLoggedIn=true

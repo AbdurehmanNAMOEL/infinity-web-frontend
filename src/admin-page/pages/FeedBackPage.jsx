@@ -1,20 +1,24 @@
 import { Box, Grid, Typography } from '@mui/material'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllFeedBacks } from '../../redux/features/adminSlice'
+import { getAllFeedBacks } from '../../redux/features/feedbackSlice'
 import Header from '../components/Header'
 import SideBar from '../components/SideBar'
 import UserFeedBackCard from '../components/UserFeedBackCard'
 import { handleResponsiveness } from '../../users-page/auth/styles/loginStyle'
+import InputSelector from '../../shared/Components/InputSelector'
+import { feedbackFilterList } from '../utils/selectorInputs'
 
 const FeedBackPage = ({isDrawerOpen,closeDrawer}) => {
     const dispatch = useDispatch()
-    const {usersFeedBacks}= useSelector(state=>state?.admin)
+    const {usersFeedBacks}= useSelector(state=>state?.feedback)
     const {isLightMode,modeColor}= useSelector(state=>state?.auth)
+    const {filterValue,setFilterValue}= useState('All')
     useEffect(()=>{
         dispatch(getAllFeedBacks())
-    },[usersFeedBacks])
+    },[])
 
+    console.log(usersFeedBacks);
    
   return (
       <Box sx={{ width: '100%', display: 'flex', flexDirection: 'row',height:'100vh',backgroundColor:modeColor}}>
@@ -27,10 +31,21 @@ const FeedBackPage = ({isDrawerOpen,closeDrawer}) => {
                 <Box sx={{ position: 'fixed', width: `${isDrawerOpen ? 100 : 100}%`, zIndex: 200 }}>
                     <Header closeDrawer={() => closeDrawer(prev => !prev)} />
                 </Box>
+
+         { usersFeedBacks?.length?  <Box sx={{marginTop:'100px',width:'80%',marginLeft:'10%'}}>
+                <InputSelector
+                 optionList={feedbackFilterList}
+                 optionTitle={'title'}
+                 optionValue={'value'}
+                 label={'Filter'}
+                 inputValue={filterValue}
+                 setValue={setFilterValue}
+                />
+            </Box>:null}  
           {usersFeedBacks?.length? 
           <Grid sx={{marginLeft:handleResponsiveness('-10%','5%'),
                 backgroundColor:modeColor,
-                height:'auto',marginTop:'80px',width:handleResponsiveness('100%','95%')}} container spacing={8}>
+                height:'auto',marginTop:'10px',width:handleResponsiveness('100%','95%')}} container spacing={8}>
             {
                 usersFeedBacks?.map((data,index)=>
                   <Grid item xs={12} md={5}>

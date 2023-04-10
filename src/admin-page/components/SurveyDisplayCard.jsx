@@ -1,15 +1,16 @@
 import { Box, Divider, Paper, Typography, useStepperContext } from '@mui/material'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { deleteSurvey } from '../../redux/features/adminSlice'
+import { deleteSurvey, setEditableSurveyValue } from '../../redux/features/QuestionSlice'
 import { handleResponsiveness } from '../../users-page/auth/styles/loginStyle'
 import {toast} from 'react-toastify'
+import { useNavigate } from 'react-router-dom'
 const SurveyDisplayCard = ({
    id,questionTitle,questions,isDeletingApproved,createdAt,setIsModalVisible,
    setPreviewData,setIsQuestionPreviewed
 }) => {
     const dispatch = useDispatch()
-
+    const navigate=useNavigate()
     let date=new Date(createdAt);
     let newDateValue = date.toString().split(' ')
     let surveyCreatedTime=`${newDateValue[0]} ${newDateValue[1]} ${newDateValue[2]} ${newDateValue[3]}` 
@@ -32,6 +33,12 @@ const SurveyDisplayCard = ({
    useEffect(()=>{
         
     },[isDeletingApproved,questions])
+
+
+    const handleEditing=()=>{
+      navigate(`/dashboard/question-Generator/${id}`)
+      dispatch(setEditableSurveyValue(questions))
+    }
 
   return (
       <Paper key={id} sx={[style.surveyDisplayContainer]}>
@@ -58,7 +65,12 @@ const SurveyDisplayCard = ({
             marginBottom:'20px',
             justifyContent:'space-between'
             }}>
-            <Typography sx={{marginLeft:'16px',color:'#1A6CE8',fontWeight:'bolder',cursor:'pointer'}}>Edit</Typography>
+            <Typography onClick={handleEditing} sx={
+             { marginLeft:'16px',
+               color:'#1A6CE8',
+               fontWeight:'bolder',
+               cursor:'pointer'
+            }}>Edit</Typography>
             <Typography 
              onClick={handleDeletingApproved} 
               sx={{marginLeft:'16px',color:'red',cursor:'pointer',fontWeight:'bolder'}}>Delete</Typography>

@@ -1,5 +1,5 @@
 import { Box } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 
 const RadioInput = ({choiceType,setValue,inputValue,setData,index,setAnswerData,answerData}) => {
@@ -11,6 +11,7 @@ const RadioInput = ({choiceType,setValue,inputValue,setData,index,setAnswerData,
    const handleInput=(e)=>{
       setData(index)
       setValue(e.target.value)
+      console.log(e.target.value);
   }
 
   const handleButtonClicked=()=>{
@@ -26,6 +27,7 @@ const RadioInput = ({choiceType,setValue,inputValue,setData,index,setAnswerData,
   const deleteAnswer=(id)=> setAnswerData(answerData.filter((item,index)=>item.id!==id))
 
  
+  useEffect(()=>{},[inputValue])
 
   return (
     <Box sx={style.inputFieldContainer}>

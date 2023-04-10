@@ -9,10 +9,14 @@ import RadioInput from '../../components/RadioInput'
 import SideBar from '../../components/SideBar'
 import { choicesType,questionTypeList, surveyAccessingFilterList } from '../../utils/selectorInputs'
 import { useDispatch, useSelector } from 'react-redux'
-import { createNewSurvey } from '../../../redux/features/adminSlice'
+import { createNewSurvey, deleteSurvey, editSurvey } from '../../../redux/features/QuestionSlice'
 import {toast} from 'react-toastify'
 import { getUserStaticData } from '../../../redux/features/authSlice'
 import { handleResponsiveness } from '../../../users-page/auth/styles/signUpStyle'
+import { useParams } from 'react-router-dom'
+import Modal from '../../components/Modal'
+import PreviewQuestion from '../../components/PreviewQuestion'
+import DeletingModal from '../../components/DeletingModal'
 
 const QuestionnairePage = ({closeDrawer,isDrawerOpen}) => {
   const [questionTitle,setQuestionTitle]= useState('text')
@@ -22,23 +26,25 @@ const QuestionnairePage = ({closeDrawer,isDrawerOpen}) => {
   const [surveyFilterValue,setSurveyFilterValue]= useState(' ')
   const [surveyFilteredOptionValue,setSurveyFilteredOptionValue]= useState([])
   const {isLightMode,modeColor,userStaticData} = useSelector(state=>state.auth)
+  const {editableSurveyValue} = useSelector(state=>state.question)
   const [questionData,setQuestionData]= useState([])
-  
+  const [isSurveyPreViewed,setIsSurveyPreViewed]= useState(false)
+  const [isDeletingModalOpen,setIsDeletingModalOpen]=useState(false)
+  const [isSurveyDelete,setIsSurveyDelete]=useState(false)
   const [question,setQuestion]= useState('')
   const [singleAnswer,setSingleAnswer]=useState('')
   let dynamicIndex=Math.random()*10  
   const [answerData,setAnswerData]=useState([{id:dynamicIndex,"answer":''}])
   const [isValid,setIsValid]= useState(false)
   const dispatch = useDispatch()
-
+  
   const handleData=(inputIndex)=>{ 
     if(questionType === 'userInput') handleUserInput(inputIndex)
   }
 
- 
-
   const handleUserInput=(inputIndex)=>{
     setAnswerData(answerData.map((item,index)=>{
+       console.log(singleAnswer);
       if(item.id===inputIndex){
           return {'id':item.id,'answer':singleAnswer}
       }else return item
@@ -55,12 +61,9 @@ const QuestionnairePage = ({closeDrawer,isDrawerOpen}) => {
        setAnswerData([...answerData],answerData.filter((item,index)=>index))
        
     }
-  },[questionType])
+  },[questionType,singleAnswer])
 
 
- 
-  
-   console.log(userStaticData)
 
   const createQuestion=()=>{
     if(question!==''){
@@ -95,7 +98,17 @@ const QuestionnairePage = ({closeDrawer,isDrawerOpen}) => {
   const deleteQuestion=(questionTitle)=>{
     setQuestionData (questionData?.filter(data=>data?.query!==questionTitle))
   }
-
+  
+  const deleteOrRestNewSurvey=()=>{
+    setQuestionData ([])
+    setQuestionMainTitle('')
+    setQuestionType('userInput')
+    setSurveyFilteringValue('')
+    setSurveyFilterValue(' ')
+    setSurveyFilteredOptionValue([])
+    setQuestionData([])
+    setQuestion('')
+  }
 
   const editQuestion=(questionTitle)=>{
     setQuestionData (questionData?.filter(data=>data?.query!==questionTitle))
@@ -123,16 +136,40 @@ console.log(questionData);
      }
       console.log(surveyData)
      dispatch(createNewSurvey({surveyData,toast}))
-     setQuestionMainTitle('')
-     setQuestionType('userInput')
-     setSurveyFilteringValue('')
-     setSurveyFilterValue(' ')
-     setSurveyFilteredOptionValue([])
-     setQuestionData([])
+     deleteOrRestNewSurvey()
   }
 
+  const {id}= useParams()
+   console.log(id)
 
+   useEffect(()=>{
+    if(id){
+      setQuestionData(editableSurveyValue)
+    }else setQuestionData([])
+
+   },[id,editableSurveyValue])
+
+   const editSurveyValue=()=>{
+     const surveyData={
+      'questions':questionData,
+     }
+    console.log(surveyData)
+     dispatch(editSurvey({surveyData,id,toast}))
+     deleteOrRestNewSurvey()
+  }
+
+   const handleSurveyDeletingApproval=()=>{
+       setIsDeletingModalOpen(false)
+        setIsSurveyDelete(true)
+   }
+   const handleDeletingSurvey=()=>{
+     setIsDeletingModalOpen(true)
+    if(isSurveyDelete){
+      dispatch(deleteSurvey({id,toast}))
+    }
+   }
   return (
+    <>
     <Box sx={{width:'100%',display:'flex',flexDirection:'row',height:'auto'}}>
         <SideBar
           isDrawerOpen={isDrawerOpen} 
@@ -209,40 +246,43 @@ console.log(questionData);
          </Paper>
        
          <Paper sx={style.questionDisplay}>
-           <Box sx={{width:'90%',display:'flex',justifyContent:'center',flexDirection:'row',marginTop:'15px',alignItems:'center'}}>
-            <Typography sx={{marginRight:'10px'}} variant='h4'>{`Q${questionData?.length+1}`}</Typography>
-            <InputField
-             inputLabel={'Enter your Question'}
-             setValue={(e)=>setQuestion(e.target.value)}
-             inputValue={question}
-             type='text'
-             setValidation={setIsValid}
+           <Box sx={{
+            width:'90%',
+            display:'flex',
+            flexDirection:'row',
+            marginTop:'15px'
+            }}>
+           
+          <Box sx={{width:'90%',display:'flex',justifyContent:'center',alignItems:'center'}}>
+            <Typography 
+              sx={{marginRight:'10px',fontSize:handleResponsiveness('14px','24px')}} >{`Q${questionData?.length+1}`}</Typography>  
+              <InputField
+               inputLabel={'Enter your Question'}
+               setValue={(e)=>setQuestion(e.target.value)}
+               inputValue={question}
+               type='text'
+               width={'100%'}
+               setValidation={setIsValid}
+              />
+            </Box>
+            <Box sx={{marginLeft:handleResponsiveness('0px','-30px')}}>
+             <ButtonStyled
+              label={'Add'}
+              btnWidth={'100px'}
+              bgColor={'#1A6CE8'}
+              setValue={createQuestion}
             />
-            <button 
-              onClick={createQuestion} 
-              style={
-              {
-                backgroundColor:'#1A6CE8',
-                width:'70px',
-                color:'white',
-                border:'none',
-                height:'50px',
-                cursor:'pointer',
-                marginLeft:'-32px',
-                marginTop:'0px'
-              
-                }}>Add</button>
-           
-           
+            </Box>
            </Box>
              <Box sx={{
-              width:'90%',
+              width:handleResponsiveness('95%','80%'),
               display:'flex',
               gap:'20px',
               flexDirection:'column',
               height:'auto',
               marginTop:'30px',
-              marginBottom:'10px'
+              marginBottom:'20px',
+
             }}>
             {
               questionTitle!=='text'&& questionTitle!=='image'?
@@ -263,25 +303,73 @@ console.log(questionData);
          </Paper>
             { questionData.length>0?
             <Box sx={style.questionGeneratorContainer}>
+            <Box sx={{width:'100%',display:'flex',justifyContent:'flex-end'}}>  
+            <ButtonStyled 
+               sx={{marginRight:'60px'}} 
+               setValue={()=>setIsSurveyPreViewed(true)} 
+               label={'Preview'} 
+               btnHeight={'40px'}
+               btnWidth={'120px'}
+               bgColor='#1A6CE8'/>
+            </Box>
              {questionData?.map((item,index)=>
-              <Paper sx={{width:'80%',marginTop:'20px',height:'50px',display:'flex',alignItems:'center',justifyContent:'space-around',backgroundColor:'white'}} key={index} htmlFor="#">
-               <Typography sx={{width:'80%'}}>{item.query}</Typography> 
-                <button style={{width:'80px',cursor:'pointer',height:'90%',border:'none',backgroundColor:'white',color:'red'}} onClick={()=>deleteQuestion(item.query)}>Delete</button>
+              <Paper sx={
+                {
+                  width:handleResponsiveness('97%','80%'),
+                  marginTop:'20px',
+                  height:handleResponsiveness('auto','50px'),
+                  display:'flex',
+                  alignItems:'center',
+                  justifyContent:'space-around',
+                  backgroundColor:'white',
+                  flexDirection:handleResponsiveness('column','row')
+                  }} key={index} htmlFor="#">
+               <Typography sx={{
+                width:handleResponsiveness('100%','80%'),
+                fontSize:handleResponsiveness('12px','16px'),
+                padding:handleResponsiveness('10px','0px'),
+                wordWrap:'break-word',
+                whiteSpace:'pre-wrap',
+                marginLeft:'10px'}}>{item.query}</Typography> 
+                <Box sx={{
+                  width:handleResponsiveness('90%','10%'),
+                  marginBottom:handleResponsiveness('20px','0px'),
+                  marginTop:handleResponsiveness('10px','0px'),
+                  display:'flex',
+                  justifyContent:'flex-end'
+                  }}>
+                   <button style={{
+                    width:'80px',
+                    cursor:'pointer',
+                    height:'90%',
+                    border:'none',
+                    backgroundColor:'white',
+                    color:'red'}} onClick={()=>deleteQuestion(item.query)}>Delete</button>
+                </Box>
               </Paper>
         )
           }
-         <Box sx={{width:'80%',marginTop:'20px',marginBottom:'30px',height:'50px',display:'flex',justifyContent:'space-between'}}>
+         <Box sx={
+          {
+            width:handleResponsiveness('90%','80%'),
+            marginTop:'20px',
+            marginBottom:'30px',
+            height:'50px',
+            display:'flex',
+            justifyContent:'space-between'
+          }}>
+
             <ButtonStyled 
                sx={{marginRight:'60px'}} 
-               setValue={createSurvey} 
-               label={'Create'} 
+               setValue={id?editSurveyValue:createSurvey} 
+               label={id?'Edit':'Create'} 
                btnHeight={'40px'}
                btnWidth={'120px'}
                bgColor='#1A6CE8'/>
               
               <ButtonStyled 
                sx={{marginRight:'60px'}} 
-               setValue={createSurvey} 
+               setValue={id?handleDeletingSurvey:deleteOrRestNewSurvey} 
                label={'Delete'} 
                btnHeight={'40px'}
                btnWidth={'120px'}
@@ -292,9 +380,24 @@ console.log(questionData);
          </Box>
         </Box>
          </Box>
-         
     </Box>
+    
+    {isSurveyPreViewed?
+       <Modal>
+         <PreviewQuestion
+           setIsQuestionPreviewed={setIsSurveyPreViewed} 
+           surveyQuestion={questionData}/>
+       </Modal>:''}
 
+   {isDeletingModalOpen?
+     <DeletingModal
+       handleSurveyDeletingApproval={handleSurveyDeletingApproval}
+       setIsDeletingModalOpen={setIsDeletingModalOpen}
+       />
+      :''}   
+
+
+</>
   )
 }
 const style={
@@ -312,7 +415,7 @@ const style={
       marginBottom:'20px'
     },
  questionDisplay:{
-      width:'80%',
+      width:handleResponsiveness('100%','80%'),
       marginLeft:'2%',
       height:'auto',
       border:'dashed 2px #1e1e1e',
@@ -322,15 +425,16 @@ const style={
       gap:'5px',
       alignItems:'center',
       flexDirection:'column',
+      marginBottom:handleResponsiveness('50px','0px')
       
     },
     questionGeneratorContainer:{
-      width:'80%',
+      width:handleResponsiveness('95%','80%'),
       height:'auto',
       display:'flex',
       flexDirection:'column',
       backgroundColor:'#DFDFDF',
-      marginLeft:'25px',
+      marginLeft:handleResponsiveness('2.5%','25px'),
       marginTop:'20px',
       gap:'10px',
       marginBottom:'40px',

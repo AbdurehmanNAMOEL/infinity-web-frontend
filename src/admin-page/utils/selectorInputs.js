@@ -25,6 +25,18 @@ export const surveyAccessingFilterList=[
     {'title':'ResidenceCities','value':'residenceCities'},
 ]
 
+export const feedbackFilterList=[
+    {'title':'All','value':'All'},
+    {'title':'New','value':'New'},
+]
+
+
+export const appointmentFilterList=[
+    {'title':'All','value':'All'},
+    {'title':'recent','value':'recent'},
+    {'title':'old','value':'old'},
+]
+
 
 
 

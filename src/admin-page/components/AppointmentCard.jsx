@@ -3,12 +3,16 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteFeedBack } from '../../redux/features/feedbackSlice'
 
-const UserFeedBackCard = ({name,feedBackGroup,suggestion,id}) => {
+const AppointmentCard= ({name,id,appointmentDate,description}) => {
     const {modeColor,isLightMode} = useSelector(state=>state.auth)
     const dispatch=useDispatch()
+     let date=new Date(appointmentDate);
+    let newDateValue = date.toString().split(' ')
+    let appointmentTime=`${newDateValue[0]} ${newDateValue[1]} ${newDateValue[2]} ${newDateValue[3]}` 
+ 
   return (
-    <Paper sx={[style.feedBackContainer,{border:isLightMode?'solid 1px #DFDFDF':'solid 1px #ACACAC'},{backgroundColor:modeColor}]}>
-     <Box sx={[style.feedBackHeader,{color:isLightMode?'#1e1e1e':'white'}]}>
+    <Paper sx={[style.appointmentContainer,{border:isLightMode?'solid 1px #DFDFDF':'solid 1px #ACACAC'},{backgroundColor:modeColor}]}>
+     <Box sx={[style.appointmentHeader,{color:isLightMode?'#1e1e1e':'white'}]}>
       <Box sx={{display:'flex',width:'60%',flexDirection:'column',gap:'4px'}}>
          <Typography sx={{fontWeight:'bolder',marginTop:'10px'}}>{name}</Typography>
          <Typography sx={{fontWeight:'bolder',fontSize:'12px'}}>{'0936970345'}</Typography>
@@ -19,15 +23,15 @@ const UserFeedBackCard = ({name,feedBackGroup,suggestion,id}) => {
       </Typography>  
      </Box>
      <Divider sx={{width:'100%',backgroundColor:isLightMode?'#DFDFDF':'#ACACAC'}}/>
-      <Box sx={[style.feedBackBody,{color:isLightMode?'#1e1e1e':'white'}]}>
-      <Typography>{`About:  ${feedBackGroup}`}</Typography>
+      <Box sx={[style.appointmentBody,{color:isLightMode?'#1e1e1e':'white'}]}>
+      <Typography>{`Date:  ${appointmentTime}`}</Typography>
       <Typography sx={{
         wordWrap:'break-word',
         whiteSpace:'pre-wrap',
         fontSize:'12px',
         width:'100%',
         overflowX:'hidden'
-      }}>{`Comment : ${suggestion}`}</Typography>
+      }}>{`About : ${description}`}</Typography>
      </Box>
      <Box sx={{
       width:'100%',
@@ -45,7 +49,7 @@ const UserFeedBackCard = ({name,feedBackGroup,suggestion,id}) => {
 }
 
 const style={
-    feedBackContainer:{
+    appointmentContainer:{
         width:'100%',
         height:'200px',
         display:'flex',
@@ -54,14 +58,14 @@ const style={
         justifyContentL:'center',
         alignItems:'center'
     },
-    feedBackHeader:{
+    appointmentHeader:{
       width:'100%',
       height:'50px',
       display:'flex',
       justifyContent:'space-around',
       alignItems:'center',
     },
-    feedBackBody:{
+    appointmentBody:{
         width:'90%',
         height:'100px',
         marginTop:'20px',
@@ -70,4 +74,4 @@ const style={
         gap:'10px'
     }
 }
-export default UserFeedBackCard
+export default AppointmentCard

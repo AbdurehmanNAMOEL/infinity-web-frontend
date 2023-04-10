@@ -31,7 +31,8 @@ const UserFeedBack = () => {
     const handleFeedBack=()=>{
       let feedBackData={
         "feedbackGroup":feedBackGroup,
-        "suggestion":feedBack
+        "suggestion":feedBack,
+        'userId':JSON.parse(localStorage.getItem('user')).id
       }
 
       dispatch(sendFeedBack({feedBackData,toast}))
@@ -82,6 +83,8 @@ const UserFeedBack = () => {
                       optionList={feedBackGroupList} 
                       label={'your feed back on'} 
                       inputValue={feedBackGroup}
+                      optionTitle={'title'}
+                      optionValue={'value'}
                       selectorWidth={'97%'}/>
                     </Box>
                <Box sx={{width:'76.5%',marginLeft:'-18px'}}>

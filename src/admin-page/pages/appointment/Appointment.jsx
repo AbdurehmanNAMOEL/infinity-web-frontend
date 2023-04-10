@@ -1,10 +1,12 @@
 import { Box, Grid, Typography } from '@mui/material'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllAppointments} from '../../../redux/features/adminSlice'
 import Header from '../../components/Header'
 import SideBar from '../../components/SideBar'
-import UserFeedBackCard from '../../components/UserFeedBackCard'
+import AppointmentCard from '../../components/AppointmentCard'
+import InputSelector from '../../../shared/Components/InputSelector'
+import { appointmentFilterList } from '../../utils/selectorInputs'
 
 
 const Appointment = ({ closeDrawer, isDrawerOpen }) => {
@@ -13,6 +15,7 @@ const Appointment = ({ closeDrawer, isDrawerOpen }) => {
 
     const {appointmentList}= useSelector(state=>state.admin)
     const {isLightMode} = useSelector(state=>state.auth)
+    const [filterAppointment,setFilterAppointment]= useState('All')
     useEffect(()=>{
         dispatch(getAllAppointments())
     },[])
@@ -34,23 +37,37 @@ const Appointment = ({ closeDrawer, isDrawerOpen }) => {
                 </Box>
                 <Box sx={{ width: '90%', marginLeft: '5%', marginTop: '80px' }}>
 
+
+
+         { appointmentList?.length?  
+           <Box sx={{marginTop:'40px',width:'90%',marginLeft:'5%'}}>
+                <InputSelector
+                 optionList={appointmentFilterList}
+                 optionTitle={'title'}
+                 optionValue={'value'}
+                 label={'Filter'}
+                 inputValue={filterAppointment}
+                 setValue={setFilterAppointment}
+                />
+            </Box>:null}  
+
+
        { appointmentList?.length? <Grid sx={{
             marginLeft:'5%',
             height:'auto',
-            marginTop:'40px',
+            marginTop:'20px',
             width:'90%',
          
             
         }} container spacing={2}>
             {
                 appointmentList?.map((data,index)=>
-                  <Grid item xs={8} md={5}>
-                   <UserFeedBackCard 
+                  <Grid item xs={12} md={5}>
+                   <AppointmentCard 
                      key={data.id} 
                      name={data.title} 
-                     feedBackGroup={data.appointmentDate}
-                     suggestion={data.description}
-                     
+                     appointmentDate={data.appointmentDate}
+                     description={data.description}
                      />
                   </Grid>
   

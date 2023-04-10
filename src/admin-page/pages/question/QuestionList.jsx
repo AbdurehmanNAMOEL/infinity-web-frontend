@@ -9,6 +9,7 @@ import Modal from '../../components/Modal'
 import ButtonStyled from '../../../users-page/components/ButtonStyled'
 import PreviewQuestion from '../../components/PreviewQuestion'
 import { handleResponsiveness } from '../../../users-page/auth/styles/signUpStyle'
+import DeletingModal from '../../components/DeletingModal'
 
 const QuestionList = ({isDrawerOpen,closeDrawer}) => {
 
@@ -22,10 +23,10 @@ const QuestionList = ({isDrawerOpen,closeDrawer}) => {
     
     useEffect(()=>{
       dispatch(getAllSurveyQuestions())
-    },[])
+    },[generatedSurvey])
 
 
-    console.log(generatedSurvey);
+
   
    const handleSurveyDeletingApproval=()=>{
         setIsDeletingModalOpen(false)
@@ -39,29 +40,13 @@ const QuestionList = ({isDrawerOpen,closeDrawer}) => {
 
 
   return (
-    <>{isDeletingModalOpen?
-      <Modal>
-        <Paper sx={{width:'400px',height:'200px',display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center'}}>
-          <Typography>Are you sure you want to delete this survey?</Typography>
-          <Box sx={{width:'70%',height:'50px',display:'flex',gap:'40px',marginTop:'30px'}}>
-             <ButtonStyled 
-               sx={{marginRight:'60px'}} 
-               label={'No'} 
-               btnHeight={'40px'}
-               btnWidth={'120px'}
-               setValue={()=>setIsDeletingModalOpen(false)}
-               bgColor='#1A6CE8'/>
-              
-              <ButtonStyled 
-               sx={{marginRight:'60px'}} 
-               setValue={handleSurveyDeletingApproval}
-               label={'yes'} 
-               btnHeight={'40px'}
-               btnWidth={'120px'}
-               bgColor='red'/>
-          </Box>
-        </Paper>
-      </Modal>:''} 
+    <>
+    {isDeletingModalOpen?
+     <DeletingModal
+       handleSurveyDeletingApproval={handleSurveyDeletingApproval}
+       setIsDeletingModalOpen={setIsDeletingModalOpen}
+       />
+      :''} 
       {isQuestionPreviewed?
       <Modal>
         <PreviewQuestion
@@ -74,7 +59,7 @@ const QuestionList = ({isDrawerOpen,closeDrawer}) => {
                 closeDrawer={closeDrawer}
                 drawerWidth={isDrawerOpen ? 200 : 0}
             />
-            <Box sx={{ display: 'flex', width: '100%', position: 'relative', flexDirection: 'column' }}>
+            <Box sx={{ display: 'flex', width: '100%', position: 'relative', flexDirection: 'column'}}>
                 <Box sx={{ position: 'fixed', width: `${isDrawerOpen ? 100 : 100}%`, zIndex: 200 }}>
                     <Header headerTitle={'Question List'} closeDrawer={() => closeDrawer(prev => !prev)} />
                 </Box>
@@ -92,18 +77,18 @@ const QuestionList = ({isDrawerOpen,closeDrawer}) => {
                 container spacing={8}>
             {generatedSurvey?.map((data,index)=>
               <Grid item xs={12} md={5}>
-                     <SurveyDisplayCard 
-                       key={data.id} 
-                       id={data.id} 
-                       createdAt={data.createdAt}
-                       index={index}
-                       questions={data?.questions}
-                       questionTitle={data.title}
-                       setIsModalVisible={setIsDeletingModalOpen}
-                       isDeletingApproved={isDeletingApproved}
-                       setPreviewData={setPreviewQuestionData}
-                       setIsQuestionPreviewed={setIsQuestionPreviewed}
-                       />
+                  <SurveyDisplayCard 
+                    key={data.id} 
+                    id={data.id} 
+                    createdAt={data.createdAt}
+                    index={index}
+                    questions={data?.questions}
+                    questionTitle={data.title}
+                    setIsModalVisible={setIsDeletingModalOpen}
+                    isDeletingApproved={isDeletingApproved}
+                    setPreviewData={setPreviewQuestionData}
+                    setIsQuestionPreviewed={setIsQuestionPreviewed}
+                  />
                   </Grid>
                     )
                  }</Grid>

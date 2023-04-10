@@ -15,43 +15,38 @@ const QuestionAnswered = ({isDrawerOpen,closeDrawer}) => {
     const {answeredSurvey} = useSelector(state=>state.admin)
     const [isModalOpen,setModalOpen]= useState(false)
     const [isRejected,setIsRejected]= useState(false)
+
     useEffect(()=>{
         dispatch(getAllAnsweredSurvey())
     },[answeredSurvey])
 
   return (
     <>
-    
-    
-         <Box sx={{ width: '100%', display: 'flex', flexDirection: 'row', height: { md: '100vh', sm: 'auto' } }}>
-            <SideBar
-                isDrawerOpen={isDrawerOpen}
-                closeDrawer={closeDrawer}
-                drawerWidth={isDrawerOpen ? 200 : 0}
-            />
-            <Box sx={{ display: 'flex', width: '100%', position: 'relative', flexDirection: 'column' }}>
-                <Box sx={{ position: 'fixed', width: `${isDrawerOpen ? 100 : 100}%`, zIndex: 200 }}>
-                    <Header headerTitle={'Answer'} closeDrawer={() =>closeDrawer(prev => !prev)} />
-                </Box>
-            {answeredSurvey.length>0?
+      <Box sx={{ width: '100%', display: 'flex', flexDirection: 'row', height: { md: '100vh', sm: 'auto' } }}>
+        <SideBar
+          isDrawerOpen={isDrawerOpen}
+          closeDrawer={closeDrawer}
+          drawerWidth={isDrawerOpen ? 200 : 0}
+          />
+        <Box sx={{ display: 'flex', width: '100%', position: 'relative', flexDirection: 'column' }}>
+          <Box sx={{ position: 'fixed', width: `${isDrawerOpen ? 100 : 100}%`, zIndex: 200 }}>
+            <Header headerTitle={'Answer'} closeDrawer={() =>closeDrawer(prev => !prev)} />
+          </Box>
+          {answeredSurvey.length>0?
              <Grid sx={{marginLeft:'5%',height:'auto',marginTop:'80px',width:'90%'}} container spacing={2}>
-                    
-                 {
-                answeredSurvey?.map(data=>
-                    <Grid item xs={8} md={6}>
-                     <DropDown 
-                       isModalOpen={isModalOpen}
-                       setModalOpen={setModalOpen}
-                       isRejected={isRejected}
-                       id={data?.responses} 
-                       data={data?.responses}
-                       />
-                     </Grid>    
-                    )
-                 }
-                </Grid>:<Typography>There is no answer yet</Typography> }
-         
-            </Box>
+            {answeredSurvey?.map(data=>
+                <Grid item xs={8} md={6}>
+                  <DropDown 
+                    isModalOpen={isModalOpen}
+                    setModalOpen={setModalOpen}
+                    isRejected={isRejected}
+                    id={data?.responses} 
+                    data={data?.responses}
+                  />
+                </Grid>    
+            )}
+            </Grid>:<Typography>There is no answer yet</Typography> }
+          </Box>
         </Box>
 
     {isModalOpen?

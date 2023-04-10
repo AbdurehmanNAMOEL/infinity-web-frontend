@@ -36,6 +36,7 @@ import ConsultantSechdulingPage from './admin-page/pages/appointment/ConsultantS
 import UserFeedBack from './users-page/pages/UserFeedBack';
 import MyWallet from './users-page/user_info_pages/pages/wallet/MyWallet';
 import Modal from './admin-page/components/Modal';
+import Setting from './admin-page/pages/Setting';
 function App() {
    const [isDrawerOpen,setDrawerOpen]=useState(true)
    const {isLightMode,loading}= useSelector(state=>state.auth)
@@ -88,6 +89,18 @@ function App() {
 
         <Route path='question-Generator' 
            element={<QuestionnairePage  
+           isDrawerOpen={isDrawerOpen} 
+           closeDrawer={closeDrawer}
+           drawerWidth={isDrawerOpen?200:0}
+          />}/>
+           <Route path='question-Generator/:id' 
+           element={<QuestionnairePage  
+           isDrawerOpen={isDrawerOpen} 
+           closeDrawer={closeDrawer}
+           drawerWidth={isDrawerOpen?200:0}
+          />}/>
+          <Route path='setting' 
+           element={<Setting  
            isDrawerOpen={isDrawerOpen} 
            closeDrawer={closeDrawer}
            drawerWidth={isDrawerOpen?200:0}

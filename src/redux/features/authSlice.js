@@ -11,8 +11,6 @@ axios.interceptors.request.use((req)=>{
   return req;
 })
 
-const testUrl='https://infinity-api-oqlt.onrender.com/signUp'
-
 const realBasicUrl='http://localhost:3000/users'
 
 export const signUp = createAsyncThunk('auth/signUp',async({userData,toast,navigate})=>{
