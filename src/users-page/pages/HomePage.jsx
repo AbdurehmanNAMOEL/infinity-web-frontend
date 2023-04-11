@@ -21,7 +21,6 @@ const HomePage = () => {
 
   const [isScrolling,setIsScrolling]=useState(false)
   const {isLoggedIn,isLightMode,modeColor} = useSelector(state=>state.auth)
-  const {isAdminLoggedIn}= useSelector(state=>state.admin)
 
   const navigate = useNavigate()
   const BoxMotion = motion(Box);
@@ -33,7 +32,7 @@ const HomePage = () => {
   })
 
   const handleSurveyTime=()=>{
-    if(isLoggedIn||isAdminLoggedIn){
+    if(isLoggedIn){
       navigate('/survey')
      }else {
       navigate('/login')
@@ -81,6 +80,7 @@ const HomePage = () => {
              transition={{ duration:1.5}} 
              style={homePageStyle.homeLandingPageImageContainer}>
                <CardMedia 
+                 loading="lazy"
                  sx={{width:'100%',height:'80%'}}
                  image={isLightMode?HomePhoto:HomePageDarkModeImage}
                  />

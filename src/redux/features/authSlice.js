@@ -7,7 +7,6 @@ axios.interceptors.request.use((req)=>{
     if(localStorage.getItem("user")){
         req.headers.authorization = `Bearer ${(JSON.parse(localStorage.getItem("user")).accessToken)}`
     }
-
   return req;
 })
 
@@ -28,7 +27,7 @@ export const signUp = createAsyncThunk('auth/signUp',async({userData,toast,navig
 })
 
 
-export const signIn = createAsyncThunk('auth/signIn',async({userData,toast,navigate})=>{
+export const signIn = createAsyncThunk('auth/signIn',async({userData,navigate,toast})=>{
     try {
          const response = await axios.post(`${realBasicUrl}/login`,userData)
          if(response){
@@ -126,8 +125,7 @@ export const getUserProfileData = createAsyncThunk('auth/getUserProfileData',asy
 
 
 
-export const editUserProfile = createAsyncThunk('auth/editUserProfile',async({id,toast,userProfileEditedData,navigate})=>{
-   console.log(userProfileEditedData,'edited')
+export const editUserProfile = createAsyncThunk('auth/editUserProfile',async({id,toast,navigate,userProfileEditedData})=>{
   try {
          const response = await axios.patch(`http://localhost:3000/users/${id}`,userProfileEditedData)
          if(response){
@@ -225,7 +223,7 @@ export const authSlice= createSlice({
       userSurveyAnswer:[],
       userStaticData:[],
       loading:false,
-      isLoggedIn:false,
+      isUserLoggedIn:false,
       isLightMode:true,
       modeColor:'white',
       survey:[],
@@ -239,13 +237,12 @@ export const authSlice= createSlice({
 },
   reducers:{
     logOut:(state,action)=>{
-      state.isLoggedIn=false
       localStorage.removeItem('user')
       state.users=[]
       state.userSurveyAnswer=[]
       state.userStaticData=[]
       state.loading=false
-      state.isLoggedIn=false
+      state.isUserLoggedIn=false
       state.isLightMode=true
       state.survey=[]
     },
@@ -256,12 +253,6 @@ export const authSlice= createSlice({
        }else state.modeColor='white'
     },
     
-     setUserLoginState:(state,action)=>{
-      if(localStorage.getItem("user")){
-         state.isLoggedIn=true
-    } else state.isLoggedIn=false
-    },
-
      setUserSignUpData:(state,action)=>{
        return {...state,userSignUpData:{...state.userSignUpData,"value":action.payload}}
     },
@@ -276,34 +267,38 @@ export const authSlice= createSlice({
     [signUp.fulfilled]:(state,action)=>{
       state.users=action.payload
       state.loading=false
-      state.isLoggedIn=true
     },
     [signUp.rejected]:(state,action)=>{
-         state.loading=false
+         state.loading=true
     },
 
     [signIn.pending]:(state,action)=>{
-   
-      state.isLoggedIn=false
+       state.loading=true
+      state.isUserLoggedIn=false
     },
     [signIn.fulfilled]:(state,action)=>{
       state.users=action.payload
+      state.loading=false
+      state.isUserLoggedIn=true
       localStorage.setItem('user',JSON.stringify({...action.payload}))
     },
     [signIn.rejected]:(state,action)=>{
-         state.isLoggedIn=false
+        state.isUserLoggedIn=false
+        state.loading=false
     },
 
     [getAllSurvey.pending]:(state,action)=>{
       state.loading=true
+      state.isUserLoggedIn=false
     },
     [getAllSurvey.fulfilled]:(state,action)=>{
       state.survey=action.payload
       state.loading=false
-      state.isLoggedIn=true
+      state.isUserLoggedIn=true
     },
     [getAllSurvey.rejected]:(state,action)=>{
          state.loading=false
+         state.isUserLoggedIn=false
     },
 
     [sendSurveyAnswer.pending]:(state,action)=>{
@@ -312,21 +307,21 @@ export const authSlice= createSlice({
     [sendSurveyAnswer.fulfilled]:(state,action)=>{
       state.userSurveyAnswer=action.payload
       state.loading=false
-      state.isLoggedIn=true
     },
     [sendSurveyAnswer.rejected]:(state,action)=>{
          state.loading=false
     },
 
     [getUserStaticData.pending]:(state,action)=>{
-        state.isLoggedIn=false
+        state.loading=true
     },
     [getUserStaticData.fulfilled]:(state,action)=>{
       state.userStaticData=action.payload
-      state.isLoggedIn=true
+      state.loading=false
+   
     },
     [getUserStaticData.rejected]:(state,action)=>{
-      state.isLoggedIn=false
+      state.loading=true
     },
 
     [getUserProfileData.pending]:(state,action)=>{
@@ -335,10 +330,9 @@ export const authSlice= createSlice({
     [getUserProfileData.fulfilled]:(state,action)=>{
       state.userProfileData=[action.payload]
       state.loading=false
-      state.isLoggedIn=true
     },
     [getUserProfileData.rejected]:(state,action)=>{
-         state.loading=false
+         state.loading=true
     },
 
     [editUserProfile.pending]:(state,action)=>{
@@ -346,10 +340,10 @@ export const authSlice= createSlice({
     },
     [editUserProfile.fulfilled]:(state,action)=>{
       state.userProfileData=[action.payload]
-      state.isLoggedIn=true
+      state.loading=false
     },
     [editUserProfile.rejected]:(state,action)=>{
-         state.loading=false
+         state.loading=true
     },
 
 
@@ -360,9 +354,7 @@ export const authSlice= createSlice({
       state.isUserExist=action.payload
       state.loading=false
     },
-    [editUserProfile.rejected]:(state,action)=>{
-         state.loading=false
-    },
+ 
 
     [getMyWalletBalance.pending]:(state,action)=>{
       state.loading=true
@@ -372,7 +364,7 @@ export const authSlice= createSlice({
       state.loading=false
     },
     [getMyWalletBalance.rejected]:(state,action)=>{
-         state.loading=false
+         state.loading=true
     },
 
     [uploadImage.pending]:(state,action)=>{

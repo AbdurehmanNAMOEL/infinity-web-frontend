@@ -16,7 +16,7 @@ const VerificationPage = ({navigateTo,handleAction}) => {
  
     const handleConfirmation = async()=>{
     try {
-       const response=await window.confirmationResult.confirm(verify);
+       const response= await window.confirmationResult.confirm(verify);
          if(response?.user){
            console.log(response);
         
@@ -26,13 +26,15 @@ const VerificationPage = ({navigateTo,handleAction}) => {
     }
     
   }
+ 
 
-   useEffect(()=>{
-      if(verify.length===6){
+useEffect(()=>{
+    if(verify.length===6){
         setIsBtnDisabled(false)
       }else setIsBtnDisabled(true)
    },[verify])
    
+
   return (
    <Box sx={style.verificationPasswordContainer}>
        <Box sx={style.companyLogoContainer}>

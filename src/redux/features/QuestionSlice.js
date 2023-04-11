@@ -37,14 +37,14 @@ export const deleteSurvey = createAsyncThunk('admin/deleteSurvey',async({id,toas
             return response.data
          }
     } catch (error) {
-       
-        console.log(error.response.data.message)    
+        toast.error(error.response.data.message)    
     }
 })
 
-export const editSurvey = createAsyncThunk('admin/editSurvey',async({surveyData,id,toast})=>{  
+export const editSurvey = createAsyncThunk('admin/editSurvey',async({surveyData,newIdValue,toast})=>{
+  console.log(surveyData);  
     try {
-         const response = await axios.patch(`${realBasicUrl}survey/${id}/updateSurvey`,surveyData)
+         const response = await axios.patch(`${realBasicUrl}survey/${newIdValue}/updateSurvey`,surveyData)
          if(response){
             toast.success('Successfully edited')
             return response.data

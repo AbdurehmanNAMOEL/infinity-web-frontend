@@ -20,37 +20,33 @@ const ForgotPassword = () => {
   const [isOTPCodeSent,setOTPSetIsCodeSent] = useState('')
   const [verify,setVerify] = useState('')
   const   onCapTchaVerify=()=>{
-    if(!window.recaptchaVerifier){
+   }
+
+  useEffect(()=>{
+     if(!window.recaptchaVerifier){
        window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {
        'size': 'invisible',
        'callback': (response) => {
         // reCAPTCHA solved, allow signInWithPhoneNumber.
-          setTimeout(()=>{
-             onSignUp()
-             console.log('hellooooo');
-             toast.success('successfully sent');
              navigate('/verify')
-          },[1000])
-      
         },
        'expired-callback': () => {
        // Response expired. Ask user to solve reCAPTCHA again.
        // ...
      }
     }, auth);
-  }}
-
+  }
+  },[])
  const onSignUp=()=>{
-    onCapTchaVerify()
+  
    const appVerifier = window.recaptchaVerifier;
    const ph= '+251'+phoneNumber
-       console.log('here!!')
     signInWithPhoneNumber(auth, ph, appVerifier)
     
     .then((confirmationResult) => {
       window.confirmationResult = confirmationResult;
        setOTPSetIsCodeSent(true)
- 
+        toast.success('successfully sent');
     }).catch((error) => {
       console.log(error)
       setOTPSetIsCodeSent(false)
@@ -58,8 +54,6 @@ const ForgotPassword = () => {
 
    
   }
-
-
 
   useEffect(()=>{
      if(phoneNumber!==''&&isFormValid){

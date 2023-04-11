@@ -17,8 +17,7 @@ const realBasicUrl='http://localhost:3000/'
 export const getAllFeedBacks = createAsyncThunk('admin/getAllFeedBack',async()=>{
     try {
          const response = await axios.get(`${realBasicUrl}feedbacks`)
-         if(response){
-            
+         if(response){  
             return response.data
          }
     } catch (error) {

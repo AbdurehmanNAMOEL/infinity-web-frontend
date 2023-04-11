@@ -29,7 +29,7 @@ const style= {
     display:'flex',
     justifyContent:'center',
     alignItems:'center',
-    position:'absolute',
+    position:'fixed',
     zIndex:4000,
     flexDirection:'column'
   }

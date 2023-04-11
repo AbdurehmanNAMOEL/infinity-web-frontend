@@ -14,6 +14,7 @@ function Setting({isDrawerOpen,closeDrawer}) {
     const [isBtnDisabled,setIsBtnDisabled]= useState(false)
     const [rewardPerCredit,setRewardPerCredit]=useState(settingData?.rewardPerCredit)
     const [minAmountForCashOut,setMinAmountForCashOut]=useState(settingData?.minAmountForCashOut)
+    
     useEffect(()=>{
         dispatch(getAllSettingValue())
     },[])
@@ -23,11 +24,8 @@ function Setting({isDrawerOpen,closeDrawer}) {
         "rewardPerCredit":parseFloat(rewardPerCredit),
         "minAmountForCashOut": parseFloat(minAmountForCashOut)
        }
-
-       dispatch(updateSetting({settingData,toast}))
-      
-    }
-
+     dispatch(updateSetting({settingData,toast}))
+  }
     useEffect(()=>{
      if(rewardPerCredit!==''&&rewardPerCredit!=='0'&& 
         minAmountForCashOut!==''&&minAmountForCashOut!=='0'){

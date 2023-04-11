@@ -21,7 +21,7 @@ const InputField = ({inputLabel,type,setValue,inputValue,width,setValidation}) =
   const [isEmpty,setEmpty] = useState()
   const handleClickShowPassword = () => setShowPassword(show =>!show);
   
-const validate = ()=>{
+const validate = (inputValue,type)=>{
     if(type==='name'){ 
       if(validateName(inputValue)!==''){
          setEmpty(validateName(inputValue))
@@ -51,25 +51,28 @@ const validate = ()=>{
          setValid(false)      
      }else  setValid(true)
   }
- if(inputValue!==''){
-  setValidation(isValid)
+ 
+ 
 }
 
-}
-
-  const handleMouseDownPassword = (event) => {
+const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
  
 
 useEffect(()=>{
-  if(inputValue?.length>=1){
-    validate()
-  } 
-  
+   if(inputValue){
+     setValidation(isValid)
+   }
 },[inputValue,isValid])
 
 
+const handleInputValueChange=(e)=>{
+  setValue(e)
+  validate(e.target.value,type)
+  
+  console.log(e.target.value);
+}
 
   return (
    <FormControl sx={{ height:'60px', width: width?width:'80%' }} >
@@ -84,7 +87,7 @@ useEffect(()=>{
             id={inputLabel}
             sx={{ height:'50px', width: '96%',backgroundColor:'white' }}
             type={type==='password'?showPassword?'text':'password':type}
-            onChange={setValue}
+            onChange={handleInputValueChange}
             value={inputValue}
             required={type==='email'?false:true}
             endAdornment={

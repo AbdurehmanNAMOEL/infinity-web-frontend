@@ -161,7 +161,7 @@ function App() {
           <ForgotPassword />
           }/>
         <Route  path='/signUp' element={<SignUp/>}/>
-        <Route  path='/userProfileFiller' element={<UserProfileSubmissionPage/>}/>
+        
         <Route isScrolling={isScrolling} path='/policy' element={<PrivacyPolicyHome/>}/>
         <Route isScrolling={isScrolling} path='/' element={<HomePage/>}/>
         <Route isScrolling={isScrolling} path='/aboutUs' element={<AboutUs/>}/>
@@ -183,7 +183,7 @@ function App() {
           path='/myWallet' 
           element={<MyWallet/>}
         />
-
+        
          <Route 
            isScrolling={isScrolling} 
            path='/survey'
@@ -196,6 +196,7 @@ function App() {
             isScrolling={isScrolling} 
             path='/profile' 
             element={<ProfilePage/>}/>
+             <Route  path='/userProfileFiller' element={<UserProfileSubmissionPage/>}/>
         </Route>
        </Routes>
       </Router>

@@ -52,6 +52,7 @@ import { useNavigate } from 'react-router-dom'
         
   useEffect(()=>{
      console.log(isFormValid)
+     console.log(userData.firstName);
      if(userData.firstName!=='' && userData.lastName!==''&& confirmPassword!==''
        && userData.phoneNumber!=='' && userData.email!==''
        &&userData.password!==''&& userData.gender!==''&& isFormValid && isUserAgreed){

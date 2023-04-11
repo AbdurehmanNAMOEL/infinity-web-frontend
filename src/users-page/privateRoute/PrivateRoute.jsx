@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { useSelector } from 'react-redux'
 import { Outlet,Navigate } from 'react-router-dom'
 const PrivateRoute = () => {
-  const {isLoggedIn}= useSelector(state=>state.auth)
-  const {isAdminLoggedIn}= useSelector(state=>state.admin)
+  const {isUserLoggedIn}= useSelector(state=>state.auth)
+  console.log(isUserLoggedIn);
   return (
-  isLoggedIn||isAdminLoggedIn?<Outlet/>:<Navigate to ={'/login'}/>
+  isUserLoggedIn?<Outlet/>:<Navigate to ={'/login'}/>
   )
 }
 

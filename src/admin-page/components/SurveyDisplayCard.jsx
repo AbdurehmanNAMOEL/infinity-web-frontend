@@ -36,7 +36,7 @@ const SurveyDisplayCard = ({
 
 
     const handleEditing=()=>{
-      navigate(`/dashboard/question-Generator/${id}`)
+      navigate(`/dashboard/question-Generator/${id}-${questionTitle}`)
       dispatch(setEditableSurveyValue(questions))
     }
 

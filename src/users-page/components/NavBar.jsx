@@ -20,9 +20,8 @@ const NavBar = ({isScrolling}) => {
   const [navTitle,setNavTitle]= useState('Home')
   
   // from the state 
-  let {isLoggedIn,isLightMode,modeColor} = useSelector(state=>state.auth)
-  let {isAdminLoggedIn}= useSelector(state=>state.admin)
- 
+  let {isUserLoggedIn,isLightMode,modeColor} = useSelector(state=>state.auth)
+  
     const [userData,setUserData]= useState([])
     useEffect(()=>{
     setUserData(JSON.parse(localStorage.getItem("user")))
@@ -39,9 +38,8 @@ const NavBar = ({isScrolling}) => {
 
     
   useEffect(()=>{
-     if(!isAdminLoggedIn) setNewNavList(navList.filter(item=>item.title!=='DashBoard'))
-     else setNewNavList(navList)
-    },[isAdminLoggedIn])
+   setNewNavList(navList)
+    },[])
     
  
   return (
@@ -70,10 +68,10 @@ const NavBar = ({isScrolling}) => {
           )}
           <Mode isLightMode={isLightMode} 
            handleDispatch={()=>dispatch(setMode())}/>
-          {!isLoggedIn?<IconButton 
+          {!isUserLoggedIn?<IconButton 
             onClick={()=>navigate('/login')} 
             sx={style.logoInIcon}>
-              <LoginIcon sx={{marginRight:'10px'}}/> <p>Login</p> 
+              <LoginIcon sx={{marginRight:'10px'}}/><p>Login</p> 
               </IconButton>:
             <IconButton  
             sx={{width:'200px',borderRadius:'0px'}}>

@@ -145,16 +145,20 @@ console.log(questionData);
    useEffect(()=>{
     if(id){
       setQuestionData(editableSurveyValue)
+      setQuestionMainTitle(id.split('-')[1])
     }else setQuestionData([])
 
    },[id,editableSurveyValue])
-
+   console.log(editableSurveyValue,);
    const editSurveyValue=()=>{
      const surveyData={
+      'title':questionMainTitle,
       'questions':questionData,
+       "hasImageQuestion": questionData.find(data=>data.type==='image')!==undefined,
      }
     console.log(surveyData)
-     dispatch(editSurvey({surveyData,id,toast}))
+     let newIdValue=id.split('-')[0]
+     dispatch(editSurvey({surveyData,newIdValue,toast}))
      deleteOrRestNewSurvey()
   }
 
@@ -176,7 +180,7 @@ console.log(questionData);
           closeDrawer={closeDrawer}
           drawerWidth={isDrawerOpen?200:0}
         />
-        <Box sx={{display:'flex',height:'100vh',width:'100%',position:'relative',flexDirection:'column'}}>
+        <Box sx={{display:'flex',height:'auto',width:'100%',position:'relative',flexDirection:'column'}}>
         <Box sx={{position:'fixed',height:'auto',width:`${isDrawerOpen?100:100}%`,zIndex:200}}> 
          <Header closeDrawer={()=>closeDrawer(prev=>!prev)}/>
          <Box sx={{height:'90vh',overflowY:'scroll',marginTop:'80px'}}>
