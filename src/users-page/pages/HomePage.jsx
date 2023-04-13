@@ -229,7 +229,7 @@ const HomePage = () => {
                   <ButtonStyled 
                    bgColor={'#1A6CE8'} 
                    label={'Register'}
-                   setValue={()=>navigate('/registration')}
+                   setValue={()=>navigate('/consultVerifier')}
                    />
               </Box>
            </Box>

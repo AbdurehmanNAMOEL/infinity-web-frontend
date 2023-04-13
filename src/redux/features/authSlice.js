@@ -187,15 +187,16 @@ export const restPassword = createAsyncThunk('auth/restPassWord',async({toast,na
 
 
 
-export const findPhoneNumber = createAsyncThunk('auth/findPhoneNumber',async({toast,phoneNumber})=>{
+export const findPhoneNumber = createAsyncThunk('auth/findPhoneNumber',async({
+  toast,navigate,phoneNumber,onSignUp,navigateTo})=>{
   
   try {
          const response = await axios.get(`http://localhost:3000/users/phoneNumberExists/${phoneNumber}`)
-         if(!response?.data){   
-            return response.data
-         }else {
-            toast.error('user already exist by this phone number')
-         }
+          if(response.data){
+            onSignUp()
+          }else  navigate(`/${navigateTo}`) 
+          return response.data
+        
     } catch (error) {
         toast.error(error.response.data)    
     }
@@ -205,7 +206,7 @@ export const getMyWalletBalance = createAsyncThunk('auth/getMyWalletBalance',asy
   
   try {
          const response = await axios.get(`http://localhost:3000/wallets/myStats`)
-          
+        
          return response.data
         
     } catch (error) {
@@ -233,7 +234,8 @@ export const authSlice= createSlice({
       isUserVerified:false,
       myWalletBalance:[],
       uploadImageUrl:{},
-      isImageLoading:false
+      isImageLoading:false,
+      isPhoneNumberExist:false
 },
   reducers:{
     logOut:(state,action)=>{
@@ -351,7 +353,7 @@ export const authSlice= createSlice({
       state.loading=true
     },
     [findPhoneNumber.fulfilled]:(state,action)=>{
-      state.isUserExist=action.payload
+      state.isPhoneNumberExist=action.payload
       state.loading=false
     },
  

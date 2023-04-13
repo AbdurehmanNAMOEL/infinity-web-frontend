@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import {toast} from 'react-toastify'
 import { useSelector } from 'react-redux';
 import ActionButton from '../../../components/ActionButton';
-const VerificationPage = ({navigateTo,handleAction}) => { 
+const VerificationPage = ({navigateTo}) => { 
    const navigate=useNavigate()
    const {isUserVerified}= useSelector(state=>state.auth)
    const [isBtnDisabled,setIsBtnDisabled]= useState(true)
@@ -18,11 +18,10 @@ const VerificationPage = ({navigateTo,handleAction}) => {
     try {
        const response= await window.confirmationResult.confirm(verify);
          if(response?.user){
-           console.log(response);
-        
+            navigate(`/${navigateTo}`)
          }  
     } catch (error) {
-      toast.error(error.message)
+      toast.error(error.response.message)
     }
     
   }

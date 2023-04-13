@@ -19,7 +19,7 @@ import { useSelector } from 'react-redux';
 import PrivacyPolicyHome from './users-page/pages/policy/PrivacyPolicyHome';
 import AdminLogin from './admin-page/pages/auth/pages/AdminLogin';
 import AdminPrivateRoute from './admin-page/privateRoute/AdminPrivateRoute';
-import Registration from './users-page/pages/Registration';
+import Registration from './users-page/pages/survey/Appointment/Registration';
 import SurveyDetail from './users-page/pages/survey/SurveyDetail';
 import ScrollToTop from './shared/Components/ScrollToTop';
 import LoadingPage from './shared/Components/LoadingPage';
@@ -37,6 +37,8 @@ import UserFeedBack from './users-page/pages/UserFeedBack';
 import MyWallet from './users-page/user_info_pages/pages/wallet/MyWallet';
 import Modal from './admin-page/components/Modal';
 import Setting from './admin-page/pages/Setting';
+import PhoneNumberVerifierPage from './users-page/pages/survey/Appointment/PhoneNumberVerifierPage';
+import UserAppointment from './users-page/pages/survey/Appointment/UserAppointment';
 function App() {
    const [isDrawerOpen,setDrawerOpen]=useState(true)
    const {isLightMode,loading}= useSelector(state=>state.auth)
@@ -165,7 +167,8 @@ function App() {
         <Route isScrolling={isScrolling} path='/policy' element={<PrivacyPolicyHome/>}/>
         <Route isScrolling={isScrolling} path='/' element={<HomePage/>}/>
         <Route isScrolling={isScrolling} path='/aboutUs' element={<AboutUs/>}/>
-       
+        <Route isScrolling={isScrolling} path='/survey'
+           element={<SurveyHome  setSurveyDetailData={setSurveyDetailData} />}/>
       <Route element={<PrivateRoute/>}>
         
         <Route 
@@ -173,10 +176,17 @@ function App() {
           path='/feedBack' 
           element={<UserFeedBack/>}
         />
-
+         <Route  
+          path='/consultVerifier' 
+          element={<PhoneNumberVerifierPage/>}
+        />
         <Route  
           path='/registration' 
           element={<Registration/>}
+        />
+         <Route  
+          path='/userAppointment' 
+          element={<UserAppointment/>}
         />
 
         <Route  
@@ -184,10 +194,7 @@ function App() {
           element={<MyWallet/>}
         />
         
-         <Route 
-           isScrolling={isScrolling} 
-           path='/survey'
-           element={<SurveyHome  setSurveyDetailData={setSurveyDetailData} />}/>
+      
          <Route 
             isScrolling={isScrolling} 
             path='/takeSurvey' 
