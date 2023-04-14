@@ -3,16 +3,18 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Box, CardMedia, Divider, IconButton, Paper, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteSurveyResponse, verifySurveyResponse } from '../../redux/features/adminSlice';
+import { deleteSurveyResponse, getAllSurveyQuestions, verifySurveyResponse } from '../../redux/features/adminSlice';
 import {toast} from 'react-toastify'
-const DropDown = ({title,data,isModalOpen,setModalOpen,isRejected}) => {
+const DropDown = ({title,data,isModalOpen,setModalOpen,isRejected,surveyId}) => {
   const [isExpanded,setIsExpanded]= useState(false)
   const [height,setHeight]= useState('50px')
-  const {modeColor,isLightMode}= useSelector(state=>state.auth)
+  const {modeColor,isLightMode,generatedSurvey}= useSelector(state=>state.auth)
   let dataTest=data.map(data=>data.answer[0].includes('files'))
+  const [isVerified,setIsVerified]= useState(false)
   const dispatch = useDispatch()
   let id = data.map(surveyResponse=>surveyResponse.surveyResponseId)[0];
   console.log(dataTest);
+  console.log(data);
   const handleExpand=()=>{
     setIsExpanded(prev=>!prev)
   }
@@ -24,9 +26,10 @@ const DropDown = ({title,data,isModalOpen,setModalOpen,isRejected}) => {
 
   const handleVerifySurveyResponse=()=>{
     const surveyId={
-     "surveyResponseId":id
+     "surveyResponseId":id,
     }
     dispatch(verifySurveyResponse({surveyId,toast}))
+    setIsVerified(true)
   }
 
 
@@ -36,14 +39,19 @@ const DropDown = ({title,data,isModalOpen,setModalOpen,isRejected}) => {
       dispatch(deleteSurveyResponse({id,toast}))
     }
   }
+     useEffect(()=>{
+      dispatch(getAllSurveyQuestions())
+    },[generatedSurvey,isVerified])
 
+
+    console.log(generatedSurvey);
   return (
     <Paper sx={[
         style.DropDownComponentContainer,
        {height:height},{backgroundColor:modeColor},
        {border:isLightMode?'solid 1px rgba(0,0,0,0.2)':'solid 1px #ACACAC'}]}>
      <Paper sx={{borderRadius:'0px',height:'40px',display:'flex',boxShadow:'none',justifyContent:'space-between',alignItems:'center'}}>
-        <Typography sx={{marginLeft:'20px'}}>{'Educational'}</Typography>
+        <Typography sx={{marginLeft:'20px'}}>{title}</Typography>
         {isExpanded?
         <IconButton onClick={handleExpand}><ArrowForwardIosIcon sx={{width:'14px',height:'14px'}}/></IconButton>:
         <IconButton onClick={handleExpand}><ExpandMoreIcon/></IconButton>}
@@ -65,13 +73,13 @@ const DropDown = ({title,data,isModalOpen,setModalOpen,isRejected}) => {
          
       )}
       
-     </Box>
+     </Box>{!isVerified?
      <Box sx={style.btnContainer}>
       <Typography  onClick={handleRejecting}  sx={style.rejectBtn}>Reject</Typography>
       <Typography 
          onClick={handleVerifySurveyResponse} 
          sx={style.approveBtn}>Approve</Typography>
-     </Box>
+     </Box>:''}
     </Paper>
   )
 }

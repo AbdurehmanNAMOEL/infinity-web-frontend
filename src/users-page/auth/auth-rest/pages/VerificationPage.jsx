@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import {toast} from 'react-toastify'
 import { useSelector } from 'react-redux';
 import ActionButton from '../../../components/ActionButton';
-const VerificationPage = ({navigateTo}) => { 
+const VerificationPage = ({navigateTo,onSignUp}) => { 
    const navigate=useNavigate()
    const {isUserVerified}= useSelector(state=>state.auth)
    const [isBtnDisabled,setIsBtnDisabled]= useState(true)
@@ -32,7 +32,8 @@ useEffect(()=>{
         setIsBtnDisabled(false)
       }else setIsBtnDisabled(true)
    },[verify])
-   
+
+  
 
   return (
    <Box sx={style.verificationPasswordContainer}>
@@ -57,6 +58,9 @@ useEffect(()=>{
              isBtnDisabled={isBtnDisabled}
             />
            </Box>
+        <Typography  sx={{width:'70%',display:'flex',justifyContent:'flex-end',color:'red',cursor:'pointer'}}>
+          Resend code
+        </Typography>
       </Paper>
       </Box>
     </Box>

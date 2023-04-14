@@ -18,8 +18,10 @@ const QuestionAnswered = ({isDrawerOpen,closeDrawer}) => {
 
     useEffect(()=>{
         dispatch(getAllAnsweredSurvey())
-    },[answeredSurvey])
+    },[])
 
+    
+  console.log(answeredSurvey);
   return (
     <>
       <Box sx={{ width: '100%', display: 'flex', flexDirection: 'row', height: { md: '100vh', sm: 'auto' } }}>
@@ -40,8 +42,9 @@ const QuestionAnswered = ({isDrawerOpen,closeDrawer}) => {
                     isModalOpen={isModalOpen}
                     setModalOpen={setModalOpen}
                     isRejected={isRejected}
-                    id={data?.responses} 
+                    surveyId={data?.surveyId} 
                     data={data?.responses}
+                    isVerified={data?.isPendingVerification}
                   />
                 </Grid>    
             )}

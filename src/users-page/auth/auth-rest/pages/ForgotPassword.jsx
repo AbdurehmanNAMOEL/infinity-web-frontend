@@ -37,8 +37,9 @@ const ForgotPassword = () => {
     }, auth);
   }
   },[])
+
  const onSignUp=()=>{
-  
+   alert('hello')
    const appVerifier = window.recaptchaVerifier;
    const ph= '+251'+phoneNumber
     signInWithPhoneNumber(auth, ph, appVerifier)

@@ -27,14 +27,15 @@ export const surveyAccessingFilterList=[
 
 export const feedbackFilterList=[
     {'title':'All','value':'All'},
-    {'title':'New','value':'New'},
+    {'title':'Experience','value':'experience'},
+    {'title':'Performance','value':'performance'},
 ]
 
 
 export const appointmentFilterList=[
     {'title':'All','value':'All'},
-    {'title':'recent','value':'recent'},
-    {'title':'old','value':'old'},
+    {'title':'Experience','value':'Experience'},
+    {'title':'Performance','value':'Performance'},
 ]
 
 

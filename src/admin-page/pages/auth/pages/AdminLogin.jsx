@@ -11,12 +11,14 @@ import { loginAdmin} from '../../../../redux/features/adminSlice'
 import LoadingAnimation from '../../../../shared/Components/LoadingAnimation'
 import { handleResponsiveness } from '../../../../users-page/auth/styles/loginStyle'
 import ActionButton from '../../../../users-page/components/ActionButton'
+import PhoneNumberVerifierPage from '../../../../users-page/pages/survey/Appointment/PhoneNumberVerifierPage'
 const AdminLogin = () => {
  
    const navigate = useNavigate()
    const dispatch = useDispatch()
    const {loading} = useSelector(state=>state.admin)
    const [isValid,setIsValid]= useState(false)
+   const [isForgetPasswordClicked,setIsForgetPasswordClicked]= useState(false)
    const [isBtnDisabled,setIsBtnDisabled]= useState(true)
    const [userData,setUserData]= useState({phoneNumber:'',password:'',})
    const handleSubmit=()=>{
@@ -35,9 +37,13 @@ useEffect(()=>{
          setIsBtnDisabled(false)
       }else setIsBtnDisabled(true)
     },[userData,isValid])
+
+    const onForgotClicked=()=>{
+      setIsForgetPasswordClicked(true)
+    }
    
   return (
-   <Box sx={style.adminLoginContainer}>  
+    <>{!isForgetPasswordClicked? <Box sx={style.adminLoginContainer}>  
       <Paper sx={style.adminLoginLogoContainer}>
       <Card onClick={()=>navigate('/')} sx={{width:'150px',height:'60px',boxShadow:'none',marginLeft:'10px'}}>
         <CardMedia image={LogoImage} sx={{width:'80%',height:'100%'}}/>
@@ -67,6 +73,9 @@ useEffect(()=>{
             setValue={(e)=>setUserData({...userData,"password":e.target.value})}
            />
         </Box>
+        <Box sx={{marginTop:'-35px',width:'70%',display:'flex',justifyContent:'flex-end'}}>
+          <Typography onClick={onForgotClicked} sx={{fontSize:'14px',cursor:'pointer',color:'#1A6CE8'}}>ForgotPassword</Typography>
+        </Box>
         <Box sx={
           {
             width:'80%',
@@ -82,7 +91,9 @@ useEffect(()=>{
              />  
         </Box>
   </Paper>
-</Box>
+</Box>:<PhoneNumberVerifierPage/>}
+</>
+
   )
 }
 

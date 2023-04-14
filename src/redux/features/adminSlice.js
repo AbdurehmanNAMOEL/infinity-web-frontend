@@ -52,13 +52,12 @@ export const loginAdmin = createAsyncThunk('admin/loginAdmin',async({userData,to
          const response = await axios.post(`${realBasicUrl}/admins/login`,userData)
          if(response){
             toast.success('well come back')
-            navigate('/dashBoard')
-            
+            navigate('/dashBoard')  
             return response.data
          }
     } catch (error) {
-       
-        toast.error(error.response.data.message)    
+        
+        toast.error(error.response.data.error.message)    
     }
 })
 
@@ -148,6 +147,18 @@ export const deleteSurveyResponse=createAsyncThunk('admin/deleteSurveyResponse',
          const response = await axios.delete(`${realBasicUrl}surveyResponses/${id}`)
          if(response){
             toast.success('successfully Deleted')
+            return response.data
+         }
+    } catch (error) {
+        console.log(error.response.data.message)    
+    }
+})
+
+export const updatePassword=createAsyncThunk('admin/updatePassword',async({id,newPassword,toast})=>{
+    try {
+         const response = await axios.patch(`${realBasicUrl}admins/${id}`,newPassword)
+         if(response){
+            toast.success('password successfully updated')
             return response.data
          }
     } catch (error) {

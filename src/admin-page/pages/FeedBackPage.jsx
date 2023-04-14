@@ -13,11 +13,21 @@ const FeedBackPage = ({isDrawerOpen,closeDrawer}) => {
     const dispatch = useDispatch()
     const {usersFeedBacks}= useSelector(state=>state?.feedback)
     const {isLightMode,modeColor}= useSelector(state=>state?.auth)
-    const {filterValue,setFilterValue}= useState('All')
+    const [filterValue,setFilterValue]= useState('All')
+    const [userFeedBackValue,setUserFeedBackValue]=useState(usersFeedBacks)
+   
     useEffect(()=>{
         dispatch(getAllFeedBacks())
     },[])
-
+    
+    useEffect(()=>{
+           console.log(filterValue);
+        if(filterValue==="All"){
+            setUserFeedBackValue(usersFeedBacks)
+        }else{
+            setUserFeedBackValue(usersFeedBacks.filter(data=>data.feedbackGroup===filterValue))
+        }
+    },[filterValue,userFeedBackValue,usersFeedBacks])
     console.log(usersFeedBacks);
    
   return (
@@ -32,22 +42,22 @@ const FeedBackPage = ({isDrawerOpen,closeDrawer}) => {
                     <Header closeDrawer={() => closeDrawer(prev => !prev)} />
                 </Box>
 
-         { usersFeedBacks?.length?  <Box sx={{marginTop:'100px',width:'80%',marginLeft:'10%'}}>
+         {usersFeedBacks?.length?  <Box sx={{marginTop:'100px',width:'80%',marginLeft:'10%'}}>
                 <InputSelector
                  optionList={feedbackFilterList}
                  optionTitle={'title'}
                  optionValue={'value'}
                  label={'Filter'}
                  inputValue={filterValue}
-                 setValue={setFilterValue}
+                 setValue={(e)=>setFilterValue(e.target.value)}
                 />
             </Box>:null}  
-          {usersFeedBacks?.length? 
+          {userFeedBackValue?.length? 
           <Grid sx={{marginLeft:handleResponsiveness('-10%','5%'),
                 backgroundColor:modeColor,
                 height:'auto',marginTop:'10px',width:handleResponsiveness('100%','95%')}} container spacing={8}>
             {
-                usersFeedBacks?.map((data,index)=>
+                userFeedBackValue?.map((data,index)=>
                   <Grid item xs={12} md={5}>
                    <UserFeedBackCard 
                      key={data.id} 

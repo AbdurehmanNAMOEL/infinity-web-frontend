@@ -48,7 +48,7 @@ const PhoneNumberVerifierPage= () => {
        setOTPSetIsCodeSent(true)
         toast.success('successfully sent');
     }).catch((error) => {
-      console.log(error)
+      console.log(error.message)
       setOTPSetIsCodeSent(false)
     });
 
@@ -74,7 +74,7 @@ const PhoneNumberVerifierPage= () => {
 
   return (
     <>
-    {isOTPCodeSent?<VerificationPage />:
+    {isOTPCodeSent?<VerificationPage navigateTo={'userAppointment'}/>:
     <Box sx={style.forgetPasswordContainer}>
      
        <Box sx={style.companyLogoContainer}>
