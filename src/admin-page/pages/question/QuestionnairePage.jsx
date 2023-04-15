@@ -95,7 +95,7 @@ const QuestionnairePage = ({closeDrawer,isDrawerOpen}) => {
   }
 
   
-  const deleteQuestion=(questionTitle)=>{
+  const deleteQuestion=(questionTitle,id)=>{
     setQuestionData (questionData?.filter(data=>data?.query!==questionTitle))
   }
   
@@ -150,6 +150,7 @@ console.log(questionData);
 
    },[id,editableSurveyValue])
    console.log(editableSurveyValue,);
+
    const editSurveyValue=()=>{
      const surveyData={
       'title':questionMainTitle,
@@ -158,6 +159,7 @@ console.log(questionData);
      }
     console.log(surveyData)
      let newIdValue=id.split('-')[0]
+     console.log(newIdValue);
      dispatch(editSurvey({surveyData,newIdValue,toast}))
      deleteOrRestNewSurvey()
   }
@@ -167,11 +169,16 @@ console.log(questionData);
         setIsSurveyDelete(true)
    }
    const handleDeletingSurvey=()=>{
+
      setIsDeletingModalOpen(true)
     if(isSurveyDelete){
-      dispatch(deleteSurvey({id,toast}))
+        let surveyId=id.split('-')[0]
+      dispatch(deleteSurvey({surveyId,toast}))
     }
    }
+   useEffect(()=>{},[isSurveyDelete])
+
+   console.log(questionData)
   return (
     <>
     <Box sx={{width:'100%',display:'flex',flexDirection:'row',height:'auto'}}>
@@ -348,7 +355,7 @@ console.log(questionData);
                     height:'90%',
                     border:'none',
                     backgroundColor:'white',
-                    color:'red'}} onClick={()=>deleteQuestion(item.query)}>Delete</button>
+                    color:'red'}} onClick={()=>deleteQuestion(item.query,item.id)}>Delete</button>
                 </Box>
               </Paper>
         )

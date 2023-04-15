@@ -142,6 +142,20 @@ export const verifySurveyResponse=createAsyncThunk('admin/verifySurveyResponse',
     }
 })
 
+export const updateSurveyResponse=createAsyncThunk('admin/updateSurveyResponse',async({id,surveyData,toast})=>{
+    try {
+         const response = await axios.patch(`${realBasicUrl}/surveyResponses/${id}`,surveyData)
+         if(response){
+           console.log(response);
+            toast.success('survey successfully updated')
+            return response.data
+         }
+    } catch (error) {
+        console.log(error.response.data.message)    
+    }
+})
+
+
 export const deleteSurveyResponse=createAsyncThunk('admin/deleteSurveyResponse',async({id,toast})=>{
     try {
          const response = await axios.delete(`${realBasicUrl}surveyResponses/${id}`)

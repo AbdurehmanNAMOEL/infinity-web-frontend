@@ -203,7 +203,10 @@ function App() {
             isScrolling={isScrolling} 
             path='/profile' 
             element={<ProfilePage/>}/>
-             <Route  path='/userProfileFiller' element={<UserProfileSubmissionPage/>}/>
+             <Route  
+               path='/userProfileFiller' 
+               element={<UserProfileSubmissionPage/>}
+               />
         </Route>
        </Routes>
       </Router>

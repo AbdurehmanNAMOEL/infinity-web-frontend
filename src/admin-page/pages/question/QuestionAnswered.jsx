@@ -8,11 +8,13 @@ import SideBar from '../../components/SideBar'
 import ButtonStyled from '../../../users-page/components/ButtonStyled'
 import Modal from '../../components/Modal'
 import { useState } from 'react'
+import { handleResponsiveness } from '../../../users-page/auth/styles/loginStyle'
 
 const QuestionAnswered = ({isDrawerOpen,closeDrawer}) => {
 
     const dispatch = useDispatch()
     const {answeredSurvey} = useSelector(state=>state.admin)
+    const {modeColor} = useSelector(state=>state.auth)
     const [isModalOpen,setModalOpen]= useState(false)
     const [isRejected,setIsRejected]= useState(false)
 
@@ -24,7 +26,7 @@ const QuestionAnswered = ({isDrawerOpen,closeDrawer}) => {
   console.log(answeredSurvey);
   return (
     <>
-      <Box sx={{ width: '100%', display: 'flex', flexDirection: 'row', height: { md: '100vh', sm: 'auto' } }}>
+      <Box sx={{ width: '100%',backgroundColor:modeColor, display: 'flex', flexDirection: 'row', height: { md: '100vh', sm: 'auto' } }}>
         <SideBar
           isDrawerOpen={isDrawerOpen}
           closeDrawer={closeDrawer}
@@ -34,16 +36,19 @@ const QuestionAnswered = ({isDrawerOpen,closeDrawer}) => {
           <Box sx={{ position: 'fixed', width: `${isDrawerOpen ? 100 : 100}%`, zIndex: 200 }}>
             <Header headerTitle={'Answer'} closeDrawer={() =>closeDrawer(prev => !prev)} />
           </Box>
-          {answeredSurvey.length>0?
-             <Grid sx={{marginLeft:'5%',height:'auto',marginTop:'80px',width:'90%'}} container spacing={2}>
+          {answeredSurvey?.length>0?
+             <Grid sx={{marginLeft:handleResponsiveness('-2%','5%'),height:'auto',marginTop:'80px',width:handleResponsiveness('100%','90%')}} container spacing={2}>
             {answeredSurvey?.map(data=>
-                <Grid item xs={8} md={6}>
+                <Grid item xs={12} md={6}>
                   <DropDown 
+                    key={data?.id}
                     isModalOpen={isModalOpen}
                     setModalOpen={setModalOpen}
                     isRejected={isRejected}
                     surveyId={data?.surveyId} 
                     data={data?.responses}
+                    id={data?.id}
+                    userId={data?.userId}
                     isVerified={data?.isPendingVerification}
                   />
                 </Grid>    

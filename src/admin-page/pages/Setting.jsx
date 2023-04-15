@@ -180,12 +180,8 @@ function Setting({isDrawerOpen,closeDrawer}) {
          </Paper> 
          </Box>
     </Box>
-
-    
     </Box>
-
-  
-    </Box>
+  </Box>
   )
 }
 

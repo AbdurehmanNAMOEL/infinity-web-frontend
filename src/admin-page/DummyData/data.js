@@ -1,116 +1,105 @@
-export const lineData=[
-{
-    "id": "france",
-    "color": "hsl(255, 70%, 50%)",
-    "data": [
+export const MonthlyData=()=>{
+  let dataList= [
       {
-        "x": "plane",
+        "x": "January",
         "y": 114
       },
       {
-        "x": "helicopter",
+        "x": "Feburary",
         "y": 195
       },
       {
-        "x": "boat",
+        "x": "Martch",
         "y": 253
       },
       {
-        "x": "train",
+        "x": "April",
         "y": 299
       },
       {
-        "x": "subway",
+        "x": "May",
         "y": 77
       },
       {
-        "x": "bus",
+        "x": "June",
         "y": 1
       },
-      {
-        "x": "car",
-        "y": 260
-      },
-      {
-        "x": "moto",
-        "y": 182
-      },
-      {
-        "x": "bicycle",
-        "y": 221
-      },
-      {
-        "x": "horse",
-        "y": 14
-      },
-      {
-        "x": "skateboard",
-        "y": 247
-      },
-      {
-        "x": "others",
-        "y": 74
-      }
+    
     ]
+  return dataList
+}
+
+export const DailyData=()=>{
+  let dataList= [
+      {
+        "x": "Monday",
+        "y": 114
+      },
+      {
+        "x": "Tuesday",
+        "y": 195
+      },
+      {
+        "x": "Wensday",
+        "y": 253
+      },
+      {
+        "x": "Thursday",
+        "y": 299
+      },
+      {
+        "x": "Friday",
+        "y": 77
+      },
+      {
+        "x": "Saturday",
+        "y": 1
+      },
+       {
+        "x": "Sunday",
+        "y": 1
+      },
+    
+    ]
+  return dataList
+}
+
+
+
+
+
+
+
+export const pieChartData=[
+  {
+    "id": "Survey",
+    "label": "Survey",
+    "value": 558,
+    "color": "hsl(121, 70%, 50%)"
   },
   {
-    "id": "us",
-    "color": "hsl(282, 70%, 50%)",
-    "data": [
-      {
-        "x": "plane",
-        "y": 206
-      },
-      {
-        "x": "helicopter",
-        "y": 176
-      },
-      {
-        "x": "boat",
-        "y": 135
-      },
-      {
-        "x": "train",
-        "y": 266
-      },
-      {
-        "x": "subway",
-        "y": 52
-      },
-      {
-        "x": "bus",
-        "y": 274
-      },
-      {
-        "x": "car",
-        "y": 95
-      },
-      {
-        "x": "moto",
-        "y": 196
-      },
-      {
-        "x": "bicycle",
-        "y": 128
-      },
-      {
-        "x": "horse",
-        "y": 42
-      },
-      {
-        "x": "skateboard",
-        "y": 0
-      },
-      {
-        "x": "others",
-        "y": 105
-      }
-    ]
+    "id": "Appointment",
+    "label": "Appointment",
+    "value": 301,
+    "color": "hsl(7, 70%, 50%)"
   },
- 
-  
+  {
+    "id": "Users",
+    "label": "Users",
+    "value": 455,
+    "color": "hsl(270, 70%, 50%)"
+  },
+  {
+    "id": "FeedBack",
+    "label": "FeedBack",
+    "value": 478,
+    "color": "hsl(115, 70%, 50%)"
+  },
+  {
+    "id": "Answered Survey",
+    "label": "Answered Survey",
+    "value": 101,
+    "color": "hsl(350, 70%, 50%)"
+  }
 ]
-
-
-
 

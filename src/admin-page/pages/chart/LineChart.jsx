@@ -1,15 +1,34 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { ResponsiveLine } from '@nivo/line'
-import { lineData } from '../../DummyData/data'
+import { MonthlyData, lineData } from '../../DummyData/data'
 import { useSelector } from 'react-redux'
-function LineChart() {
+function LineChart({lineGraphData}) {
  const {isLightMode} = useSelector(state=>state.auth)
+
  
 // make sure parent container have a defined height when using
 // responsive component, otherwise height will be 0 and
 // no chart will be rendered.
 // website examples showcase many properties,
 // you'll often use just a few of them.
+
+ 
+
+   const lineData=[
+{
+    "id": "Survey",
+    "color": "hsl(255, 70%, 50%)",
+    "data":lineGraphData,
+  },
+  {
+    "id": "Response",
+    "color": "hsl(282, 70%, 50%)",
+    "data":lineGraphData,
+  },
+
+]
+
+
 
   return(
     <ResponsiveLine

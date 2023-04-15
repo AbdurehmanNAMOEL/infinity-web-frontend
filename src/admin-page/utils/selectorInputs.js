@@ -38,6 +38,11 @@ export const appointmentFilterList=[
     {'title':'Performance','value':'Performance'},
 ]
 
+export const graphFilterList=[
+    {'title':'Weekly','value':'week'},
+    {'title':'Monthly','value':'month'},
+]
+
 
 
 

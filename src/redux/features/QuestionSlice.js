@@ -28,16 +28,16 @@ export const createNewSurvey = createAsyncThunk('admin/createSurvey',async({surv
     }
 })
 
-export const deleteSurvey = createAsyncThunk('admin/deleteSurvey',async({id,toast})=>{
-        console.log('please delete',id)
+export const deleteSurvey = createAsyncThunk('admin/deleteSurvey',async({surveyId,toast})=>{
+    
     try {
-         const response = await axios.delete(`${realBasicUrl}surveys/${id}`)
+         const response = await axios.delete(`${realBasicUrl}surveys/${surveyId}`)
          if(response){
             toast.success('Successfully deleted')
             return response.data
          }
     } catch (error) {
-        toast.error(error.response.data.message)    
+        toast.error(error.response.data.error.message)    
     }
 })
 

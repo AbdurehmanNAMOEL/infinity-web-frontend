@@ -11,6 +11,7 @@ import Logo from '../../assets/image/logo.png'
 import { ExpandLess, ExpandMore, Settings } from '@mui/icons-material'
 import PlaylistAddCheckOutlinedIcon from '@mui/icons-material/PlaylistAddCheckOutlined';
 import SettingsIcon from '@mui/icons-material/Settings';
+import { handleResponsiveness } from '../../users-page/auth/styles/loginStyle'
 const SideBar = ({isDrawerOpen,closeDrawer,drawerWidth}) => {
    
   const {navTitle,admins}= useSelector(state=>state.admin)
@@ -41,7 +42,10 @@ const SideBar = ({isDrawerOpen,closeDrawer,drawerWidth}) => {
      onClose={closeDrawer}   
      variant='persistent' 
      sx={{
-      height:'auto',
+        zIndex:8000,
+        height:handleResponsiveness('100vh','auto',),
+        display:'flex',
+        
           width:{xs:!isDrawerOpen?200:0,md:drawerWidth},
           color:'white',
           "& .MuiDrawer-paper":{
@@ -92,7 +96,8 @@ const SideBar = ({isDrawerOpen,closeDrawer,drawerWidth}) => {
               display:'flex',
               gap:'2px',
               cursor:'pointer',
-              transition:'all 0.7s'
+              transition:'all 0.7s',
+              marginBottom:appointmentCollapse?'10px':'0px'
               }} >
               <ListItemIcon  sx={{marginLeft:'10px'}}>
                  <PlaylistAddCheckOutlinedIcon sx={{ color:'#1977FC'}}/> 
@@ -124,12 +129,13 @@ const SideBar = ({isDrawerOpen,closeDrawer,drawerWidth}) => {
           <ListItem onClick={handleOpenQuestion} 
           sx={
             {
-              marginTop:'10px',
+              marginTop:appointmentCollapse&&questionCollapse?'65px':'10px',
               width:'100%',
               display:'flex',
               gap:'2px',
               cursor:'pointer',
-              transition:'all 0.7s'
+              transition:'all 0.7s',
+             
               }} >
               <ListItemIcon  sx={[{marginLeft:'10px'},]}>
                  <PlaylistAddCheckOutlinedIcon sx={{ color:'#1977FC'}}/> 
@@ -161,9 +167,12 @@ const SideBar = ({isDrawerOpen,closeDrawer,drawerWidth}) => {
           {/* <Paper sx={style.topHeaderContainer}>
                <CardMedia image={Logo} sx={{width:'50%',height:'90%'}}/>
           </Paper> */}
-        <IconButton onClick={()=>navigate('/dashboard/setting')} sx={style.listIconContainer}>
-          <SettingsIcon sx={style.iconStyle}/>
-          <Typography>Setting</Typography>
+        <IconButton 
+          onClick={()=>navigate('/dashboard/setting')} 
+          sx={[style.listIconContainer,
+          {marginTop:questionCollapse?`${appointmentCollapse?'120px':'40px'}`:'0px'}]}>
+          <SettingsIcon sx={[style.iconStyle]}/>
+          <Typography sx={{color:isLightMode?'#1e1e1e':'white'}}>Setting</Typography>
         </IconButton>
     </Drawer>
   )
@@ -211,7 +220,7 @@ const style ={
     justifyContent:'start',
     alignItems:'center',
     gap:'8px',
-    marginTop:'20px',
+    marginTop:'10px',
    borderRadius:'0px'
   },
   divider:{

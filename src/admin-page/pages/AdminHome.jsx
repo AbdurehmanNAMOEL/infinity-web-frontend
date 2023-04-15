@@ -10,12 +10,14 @@ import LineChart from './chart/LineChart'
 import Modal from '../components/Modal'
 import AdminSignUp from './auth/pages/AdminSignUp'
 import { handleResponsiveness } from '../../users-page/auth/styles/signUpStyle'
+import { DailyData, MonthlyData } from '../DummyData/data'
 
 const AdminHome = () => {
     const [isDrawerOpen,closeDrawer] = useState(true)
     const {isLightMode}= useSelector(state=>state.auth)
     const [isNewAdminModalOpened,setIsNewAdminModalOpened]= useState(false)
     const {users,generatedSurvey,appointmentList}= useSelector(state=>state.admin)
+  
    const column=[
         {field:"firstName",headerName:"FirstName",flex:1,cellClassName:'name-column-cell'},
         {field:"lastName",headerName:"LastName",flex:1,cellClassName:'name-column-cell'},
@@ -27,6 +29,12 @@ const AdminHome = () => {
     const handleModalOpen=(e)=>{
         setIsNewAdminModalOpened(prev=>!prev)
     }
+
+  const [lineGraphData,setLineData] = useState(MonthlyData)
+
+   
+
+
   return (
     <>  
      {isNewAdminModalOpened? 
@@ -73,7 +81,7 @@ const AdminHome = () => {
         
          </Box>
          <Box sx={[style.chartDisplay,{backgroundColor:`${isLightMode?"white":'#1E1E1E'}`}]}>
-            <LineChart/>
+            <LineChart lineGraphData={lineGraphData}/>
          </Box>
          <Box sx={{width:'90%',marginLeft:'5%',height:'auto',marginBottom:'10px'}}>
          { users?.length>0?

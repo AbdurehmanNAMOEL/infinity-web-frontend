@@ -1,11 +1,17 @@
 import { Box, Divider, Paper, Typography } from '@mui/material'
-import React from 'react'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteFeedBack } from '../../redux/features/feedbackSlice'
 
 const UserFeedBackCard = ({name,feedBackGroup,suggestion,id}) => {
     const {modeColor,isLightMode} = useSelector(state=>state.auth)
+    const [checked,setChecked]= useState(false)
     const dispatch=useDispatch()
+
+    const handleCheck=()=>{
+       setChecked(prev=>!prev)
+    }
+
   return (
     <Paper sx={[style.feedBackContainer,{border:isLightMode?'solid 1px #DFDFDF':'solid 1px #ACACAC'},{backgroundColor:modeColor}]}>
      <Box sx={[style.feedBackHeader,{color:isLightMode?'#1e1e1e':'white'}]}>
@@ -13,9 +19,9 @@ const UserFeedBackCard = ({name,feedBackGroup,suggestion,id}) => {
          <Typography sx={{fontWeight:'bolder',marginTop:'10px'}}>{name}</Typography>
          <Typography sx={{fontWeight:'bolder',fontSize:'12px'}}>{'0936970345'}</Typography>
        </Box>
-       <Typography sx={{display:'flex', gap:'10px',color:isLightMode?'#1e1e1e':'white'}}>
+       <Typography onClick={handleCheck} sx={{display:'flex', gap:'10px',color:isLightMode?'#1e1e1e':'white'}}>
         <label htmlFor='selected'>Seen</label>
-        <input checked id='selected' type='checkbox'/>
+        <input checked={checked} id='selected' type='checkbox'/>
       </Typography>  
      </Box>
      <Divider sx={{width:'100%',backgroundColor:isLightMode?'#DFDFDF':'#ACACAC'}}/>
