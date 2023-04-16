@@ -41,7 +41,7 @@ import PhoneNumberVerifierPage from './users-page/pages/survey/Appointment/Phone
 import UserAppointment from './users-page/pages/survey/Appointment/UserAppointment';
 function App() {
    const [isDrawerOpen,setDrawerOpen]=useState(true)
-   const {isLightMode,loading}= useSelector(state=>state.auth)
+   const {isLightMode,modeColor,loading}= useSelector(state=>state.auth)
    const [isScrolling,setIsScrolling]=useState(false)
    const [surveyData, setSurveyDetailData] = useState([])
    const closeDrawer=()=>setDrawerOpen(prev=>!prev)
@@ -60,7 +60,7 @@ function App() {
       {
         width:'100%',
         display:'flex',
-        backgroundColor:`${isLightMode?'white':'#1E1E1E'}`
+        backgroundColor:modeColor
         }}>
              <div id='recaptcha-container'></div>
         {loading?<LoadingPage/>:''}
@@ -167,10 +167,10 @@ function App() {
         <Route isScrolling={isScrolling} path='/policy' element={<PrivacyPolicyHome/>}/>
         <Route isScrolling={isScrolling} path='/' element={<HomePage/>}/>
         <Route isScrolling={isScrolling} path='/aboutUs' element={<AboutUs/>}/>
+        
+      <Route element={<PrivateRoute/>}>
         <Route isScrolling={isScrolling} path='/survey'
            element={<SurveyHome  setSurveyDetailData={setSurveyDetailData} />}/>
-      <Route element={<PrivateRoute/>}>
-        
         <Route 
           isScrolling={isScrolling} 
           path='/feedBack' 

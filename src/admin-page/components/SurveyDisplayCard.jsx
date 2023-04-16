@@ -7,7 +7,7 @@ import {toast} from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
 const SurveyDisplayCard = ({
    id,questionTitle,questions,isDeletingApproved,createdAt,setIsModalVisible,
-   setPreviewData,setIsQuestionPreviewed
+   setPreviewData,setIsQuestionPreviewed,setId
 }) => {
     const dispatch = useDispatch()
     const navigate=useNavigate()
@@ -17,15 +17,14 @@ const SurveyDisplayCard = ({
 
     const handleDeletingApproved=()=>{
       setIsModalVisible(true) 
+      setId(id)
     }
 
     console.log(id);
     const handlePreview=()=>{
         setPreviewData(questions)
         setIsQuestionPreviewed(true)
-         if(isDeletingApproved){
-            dispatch(deleteSurvey({id,toast}))
-      }
+        
     }
 
  
@@ -84,7 +83,7 @@ const style ={
  surveyDisplayContainer:{
    justifyContent:'space-between',
    border:'solid 1px rgba(0,0,0,0.1)',
-   width:handleResponsiveness('50%','100%'),
+   width:handleResponsiveness('100%','100%'),
    display:'flex',
    alignItems:'center',
    height:'200px', 

@@ -1,4 +1,4 @@
-import { Box } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getConsultantAppointment } from '../../../redux/features/adminSlice'
@@ -36,6 +36,7 @@ const ConsultantSechdulingPage = ({ closeDrawer, isDrawerOpen }) => {
                 <Box sx={{ position: 'fixed', width: `${isDrawerOpen ? 100 : 100}%`, zIndex: 200 }}>
                     <Header closeDrawer={() => closeDrawer(prev => !prev)} />
                 </Box>
+                {consultantUserList?.length>0?
                 <Box sx={{ width: '90%', marginLeft: '5%', marginTop: '80px' }}>
 
                     <GridTable
@@ -44,7 +45,11 @@ const ConsultantSechdulingPage = ({ closeDrawer, isDrawerOpen }) => {
                         columnFieldsList={column}
                     />
 
-                </Box>
+                </Box>:
+                <Typography variant='h4' sx={{marginTop:'80px',color:'#1e1e1e',textAlign:'center'}}>
+                    you don't have a consulates yet
+                </Typography>
+                }
             </Box>
         </Box>
     )

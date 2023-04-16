@@ -12,6 +12,7 @@ import development from '../../assets/image/development.svg'
 import product from '../../assets/image/product.svg'
 import Consultancy from '../../assets/image/Consultancy.svg'
 import Carousel from '../../shared/Components/Carousel'
+import RoadMap from '../components/RoadMap'
 export const OurWorkCard=({image,Title})=>{
    const {isLightMode,modeColor} = useSelector(state=>state.auth)
   return (
@@ -110,6 +111,7 @@ const AboutUs = () => {
           </Typography>
         </Box>
       </ResponsiveContainer>
+      <RoadMap/>
        <Typography 
          variant='h4' 
          sx={{width:'90%',fontWeight:'bold',color:'#1A6CE8'}} >Meet Our Team</Typography>

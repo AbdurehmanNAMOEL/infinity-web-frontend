@@ -1,7 +1,7 @@
 import { Box, Grid, Paper, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { deleteSurvey, getAllSurveyQuestions } from '../../../redux/features/adminSlice'
+import {getAllSurveyQuestions } from '../../../redux/features/adminSlice'
 import Header from '../../components/Header'
 import SideBar from '../../components/SideBar'
 import SurveyDisplayCard from '../../components/SurveyDisplayCard'
@@ -10,7 +10,9 @@ import ButtonStyled from '../../../users-page/components/ButtonStyled'
 import PreviewQuestion from '../../components/PreviewQuestion'
 import { handleResponsiveness } from '../../../users-page/auth/styles/signUpStyle'
 import DeletingModal from '../../components/DeletingModal'
-
+import {toast} from 'react-toastify'
+import { deleteSurvey } from '../../../redux/features/QuestionSlice'
+import SearchBar from '../../../shared/Components/SearchBar'
 const QuestionList = ({isDrawerOpen,closeDrawer}) => {
 
     const {users,generatedSurvey}= useSelector(state=>state.admin)
@@ -19,24 +21,36 @@ const QuestionList = ({isDrawerOpen,closeDrawer}) => {
     const [isDeletingApproved,setIsDeletingApproved]= useState(false)
     const [isQuestionPreviewed,setIsQuestionPreviewed]= useState(false)
     const [previewQuestionData,setPreviewQuestionData]= useState([])
+    const [filteredSurveyList,setFilteredSurveyList]= useState(generatedSurvey)
+    const [filteringValue,setFilteringValue]= useState('')
+    const [id,setId]= useState('')
     const dispatch = useDispatch()
     
     useEffect(()=>{
       dispatch(getAllSurveyQuestions())
-    },[generatedSurvey])
+    },[])
 
+   useEffect(()=>{
+    let surveyList=generatedSurvey.find(data=>data.title.includes(filteringValue))
+    if(filteringValue===''){
+      setFilteredSurveyList(generatedSurvey)
+    }else if(surveyList!==undefined) {
+      setFilteredSurveyList([surveyList])
+    }
+   },[filteringValue,generatedSurvey])
 
-
-  
+  console.log(generatedSurvey.find(data=>data.title.includes(filteringValue)));
    const handleSurveyDeletingApproval=()=>{
         setIsDeletingModalOpen(false)
         setIsDeletingApproved(true)
+     
    }
 
-    useEffect(()=>{
-      
-    },[generatedSurvey,isDeletingApproved])
-
+   useEffect(()=>{
+      if(isDeletingApproved){
+            dispatch(deleteSurvey({id,toast}))
+      }
+   },[isDeletingApproved])
 
 
   return (
@@ -64,6 +78,12 @@ const QuestionList = ({isDrawerOpen,closeDrawer}) => {
                     <Header headerTitle={'Question List'} closeDrawer={() => closeDrawer(prev => !prev)} />
                 </Box>
                 <Box sx={{ width: '90%', marginLeft: '5%', marginTop: '80px' }}>
+                   {generatedSurvey?.length>0? <Box sx={{width:'80%',marginLeft:handleResponsiveness('0','5%')}}>
+                    <SearchBar 
+                     inputValue={filteringValue}
+                     setChangeValue={(e)=>setFilteringValue(e.target.value)}
+                     />
+                  </Box>:''}
                 {!generatedSurvey?.length>0?
                   <Typography 
                     variant='h4' 
@@ -71,11 +91,14 @@ const QuestionList = ({isDrawerOpen,closeDrawer}) => {
                       There is no generated Survey
                     </Typography>:null
                   }
-             <Grid sx={{marginLeft:handleResponsiveness('-10%','5%'),
+             <Grid sx={{marginLeft:handleResponsiveness('-10%','0%'),
                 backgroundColor:modeColor,
-                height:'auto',marginTop:'2px',width:handleResponsiveness('100%','95%')}} 
+                height:'auto',marginTop:'2px',
+                width:handleResponsiveness('100%','95%'),
+                position:handleResponsiveness('relative','absolute')
+              }} 
                 container spacing={8}>
-            {generatedSurvey?.map((data,index)=>
+            {filteredSurveyList?.map((data,index)=>
               <Grid item xs={12} md={5}>
                   <SurveyDisplayCard 
                     key={data.id} 
@@ -88,6 +111,7 @@ const QuestionList = ({isDrawerOpen,closeDrawer}) => {
                     isDeletingApproved={isDeletingApproved}
                     setPreviewData={setPreviewQuestionData}
                     setIsQuestionPreviewed={setIsQuestionPreviewed}
+                    setId={setId}
                   />
                   </Grid>
                     )

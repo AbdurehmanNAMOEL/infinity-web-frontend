@@ -1,14 +1,16 @@
 import { Box, FormControl, InputLabel, MenuItem, Select } from '@mui/material'
 import React from 'react'
+import { useSelector } from 'react-redux'
 
 const InputSelector = ({optionList,optionValue,optionTitle,selectorWidth,setValue,inputValue,label}) => {
-
+   
+  const {modeColor,isLightMode}= useSelector(state=>state.auth)
 
   return (
     
   
     <Box sx={{ width:selectorWidth?selectorWidth:'120px'}}>
-      <FormControl fullWidth>
+      <FormControl fullWidth sx={{ backgroundColor:'white'}}>
         <InputLabel id="demo-simple-select-label">{label}</InputLabel>
         <Select
          sx={{height:'50px' }}

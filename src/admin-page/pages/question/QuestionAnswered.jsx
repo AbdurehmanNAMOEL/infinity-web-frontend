@@ -13,7 +13,7 @@ import { handleResponsiveness } from '../../../users-page/auth/styles/loginStyle
 const QuestionAnswered = ({isDrawerOpen,closeDrawer}) => {
 
     const dispatch = useDispatch()
-    const {answeredSurvey} = useSelector(state=>state.admin)
+    const {answeredSurvey,isLightMode} = useSelector(state=>state.admin)
     const {modeColor} = useSelector(state=>state.auth)
     const [isModalOpen,setModalOpen]= useState(false)
     const [isRejected,setIsRejected]= useState(false)
@@ -36,6 +36,7 @@ const QuestionAnswered = ({isDrawerOpen,closeDrawer}) => {
           <Box sx={{ position: 'fixed', width: `${isDrawerOpen ? 100 : 100}%`, zIndex: 200 }}>
             <Header headerTitle={'Answer'} closeDrawer={() =>closeDrawer(prev => !prev)} />
           </Box>
+          
           {answeredSurvey?.length>0?
              <Grid sx={{marginLeft:handleResponsiveness('-2%','5%'),height:'auto',marginTop:'80px',width:handleResponsiveness('100%','90%')}} container spacing={2}>
             {answeredSurvey?.map(data=>
@@ -53,7 +54,12 @@ const QuestionAnswered = ({isDrawerOpen,closeDrawer}) => {
                   />
                 </Grid>    
             )}
-            </Grid>:<Typography>There is no answer yet</Typography> }
+            </Grid>:
+             <Typography variant='h4' 
+              sx={{color:isLightMode?'#1e1e1e':'#1e1e1e',marginTop:'80px',textAlign:'center'}}>
+              There is no answer yet
+              </Typography> 
+             }
           </Box>
         </Box>
 

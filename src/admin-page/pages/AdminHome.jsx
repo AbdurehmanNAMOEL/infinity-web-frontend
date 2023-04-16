@@ -39,7 +39,7 @@ const AdminHome = () => {
     <>  
      {isNewAdminModalOpened? 
        <Modal closeModal={(e)=>handleModalOpen(e)}>
-        <AdminSignUp/>
+        <AdminSignUp  closeModal={(e)=>handleModalOpen(e)}/>
        </Modal>:null
     }
      <Box sx={

@@ -9,7 +9,7 @@ import { handleResponsiveness } from '../styles/loginStyle'
 import { useNavigate } from 'react-router-dom'
 import {toast} from 'react-toastify'
 const UserProfileSubmissionPage = () => {
-    const {modeColor,userStaticData,userProfileData}= useSelector(state=>state.auth)
+    const {modeColor,userStaticData,userProfileData,isLightMode}= useSelector(state=>state.auth)
     const navigate=useNavigate()
     const [userPersonData,setUserPersonalData]=useState({})
     const dispatch = useDispatch()
@@ -25,22 +25,23 @@ const UserProfileSubmissionPage = () => {
      let id = JSON.parse(localStorage.getItem("user"))?.id
      let userProfileEditedData={
      "id":id,
-     "birthPlaceId": userPersonData.birthPlaceId,
-     "residenceCityId": userPersonData.residenceCityId,
+     "birthPlaceId":userPersonData.birthPlaceId,
+     "residenceCityId":userPersonData.residenceCityId,
      "religionId":userPersonData.religionId,
-     "employmentStatusId": userPersonData.employmentStatusId,
-     "incomeLevelId": userPersonData.incomeLevelId,
-     "professionId": userPersonData.professionId,
-     "educationalLevelId": userPersonData.educationalLevelId,
-     "martialStatusId": userPersonData.martialStatusId
+     "employmentStatusId":userPersonData.employmentStatusId,
+     "incomeLevelId":userPersonData.incomeLevelId,
+     "professionId":userPersonData.professionId,
+     "educationalLevelId":userPersonData.educationalLevelId,
+     "martialStatusId":userPersonData.martialStatusId
      }
 
      dispatch(editUserProfile({id,userProfileEditedData,navigate,toast}))
   }
     console.log(userProfileData)
   return (
-    <Box sx={style.profileContainer}>
-         <Typography variant='h5' sx={{marginTop:'20px'}}>Personal Information </Typography>
+    <Box sx={[style.profileContainer,{backgroundColor:modeColor}]}>
+         <Typography variant='h5' sx={{marginTop:'20px',color:isLightMode?'#1e1e1e':'white'}}>
+          Personal Information </Typography>
          <Divider sx={{width:'80%',marginTop:'20px',fontWeight:'bolder'}}/>
          <Box sx={{
            height:'80vh',
@@ -57,7 +58,8 @@ const UserProfileSubmissionPage = () => {
               alignItems:'center'
               }}>
               <CardMedia image={profileImage}
-               sx={{width:handleResponsiveness('70%','90%'),height:handleResponsiveness('70%','70%')}}/>
+               sx={{width:handleResponsiveness('70%','90%'),
+               height:handleResponsiveness('70%','70%')}}/>
             </Box>
             
             <Box sx={{

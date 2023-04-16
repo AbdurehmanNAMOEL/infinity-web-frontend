@@ -1,4 +1,4 @@
-import { Box } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllUsers } from '../../redux/features/adminSlice'
@@ -11,10 +11,9 @@ const Users = ({closeDrawer,isDrawerOpen}) => {
     const {users}= useSelector(state=>state.admin)
     const dispatch = useDispatch()
     useEffect(()=>{
-     
-       console.log(users)
-    },[users])
-      dispatch(getAllUsers())
+       dispatch(getAllUsers())
+    },[])
+      
     const column=[
         {field:"firstName",headerName:"FirstName",flex:1,cellClassName:'name-column-cell'},
         {field:"lastName",headerName:"LastName",flex:1,cellClassName:'name-column-cell'},
@@ -40,7 +39,9 @@ const Users = ({closeDrawer,isDrawerOpen}) => {
             data={users}
             columnFieldsList={column}
           />
-          :''}
+          :<Typography variant='h4' sx={{marginTop:'50px',color:'#1e1e1e',textAlign:'center'}}>
+             You don't have users yet
+            </Typography>}
           </Box>
         </Box>
     </Box>

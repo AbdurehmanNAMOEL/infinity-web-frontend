@@ -29,7 +29,7 @@ export const getAllSettingValue = createAsyncThunk('admin/getAllSettingValue',as
 
 export const updateSetting = createAsyncThunk('admin/updateSetting',async({settingData,toast})=>{
     try {
-         const response = await axios.post(`${realBasicUrl}settings`,settingData)
+         const response = await axios.patch(`${realBasicUrl}settings`,settingData)
          if(response){
             toast.success('successfully updated')
             return response.data
@@ -46,6 +46,7 @@ export const settingSlice= createSlice({
       settingData:{},
       isDrawerOpened:false,
       loading:false,
+      rewardAndCheckOutValue:{},
       navTitle:'dashboard/adminHome',
       modeColor:'white'
 },
@@ -72,6 +73,20 @@ export const settingSlice= createSlice({
       state.isAdminLoggedIn=true
     },
     [getAllSettingValue.rejected]:(state,action)=>{
+      state.loading=false
+      state.isAdminLoggedIn=true
+    },
+
+    [updateSetting.pending]:(state,action)=>{
+      state.loading=true
+      state.isAdminLoggedIn=true
+    },
+    [updateSetting.fulfilled]:(state,action)=>{
+      state.rewardAndCheckOutValue=action.payload
+      state.loading=false
+      state.isAdminLoggedIn=true
+    },
+    [updateSetting.rejected]:(state,action)=>{
       state.loading=false
       state.isAdminLoggedIn=true
     },

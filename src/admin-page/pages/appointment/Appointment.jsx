@@ -75,8 +75,8 @@ const Appointment = ({ closeDrawer, isDrawerOpen }) => {
                 )
             }
             </Grid>:<Typography 
-               sx={{marginTop:'80px',textAlign:'center',color:isLightMode?'#1e1e1e':'white'}} 
-               variant='h5'>There is no feedBack Yet</Typography>}
+               sx={{marginTop:'50px',textAlign:'center',color:isLightMode?'#1e1e1e':'white'}} 
+               variant='h4'>you don't have an appointments Yet</Typography>}
                 </Box>
             </Box>
         </Box>

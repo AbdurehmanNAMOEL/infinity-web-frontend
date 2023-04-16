@@ -72,7 +72,11 @@ const SurveyHome = ({setSurveyDetailData}) => {
             {
               survey?.map((item,index)=>
                <Grid onClick={()=>handleSurvey(item)} on item xs={8} md={3}>
-                 <SurveyCard key={index} title={item?.title}/>
+                 <SurveyCard 
+                  key={index} 
+                  title={item?.title}
+                  questionNumber={item}
+                  />
                </Grid>
              )}
       </Grid>

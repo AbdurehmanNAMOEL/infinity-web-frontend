@@ -11,7 +11,7 @@ import {toast} from 'react-toastify'
 import { updatePassword } from '../../redux/features/adminSlice'
 import { restPassword } from '../../redux/features/authSlice'
 function Setting({isDrawerOpen,closeDrawer}) {
-    const {settingData}= useSelector(state=>state.setting)
+    const {settingData,rewardAndCheckOutValue}= useSelector(state=>state.setting)
     const dispatch = useDispatch()
     const [isValid,setIsValid]=useState(false)
     const [isBtnDisabled,setIsBtnDisabled]= useState(true)
@@ -50,6 +50,8 @@ function Setting({isDrawerOpen,closeDrawer}) {
     alert('hello')
     dispatch(updatePassword({id,newPassword,toast}))
    }
+
+  
 
    useEffect(()=>{
       if(passwordValue.password!=='' && passwordValue.confirmPassword!==''&& 

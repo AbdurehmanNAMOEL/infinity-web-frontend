@@ -4,6 +4,8 @@ import { Box, Paper, Typography } from '@mui/material'
 import ButtonStyled from '../../users-page/components/ButtonStyled'
 
 const DeletingModal = ({setIsDeletingModalOpen,handleSurveyDeletingApproval}) => {
+  
+  
   return (
    <Modal>
         <Paper sx={{width:'400px',height:'200px',display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center'}}>

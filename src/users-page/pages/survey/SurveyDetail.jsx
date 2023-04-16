@@ -125,7 +125,7 @@ const SurveyDetail = () => {
                         />
                         }
                        </Box> 
-                    :answerCount>1?
+                    :questions.multipleAnswerLimit===1?
                       <ChoiceCard 
                        key={index}
                        index={index}

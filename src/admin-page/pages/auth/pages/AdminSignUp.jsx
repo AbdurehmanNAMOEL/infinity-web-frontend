@@ -1,4 +1,4 @@
-import { Box, Divider, Paper, Typography } from '@mui/material'
+import { Box, Divider, IconButton, Paper, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import InputField from '../../../../users-page/components/InputField'
 import ActionButton from '../../../../users-page/components/ActionButton'
@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux'
 import {toast} from 'react-toastify'
 import { signUpAdmin } from '../../../../redux/features/adminSlice'
 import { handleResponsiveness } from '../../../../users-page/auth/styles/loginStyle'
-const AdminSignUp = () => {
+const AdminSignUp = ({closeModal}) => {
     const [isFormValid,setIsFormValid]= useState(false)
     const [isBtnDisabled,setIsBtnDisabled]= useState(true)
     const [confirmPassword,setConfirmPassword]= useState('')
@@ -29,7 +29,7 @@ const AdminSignUp = () => {
     
 
     const handleNewAdminSignUp=()=>{
-     dispatch(signUpAdmin({toast,adminSignUpData}))
+     dispatch(signUpAdmin({adminSignUpData,toast}))
      setAdminSignUpData({
         "firstName":'',
         "lastName":'',
@@ -39,9 +39,25 @@ const AdminSignUp = () => {
     })
     }
 
-console.log(adminSignUpData);
+
   return (
    <Paper sx={style.adminSignUpContainer}>
+      <Box sx={{width:'100%',display:'flex',justifyContent:'flex-end',height:'30px',alignItems:'center'}}>
+        <Box onClick={()=>closeModal(false)} sx={{
+          height:'30px',
+          width:'30px',
+          borderRadius:"100%",
+          display:'flex',
+          justifyContent:'center',
+          alignItems:"center",
+          marginRight:'20px',
+          backgroundColor:`#1A6CE8`,
+          color:'white',
+          marginTop:'20px',
+          cursor:'pointer'
+
+          }}>x</Box>
+      </Box>
       <Typography variant='h6' sx={{marginTop:'20px',fontWeight:'bolder'}}>New Admin</Typography>
       <Divider sx={{backgroundColor:'#DFDFDF',width:'100%',marginBottom:'20px'}}/>
        <Box sx={style.inputFieldContainer}>
@@ -72,7 +88,7 @@ console.log(adminSignUpData);
          width={'100%'}
          setValidation={setIsFormValid}
          inputValue={adminSignUpData?.phoneNumber}
-         setValue={(e)=>setAdminSignUpData({...adminSignUpData,'phoneNumber':e.target.value})}
+         setValue={(e)=>setAdminSignUpData({...adminSignUpData,'phoneNumber':`${e.target.value}`})}
         />
       </Box> 
 

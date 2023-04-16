@@ -35,13 +35,12 @@ export const signUpAdmin = createAsyncThunk('admin/signUpAdmin',async({adminSign
     try {
          const response = await axios.post(`${realBasicUrl}admins`,adminSignUpData)
          if(response){
-            toast.success('new Admin SuccessFully created')
-           
+            toast.success('new Admin SuccessFully created')      
             return response.data
          }
     } catch (error) {
-       
-        toast.error(error.response.data.message)    
+        console.log(error);
+        toast.error(error.response.data.error.details[0].message)    
     }
 })
 
@@ -225,9 +224,7 @@ export const adminSlice= createSlice({
       state.loading=true
     },
     [signUpAdmin.fulfilled]:(state,action)=>{
-      state.admins=action.payload
       state.loading=false
-      state.isLoggedIn=true
     },
     [signUpAdmin.rejected]:(state,action)=>{
          state.loading=false

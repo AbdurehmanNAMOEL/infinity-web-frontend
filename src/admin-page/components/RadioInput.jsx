@@ -9,7 +9,7 @@ const RadioInput = ({choiceType,setValue,inputValue,setData,index,setAnswerData,
    
 
    const handleInput=(e)=>{
-      setData(index)
+      setData(index,e.target.value)
       setValue(e.target.value)
       console.log(e.target.value);
   }

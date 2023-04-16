@@ -1,18 +1,20 @@
 export const userInitialProfileData=(userProfileData)=>{
-    return{
-    'id':userProfileData?.map(data=>data?.id)[0],
-    'firstName':userProfileData?.map(data=>data?.firstName)[0],
-    'lastName':userProfileData?.map(data=>data?.lastName)[0],
-    'phoneNumber':userProfileData?.map(data=>data?.phoneNumber)[0],
-    'email':userProfileData?.map(data=>data?.email)[0],
-    'gender':userProfileData?.map(data=>data?.gender)[0],
-    'birthPlaceId':userProfileData?.map(data=>data?.birthPlaceId)[0]?.id,
-    // 'educationalLevelId':userProfileData?.map(data=>data?.educationLevelId)[0]?.id,
-    'incomeLevelId':userProfileData?.map(data=>data?.incomeLevelId)[0]?.id,
-    'professionId':userProfileData?.map(data=>data?.professionId)[0]?.id,
-    'religionId':userProfileData?.map(data=>data?.religionId)[0]?.id,
-    'residenceCityId':userProfileData?.map(data=>data?.residenceCityId)[0]?.id
+    let data={
+    'id':userProfileData?.id,
+    'firstName':userProfileData?.firstName,
+    'lastName':userProfileData?.lastName,
+    'phoneNumber':userProfileData?.phoneNumber,
+    'email':userProfileData?.email,
+    'gender':userProfileData?.gender,
+    'birthPlaceId':userProfileData?.birthPlaceId,
+    'educationLevelId':userProfileData?.educationLevelId,
+    'incomeLevelId':userProfileData?.incomeLevelId,
+    'professionId':userProfileData?.professionId,
+    'religionId':userProfileData?.religionId,
+    'maritalStatusId':userProfileData?.maritalStatusId,
+    'residenceCityId':userProfileData?.residenceCityId,
 }
+    return data
 }
 
 export const profileFillingData=(userPersonData)=>{

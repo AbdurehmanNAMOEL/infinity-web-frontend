@@ -1,7 +1,7 @@
 import { Box, Button, Grid, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { editUserProfile, getUserProfileData, getUserStaticData } from '../../../../redux/features/authSlice'
+import { editUserProfile, getUserProfileData, getUserStaticData, restPassword } from '../../../../redux/features/authSlice'
 import InputField from '../../../components/InputField'
 import NavBar from '../../../components/NavBar'
 import ButtonStyled from '../../../components/ButtonStyled'
@@ -16,11 +16,13 @@ const ProfilePage = ({isScrolling}) => {
   const {modeColor,userStaticData,userProfileData}= useSelector(state=>state.auth)
   const navigate=useNavigate()
   const [isFormValid,setFormValidation]= useState(false)
+  const [isRestFormValid,setIsRestFormValid]= useState(false)
   const [isBtnDisabled,setIsBtnDisabled]= useState(true)
+  const [isRestBtnDisabled,setIsRestBtnDisabled]= useState(true)
   const [password,setPassword] = useState('')
-  const [confirmPassword,setConfirmPassword] = useState('')
+  const [phoneNumber,setPhoneNumber] = useState('')
   const [userProfileEditedData,setUserProfileEditedData]=useState(
-    userInitialProfileData(userProfileData))
+    userInitialProfileData(userProfileData[0]))
 
     useEffect(()=>{
     let id = JSON.parse(localStorage.getItem("user"))?.id
@@ -31,16 +33,16 @@ const ProfilePage = ({isScrolling}) => {
 
   const dispatch = useDispatch()
 
-   console.log(userProfileData)
+  //  console.log(userStaticData)
 
   
   const handleProfileEdit=()=>{
        let id = JSON.parse(localStorage.getItem("user"))?.id
-       console.log(userProfileEditedData);
      dispatch(editUserProfile({id,toast,navigate,userProfileEditedData}))
   }
 
-  console.log(userProfileData?.map(data=>data?.id)[0])
+  // console.log(userProfileData[0].birthPlaceId);
+
 
   // const setInitialValue=()=>{
   //     userStaticData?.birthPlaces?.map(data=>
@@ -56,11 +58,26 @@ const ProfilePage = ({isScrolling}) => {
     if(userProfileEditedData?.firstName!=='' && userProfileEditedData?.last!==''&&
       userProfileEditedData?.phoneNumber!==''&& userProfileEditedData?.email!==''&&
       userProfileEditedData?.gender!=='' && isFormValid){
-      
         setIsBtnDisabled(false)
       }else setIsBtnDisabled(true)
   },[userProfileEditedData,isFormValid])
     
+
+  useEffect(()=>{
+    if(phoneNumber!=='' && password!=='' && isRestFormValid){
+        setIsRestBtnDisabled(false)
+      }else setIsRestBtnDisabled(true)
+  },[phoneNumber,password,isRestFormValid])
+    
+  const restNewPassword=()=>{
+    const newPasswordData={
+      "phoneNumber":phoneNumber,
+      "newPassword":password
+    }
+
+    dispatch(restPassword({toast,newPasswordData}))
+
+  }
 
   return (
   <Box sx={[style.profileMainContainer,{backgroundColor:modeColor}]}>
@@ -186,7 +203,7 @@ const ProfilePage = ({isScrolling}) => {
         <SelectorInput
           label={'Martial Status'}
           selectorWidth={'77%'}
-          optionList={userStaticData?.martialStatuses}
+          optionList={userStaticData?.maritalStatuses}
           inputValue={userProfileEditedData?.martialStatusId}
           setValue={(e)=>setUserProfileEditedData({
             ...userProfileEditedData,'martialStatusId':e.target.value})}
@@ -228,7 +245,7 @@ const ProfilePage = ({isScrolling}) => {
           bgColor='#1A6CE8'
           btnWidth={handleResponsiveness('95%','40%')}
           isBtnDisabled={isBtnDisabled}
-          setValue={handleProfileEdit}
+          onClick={handleProfileEdit}
          />
          </Box>
 
@@ -242,12 +259,12 @@ const ProfilePage = ({isScrolling}) => {
           <Typography>UpdatePassword</Typography>
            <Box sx={{display:'flex'}}>
           <InputField
-            type='password'
+            type='phoneNumber'
             width={handleResponsiveness('94%','40%')}
-            inputLabel={'New Password'}
-            setValidation={setFormValidation}
-            inputValue={password}
-            setValue={(e)=>setPassword(e.target.value)}
+            inputLabel={'PhoneNumber'}
+            setValidation={setIsRestFormValid}
+            inputValue={phoneNumber}
+            setValue={(e)=>setPhoneNumber(e.target.value)}
           />
      
         </Box>
@@ -255,10 +272,10 @@ const ProfilePage = ({isScrolling}) => {
           <InputField
             type='password'
             width={handleResponsiveness('94%','40%')}
-            inputLabel={'confirmPassword'}
-            setValidation={setFormValidation}
-            inputValue={confirmPassword}
-            setValue={(e)=>setConfirmPassword(e.target.value)}
+            inputLabel={'password'}
+            setValidation={setIsRestFormValid}
+            inputValue={password}
+            setValue={(e)=>setPassword(e.target.value)}
           />
      
         </Box>
@@ -267,8 +284,8 @@ const ProfilePage = ({isScrolling}) => {
           btnLabel={'Update'}
           bgColor='#1A6CE8'
           btnWidth={'95%'}
-          isBtnDisabled={isBtnDisabled}
-          setValue={handleProfileEdit}
+          isBtnDisabled={isRestBtnDisabled}
+          onClick={restNewPassword}
          />
          </Box>
          </Box>

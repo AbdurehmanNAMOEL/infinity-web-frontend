@@ -11,12 +11,12 @@ const CheckBoxInput = ({id,type,title,optionValue,data,choice,setValue,surveyAns
     
 
     const handleInputValue=(e)=>{
-    
+      console.log(e.target)
       let isFound = surveyAnswer.find(data=>(data.questionId===e.target.id))===undefined
       setCheckedValue(prev=>!prev)
        if(type){
        if(isFound){
-          setSurveyAnswer([...surveyAnswer,{"questionId":id,"answer":[e.target.value]}])
+          setSurveyAnswer([...surveyAnswer,{"questionId":e.target.id,"answer":[e.target.value]}])
         }
         else{
            surveyAnswer?.map(data=>{
@@ -28,12 +28,13 @@ const CheckBoxInput = ({id,type,title,optionValue,data,choice,setValue,surveyAns
       })   
       }
     }
+    console.log(surveyAnswer)
   }
 
 useEffect(()=>{
 
 },[checkedValue])
-console.log(surveyAnswer)
+
   return (
     <>
     <button 
@@ -55,11 +56,9 @@ console.log(surveyAnswer)
          onChange={handleInputValue} 
          type='checkbox' 
          title={id}
-         id={optionValue}
+         id={id}
          style={{width:'15px',height:'15px',marginLeft:'16px'}}/>
-        <label 
-          style={{fontSize:'12px',cursor:'pointer'}} 
-          htmlFor={`#${id}`}>{choice}</label>
+       {choice}
     </button>
     </>
   )

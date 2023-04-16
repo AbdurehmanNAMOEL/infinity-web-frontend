@@ -7,7 +7,7 @@ import Header from '../../components/Header'
 import InputSelector from '../../../shared/Components/InputSelector'
 import RadioInput from '../../components/RadioInput'
 import SideBar from '../../components/SideBar'
-import { choicesType,questionTypeList, surveyAccessingFilterList } from '../../utils/selectorInputs'
+import { answerCountList, choicesType,questionTypeList, surveyAccessingFilterList } from '../../utils/selectorInputs'
 import { useDispatch, useSelector } from 'react-redux'
 import { createNewSurvey, deleteSurvey, editSurvey } from '../../../redux/features/QuestionSlice'
 import {toast} from 'react-toastify'
@@ -23,7 +23,7 @@ const QuestionnairePage = ({closeDrawer,isDrawerOpen}) => {
   const [questionMainTitle,setQuestionMainTitle]= useState('')
   const [questionType,setQuestionType]= useState('userInput')
   const [surveyFilteringValue,setSurveyFilteringValue]= useState('')
-  const [surveyFilterValue,setSurveyFilterValue]= useState(' ')
+  const [surveyFilterValue,setSurveyFilterValue]= useState('')
   const [surveyFilteredOptionValue,setSurveyFilteredOptionValue]= useState([])
   const {isLightMode,modeColor,userStaticData} = useSelector(state=>state.auth)
   const {editableSurveyValue} = useSelector(state=>state.question)
@@ -33,20 +33,20 @@ const QuestionnairePage = ({closeDrawer,isDrawerOpen}) => {
   const [isSurveyDelete,setIsSurveyDelete]=useState(false)
   const [question,setQuestion]= useState('')
   const [singleAnswer,setSingleAnswer]=useState('')
+  const [answerCount,setAnswerCount]=useState(1)
   let dynamicIndex=Math.random()*10  
   const [answerData,setAnswerData]=useState([{id:dynamicIndex,"answer":''}])
   const [isValid,setIsValid]= useState(false)
   const dispatch = useDispatch()
   
-  const handleData=(inputIndex)=>{ 
-    if(questionType === 'userInput') handleUserInput(inputIndex)
+  const handleData=(inputIndex,value)=>{ 
+    if(questionType === 'userInput') handleUserInput(inputIndex,value)
   }
 
-  const handleUserInput=(inputIndex)=>{
+  const handleUserInput=(inputIndex,value)=>{
     setAnswerData(answerData.map((item,index)=>{
-       console.log(singleAnswer);
       if(item.id===inputIndex){
-          return {'id':item.id,'answer':singleAnswer}
+          return {'id':item.id,'answer':value}
       }else return item
     }))
   }
@@ -76,6 +76,7 @@ const QuestionnairePage = ({closeDrawer,isDrawerOpen}) => {
               if(questionType==='userInput'){
                 optionData=answerData.map(answersValue=>answersValue.answer)
                 setQuestionData([...questionData,{"query":question,"type":questionTitle,
+                "multipleAnswerLimit":answerCount,
                 'options':optionData}])
               }else{
                 optionData=answerData.map(answersValue=>answersValue.answer)[0]
@@ -117,16 +118,19 @@ const QuestionnairePage = ({closeDrawer,isDrawerOpen}) => {
 
   const handleSurveyFilter=(e)=>{
        setSurveyFilteringValue(e.target.value)
-       let data=userStaticData[`${surveyFilteringValue}`]
-       setSurveyFilteredOptionValue(data) 
+      
+      
   }
 
    useEffect(()=>{
     dispatch(getUserStaticData())
   
-  },[questionData,surveyFilterValue,surveyFilteredOptionValue])
+  },[])
 
-console.log(questionData);
+    useEffect(()=>{
+       setSurveyFilteredOptionValue(userStaticData[`${surveyFilteringValue}`]) 
+    },[surveyFilteringValue,userStaticData])
+
     const createSurvey=()=>{
      const surveyData={
       'title':questionMainTitle,
@@ -176,9 +180,10 @@ console.log(questionData);
       dispatch(deleteSurvey({surveyId,toast}))
     }
    }
+
    useEffect(()=>{},[isSurveyDelete])
 
-   console.log(questionData)
+
   return (
     <>
     <Box sx={{width:'100%',display:'flex',flexDirection:'row',height:'auto'}}>
@@ -239,7 +244,7 @@ console.log(questionData);
              optionValue={'value'}             
              optionTitle={'title'} 
              />
-            {surveyFilteredOptionValue?.length?
+            {surveyFilteredOptionValue?.length>0?
              <InputSelector 
               setValue={(e)=>setSurveyFilterValue(e.target.value)}
               inputValue={surveyFilterValue} 
@@ -295,6 +300,17 @@ console.log(questionData);
               marginBottom:'20px',
 
             }}>
+             { questionTitle==='choice' && questionType==='userInput'?
+               <Box sx={{width:handleResponsiveness('100%','50%'),display:'flex'}}>
+                <InputSelector
+                 setValue={(e)=>setAnswerCount(e.target.value)}
+                 inputValue={answerCount} 
+                 optionList={answerCountList}
+                 optionValue={'value'}
+                 optionTitle={'title'}
+                 selectorWidth={'40%'}
+                 label={'Answer Count'}/>
+              </Box>:''}
             {
               questionTitle!=='text'&& questionTitle!=='image'?
               
@@ -417,13 +433,14 @@ const style={
       marginLeft:'2%',
       height:handleResponsiveness('auto','120px'),
       backgroundColor:'#DFDFDF',
-      marginTop:'80px',
+      marginTop:'50px',
       display:'flex',
       justifyContent:'space-around',
       gap:'5px',
       alignItems:'center',
       flexDirection:handleResponsiveness('column','row'),
-      marginBottom:'20px'
+      marginBottom:'20px',
+      border:'solid 1px rgba(0,0,0,0.5)'
     },
  questionDisplay:{
       width:handleResponsiveness('100%','80%'),

@@ -126,6 +126,7 @@ export const getUserProfileData = createAsyncThunk('auth/getUserProfileData',asy
 
 
 export const editUserProfile = createAsyncThunk('auth/editUserProfile',async({id,toast,navigate,userProfileEditedData})=>{
+
   try {
          const response = await axios.patch(`http://localhost:3000/users/${id}`,userProfileEditedData)
          if(response){
@@ -138,6 +139,8 @@ export const editUserProfile = createAsyncThunk('auth/editUserProfile',async({id
         console.log(error.response.data.error)    
     }
 })
+
+
 
 
 export const createAppointment = createAsyncThunk('auth/createAppointment',async({toast,appointmentData})=>{
@@ -170,13 +173,12 @@ export const createPersonalAppointment = createAsyncThunk('auth/createPersonalAp
     }
 })
 
-export const restPassword = createAsyncThunk('auth/restPassWord',async({toast,navigate,newPasswordData})=>{
+export const restPassword = createAsyncThunk('auth/restPassWord',async({toast,newPasswordData})=>{
   
   try {
          const response = await axios.post(`http://localhost:3000/users/resetPassword`,newPasswordData)
          if(response){
             toast.success('your password successfully rested')
-            navigate('/login') 
             return response.data
          }
     } catch (error) {
@@ -247,6 +249,7 @@ export const authSlice= createSlice({
       state.isUserLoggedIn=false
       state.isLightMode=true
       state.survey=[]
+      state.modeColor='white'
     },
      setMode:(state,action)=>{
        state.isLightMode=!state.isLightMode
@@ -275,7 +278,7 @@ export const authSlice= createSlice({
     },
 
     [signIn.pending]:(state,action)=>{
-       state.loading=true
+      state.loading=true
       state.isUserLoggedIn=false
     },
     [signIn.fulfilled]:(state,action)=>{
@@ -291,16 +294,16 @@ export const authSlice= createSlice({
 
     [getAllSurvey.pending]:(state,action)=>{
       state.loading=true
-      state.isUserLoggedIn=false
+    
     },
     [getAllSurvey.fulfilled]:(state,action)=>{
       state.survey=action.payload
       state.loading=false
-      state.isUserLoggedIn=true
+    
     },
     [getAllSurvey.rejected]:(state,action)=>{
          state.loading=false
-         state.isUserLoggedIn=false
+         
     },
 
     [sendSurveyAnswer.pending]:(state,action)=>{
