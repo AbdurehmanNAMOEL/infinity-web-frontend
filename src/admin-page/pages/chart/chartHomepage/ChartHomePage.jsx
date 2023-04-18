@@ -1,4 +1,4 @@
-import { Box } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { handleResponsiveness } from '../../../../users-page/auth/styles/loginStyle'
 import Header from '../../../components/Header'
@@ -40,8 +40,13 @@ const ChartHomePage = ({closeDrawer,isDrawerOpen}) => {
           {
             width:handleResponsiveness('100%','85%'),
             height:handleResponsiveness('50%','60%'),
-            marginTop:'60px'
+            marginTop:'60px',
+            display:'flex',
+            alignItems:'center',
+            flexDirection:'column',
+         
             }}>
+              <Typography sx={{width:'100%',marginTop:'20px',fontWeight:'bold',textAlign:'center'}}>Survey Comparison Chart</Typography>
             <PieChart/>
             <Box sx={{marginTop:'50px',width:'80%',marginLeft:'5%'}}>
                 <InputSelector
@@ -53,7 +58,15 @@ const ChartHomePage = ({closeDrawer,isDrawerOpen}) => {
                  setValue={(e)=>setGraphFilter(e.target.value)}
                 />
             </Box>
-            <LineChart lineGraphData={lineGraphData}/>
+            <Box sx={{
+              width:'100%',
+              height:'50vh',
+              marginLeft:'20%',
+              display:'flex',
+              justifyContent:'center',
+              alignItems:'center'}}>
+              <LineChart lineGraphData={lineGraphData}/>
+            </Box>
         </Box>
          </Box>
          

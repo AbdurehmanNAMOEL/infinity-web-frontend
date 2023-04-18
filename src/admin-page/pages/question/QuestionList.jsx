@@ -26,9 +26,7 @@ const QuestionList = ({isDrawerOpen,closeDrawer}) => {
     const [id,setId]= useState('')
     const dispatch = useDispatch()
     
-    useEffect(()=>{
-      dispatch(getAllSurveyQuestions())
-    },[])
+ 
 
    useEffect(()=>{
     let surveyList=generatedSurvey.find(data=>data.title.includes(filteringValue))

@@ -18,11 +18,7 @@ const QuestionAnswered = ({isDrawerOpen,closeDrawer}) => {
     const [isModalOpen,setModalOpen]= useState(false)
     const [isRejected,setIsRejected]= useState(false)
 
-    useEffect(()=>{
-        dispatch(getAllAnsweredSurvey())
-    },[])
-
-    
+ 
   console.log(answeredSurvey);
   return (
     <>

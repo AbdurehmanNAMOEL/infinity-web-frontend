@@ -23,25 +23,24 @@ const responsive =(xs,md)=>{
 
 const UserFeedBack = () => {
     const navigate = useNavigate()
-    const {modeColor}= useSelector(state=>state.auth)
+    const {modeColor,userData}= useSelector(state=>state.auth)
     const [feedBack,setFeedBack] = useState('')
     const [feedBackGroup,setFeedBackGroup] = useState('')
     const [isBtnDisabled,setIsBtnDisabled] = useState(false)
     const dispatch = useDispatch()
-    const handleFeedBack=()=>{
+
+  const handleFeedBack=()=>{
       let feedBackData={
         "feedbackGroup":feedBackGroup,
         "suggestion":feedBack,
-        'userId':JSON.parse(localStorage.getItem('user')).id
+        'userId':userData?.id
       }
-
       dispatch(sendFeedBack({feedBackData,toast}))
-
       setFeedBack('')
       setFeedBackGroup('')
     }
 
-    useEffect(()=>{
+   useEffect(()=>{
       if(feedBackGroup !=='' && feedBack!==''){
         setIsBtnDisabled(false)
       }else setIsBtnDisabled(true)

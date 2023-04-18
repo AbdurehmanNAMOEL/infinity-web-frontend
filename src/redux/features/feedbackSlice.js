@@ -22,21 +22,21 @@ export const getAllFeedBacks = createAsyncThunk('admin/getAllFeedBack',async()=>
          }
     } catch (error) {
        
-        console.log(error.response.data.message)    
+        console.log(error.response.data.error.message)    
     }
 })
 
 
-export const deleteFeedBack = createAsyncThunk('admin/deleteFeedBack',async({id})=>{
+export const deleteFeedBack = createAsyncThunk('admin/deleteFeedBack',async({toast,id})=>{
     try {
          const response = await axios.delete(`${realBasicUrl}feedbacks/${id}`)
          if(response){
-            
+            toast.success('SuccessFully deleted')
             return response.data
          }
     } catch (error) {
        
-        console.log(error.response.data.message)    
+        console.log(error.response.data.error.message)    
     }
 })
 

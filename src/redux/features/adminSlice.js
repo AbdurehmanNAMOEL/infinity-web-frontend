@@ -1,24 +1,10 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
-import axios from 'axios'
-
-// export const signUp = createAsyncThunk('auth/signUp',async({userData,toast,navigate})=>{
-//     try {
-    
-//          const response = await axios.post('https://infinity-api-oqlt.onrender.com/signUp',userData)
-//          if(response){
-//             toast.success('your account is successfully created')
-//             navigate('/')
-//             return response.data
-//          }
-//     } catch (error) {
-//         toast.error(error.response.data.error)    
-//     }
-// })
+import axios from '../../api/axios';
 
 
 axios.interceptors.request.use((req)=>{
-    if(localStorage.getItem("admin")){
-        req.headers.authorization = `Bearer ${(JSON.parse(localStorage.getItem("admin")).accessToken)}`
+    if(sessionStorage.getItem("admin")){
+        req.headers.authorization = `Bearer ${(JSON.parse(sessionStorage.getItem("admin")).accessToken)}`
     }
 
   return req;
@@ -26,14 +12,11 @@ axios.interceptors.request.use((req)=>{
 
 
 
-const testUrl='https://infinity-api-oqlt.onrender.com/loginAdmin'
-
-const realBasicUrl='http://localhost:3000/'
 
 
 export const signUpAdmin = createAsyncThunk('admin/signUpAdmin',async({adminSignUpData,toast})=>{
     try {
-         const response = await axios.post(`${realBasicUrl}admins`,adminSignUpData)
+         const response = await axios.post(`admins`,adminSignUpData)
          if(response){
             toast.success('new Admin SuccessFully created')      
             return response.data
@@ -48,7 +31,7 @@ export const signUpAdmin = createAsyncThunk('admin/signUpAdmin',async({adminSign
 
 export const loginAdmin = createAsyncThunk('admin/loginAdmin',async({userData,toast,navigate})=>{
     try {
-         const response = await axios.post(`${realBasicUrl}/admins/login`,userData)
+         const response = await axios.post(`admins/login`,userData)
          if(response){
             toast.success('well come back')
             navigate('/dashBoard')  
@@ -62,7 +45,7 @@ export const loginAdmin = createAsyncThunk('admin/loginAdmin',async({userData,to
 
 export const getAllUsers = createAsyncThunk('admin/getAllUsers',async()=>{
     try {
-         const response = await axios.get(`${realBasicUrl}/users`)
+         const response = await axios.get(`users`)
          if(response){
             console.log(response?.data)
             return response.data
@@ -74,7 +57,7 @@ export const getAllUsers = createAsyncThunk('admin/getAllUsers',async()=>{
 
 export const getAllSurveyQuestions = createAsyncThunk('admin/getAllSurveyQuestions',async()=>{
     try {
-         const response = await axios.get(`http://localhost:3000/surveys`,
+         const response = await axios.get(`surveys`,
          {params:{filter:{where:{},include: ["questions"]}}})
          if(response){
            
@@ -88,7 +71,7 @@ export const getAllSurveyQuestions = createAsyncThunk('admin/getAllSurveyQuestio
 
 export const getAllAnsweredSurvey = createAsyncThunk('admin/getAllAnsweredSurvey',async()=>{
     try {
-         const response = await axios.get(`${realBasicUrl}surveyResponses`,
+         const response = await axios.get(`surveyResponses`,
           {params:{filter:{include: ["responses"]}}})
          
          if(response){
@@ -103,7 +86,7 @@ export const getAllAnsweredSurvey = createAsyncThunk('admin/getAllAnsweredSurvey
 
 export const getConsultantAppointment = createAsyncThunk('admin/getConsultantAppointment',async()=>{
     try {
-         const response = await axios.get(`${realBasicUrl}consultees`)
+         const response = await axios.get(`consultees`)
          if(response){
             
             return response.data
@@ -117,7 +100,7 @@ export const getConsultantAppointment = createAsyncThunk('admin/getConsultantApp
 
 export const getAllAppointments = createAsyncThunk('admin/getAllAppointments',async()=>{
     try {
-         const response = await axios.get(`${realBasicUrl}appointments`)
+         const response = await axios.get(`appointments`)
          if(response){
             
             return response.data
@@ -131,7 +114,7 @@ export const getAllAppointments = createAsyncThunk('admin/getAllAppointments',as
 
 export const verifySurveyResponse=createAsyncThunk('admin/verifySurveyResponse',async({surveyId,toast})=>{
     try {
-         const response = await axios.post(`${realBasicUrl}surveyResponses/verifySurveyResponse`,surveyId)
+         const response = await axios.post(`surveyResponses/verifySurveyResponse`,surveyId)
          if(response){
             toast.success('successfully verified')
             return response.data
@@ -143,7 +126,7 @@ export const verifySurveyResponse=createAsyncThunk('admin/verifySurveyResponse',
 
 export const updateSurveyResponse=createAsyncThunk('admin/updateSurveyResponse',async({id,surveyData,toast})=>{
     try {
-         const response = await axios.patch(`${realBasicUrl}/surveyResponses/${id}`,surveyData)
+         const response = await axios.patch(`surveyResponses/${id}`,surveyData)
          if(response){
            console.log(response);
             toast.success('survey successfully updated')
@@ -157,7 +140,7 @@ export const updateSurveyResponse=createAsyncThunk('admin/updateSurveyResponse',
 
 export const deleteSurveyResponse=createAsyncThunk('admin/deleteSurveyResponse',async({id,toast})=>{
     try {
-         const response = await axios.delete(`${realBasicUrl}surveyResponses/${id}`)
+         const response = await axios.delete(`surveyResponses/${id}`)
          if(response){
             toast.success('successfully Deleted')
             return response.data
@@ -169,7 +152,7 @@ export const deleteSurveyResponse=createAsyncThunk('admin/deleteSurveyResponse',
 
 export const updatePassword=createAsyncThunk('admin/updatePassword',async({id,newPassword,toast})=>{
     try {
-         const response = await axios.patch(`${realBasicUrl}admins/${id}`,newPassword)
+         const response = await axios.patch(`admins/${id}`,newPassword)
          if(response){
             toast.success('password successfully updated')
             return response.data
@@ -178,6 +161,39 @@ export const updatePassword=createAsyncThunk('admin/updatePassword',async({id,ne
         console.log(error.response.data.message)    
     }
 })
+
+
+export const restAdminPassword = createAsyncThunk('auth/restAdminPassWord',async({toast,newPassword})=>{
+  
+  try {
+         const response = await axios.patch(`http://localhost:3000/admins`,newPassword)
+         if(response){
+            toast.success('your password successfully rested')
+            return response.data
+         }
+    } catch (error) {
+       
+        console.log(error.response.data.error)    
+    }
+})
+
+
+export const getUserStaticData = createAsyncThunk('auth/getUserStaticData',async()=>{
+  
+  try {
+         const response = await axios.get(`http://localhost:3000/users/fetchStatics`)
+         if(response){
+            
+            return response.data
+         }
+    } catch (error) {
+       
+        console.log(error.response.data.error)    
+    }
+})
+
+
+
 
 export const adminSlice= createSlice({
     name:'admin',
@@ -188,6 +204,7 @@ export const adminSlice= createSlice({
       generatedSurvey:[], 
       answeredSurvey:[],   
       consultantUserList:[],
+      userStaticData:[],
       appointmentList:[],
       isDrawerOpened:false,
       loading:false,
@@ -195,28 +212,38 @@ export const adminSlice= createSlice({
       navTitle:'dashboard/adminHome',
       users:[],
       isAdmin:false,
-      modeColor:'white'
+      modeColor:'white',
+      isDrawerOpen:true,
+      navigateTo:''
 },
   reducers:{
     logOut:(state,action)=>{
       state.isAdminLoggedIn=false
       state.isAdmin=false
-      localStorage.removeItem('admin')
+      sessionStorage.removeItem('admin')
       state.survey=[]
       state.usersFeedBacks=[]
       state.generatedSurvey=[] 
       state.answeredSurvey=[]   
       state.consultantUserList=[]
+      state.userStaticData=[]
       state.appointmentList=[]
       state.loading=false
       state.isAdminLoggedIn=false
+      state.navTitle='dashboard/adminHome'
     },
      setMode:(state,action)=>{
        state.isLightMode=!state.isLightMode
     },
+     closeDrawer:(state,action)=>{
+       state.isDrawerOpen=!state.isDrawerOpen
+    },
     setNavTitle:(state,action)=>{
         state.navTitle=action.payload
     },
+    setNavigate:(state,action)=>{
+        state.navigateTo=action.payload
+    }
 
   },
   extraReducers:{
@@ -239,7 +266,7 @@ export const adminSlice= createSlice({
       state.loading=false
       state.isAdminLoggedIn=true
       state.isAdmin=true
-      localStorage.setItem('admin',JSON.stringify({...action.payload}))
+      sessionStorage.setItem('admin',JSON.stringify({...action.payload}))
     },
     [loginAdmin.rejected]:(state,action)=>{
       state.loading=false
@@ -324,6 +351,7 @@ export const adminSlice= createSlice({
       state.isAdminLoggedIn=true
     },
 
+
      [deleteSurveyResponse.pending]:(state,action)=>{
       state.loading=true
       state.isAdminLoggedIn=true
@@ -337,9 +365,27 @@ export const adminSlice= createSlice({
       state.loading=false
       state.isAdminLoggedIn=true
     },
+
+     [getUserStaticData.pending]:(state,action)=>{
+        state.loading=true
+    },
+    [getUserStaticData.fulfilled]:(state,action)=>{
+      state.userStaticData=action.payload
+      state.loading=false
+   
+    },
+    [getUserStaticData.rejected]:(state,action)=>{
+      state.loading=true
+    },
   }
 
 })
 
-export const {logOut,setMode,setNavTitle}=adminSlice.actions
+export const {
+  logOut,
+  setNavigate,
+  setMode,
+  setNavTitle,
+  closeDrawer
+}= adminSlice.actions
 export const adminReducer=adminSlice.reducer

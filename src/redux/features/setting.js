@@ -1,22 +1,18 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
-import axios from 'axios'
-
+import axios from '../../api/axios';
 
 axios.interceptors.request.use((req)=>{
-    if(localStorage.getItem("admin")){
-        req.headers.authorization = `Bearer ${(JSON.parse(localStorage.getItem("admin")).accessToken)}`
+    if(sessionStorage.getItem("admin")){
+        req.headers.authorization = `Bearer ${(JSON.parse(sessionStorage.getItem("admin")).accessToken)}`
     }
 
   return req;
 })
 
 
-const realBasicUrl='http://localhost:3000/'
-
-
 export const getAllSettingValue = createAsyncThunk('admin/getAllSettingValue',async()=>{
     try {
-         const response = await axios.get(`${realBasicUrl}settings`)
+         const response = await axios.get(`settings`)
          if(response){
             return response.data
          }
@@ -29,7 +25,7 @@ export const getAllSettingValue = createAsyncThunk('admin/getAllSettingValue',as
 
 export const updateSetting = createAsyncThunk('admin/updateSetting',async({settingData,toast})=>{
     try {
-         const response = await axios.patch(`${realBasicUrl}settings`,settingData)
+         const response = await axios.patch(`settings`,settingData)
          if(response){
             toast.success('successfully updated')
             return response.data

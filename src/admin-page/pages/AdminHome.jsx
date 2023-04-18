@@ -1,6 +1,6 @@
 import { Box, Paper} from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import {  useSelector } from 'react-redux'
+import {  useDispatch, useSelector } from 'react-redux'
 
 import Card from '../components/Card'
 import GridTable from '../components/GridTable'
@@ -11,30 +11,27 @@ import Modal from '../components/Modal'
 import AdminSignUp from './auth/pages/AdminSignUp'
 import { handleResponsiveness } from '../../users-page/auth/styles/signUpStyle'
 import { DailyData, MonthlyData } from '../DummyData/data'
+import { column } from '../utils/data'
+import { getAllAnsweredSurvey, getAllSurveyQuestions } from '../../redux/features/adminSlice'
 
 const AdminHome = () => {
     const [isDrawerOpen,closeDrawer] = useState(true)
     const {isLightMode}= useSelector(state=>state.auth)
     const [isNewAdminModalOpened,setIsNewAdminModalOpened]= useState(false)
     const {users,generatedSurvey,appointmentList}= useSelector(state=>state.admin)
-  
-   const column=[
-        {field:"firstName",headerName:"FirstName",flex:1,cellClassName:'name-column-cell'},
-        {field:"lastName",headerName:"LastName",flex:1,cellClassName:'name-column-cell'},
-        {field:"gender",headerName:"Gender",type:"number",headerAlign:'left',align:'left'},
-        {field:"phoneNumber",headerName:"Phone Number",flex:1},
-        {field:"email",headerName:"Email",flex:1},
-    ]
+    const dispatch = useDispatch()
 
     const handleModalOpen=(e)=>{
         setIsNewAdminModalOpened(prev=>!prev)
     }
 
   const [lineGraphData,setLineData] = useState(MonthlyData)
-
-   
-
-
+  useEffect(()=>{
+      dispatch(getAllSurveyQuestions())
+      dispatch(getAllAnsweredSurvey())
+  },[])
+    
+    
   return (
     <>  
      {isNewAdminModalOpened? 
@@ -83,8 +80,8 @@ const AdminHome = () => {
          <Box sx={[style.chartDisplay,{backgroundColor:`${isLightMode?"white":'#1E1E1E'}`}]}>
             <LineChart lineGraphData={lineGraphData}/>
          </Box>
-         <Box sx={{width:'90%',marginLeft:'5%',height:'auto',marginBottom:'10px'}}>
-         { users?.length>0?
+        <Box sx={{width:'90%',marginLeft:'5%',marginTop:'80px'}}>  
+          { users?.length>0?
           <GridTable 
             colors={'white'}
             data={users}

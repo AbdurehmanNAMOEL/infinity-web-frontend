@@ -4,8 +4,8 @@ import axios from 'axios'
 
 
 axios.interceptors.request.use((req)=>{
-    if(localStorage.getItem("admin")){
-        req.headers.authorization = `Bearer ${(JSON.parse(localStorage.getItem("admin")).accessToken)}`
+    if(sessionStorage.getItem("admin")){
+        req.headers.authorization = `Bearer ${(JSON.parse(sessionStorage.getItem("admin")).accessToken)}`
     }
 
   return req;
@@ -24,7 +24,7 @@ export const createNewSurvey = createAsyncThunk('admin/createSurvey',async({surv
          }
     } catch (error) {
        
-        toast.error(error.response.data.message)    
+        toast.error(error.response.data.error.message)    
     }
 })
 
@@ -51,7 +51,7 @@ export const editSurvey = createAsyncThunk('admin/editSurvey',async({surveyData,
          }
     } catch (error) {
        
-        console.log(error.response.data.message)    
+        console.log(error.response.data.error.message)    
     }
 })
 

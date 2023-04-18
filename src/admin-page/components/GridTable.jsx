@@ -13,7 +13,8 @@ const GridTable = ({colors,data,columnFieldsList}) => {
      }]}>
         <DataGrid
         components={{Toolbar:GridToolbar}}
-        sx={{color:`${isLightMode?'#1E1E1E':'white'}`,headerStyle:{backgroundColor:'blue'}}}
+        sx={{color:`${isLightMode?'#1E1E1E':'white'}`,
+          headerStyle:{backgroundColor:'blue'},zIndex:500}}
         rows={data}
         columns={columnFieldsList}
         />
@@ -23,7 +24,8 @@ const GridTable = ({colors,data,columnFieldsList}) => {
 const style= {
     gridDataContainer:{
      m:'20px 0 0 0',
-        height:'74vh',
+        height:'50vh',
+        zIndex:3000,
         "& .MuiDataGrid-root":{
             border:'none'
         },

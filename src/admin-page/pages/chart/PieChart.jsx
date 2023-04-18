@@ -1,5 +1,6 @@
 import { ResponsivePie } from '@nivo/pie'
-import { pieChartData } from '../../DummyData/data'
+import { pieChartData, setPieChart } from '../../DummyData/data'
+import { useSelector } from 'react-redux'
 
 // make sure parent container have a defined height when using
 // responsive component, otherwise height will be 0 and
@@ -7,10 +8,11 @@ import { pieChartData } from '../../DummyData/data'
 // website examples showcase many properties,
 // you'll often use just a few of them.
 const PieChart = () =>{ 
+    const {generatedSurvey,answeredSurvey}= useSelector(state=>state.admin)
   return (
     <ResponsivePie
-        data={pieChartData}
-        margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
+        data={setPieChart(generatedSurvey,answeredSurvey)}
+        margin={{ top: 40, right: 80,bottom: 80, left: 80 }}
         innerRadius={0.5}
         padAngle={0.7}
         cornerRadius={3}

@@ -19,7 +19,7 @@ function Header({closeDrawer,headerTitle,openModal}) {
    const navigate = useNavigate()
    const dispatch = useDispatch()
    const {isLightMode}= useSelector(state=>state.auth)
-   const {navTitle}= useSelector(state=>state.admin)
+   const {navTitle,isDrawerOpen}= useSelector(state=>state.admin)
    const [adminData,setAdminData]= useState([])
    
    const handleDispatch=()=>{
@@ -30,11 +30,11 @@ function Header({closeDrawer,headerTitle,openModal}) {
   useEffect(()=>{
     setAdminData(JSON.parse(localStorage.getItem("admin")))
   },[])
-
+console.log(isDrawerOpen);
 
   return (
     <Paper sx={[style.headerContainer,{backgroundColor:`${isLightMode?"#D9D9D9":"#1E1E1E"}`,}]}>
-       <Box sx={{width:{xs:'30%',md:'50%'},display:'flex',justifyContent:'flex-start',alignItems:'center',gap:'20px'}}>
+       <Box sx={{width:{xs:'30%',md:'40%'},display:'flex',justifyContent:'flex-start',alignItems:'center',gap:'20px'}}>
         <IconButton onClick={closeDrawer}>
             <MenuOutlined sx={{color:'#1977FC', fontweight:'bold'}}/>
         </IconButton>
@@ -42,7 +42,7 @@ function Header({closeDrawer,headerTitle,openModal}) {
             {!headerTitle?navTitle?.split('/')[1]:headerTitle}
        </Typography>
         </Box>
-        <Box sx={{width:{xs:'95%',md:'50%'},display:'flex',justifyContent:'center',gap:'20px'}}>
+        <Box sx={{width:{xs:'50%',md:`${isDrawerOpen?40:50}%`},display:'flex',justifyContent:'center',gap:'20px'}}>
         {isLightMode?<IconButton onClick={handleDispatch}>
             <ModeNightOutlined sx={{width:'20px',height:'20px',color:'black', fontweight:'bold'}}/>
         </IconButton>:

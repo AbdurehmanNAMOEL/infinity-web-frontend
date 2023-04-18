@@ -7,7 +7,7 @@ import { deleteSurveyResponse, getAllSurveyQuestions, getAllUsers, updateSurveyR
 import {toast} from 'react-toastify'
 const DropDown = ({title,data,isModalOpen,setModalOpen,isRejected,isVerified,userId}) => {
   const [isExpanded,setIsExpanded]= useState(false)
-  const [height,setHeight]= useState('35px')
+  const [height,setHeight]= useState('60px')
   const {modeColor,isLightMode,generatedSurvey}= useSelector(state=>state.auth)
   const {users}= useSelector(state=>state.admin)
   let dataTest=data?.map(data=>data.answer[0].includes('files'))
@@ -24,19 +24,14 @@ const DropDown = ({title,data,isModalOpen,setModalOpen,isRejected,isVerified,use
   useEffect(()=>{
     if(isExpanded){
         setHeight('auto')
-    }else setHeight('35px')
+    }else setHeight('60px')
   },[height,isExpanded])
 
   const handleVerifySurveyResponse=()=>{
     const surveyId={
      "surveyResponseId":id,
     }
-    const surveyData={
-     "isPendingVerification":true,
-    }
     dispatch(verifySurveyResponse({surveyId,toast}))
-    dispatch(updateSurveyResponse({id,surveyData,toast}))
- 
   }
 
 
@@ -62,15 +57,15 @@ const DropDown = ({title,data,isModalOpen,setModalOpen,isRejected,isVerified,use
        {height:height},{backgroundColor:modeColor},
        {border:isLightMode?'solid 1px rgba(0,0,0,0.2)':'solid 1px #ACACAC'}]}>
      <Paper sx={{borderRadius:'0px',height:'45px',display:'flex',boxShadow:'none',justifyContent:'space-between',alignItems:'center'}}>
-        <Typography sx={{marginLeft:'20px',display:'flex',gap:'20px'}}>
-          <Typography sx={{fontWeight:'bolder'}}>{`${(userData[0]?.firstName)}`}</Typography>
+          <Typography sx={{marginLeft:'20px',marginTop:'10px',display:'flex',flexDirection:'column',gap:'5px'}}>
+          <Typography sx={{fontWeight:'bolder'}}>{`Name: ${(userData[0]?.firstName)}`}</Typography>
           <Typography>{`phone: ${userData[0]?.phoneNumber}`}</Typography>
         </Typography>
         {!isExpanded?
         <IconButton onClick={handleExpand}><ArrowForwardIosIcon sx={{width:'14px',height:'14px'}}/></IconButton>:
         <IconButton onClick={handleExpand}><ExpandMoreIcon/></IconButton>}
      </Paper>
-     <Divider/>
+     <Divider sx={{marginTop:'15px',marginBottom:'10px'}}/>
      <Box sx={{width:'100%',display:'flex',marginBottom:'10px',flexDirection:'column',alignItems:'center'}}>
     
       {data?.map((answers,index)=>
@@ -78,7 +73,7 @@ const DropDown = ({title,data,isModalOpen,setModalOpen,isRejected,isVerified,use
            data.includes('files')?  
             <img 
                alt=''
-              style={{width:'40%',height:'40%'}} 
+              style={{width:'40%',height:'40%',marginBottom:'10px'}} 
               src={`http://localhost:3000/${data}`}/>:
            
            <Typography sx={{padding:'6px',width:'80%',color:isLightMode?'#1e1e1e':'white'}}>{data}</Typography>

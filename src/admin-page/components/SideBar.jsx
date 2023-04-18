@@ -45,7 +45,6 @@ const SideBar = ({isDrawerOpen,closeDrawer,drawerWidth}) => {
         zIndex:8000,
         height:handleResponsiveness('100vh','auto',),
         display:'flex',
-        
           width:{xs:!isDrawerOpen?200:0,md:drawerWidth},
           color:'white',
           "& .MuiDrawer-paper":{

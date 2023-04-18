@@ -8,24 +8,24 @@ import { useNavigate } from 'react-router-dom';
 import {toast} from 'react-toastify'
 import { useSelector } from 'react-redux';
 import ActionButton from '../../../components/ActionButton';
-const VerificationPage = ({navigateTo,onSignUp}) => { 
+const OtpVerifierPage= () => { 
+   
    const navigate=useNavigate()
-   const {isUserVerified}= useSelector(state=>state.auth)
+   const {isUserVerified,navigateTo}= useSelector(state=>state.auth)
    const [isBtnDisabled,setIsBtnDisabled]= useState(true)
    const [verify,setVerify] = useState('')
- 
+
     const handleConfirmation = async()=>{
     try {
        const response= await window.confirmationResult.confirm(verify);
          if(response?.user){
-            navigate(`/${navigateTo}`)
+            // console.log(response?.user.phoneNumber);
+            navigate(`/${navigateTo}/${response?.user?.phoneNumber}`) 
          }  
     } catch (error) {
-      toast.error(error.response.message)
-    }
-    
+      toast.error(error.message)
+    }    
   }
- 
 
 useEffect(()=>{
     if(verify.length===6){
@@ -33,7 +33,6 @@ useEffect(()=>{
       }else setIsBtnDisabled(true)
    },[verify])
 
-  
 
   return (
    <Box sx={style.verificationPasswordContainer}>
@@ -58,7 +57,13 @@ useEffect(()=>{
              isBtnDisabled={isBtnDisabled}
             />
            </Box>
-        <Typography  sx={{width:'70%',display:'flex',justifyContent:'flex-end',color:'red',cursor:'pointer'}}>
+        <Typography  sx={{
+          width:'70%',
+          display:'flex',
+          justifyContent:'flex-end',
+          color:'red',
+          cursor:'pointer'
+          }}>
           Resend code
         </Typography>
       </Paper>
@@ -75,9 +80,9 @@ const style={
     display:'flex',
     flexDirection:'column',
     backgroundColor:'white',
-   
     gap:'20px'
   },
+
  verificationPasswordCard:{
     width:handleResponsiveness('95%','400px'),
     height:'250px',
@@ -125,4 +130,4 @@ const style={
   }
 }
 
-export default VerificationPage
+export default OtpVerifierPage

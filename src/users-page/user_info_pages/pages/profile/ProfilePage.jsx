@@ -13,7 +13,7 @@ import ActionButton from '../../../components/ActionButton'
 import { handleResponsiveness } from '../../../auth/styles/loginStyle'
 
 const ProfilePage = ({isScrolling}) => {
-  const {modeColor,userStaticData,userProfileData}= useSelector(state=>state.auth)
+  const {modeColor,userStaticData,userData,userProfileData}= useSelector(state=>state.auth)
   const navigate=useNavigate()
   const [isFormValid,setFormValidation]= useState(false)
   const [isRestFormValid,setIsRestFormValid]= useState(false)
@@ -22,10 +22,10 @@ const ProfilePage = ({isScrolling}) => {
   const [password,setPassword] = useState('')
   const [phoneNumber,setPhoneNumber] = useState('')
   const [userProfileEditedData,setUserProfileEditedData]=useState(
-    userInitialProfileData(userProfileData[0]))
+  userInitialProfileData(userProfileData[0]))
 
-    useEffect(()=>{
-    let id = JSON.parse(localStorage.getItem("user"))?.id
+  useEffect(()=>{
+    let id =userData.id
      dispatch(getUserStaticData())
      dispatch(getUserProfileData({id}))
 
@@ -33,26 +33,13 @@ const ProfilePage = ({isScrolling}) => {
 
   const dispatch = useDispatch()
 
-  //  console.log(userStaticData)
-
   
   const handleProfileEdit=()=>{
-       let id = JSON.parse(localStorage.getItem("user"))?.id
+       let id =userData.id
      dispatch(editUserProfile({id,toast,navigate,userProfileEditedData}))
   }
 
-  // console.log(userProfileData[0].birthPlaceId);
 
-
-  // const setInitialValue=()=>{
-  //     userStaticData?.birthPlaces?.map(data=>
-  //   {if(data.id===userProfileData.map(data=>data.birthPlaceId)[0]){
-  //     return data.en
-  //   } else return data
-  // }
-  //   )
-  
-  // }
 
   useEffect(()=>{
     if(userProfileEditedData?.firstName!=='' && userProfileEditedData?.last!==''&&

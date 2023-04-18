@@ -9,20 +9,20 @@ import { handleResponsiveness } from '../styles/loginStyle'
 import { useNavigate } from 'react-router-dom'
 import {toast} from 'react-toastify'
 const UserProfileSubmissionPage = () => {
-    const {modeColor,userStaticData,userProfileData,isLightMode}= useSelector(state=>state.auth)
-    const navigate=useNavigate()
-    const [userPersonData,setUserPersonalData]=useState({})
-    const dispatch = useDispatch()
+  const {modeColor,userData,userStaticData,userProfileData,isLightMode}= useSelector(state=>state.auth)
+  const navigate=useNavigate()
+  const [userPersonData,setUserPersonalData]=useState({})
+  const dispatch = useDispatch()
 
   useEffect(()=>{
-    let id = JSON.parse(localStorage.getItem("user"))?.id
+    let {id} =userData
    dispatch(getUserStaticData())
     dispatch(getUserStaticData())
    dispatch(getUserProfileData({id}))
   },[])
 
  const handleProfileEdit=()=>{
-     let id = JSON.parse(localStorage.getItem("user"))?.id
+     let id = userData.id
      let userProfileEditedData={
      "id":id,
      "birthPlaceId":userPersonData.birthPlaceId,

@@ -11,22 +11,24 @@ import { answerCountList, choicesType,questionTypeList, surveyAccessingFilterLis
 import { useDispatch, useSelector } from 'react-redux'
 import { createNewSurvey, deleteSurvey, editSurvey } from '../../../redux/features/QuestionSlice'
 import {toast} from 'react-toastify'
-import { getUserStaticData } from '../../../redux/features/authSlice'
+
 import { handleResponsiveness } from '../../../users-page/auth/styles/signUpStyle'
 import { useParams } from 'react-router-dom'
 import Modal from '../../components/Modal'
 import PreviewQuestion from '../../components/PreviewQuestion'
 import DeletingModal from '../../components/DeletingModal'
+import { closeDrawer, getUserStaticData } from '../../../redux/features/adminSlice'
 
-const QuestionnairePage = ({closeDrawer,isDrawerOpen}) => {
+const QuestionnairePage = () => {
   const [questionTitle,setQuestionTitle]= useState('text')
   const [questionMainTitle,setQuestionMainTitle]= useState('')
   const [questionType,setQuestionType]= useState('userInput')
   const [surveyFilteringValue,setSurveyFilteringValue]= useState('')
   const [surveyFilterValue,setSurveyFilterValue]= useState('')
   const [surveyFilteredOptionValue,setSurveyFilteredOptionValue]= useState([])
-  const {isLightMode,modeColor,userStaticData} = useSelector(state=>state.auth)
+  const {isLightMode,modeColor,userStaticData} = useSelector(state=>state.admin)
   const {editableSurveyValue} = useSelector(state=>state.question)
+  const {isDrawerOpen} = useSelector(state=>state.admin)
   const [questionData,setQuestionData]= useState([])
   const [isSurveyPreViewed,setIsSurveyPreViewed]= useState(false)
   const [isDeletingModalOpen,setIsDeletingModalOpen]=useState(false)
@@ -38,7 +40,10 @@ const QuestionnairePage = ({closeDrawer,isDrawerOpen}) => {
   const [answerData,setAnswerData]=useState([{id:dynamicIndex,"answer":''}])
   const [isValid,setIsValid]= useState(false)
   const dispatch = useDispatch()
-  
+  const {id}= useParams()
+
+
+
   const handleData=(inputIndex,value)=>{ 
     if(questionType === 'userInput') handleUserInput(inputIndex,value)
   }
@@ -61,7 +66,7 @@ const QuestionnairePage = ({closeDrawer,isDrawerOpen}) => {
        setAnswerData([...answerData],answerData.filter((item,index)=>index))
        
     }
-  },[questionType,singleAnswer])
+  },[questionType,singleAnswer,answerData])
 
 
 
@@ -76,8 +81,7 @@ const QuestionnairePage = ({closeDrawer,isDrawerOpen}) => {
               if(questionType==='userInput'){
                 optionData=answerData.map(answersValue=>answersValue.answer)
                 setQuestionData([...questionData,{"query":question,"type":questionTitle,
-                "multipleAnswerLimit":answerCount,
-                'options':optionData}])
+                "multipleAnswerLimit":answerCount,'options':optionData}])
               }else{
                 optionData=answerData.map(answersValue=>answersValue.answer)[0]
                 setQuestionData([...questionData,{"query":question,"type":questionTitle,
@@ -96,9 +100,19 @@ const QuestionnairePage = ({closeDrawer,isDrawerOpen}) => {
   }
 
   
-  const deleteQuestion=(questionTitle,id)=>{
-    setQuestionData (questionData?.filter(data=>data?.query!==questionTitle))
+  const deleteAndEditQuestion=(questionTitle,id)=>{
+ 
+    setQuestionData(questionData.map(data=>{
+      if(data.id===id){
+        return {...data,'deleteThis':true}
+      }else return data
+    }))
+    console.log(questionData);
   }
+
+const deleteQuestion=(questionTitle)=>{
+    setQuestionData (questionData?.filter(data=>data?.query!==questionTitle))
+}
   
   const deleteOrRestNewSurvey=()=>{
     setQuestionData ([])
@@ -143,8 +157,6 @@ const QuestionnairePage = ({closeDrawer,isDrawerOpen}) => {
      deleteOrRestNewSurvey()
   }
 
-  const {id}= useParams()
-   console.log(id)
 
    useEffect(()=>{
     if(id){
@@ -153,8 +165,7 @@ const QuestionnairePage = ({closeDrawer,isDrawerOpen}) => {
     }else setQuestionData([])
 
    },[id,editableSurveyValue])
-   console.log(editableSurveyValue,);
-
+  
    const editSurveyValue=()=>{
      const surveyData={
       'title':questionMainTitle,
@@ -181,22 +192,21 @@ const QuestionnairePage = ({closeDrawer,isDrawerOpen}) => {
     }
    }
 
-   useEffect(()=>{},[isSurveyDelete])
-
-
+   
   return (
     <>
     <Box sx={{width:'100%',display:'flex',flexDirection:'row',height:'auto'}}>
         <SideBar
           isDrawerOpen={isDrawerOpen} 
-          closeDrawer={closeDrawer}
+          closeDrawer={()=>dispatch(closeDrawer())}
           drawerWidth={isDrawerOpen?200:0}
         />
-        <Box sx={{display:'flex',height:'auto',width:'100%',position:'relative',flexDirection:'column'}}>
-        <Box sx={{position:'fixed',height:'auto',width:`${isDrawerOpen?100:100}%`,zIndex:200}}> 
-         <Header closeDrawer={()=>closeDrawer(prev=>!prev)}/>
+        <Box sx={{display:'flex',height:'auto',position:'relative',flexDirection:'column'}}>
+        <Box sx={{position:'fixed',height:'100vh',backgroundColor:modeColor,width:`${isDrawerOpen?100:100}%`,zIndex:200}}> 
+         <Header  closeDrawer={()=>dispatch(closeDrawer())}/>
          <Box sx={{height:'90vh',overflowY:'scroll',marginTop:'80px'}}>
-         <Paper sx={[style.questionMainTitle,{backgroundColor:modeColor}]}>
+         <Paper sx={[style.questionMainTitle,
+          {backgroundColor:modeColor,width:{xs:'100%',md:isDrawerOpen?'80%':'90%'}}]}>
           <Box sx={{width:handleResponsiveness('100%','15%'),height:'50px'}}>
             <InputField
              inputLabel={'Question Title'}
@@ -261,7 +271,7 @@ const QuestionnairePage = ({closeDrawer,isDrawerOpen}) => {
          
          </Paper>
        
-         <Paper sx={style.questionDisplay}>
+         <Paper sx={[style.questionDisplay,{width:{xs:'100%',md:isDrawerOpen?'80%':'90%'}}]}>
            <Box sx={{
             width:'90%',
             display:'flex',
@@ -371,7 +381,10 @@ const QuestionnairePage = ({closeDrawer,isDrawerOpen}) => {
                     height:'90%',
                     border:'none',
                     backgroundColor:'white',
-                    color:'red'}} onClick={()=>deleteQuestion(item.query,item.id)}>Delete</button>
+                    color:'red'}} onClick={
+                     id?()=>deleteAndEditQuestion(item.query,item.id):
+                     ()=>deleteQuestion(item.query,item.id)}>
+                    Delete</button>
                 </Box>
               </Paper>
         )
@@ -429,7 +442,7 @@ const QuestionnairePage = ({closeDrawer,isDrawerOpen}) => {
 }
 const style={
     questionMainTitle:{
-      width:handleResponsiveness('100%','80%'),
+      width:handleResponsiveness('100%','90%'),
       marginLeft:'2%',
       height:handleResponsiveness('auto','120px'),
       backgroundColor:'#DFDFDF',
@@ -453,7 +466,7 @@ const style={
       gap:'5px',
       alignItems:'center',
       flexDirection:'column',
-      marginBottom:handleResponsiveness('50px','0px')
+      marginBottom:handleResponsiveness('50px','50px')
       
     },
     questionGeneratorContainer:{

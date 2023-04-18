@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import InputField from '../../../components/InputField'
 import companyLogoImage from '../../../../assets/image/logo.png'
 import { handleResponsiveness } from '../../styles/loginStyle'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { restPassword } from '../../../../redux/features/authSlice'
 import {toast} from 'react-toastify'
@@ -13,29 +13,25 @@ const RestPassword = () => {
   const dispatch = useDispatch()
   const [isValid,setIsValid] = useState(false)
   const [isBtnDisabled,setIsBtnDisabled]= useState(true)
-  const [confirmPassword,setConfirmPassword]= useState('')
+  const {id}= useParams()
   const [newPasswordData,setNewPassWordData]=useState({
-    phoneNumber:'',
+    phoneNumber:id,
     newPassword:''
   })
-
+   
   const handleRestingPassword=()=>{
-      if(newPasswordData.phoneNumber!==''&&newPasswordData.newPassword!==''&&confirmPassword!==''){
-          if(newPasswordData.newPassword===confirmPassword){
-            console.log(newPasswordData)
-            dispatch(restPassword({toast,navigate,newPasswordData}))
-             setNewPassWordData({phoneNumber:'',newPassword:''})
-             setConfirmPassword('')
-          }else console.log('password is not match')
+      if(newPasswordData.phoneNumber!==''&&newPasswordData.newPassword!==''){
+         console.log(newPasswordData)
+         dispatch(restPassword({toast,navigate,newPasswordData}))
+         setNewPassWordData({phoneNumber:'',newPassword:''})
       }else alert('please first fill the whole inputs')
   }
 
   useEffect(()=>{
-     if(newPasswordData.phoneNumber!==''&& newPasswordData.newPassword!=='' 
-       && confirmPassword!==''&& isValid){
+     if(newPasswordData.phoneNumber!=='' && newPasswordData.newPassword!==''&&isValid){
         setIsBtnDisabled(false)
      }else setIsBtnDisabled(true)
-  },[newPasswordData,isValid,confirmPassword])
+  },[newPasswordData,isValid])
 
   return (
   <Box sx={style.restPasswordContainer}>
@@ -44,16 +40,13 @@ const RestPassword = () => {
        </Box>
       <Box sx={style.cardContainer}>
       <Paper sx={style.restPasswordCard}>
-       <Typography sx={{color:'#1A6CE8',fontWeight:'bold',marginTop:'10px',marginBottom:'20px'}} variant='h6'>Rest Password</Typography>
+       <Typography sx={{
+        color:'#1A6CE8',
+        fontWeight:'bold',
+        marginTop:'10px',
+        marginBottom:'20px'
+        }} variant='h6'>Rest Password</Typography>
         <Divider sx={{width:'100%',marginBottom:'20px'}}/>
-            <InputField
-             inputLabel={'PhoneNumber'}
-             type='phoneNumber'
-             setValidation={setIsValid}
-             inputValue={newPasswordData?.phoneNumber}
-             setValue={(e)=>setNewPassWordData({...newPasswordData,'phoneNumber':e.target.value})}
-             
-           />
            <InputField
              inputLabel={'Enter new password'}
              type='password'
@@ -61,14 +54,13 @@ const RestPassword = () => {
              inputValue={newPasswordData?.newPassword}
              setValue={(e)=>setNewPassWordData({...newPasswordData,'newPassword':e.target.value})}
            />
-            <InputField
-             inputLabel={'Confirm new password'}
-             type='password'
-             setValidation={setIsValid}
-             inputValue={confirmPassword}
-             setValue={(e)=>setConfirmPassword(e.target.value)}
-           />
-           <Box sx={{width:'100%',marginBottom:'20px',display:'flex',justifyContent:'center',alignItems:'center'}}>
+           <Box sx={{
+            width:'100%',
+            marginBottom:'20px',
+            display:'flex',
+            justifyContent:'center',
+            alignItems:'center'
+            }}>
              <ActionButton
               btnLabel={'Rest'}
               onClick={handleRestingPassword}

@@ -1,21 +1,29 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
-import axios from 'axios'
+import axios, { imageUploadAxios } from '../../api/axios';
+import Cookies from 'universal-cookie'; 
 
-
+const cookies = new Cookies();
+ 
 
 axios.interceptors.request.use((req)=>{
-    if(localStorage.getItem("user")){
-        req.headers.authorization = `Bearer ${(JSON.parse(localStorage.getItem("user")).accessToken)}`
+    if(sessionStorage.getItem("user")){
+        req.headers.authorization = `Bearer ${(JSON.parse(sessionStorage.getItem("user")))}`
     }
   return req;
 })
 
-const realBasicUrl='http://localhost:3000/users'
+imageUploadAxios.interceptors.request.use((req)=>{
+    if(sessionStorage.getItem("user")){
+        req.headers.authorization = `Bearer ${(JSON.parse(sessionStorage.getItem("user")))}`
+    }
+  return req;
+})
+
 
 export const signUp = createAsyncThunk('auth/signUp',async({userData,toast,navigate})=>{
     try {
     
-         const response = await axios.post(`${realBasicUrl}/signUp`,userData)
+         const response = await axios.post(`users/signUp`,userData)
          if(response){
             toast.success('your account is successfully created')
             navigate('/login')
@@ -29,7 +37,7 @@ export const signUp = createAsyncThunk('auth/signUp',async({userData,toast,navig
 
 export const signIn = createAsyncThunk('auth/signIn',async({userData,navigate,toast})=>{
     try {
-         const response = await axios.post(`${realBasicUrl}/login`,userData)
+         const response = await axios.post(`users/login`,userData,{withCredentials:true})
          if(response){
             toast.success('well come back')
             navigate('/userProfileFiller')
@@ -43,8 +51,7 @@ export const signIn = createAsyncThunk('auth/signIn',async({userData,navigate,to
 
 export const getAllSurvey = createAsyncThunk('auth/getAllSurvey',async()=>{
     try {
-         const response = await axios.get(`http://localhost:3000/surveys`,
-         {params:{filter:{where:{},include: ["questions"]}}})
+         const response = await axios.get(`surveys`,{params:{filter:{where:{},include: ["questions"]}}})
          if(response){
            return response.data
          }
@@ -55,10 +62,9 @@ export const getAllSurvey = createAsyncThunk('auth/getAllSurvey',async()=>{
 
 
 export const uploadImage = createAsyncThunk('auth/uploadImage',async({formData})=>{
-    try {
-         const response = await axios.post(`http://localhost:3000/files/uploadFiles`,formData)
-         if(response){
-           console.log(response.data)
+    try { 
+         const response = await imageUploadAxios.post(`files/uploadFiles`,formData)
+         if(response){  
            return response.data
          }
     } catch (error) {
@@ -69,7 +75,7 @@ export const uploadImage = createAsyncThunk('auth/uploadImage',async({formData})
 
 export const sendFeedBack = createAsyncThunk('auth/sendFeedBack',async({feedBackData,toast})=>{
     try {
-         const response =await axios.post(`http://localhost:3000/feedbacks`,feedBackData)
+         const response =await axios.post(`feedbacks`,feedBackData)
          if(response){
             toast.success('your feedback successfully submitted')
             return response.data
@@ -80,9 +86,9 @@ export const sendFeedBack = createAsyncThunk('auth/sendFeedBack',async({feedBack
 })
 
 export const sendSurveyAnswer = createAsyncThunk('auth/sendSurveyAnswer',async({userSurveyAnswerData,toast})=>{
-    console.log(userSurveyAnswerData);  
+    
   try {
-         const response = await axios.post(`http://localhost:3000/surveyResponses/fillSurvey`,userSurveyAnswerData)
+         const response = await axios.post(`surveyResponses/fillSurvey`,userSurveyAnswerData)
          if(response){
             toast.success('Your answer successfully submitted')
             return response.data
@@ -97,7 +103,7 @@ export const sendSurveyAnswer = createAsyncThunk('auth/sendSurveyAnswer',async({
 export const getUserStaticData = createAsyncThunk('auth/getUserStaticData',async()=>{
   
   try {
-         const response = await axios.get(`http://localhost:3000/users/fetchStatics`)
+         const response = await axios.get(`users/fetchStatics`)
          if(response){
             
             return response.data
@@ -110,15 +116,13 @@ export const getUserStaticData = createAsyncThunk('auth/getUserStaticData',async
 
 
 export const getUserProfileData = createAsyncThunk('auth/getUserProfileData',async({id})=>{
-   console.log(id)
+
   try {
-         const response = await axios.get(`http://localhost:3000/users/${id}`)
-         if(response){
-            
+         const response = await axios.get(`users/${id}`)
+         if(response){   
             return response.data
          }
     } catch (error) {
-       
         console.log(error.response.data.error)    
     }
 })
@@ -126,9 +130,9 @@ export const getUserProfileData = createAsyncThunk('auth/getUserProfileData',asy
 
 
 export const editUserProfile = createAsyncThunk('auth/editUserProfile',async({id,toast,navigate,userProfileEditedData})=>{
-
+  console.log(id);
   try {
-         const response = await axios.patch(`http://localhost:3000/users/${id}`,userProfileEditedData)
+         const response = await axios.patch(`users/${id}`,userProfileEditedData)
          if(response){
             toast.success('your profile successfully updated')
             navigate('/profile')
@@ -146,7 +150,7 @@ export const editUserProfile = createAsyncThunk('auth/editUserProfile',async({id
 export const createAppointment = createAsyncThunk('auth/createAppointment',async({toast,appointmentData})=>{
   
   try {
-         const response = await axios.post(`http://localhost:3000/appointments`,appointmentData)
+         const response = await axios.post(`appointments`,appointmentData)
          if(response){
             toast.success('your Appointment successfully sent')
            
@@ -161,7 +165,7 @@ export const createAppointment = createAsyncThunk('auth/createAppointment',async
 export const createPersonalAppointment = createAsyncThunk('auth/createPersonalAppointment',async({toast,userData})=>{
   
   try {
-         const response = await axios.post(`http://localhost:3000/consultees`,userData)
+         const response = await axios.post(`consultees`,userData)
          if(response){
             toast.success('your personal Appointment successfully sent')
            
@@ -176,7 +180,7 @@ export const createPersonalAppointment = createAsyncThunk('auth/createPersonalAp
 export const restPassword = createAsyncThunk('auth/restPassWord',async({toast,newPasswordData})=>{
   
   try {
-         const response = await axios.post(`http://localhost:3000/users/resetPassword`,newPasswordData)
+         const response = await axios.post(`users/resetPassword`,newPasswordData)
          if(response){
             toast.success('your password successfully rested')
             return response.data
@@ -193,10 +197,13 @@ export const findPhoneNumber = createAsyncThunk('auth/findPhoneNumber',async({
   toast,navigate,phoneNumber,onSignUp,navigateTo})=>{
   
   try {
-         const response = await axios.get(`http://localhost:3000/users/phoneNumberExists/${phoneNumber}`)
+         const response = await axios.get(`users/phoneNumberExists/${phoneNumber}`)
           if(response.data){
             onSignUp()
-          }else  navigate(`/${navigateTo}`) 
+          }else {
+            toast.error("user doesn't exist") 
+             navigate(`/${navigateTo}`) 
+          }
           return response.data
         
     } catch (error) {
@@ -207,7 +214,7 @@ export const findPhoneNumber = createAsyncThunk('auth/findPhoneNumber',async({
 export const getMyWalletBalance = createAsyncThunk('auth/getMyWalletBalance',async()=>{
   
   try {
-         const response = await axios.get(`http://localhost:3000/wallets/myStats`)
+         const response = await axios.get(`wallets/myStats`)
         
          return response.data
         
@@ -237,11 +244,13 @@ export const authSlice= createSlice({
       myWalletBalance:[],
       uploadImageUrl:{},
       isImageLoading:false,
-      isPhoneNumberExist:false
+      isPhoneNumberExist:false,
+      navigateTo:'',
+      userLoginData:{}
 },
   reducers:{
     logOut:(state,action)=>{
-      localStorage.removeItem('user')
+      sessionStorage.removeItem('user')
       state.users=[]
       state.userSurveyAnswer=[]
       state.userStaticData=[]
@@ -250,6 +259,8 @@ export const authSlice= createSlice({
       state.isLightMode=true
       state.survey=[]
       state.modeColor='white'
+      state.uploadImageUrl={}
+      cookies.remove('user')
     },
      setMode:(state,action)=>{
        state.isLightMode=!state.isLightMode
@@ -258,11 +269,14 @@ export const authSlice= createSlice({
        }else state.modeColor='white'
     },
     
-     setUserSignUpData:(state,action)=>{
+    setUserSignUpData:(state,action)=>{
        return {...state,userSignUpData:{...state.userSignUpData,"value":action.payload}}
     },
     getSurveyValue:(state,action)=>{
           state.surveyDetailValue=action.payload
+    },
+    setNavigateValue:(state,action)=>{
+          state.navigateTo=action.payload
     }
   },
   extraReducers:{
@@ -278,18 +292,20 @@ export const authSlice= createSlice({
     },
 
     [signIn.pending]:(state,action)=>{
-      state.loading=true
+      
       state.isUserLoggedIn=false
     },
     [signIn.fulfilled]:(state,action)=>{
       state.users=action.payload
-      state.loading=false
       state.isUserLoggedIn=true
-      localStorage.setItem('user',JSON.stringify({...action.payload}))
+      let {id,email,firstName,lastName}=action.payload
+      state.userData={id,email,firstName,lastName}
+      sessionStorage.setItem('user',JSON.stringify(action.payload.accessToken))
+      cookies.set('user',action.payload.refreshToken,{ path: '/' });
     },
     [signIn.rejected]:(state,action)=>{
         state.isUserLoggedIn=false
-        state.loading=false
+       
     },
 
     [getAllSurvey.pending]:(state,action)=>{
@@ -392,7 +408,8 @@ export const authSlice= createSlice({
     setMode,
     setUserLoginState,
     setUserSignUpData,
-    getSurveyValue
+    getSurveyValue,
+    setNavigateValue
   }=authSlice.actions
 
  export const authReducer=authSlice.reducer

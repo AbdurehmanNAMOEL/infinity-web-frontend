@@ -70,36 +70,22 @@ export const DailyData=()=>{
 
 
 
-export const pieChartData=[
+export const setPieChart=(survey,answeredSurvey)=>{
+ const pieChartData = [
   {
     "id": "Survey",
     "label": "Survey",
-    "value": 558,
+    "value": survey.length,
     "color": "hsl(121, 70%, 50%)"
-  },
-  {
-    "id": "Appointment",
-    "label": "Appointment",
-    "value": 301,
-    "color": "hsl(7, 70%, 50%)"
-  },
-  {
-    "id": "Users",
-    "label": "Users",
-    "value": 455,
-    "color": "hsl(270, 70%, 50%)"
-  },
-  {
-    "id": "FeedBack",
-    "label": "FeedBack",
-    "value": 478,
-    "color": "hsl(115, 70%, 50%)"
   },
   {
     "id": "Answered Survey",
     "label": "Answered Survey",
-    "value": 101,
-    "color": "hsl(350, 70%, 50%)"
-  }
+    "value": answeredSurvey?.length,
+    "color": "hsl(7, 70%, 50%)"
+  },
+ 
 ]
+return pieChartData
 
+}

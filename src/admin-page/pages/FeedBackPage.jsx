@@ -8,6 +8,7 @@ import UserFeedBackCard from '../components/UserFeedBackCard'
 import { handleResponsiveness } from '../../users-page/auth/styles/loginStyle'
 import InputSelector from '../../shared/Components/InputSelector'
 import { feedbackFilterList } from '../utils/selectorInputs'
+import {toast} from 'react-toastify'
 
 const FeedBackPage = ({isDrawerOpen,closeDrawer}) => {
     const dispatch = useDispatch()
@@ -18,18 +19,13 @@ const FeedBackPage = ({isDrawerOpen,closeDrawer}) => {
    
     useEffect(()=>{
         dispatch(getAllFeedBacks())
-    },[])
+    },[usersFeedBacks])
     
     useEffect(()=>{
-           console.log(filterValue);
-        if(filterValue==="All"){
-            setUserFeedBackValue(usersFeedBacks)
-        }else{
-            setUserFeedBackValue(usersFeedBacks.filter(data=>data.feedbackGroup===filterValue))
-        }
+      if(filterValue==="All") setUserFeedBackValue(usersFeedBacks)
+      else setUserFeedBackValue(usersFeedBacks.filter(data=>data.feedbackGroup===filterValue))    
     },[filterValue,userFeedBackValue,usersFeedBacks])
-    console.log(usersFeedBacks);
-   
+
   return (
       <Box sx={{ width: '100%', display: 'flex', flexDirection: 'row',height:'100vh',backgroundColor:modeColor}}>
             <SideBar
@@ -55,7 +51,8 @@ const FeedBackPage = ({isDrawerOpen,closeDrawer}) => {
           {userFeedBackValue?.length? 
           <Grid sx={{marginLeft:handleResponsiveness('-10%','5%'),
                 backgroundColor:modeColor,
-                height:'auto',marginTop:'10px',width:handleResponsiveness('100%','95%')}} container spacing={8}>
+                height:'auto',marginTop:'10px',width:handleResponsiveness('100%','95%')}} 
+                container spacing={8}>
             {
                 userFeedBackValue?.map((data,index)=>
                   <Grid item xs={12} md={5}>

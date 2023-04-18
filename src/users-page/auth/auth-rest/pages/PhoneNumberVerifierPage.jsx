@@ -1,26 +1,26 @@
 import { auth } from '../../../../config/firebase_config';
-import { CardMedia, Divider, IconButton, Paper, Typography } from '@mui/material';
+import { CardMedia, Divider, Paper, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { RecaptchaVerifier,signInWithPhoneNumber } from 'firebase/auth';
 import React, { useEffect, useState } from 'react'
-
 import InputField from '../../../components/InputField';
-
 import companyLogoImage from '../../../../assets/image/logo.png'
 import { handleResponsiveness } from '../../styles/loginStyle';
 import { useNavigate } from 'react-router-dom';
 import {toast} from 'react-toastify'
 import ActionButton from '../../../components/ActionButton';
-import VerificationPage from './VerificationPage';
-const ForgotPassword = () => {
+import { useDispatch} from 'react-redux';
+import { findPhoneNumber, setNavigateValue } from '../../../../redux/features/authSlice';
+import OtpVerifierPage from './OtpVerifierPage';
+const PhoneNumberVerifierPage= ({navigateTo,secondNavigate}) => {
+
   const navigate=useNavigate()
   const [phoneNumber,setPhoneNumber]=useState('')
   const [isBtnDisabled,setIsBtnDisabled]=useState(true)
   const [isFormValid,setFormValidation]= useState(false)
   const [isOTPCodeSent,setOTPSetIsCodeSent] = useState('')
-  const [verify,setVerify] = useState('')
-  const   onCapTchaVerify=()=>{
-   }
+  const dispatch = useDispatch()
+  
 
   useEffect(()=>{
      if(!window.recaptchaVerifier){
@@ -38,22 +38,23 @@ const ForgotPassword = () => {
   }
   },[])
 
+
+
  const onSignUp=()=>{
-   alert('hello')
+  
    const appVerifier = window.recaptchaVerifier;
    const ph= '+251'+phoneNumber
+   console.log('here!!')
     signInWithPhoneNumber(auth, ph, appVerifier)
-    
     .then((confirmationResult) => {
       window.confirmationResult = confirmationResult;
        setOTPSetIsCodeSent(true)
         toast.success('successfully sent');
     }).catch((error) => {
-      console.log(error)
+      console.log(error.message)
       setOTPSetIsCodeSent(false)
     });
 
-   
   }
 
   useEffect(()=>{
@@ -62,19 +63,23 @@ const ForgotPassword = () => {
      }else setIsBtnDisabled(true)
   },[phoneNumber,isFormValid])
 
-
+   const onSubmit=()=>{
+      dispatch(findPhoneNumber({toast,navigate,phoneNumber,onSignUp,navigateTo})) 
+      dispatch(setNavigateValue(secondNavigate)) 
+   }
+   
   return (
     <>
-    {isOTPCodeSent?<VerificationPage />:
+    {!isOTPCodeSent?
+    
     <Box sx={style.forgetPasswordContainer}>
      
        <Box sx={style.companyLogoContainer}>
-      
         <CardMedia image={companyLogoImage} sx={style.companyLogoImage}/>
        </Box>
        <Box sx={style.cardContainer}>
         <Paper sx={style.forgetPasswordCard}>
-          <Typography sx={{color:'#1A6CE8',fontWeight:'bold'}} variant='h6'>Rest Password</Typography>
+          <Typography sx={{color:'#1A6CE8',fontWeight:'bold'}} variant='h6'>Verifier</Typography>
           <Divider sx={{width:'100%'}}/>
            <InputField
              type={'phoneNumber'}
@@ -84,10 +89,10 @@ const ForgotPassword = () => {
              setValue={(e)=>setPhoneNumber(e.target.value)}
              inputValue={phoneNumber}
            />
-             <Box onClick={onSignUp} sx={{width:'100%',marginTop:'-5px',display:'flex',justifyContent:'center',alignItems:'center'}}>
+             <Box onClick={onSubmit} sx={{width:'100%',marginTop:'-5px',display:'flex',justifyContent:'center',alignItems:'center'}}>
              <Box sx={{width:'76%',marginLeft:'-3%'}}>
               <ActionButton
-               btnLabel={'Request OTP'}
+               btnLabel={'Submit'}
                btnWidth={'100%'}
                isBtnDisabled={isBtnDisabled}
               />
@@ -95,7 +100,8 @@ const ForgotPassword = () => {
            </Box>
       </Paper>
       </Box>
-    </Box>}
+    </Box>:
+    <OtpVerifierPage/>}
     </>
   )
 }
@@ -156,4 +162,4 @@ const style={
     
   }
 }
-export default ForgotPassword
+export default PhoneNumberVerifierPage

@@ -6,46 +6,50 @@ import {useForm} from 'react-hook-form'
 import { uploadImage } from '../../redux/features/authSlice';
 import { handleResponsiveness } from '../../users-page/auth/styles/loginStyle';
 import LoadingAnimation from './LoadingAnimation';
+import ActionButton from '../../users-page/components/ActionButton';
 
 const UploadImage = ({title,id,inputValue,type,questionNumber,surveyAnswer,setSurveyAnswer}) => {
-  const {uploadImageUrl,isImageLoading,isLightMode}= useSelector(state=>state.auth)
+  let {uploadImageUrl,isImageLoading,isLightMode}= useSelector(state=>state.auth)
   const [imageUrl,setImageUrl]=useState('')
   const dispatch = useDispatch()
+   const [isBtnDisabled,setIsBtnDisabled]=useState(true)
 
-
-
-  const handleImageInputFieldValue=async(e)=>{
+  const handleImageInputFieldValue=(e)=>{
        const formData = new FormData();
        formData.append("file",e.target.files[0]);
        dispatch(uploadImage({formData})) 
-            
-       if(type==='image'){
-        let isFound= surveyAnswer.find(data=>(data.questionId===id))===undefined
-       if(isFound){  
-          if(uploadImageUrl?.urls[0]!==undefined){
-       setSurveyAnswer(
-          [...surveyAnswer,
-          {"questionId":id,"answer":[`${uploadImageUrl?.urls[0]}`]}
-          
-        ])}
-         setImageUrl(URL.createObjectURL(e.target.files[0]))
+        setImageUrl(URL.createObjectURL(e.target.files[0]))   
+   
+      
+}
+
+  useEffect(()=>{
+    if(imageUrl){
+      setIsBtnDisabled(false)
+    }else setIsBtnDisabled(true)
+  },[imageUrl])
+
+const handleUploadImage=()=>{
+      if(type==='image'){
+        let isFound = surveyAnswer.find(data=>(data.questionId===id))===undefined
+        if(isFound){  
+          if(uploadImageUrl){
+            setSurveyAnswer([...surveyAnswer,
+             {"questionId":id,"answer":[`${uploadImageUrl?.urls[0]}`]}
+           ])}
+        
+       }else{
+         surveyAnswer.map(question=>{
+         if(question.questionId===id){
          
-      }else{
-        surveyAnswer.map(question=>{
-        if(question.questionId===id){
-          setImageUrl(URL.createObjectURL(e.target.files[0]))
           return question.answer=[`${uploadImageUrl?.urls[0]}`]    
       }else return question
     })
   }
+
 }
+    
 }
-
-  useEffect(()=>{
-    console.log(surveyAnswer)
-  },[surveyAnswer,imageUrl])
-
-
 
   return (
     <Box sx={{height:'auto'}}>
@@ -66,8 +70,8 @@ const UploadImage = ({title,id,inputValue,type,questionNumber,surveyAnswer,setSu
       sx={[style.imageBtnContainer]}>
         {isImageLoading?<LoadingAnimation/>:
         !imageUrl?
-        <Typography>Upload</Typography>:
-       <img style={{width:'80%',heigh:'80%',position:'absolute'}} alt='' src={imageUrl}/>
+        <Typography>choose Image</Typography>:
+       <img style={{width:'80%',heigh:'60%'}} alt='' src={imageUrl}/>
        }
         
         <input 
@@ -79,6 +83,12 @@ const UploadImage = ({title,id,inputValue,type,questionNumber,surveyAnswer,setSu
           multiple type="file"
           />    
       </Button>
+      <Box sx={{width:'90%',marginTop:'10px',marginBottom:'10px'}}>
+      <ActionButton
+       btnLabel={'UploadFile'} 
+       isBtnDisabled={isBtnDisabled}
+       onClick={handleUploadImage}/>
+       </Box>
     </Box>
     </Box>
   )
@@ -87,7 +97,7 @@ const UploadImage = ({title,id,inputValue,type,questionNumber,surveyAnswer,setSu
 const style={
   imageUploaderContainer:{
         width:'40%',
-        height:'300px',
+        height:'330px',
         border:'dashed 1px black',
         display:'flex',
         justifyContent:'center',
@@ -115,7 +125,8 @@ const style={
      width:'90%',
      height:'95%',
      backgroundColor:'white',
-     zIndex:1000,   
+     zIndex:1000, 
+     marginTop:'20px',  
      backgroundSize:'cover',
     
      color:'#1A6CE8',

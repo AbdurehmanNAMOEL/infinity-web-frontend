@@ -1,14 +1,13 @@
 import { Box, Card, CardMedia, Divider, Paper, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import NavBar from '../../../components/NavBar'
-import CourseRegistration from '../../../../assets/image/course.jpg'
-import InputField from '../../../components/InputField'
+import NavBar from '../../components/NavBar'
+import CourseRegistration from '../../../assets/image/course.jpg'
 import { useDispatch, useSelector } from 'react-redux'
-import { createPersonalAppointment } from '../../../../redux/features/authSlice'
+import { createPersonalAppointment } from '../../../redux/features/authSlice'
 import {toast} from 'react-toastify'
-import ActionButton from '../../../components/ActionButton'
-
-import { style } from '../../style/registerationStyles'
+import { style } from '../style/registerationStyles'
+import ActionButton from '../../components/ActionButton'
+import InputField from '../../components/InputField'
 const Registration = () => {
   const [isItPersonal,setIsItPerson]=useState(true)
   const [isValid,setIsValid] = useState(false)

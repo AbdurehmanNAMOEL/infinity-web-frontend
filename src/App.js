@@ -19,17 +19,13 @@ import { useSelector } from 'react-redux';
 import PrivacyPolicyHome from './users-page/pages/policy/PrivacyPolicyHome';
 import AdminLogin from './admin-page/pages/auth/pages/AdminLogin';
 import AdminPrivateRoute from './admin-page/privateRoute/AdminPrivateRoute';
-import Registration from './users-page/pages/survey/Appointment/Registration';
 import SurveyDetail from './users-page/pages/survey/SurveyDetail';
 import ScrollToTop from './shared/Components/ScrollToTop';
 import LoadingPage from './shared/Components/LoadingPage';
-import ForgotPassword from './users-page/auth/auth-rest/pages/ForgotPassword';
-import VerificationPage from './users-page/auth/auth-rest/pages/VerificationPage';
 import RestPassword from './users-page/auth/auth-rest/pages/RestPassword';
 import FeedBackPage from './admin-page/pages/FeedBackPage';
 import QuestionList from './admin-page/pages/question/QuestionList';
 import QuestionAnswered from './admin-page/pages/question/QuestionAnswered';
-import Appointment from './admin-page/pages/appointment/Appointment';
 import ProfilePage from './users-page/user_info_pages/pages/profile/ProfilePage';
 import UserProfileSubmissionPage from './users-page/auth/page/UserProfileSubmissionPage';
 import ConsultantSechdulingPage from './admin-page/pages/appointment/ConsultantSechdulingPage';
@@ -37,15 +33,20 @@ import UserFeedBack from './users-page/pages/UserFeedBack';
 import MyWallet from './users-page/user_info_pages/pages/wallet/MyWallet';
 import Modal from './admin-page/components/Modal';
 import Setting from './admin-page/pages/Setting';
-import PhoneNumberVerifierPage from './users-page/pages/survey/Appointment/PhoneNumberVerifierPage';
-import UserAppointment from './users-page/pages/survey/Appointment/UserAppointment';
+import PhoneNumberVerifierPage from './users-page/auth/auth-rest/pages/PhoneNumberVerifierPage';
+
+import OtpVerifierPage from './users-page/auth/auth-rest/pages/OtpVerifierPage';
+import UserAppointment from './users-page/pages/Appointment/UserAppointment';
+import PageIsNotFound from './users-page/pages/PageIsNotFound';
+import Appointment from './admin-page/pages/appointment/Appointment';
+import Registration from './users-page/pages/Appointment/Registration';
 function App() {
    const [isDrawerOpen,setDrawerOpen]=useState(true)
    const {isLightMode,modeColor,loading}= useSelector(state=>state.auth)
    const [isScrolling,setIsScrolling]=useState(false)
    const [surveyData, setSurveyDetailData] = useState([])
    const closeDrawer=()=>setDrawerOpen(prev=>!prev)
-    
+   const [navigateTo,setNavigateTo]=useState('rest') 
    useEffect(()=>{
     },[isDrawerOpen])
 
@@ -139,13 +140,7 @@ function App() {
           closeDrawer={closeDrawer}
           drawerWidth={isDrawerOpen?200:0}/>}/>
          
-         <Route path='appointment' 
-           element={<Appointment  
-           isDrawerOpen={isDrawerOpen} 
-           closeDrawer={closeDrawer}
-           drawerWidth={isDrawerOpen?200:0}
-          />}/>
-
+      
           <Route path='consultant' 
            element={<ConsultantSechdulingPage  
            isDrawerOpen={isDrawerOpen} 
@@ -155,15 +150,16 @@ function App() {
 
         </Route>
       </Route>
+
         <Route  path='/login' element={<Login/>}/>
-        <Route  path='/verify' element={<VerificationPage/>}/>
-         <Route  path='/rest' element={<RestPassword/>}/>
-        <Route path='/forgetPassWord' 
-          element={
-          <ForgotPassword />
-          }/>
-        <Route  path='/signUp' element={<SignUp/>}/>
+        <Route  path='/verify' element={<OtpVerifierPage navigateTo={navigateTo}/>}/>
+         <Route  path='/rest/:id' element={<RestPassword/>}/>
         
+        <Route  path='/signUp' element={<SignUp/>}/>
+        <Route  
+          path='/verifyPhoneNumber' 
+          element={<PhoneNumberVerifierPage setNavigateTo={setNavigateTo}/>}
+        />
         <Route isScrolling={isScrolling} path='/policy' element={<PrivacyPolicyHome/>}/>
         <Route isScrolling={isScrolling} path='/' element={<HomePage/>}/>
         <Route isScrolling={isScrolling} path='/aboutUs' element={<AboutUs/>}/>
@@ -175,10 +171,6 @@ function App() {
           isScrolling={isScrolling} 
           path='/feedBack' 
           element={<UserFeedBack/>}
-        />
-         <Route  
-          path='/consultVerifier' 
-          element={<PhoneNumberVerifierPage/>}
         />
         <Route  
           path='/registration' 
@@ -193,8 +185,6 @@ function App() {
           path='/myWallet' 
           element={<MyWallet/>}
         />
-        
-      
          <Route 
             isScrolling={isScrolling} 
             path='/takeSurvey' 
@@ -208,6 +198,10 @@ function App() {
                element={<UserProfileSubmissionPage/>}
                />
         </Route>
+           <Route  
+             path='/*' 
+             element={<PageIsNotFound/>}
+           />
        </Routes>
       </Router>
      

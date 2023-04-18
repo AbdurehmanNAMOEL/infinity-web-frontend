@@ -11,7 +11,8 @@ import { loginAdmin} from '../../../../redux/features/adminSlice'
 import LoadingAnimation from '../../../../shared/Components/LoadingAnimation'
 import { handleResponsiveness } from '../../../../users-page/auth/styles/loginStyle'
 import ActionButton from '../../../../users-page/components/ActionButton'
-import PhoneNumberVerifierPage from '../../../../users-page/pages/survey/Appointment/PhoneNumberVerifierPage'
+import PhoneNumberVerifierPage from '../../../../users-page/auth/auth-rest/pages/PhoneNumberVerifierPage'
+
 const AdminLogin = () => {
  
    const navigate = useNavigate()
@@ -26,8 +27,7 @@ const AdminLogin = () => {
      if(userData.phoneNumber!==''&&userData.password!==''){
          dispatch(loginAdmin({userData,toast,navigate}))
          setUserData({phoneNumber:'',password:''})
-     }
-       
+     }    
    }
 
 
@@ -91,7 +91,9 @@ useEffect(()=>{
              />  
         </Box>
   </Paper>
-</Box>:<PhoneNumberVerifierPage/>}
+</Box>:<PhoneNumberVerifierPage 
+    secondNavigate={'rest'}
+   navigateTo={'adminLogin'}/>}
 </>
 
   )

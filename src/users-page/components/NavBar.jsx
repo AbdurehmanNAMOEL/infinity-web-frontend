@@ -20,12 +20,8 @@ const NavBar = ({isScrolling}) => {
   const [navTitle,setNavTitle]= useState('Home')
   
   // from the state 
-  let {isUserLoggedIn,isLightMode,modeColor} = useSelector(state=>state.auth)
+  let {isUserLoggedIn,isLightMode,modeColor,userData} = useSelector(state=>state.auth)
   
-    const [userData,setUserData]= useState([])
-    useEffect(()=>{
-    setUserData(JSON.parse(localStorage.getItem("user")))
-  },[])
 
   
 

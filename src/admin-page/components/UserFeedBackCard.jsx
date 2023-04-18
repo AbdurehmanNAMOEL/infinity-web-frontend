@@ -2,6 +2,7 @@ import { Box, Divider, Paper, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteFeedBack } from '../../redux/features/feedbackSlice'
+import {toast} from 'react-toastify'
 
 const UserFeedBackCard = ({name,feedBackGroup,suggestion,id}) => {
     const {modeColor,isLightMode} = useSelector(state=>state.auth)
@@ -13,7 +14,8 @@ const UserFeedBackCard = ({name,feedBackGroup,suggestion,id}) => {
     }
 
   return (
-    <Paper sx={[style.feedBackContainer,{border:isLightMode?'solid 1px #DFDFDF':'solid 1px #ACACAC'},{backgroundColor:modeColor}]}>
+    <Paper sx={[style.feedBackContainer,{border:isLightMode?'solid 1px #DFDFDF':'solid 1px #ACACAC'},
+       {backgroundColor:modeColor}]}>
      <Box sx={[style.feedBackHeader,{color:isLightMode?'#1e1e1e':'white'}]}>
       <Box sx={{display:'flex',width:'60%',flexDirection:'column',gap:'4px'}}>
          <Typography sx={{fontWeight:'bolder',marginTop:'10px'}}>{name}</Typography>
@@ -42,7 +44,7 @@ const UserFeedBackCard = ({name,feedBackGroup,suggestion,id}) => {
       justifyContent:'flex-end',
       alignItems:'center'}}>
        <Typography 
-          onClick={()=>dispatch(deleteFeedBack({id}))} 
+          onClick={()=>dispatch(deleteFeedBack({toast,id}))} 
           sx={{color:'red',marginRight:'10px',cursor:'pointer'}}>Delete</Typography>
       
      </Box>
