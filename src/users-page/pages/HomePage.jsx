@@ -73,7 +73,7 @@ const HomePage = () => {
                <CardMedia 
                  loading="lazy"
                  sx={{width:'100%',height:'80%'}}
-                 image={isLightMode?HomePhoto:HomePageDarkModeImage}
+                 image={HomePhoto}
                  />
             </motion.div>
          </Box>
