@@ -1,11 +1,9 @@
 import { Box, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { handleResponsiveness } from '../../users-page/auth/styles/loginStyle'
-import RadioInput from './RadioInput'
 import { useSelector } from 'react-redux'
 
 const ChoiceCard = ({index,questions,surveyAnswer,type,setSurveyAnswer,id}) => {
-    const [surveyChoiceAnswer,setSurveyChoiceAnswer]=useState([])
     const {isLightMode} = useSelector(state=>state.auth)
     const [checkedValue,setCheckedValue]= useState('')
     

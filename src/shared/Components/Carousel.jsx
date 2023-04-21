@@ -1,6 +1,5 @@
 import { Box } from '@mui/material'
 import React from 'react'
-import { useSelector } from 'react-redux'
 import { handleResponsiveness } from '../../users-page/auth/styles/loginStyle'
 
 const Carousel = ({children,innerMargin,height}) => {

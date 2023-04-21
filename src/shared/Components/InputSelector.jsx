@@ -4,8 +4,6 @@ import { useSelector } from 'react-redux'
 
 const InputSelector = ({optionList,optionValue,optionTitle,selectorWidth,setValue,inputValue,label}) => {
    
-  const {modeColor,isLightMode}= useSelector(state=>state.auth)
-
   return (
     
   

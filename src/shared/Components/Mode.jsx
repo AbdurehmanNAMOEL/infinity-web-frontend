@@ -1,6 +1,6 @@
 import { Box, IconButton } from '@mui/material'
 import React from 'react'
-import {ModeNight,LightMode} from '@mui/icons-material/'
+import {LightMode} from '@mui/icons-material/'
 import ModeNightOutlinedIcon from '@mui/icons-material/ModeNightOutlined';
 const Mode = ({isLightMode,handleDispatch}) => {
   return (

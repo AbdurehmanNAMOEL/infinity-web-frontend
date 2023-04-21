@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
-import { Box, Button, CardMedia, Typography } from '@mui/material';
+import { Box, Button,Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import {useForm} from 'react-hook-form'
+
 import { uploadImage } from '../../redux/features/authSlice';
-import { handleResponsiveness } from '../../users-page/auth/styles/loginStyle';
 import LoadingAnimation from './LoadingAnimation';
 import ActionButton from '../../users-page/components/ActionButton';
 

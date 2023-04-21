@@ -1,5 +1,5 @@
 import { Box, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import React from 'react'
 import { handleResponsiveness } from '../../users-page/auth/styles/loginStyle'
 import { useSelector } from 'react-redux'
 import CheckBoxInput from './CheckBoxInput'

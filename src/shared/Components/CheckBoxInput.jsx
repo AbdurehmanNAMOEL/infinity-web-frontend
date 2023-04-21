@@ -1,10 +1,9 @@
-import { Box } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { handleResponsiveness } from '../../users-page/auth/styles/loginStyle'
 import './style/radioButtonStyle.css'
 import { useSelector } from 'react-redux'
 
-const CheckBoxInput = ({id,type,title,optionValue,data,choice,setValue,surveyAnswer,setSurveyAnswer}) => {
+const CheckBoxInput = ({id,type,title,choice,surveyAnswer,setSurveyAnswer}) => {
 
     const {isLightMode}= useSelector(state=>state.auth)
     const [checkedValue,setCheckedValue]= useState(false)
@@ -41,7 +40,6 @@ useEffect(()=>{
       className='radioButtonContainer'
       onClick={handleInputValue}  
       id={id}
-      title={title}
       value={choice}
       style={{width:handleResponsiveness('auto','350px'),
        height:'40px',backgroundColor:isLightMode?'white':'#1e1e1e',
@@ -53,9 +51,7 @@ useEffect(()=>{
         <input 
          checked={checkedValue}
          value={choice} 
-         onChange={handleInputValue} 
          type='checkbox' 
-         title={id}
          id={id}
          style={{width:'15px',height:'15px',marginLeft:'16px'}}/>
        {choice}
