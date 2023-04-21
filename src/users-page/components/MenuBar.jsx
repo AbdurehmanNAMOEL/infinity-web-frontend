@@ -14,7 +14,8 @@ const MenuBar = ({newNavList,handleNavigation,dispatch}) => {
    const navigate= useNavigate('/')
    const [navTitle,setNavTitle]= useState('Home')
    const [isSideBarOpen,setIsSideBarOpen]= useState(false)
-   const {modeColor,isLightMode,isLoggedIn} = useSelector(state=>state.auth)
+   const {modeColor,isLightMode,isUserLoggedIn} = useSelector(state=>state.auth)
+   
    const handleSideBarNavigation=(name,navigateTo)=>{
        setNavTitle(name)
        navigate(`${navigateTo}`)
@@ -26,7 +27,7 @@ const MenuBar = ({newNavList,handleNavigation,dispatch}) => {
       display:'flex',
       flexDirection:'column',
       width:'100%',
-      height:`${isSideBarOpen?'400px':'70px'}`,
+      height:`${isSideBarOpen?'auto':'70px'}`,
       overflowY:'hidden',
       transition:'all 0.7s'
       }}>
@@ -70,11 +71,27 @@ const MenuBar = ({newNavList,handleNavigation,dispatch}) => {
             </IconButton>
           )}
 
-      
-         {(!isLoggedIn)?<IconButton 
+        {isUserLoggedIn? 
+        <>        
+        <IconButton
+            onClick={()=>navigate('/profile')}
+            sx={[style.navLists,{color:`${isLightMode?"#1e1e1e":'white'}`}]}>
+              Profile
+         </IconButton>
+
+         <IconButton
+            onClick={()=>navigate('/myWallet')}
+            sx={[style.navLists,{color:`${isLightMode?"#1e1e1e":'white'}`}]}>
+              Wallet
+         </IconButton>
+        </>:''}
+
+              
+         {!isUserLoggedIn?<IconButton 
             onClick={()=>navigate('/login')} 
             sx={style.logoInIcon}>
-            <LoginIcon sx={{marginRight:'10px'}}/> <p>Login</p> 
+            <LoginIcon sx={{marginRight:'10px'}}/> 
+            <p>Login</p> 
             </IconButton>:
             <IconButton  
             sx={style.logoInIcon}>

@@ -13,6 +13,7 @@ import product from '../../assets/image/product.svg'
 import Consultancy from '../../assets/image/Consultancy.svg'
 import Carousel from '../../shared/Components/Carousel'
 import RoadMap from '../components/RoadMap'
+
 export const OurWorkCard=({image,Title})=>{
    const {isLightMode,modeColor} = useSelector(state=>state.auth)
   return (
@@ -69,12 +70,15 @@ const AboutUs = () => {
           </Typography>
         </Box>
       </ResponsiveContainer>
-      <Typography variant='h3' sx={{width:'90%',marginBottom:'10px',fontWeight:'bold',color:'#1A6CE8'}}>Our Work</Typography>
+      <Typography variant='h3' 
+       sx={{width:'90%',marginBottom:'10px',fontWeight:'bold',color:'#1A6CE8'}}>
+        Our Work
+      </Typography>
       <Container 
          sx={[style.ourWorkContainer,
           {backgroundColor:`${isLightMode?'#1A6CE8':'#333333'}`,
           height:`${isLightMode?"60vh":'50vh'}`,
-          borderRadius:`${isLightMode?'150px 50px 150px 50px':'10px'}`
+          borderRadius:handleResponsiveness('0px',`${isLightMode?'150px 50px 150px 50px':'10px'}`)
           }]}>
             <Carousel innerMargin={600} height={50}>
              <OurWorkCard image={Investment} Title={'Market Research'}/>
@@ -91,7 +95,7 @@ const AboutUs = () => {
               sx={{fontWeight:'bold',marginBottom:'16px',color:'#1A6CE8'}}>Mission</Typography> 
            </Box>
          <Typography sx={{width:'90%',fontSize:'16px',fontWeight:'400',color:`${isLightMode?'#1e1e1e':'white'}`}}>
-          <ul>
+          <ul style={{listStyle:'none',display:'flex',flexDirection:'column',gap:'10px'}}>
             <li>To Provide in-depth research that centres decision-making on facts and insights.</li>
              <li>To Support the creation and monitoring of appropriate Product metrics</li>
              <li>Create experimentation capabilities and knowledge creation</li>
@@ -111,7 +115,18 @@ const AboutUs = () => {
           </Typography>
         </Box>
       </ResponsiveContainer>
-      <RoadMap/>
+      <Typography sx={{
+        width:'90%',
+        fontSize:'32px',
+        color:'#1A6CE8',
+        fontWeight:'bold',
+        marginBottom:'20px'
+        }}>
+        Road Map
+      </Typography>
+      <Box sx={{width:'100%'}}>
+       <RoadMap/>
+      </Box>
        <Typography 
          variant='h4' 
          sx={{width:'90%',fontWeight:'bold',color:'#1A6CE8'}} >Meet Our Team</Typography>

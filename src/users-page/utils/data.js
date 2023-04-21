@@ -68,3 +68,32 @@ export const foundersData=[
     'imageUrl':SamuelGebremariam
 },
 ]
+
+export const roadMapData=[
+  {
+    'year':'2023',
+    'userCount':'100k contributor',
+    'work':'100 survey and observation',
+    'animationDuration':1
+},
+
+  {
+    'year':'2024',
+    'userCount':'250+ contributor',
+    'work':'Service to south Sudan and Kenya',
+    'animationDuration':2
+},
+
+  {
+    'year':'2025',
+    'userCount':'500k contributor',
+    'work':'2k survey and observation',
+    "animationDuration":2.5
+},
+  {
+    'year':'2026',
+    'userCount':'1M contributor',
+    'work':'10k survey and observation',
+    "animationDuration":3
+},
+]

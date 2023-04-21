@@ -6,7 +6,9 @@ import { handleResponsiveness } from '../../users-page/auth/styles/loginStyle'
 const Carousel = ({children,innerMargin,height}) => {
   return (
  <Box sx={[style.ourWorkCardContainerWrapper,{ height:`${height}vh`}]}>
-    <Box sx={[style.ourWorkCardContainer, { marginLeft:handleResponsiveness(`${innerMargin}px`,'0')}]}>{children}</Box>
+    <Box sx={[style.ourWorkCardContainer, {marginLeft:handleResponsiveness(`${innerMargin}px`,'0')}]}>
+      {children}
+      </Box>
 </Box>
   )
 }
@@ -19,7 +21,7 @@ const style ={
     alignItems:'center',
     flexDirection:'row',
     gap:'50px',
-    borderRadius:handleResponsiveness('none','100px 50px 150px 50px'),
+    borderRadius:handleResponsiveness('0px','100px 50px 150px 50px'),
     overflowX:handleResponsiveness('scroll','hidden'),
     overflowY:'hidden',
   },

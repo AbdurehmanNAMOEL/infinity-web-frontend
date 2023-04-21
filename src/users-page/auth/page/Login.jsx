@@ -14,6 +14,7 @@ import { signIn } from '../../../redux/features/authSlice'
 import { useDispatch } from 'react-redux'
 import {toast} from 'react-toastify'
 import NavBar from '../../components/NavBar'
+import PhoneNumberVerifierPage from '../auth-rest/pages/PhoneNumberVerifierPage'
 
 
 export const Login = ({isSideBarOpen,setIsSideBarOpen,handleSideBarNavigation,navTitle}) => {
@@ -21,6 +22,7 @@ export const Login = ({isSideBarOpen,setIsSideBarOpen,handleSideBarNavigation,na
    const dispatch= useDispatch()
    const [isFormValid,setFormValidation]=useState(false)
    const [isBtnDisabled,setIsBtnDisabled]=useState(false)
+   const [isForgetClicked,setIsForgetClicked]=useState(false)
    const [userData,setUserData]= useState({phoneNumber:'',password:'',})
    const handleSubmit=()=>{
     
@@ -39,7 +41,8 @@ export const Login = ({isSideBarOpen,setIsSideBarOpen,handleSideBarNavigation,na
    },[isFormValid,userData])
 
   return (
-    <Box sx={loginStyle.loginMainWrapper}>
+    <>    
+    {!isForgetClicked?<Box sx={loginStyle.loginMainWrapper}>
        <NavBar isScrolling={false}/>
        <Box sx={loginStyle.loginMainContainer}>
          <Paper sx={loginStyle.loginLeftContainer}>
@@ -73,8 +76,9 @@ export const Login = ({isSideBarOpen,setIsSideBarOpen,handleSideBarNavigation,na
                       setValue={(e)=>setUserData({...userData,"password":e.target.value})}
                     />
                     </Box>
-                    <Box onClick={()=>navigate('/verifyPhoneNumber')} sx={loginStyle.forgotPasswordContainer}>
+                    <Box sx={loginStyle.forgotPasswordContainer}>
                       <Typography 
+                       onClick={()=>setIsForgetClicked(true)}
                        sx={{fontSize:'15px', color:'#1A6CE8',cursor:'pointer'}}>Forgot Password?
                       </Typography>
                     </Box>                 
@@ -180,7 +184,13 @@ export const Login = ({isSideBarOpen,setIsSideBarOpen,handleSideBarNavigation,na
            
         </Paper>
     </Box>
-    </Box>
+    </Box>:
+     <PhoneNumberVerifierPage 
+       secondNavigate={'rest'} 
+       navigateTo={'login'}
+       restIdentifier={'user'}
+       />}
+  </>
   )
 }
 

@@ -6,42 +6,52 @@ import OtpInput from 'react-otp-input';
 import { handleResponsiveness } from '../../styles/loginStyle';
 import { useNavigate } from 'react-router-dom';
 import {toast} from 'react-toastify'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import ActionButton from '../../../components/ActionButton';
+import { setAppointmentVerification, setSignUpVerification } from '../../../../redux/features/authSlice';
 const OtpVerifierPage= () => { 
    
    const navigate=useNavigate()
-   const {isUserVerified,navigateTo}= useSelector(state=>state.auth)
+   const {isUserVerified,navigateTo, navIdentifier}= useSelector(state=>state.auth)
    const [isBtnDisabled,setIsBtnDisabled]= useState(true)
    const [verify,setVerify] = useState('')
-
-    const handleConfirmation = async()=>{
+   const dispatch = useDispatch()
+  const handleConfirmation = async()=>{
     try {
        const response= await window.confirmationResult.confirm(verify);
          if(response?.user){
-            // console.log(response?.user.phoneNumber);
-            navigate(`/${navigateTo}/${response?.user?.phoneNumber}`) 
+          if(navIdentifier==='admin'||navIdentifier==='user'){
+            navigate(`/${navigateTo}/${response?.user?.phoneNumber}-${navIdentifier}`)
+          }else{ 
+              if(navIdentifier==='signUp'){
+               dispatch(setSignUpVerification(true))
+            }else if(navIdentifier==='userAppointment'){
+              dispatch(setAppointmentVerification(true))
+            }
+              navigate(`/${navIdentifier}`)
+           
+            } 
          }  
     } catch (error) {
       toast.error(error.message)
     }    
   }
 
-useEffect(()=>{
+  useEffect(()=>{
     if(verify.length===6){
         setIsBtnDisabled(false)
       }else setIsBtnDisabled(true)
-   },[verify])
+  },[verify])
 
 
   return (
    <Box sx={style.verificationPasswordContainer}>
        <Box sx={style.companyLogoContainer}>
-        <CardMedia image={companyLogoImage} sx={style.companyLogoImage}/>
+        <CardMedia onClick={()=>navigate('/')} image={companyLogoImage} sx={style.companyLogoImage}/>
        </Box>
       <Box sx={style.cardContainer}> 
       <Paper sx={style.verificationPasswordCard}>
-         <Typography sx={{color:'#1A6CE8',fontWeight:'bold'}} variant='h6'>Rest Password</Typography>
+         <Typography sx={{color:'#1A6CE8',fontWeight:'bold'}} variant='h6'>Verify Code</Typography>
          <Divider sx={{width:'100%'}}/>
          <OtpInput
           numInputs={6}
@@ -50,7 +60,10 @@ useEffect(()=>{
           containerStyle={{display:'flex',gap:'20px'}}
           inputStyle={{width:'30px',height:'30px'}}
          />
-          <Box onClick={handleConfirmation} sx={{width:'100%',display:'flex',justifyContent:'center',alignItems:'center'}}>
+          <Box
+           sx={{width:'100%',display:'flex',justifyContent:'center',alignItems:'center'}} 
+           onClick={handleConfirmation} 
+           >
             <ActionButton
              btnLabel={'Verify'}
              btnWidth={'70%'}
@@ -104,7 +117,8 @@ const style={
   },
   companyLogoImage:{
     width:'100%',
-    height:'100%'
+    height:'100%',
+    cursor:'pointer'
   },
   btnContainer:{
     width:'76%',

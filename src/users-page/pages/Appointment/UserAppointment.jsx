@@ -5,19 +5,20 @@ import ActionButton from '../../components/ActionButton'
 import { useDispatch, useSelector } from 'react-redux'
 import TextArea from '../../components/TextArea'
 import dayjs from 'dayjs'
-import { createAppointment } from '../../../redux/features/authSlice'
+import { createAppointment, setAppointmentVerification } from '../../../redux/features/authSlice'
 import {toast} from 'react-toastify'
 import DateAndTimePicker from '../../../shared/Components/DateAndTimePicker'
 import { style } from '../../pages/style/registerationStyles'
 import NavBar from '../../components/NavBar'
 import CourseRegistration from '../../../assets/image/course.jpg'
+import PhoneNumberVerifierPage from '../../auth/auth-rest/pages/PhoneNumberVerifierPage'
 const UserAppointment = () => {
-    const {modeColor,isLightMode} = useSelector(state=>state.auth)
-    const newDate= new Date()
-    const [appointmentDate,setAppointmentDate] = useState(dayjs(newDate.toISOString()))
-    const [isCompanyFormValid,setIsCompanyFormValid] = useState(false)
-    const [isBtnDisabled,setIsBtnDisabled]= useState(true)
-    const dispatch = useDispatch()
+  const {modeColor,isLightMode,isAppointmentVerified} = useSelector(state=>state.auth)
+  const newDate= new Date()
+  const [appointmentDate,setAppointmentDate] = useState(dayjs(newDate.toISOString()))
+  const [isCompanyFormValid,setIsCompanyFormValid] = useState(false)
+  const [isBtnDisabled,setIsBtnDisabled]= useState(true)
+  const dispatch = useDispatch()
   const convertDateToAPIstandard=(inputValue)=>{
    if(inputValue){
       let date =appointmentDate?.$d?.toISOString()
@@ -39,6 +40,7 @@ const UserAppointment = () => {
     description:"",
     appointmentDate:""
   })
+   dispatch(setAppointmentVerification(false))
    }
 
   useEffect(()=>{
@@ -54,7 +56,9 @@ const UserAppointment = () => {
 
 
   return (
-    <Box sx={style.registrationMainContainer}>
+    <>
+    {isAppointmentVerified?
+     <Box sx={style.registrationMainContainer}>
       <NavBar/>
       <Box sx={style.registrationCardMainContainer}>
          <Box sx={style.registrationInnerContainer}>
@@ -109,8 +113,13 @@ const UserAppointment = () => {
           <CardMedia image={CourseRegistration} sx={{height:'100%'}}/>
         </Card>   
       </Box>
-    </Box>
-    
+    </Box>:
+    <PhoneNumberVerifierPage
+      navigateTo={'registration'}
+      secondNavigate={'userAppointment'}
+      restIdentifier={'userAppointment'}
+     />}
+    </>
   )
 }
 

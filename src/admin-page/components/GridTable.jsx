@@ -24,7 +24,7 @@ const GridTable = ({colors,data,columnFieldsList}) => {
 const style= {
     gridDataContainer:{
      m:'20px 0 0 0',
-        height:'50vh',
+        height:'80vh',
         zIndex:3000,
         "& .MuiDataGrid-root":{
             border:'none'

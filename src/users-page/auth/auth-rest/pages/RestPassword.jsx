@@ -13,19 +13,25 @@ const RestPassword = () => {
   const dispatch = useDispatch()
   const [isValid,setIsValid] = useState(false)
   const [isBtnDisabled,setIsBtnDisabled]= useState(true)
+  
   const {id}= useParams()
   const [newPasswordData,setNewPassWordData]=useState({
-    phoneNumber:id,
+    phoneNumber:id?.split('-')[0],
     newPassword:''
   })
    
   const handleRestingPassword=()=>{
-      if(newPasswordData.phoneNumber!==''&&newPasswordData.newPassword!==''){
-         console.log(newPasswordData)
-         dispatch(restPassword({toast,navigate,newPasswordData}))
-         setNewPassWordData({phoneNumber:'',newPassword:''})
-      }else alert('please first fill the whole inputs')
+    if(newPasswordData.phoneNumber!==''&&newPasswordData.newPassword!==''){
+       if(id.split('-')[1]==='admin') restAdminPassword()
+       else restUserPassword()  
+       setNewPassWordData({phoneNumber:'',newPassword:''})
+    }else alert('please first fill the whole inputs')
   }
+
+  const restUserPassword=()=> dispatch(restPassword({navigate,toast,newPasswordData}))
+  const restAdminPassword=()=> dispatch(restAdminPassword({toast,navigate,newPasswordData}))
+  
+
 
   useEffect(()=>{
      if(newPasswordData.phoneNumber!=='' && newPasswordData.newPassword!==''&&isValid){

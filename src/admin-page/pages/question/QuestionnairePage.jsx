@@ -99,7 +99,6 @@ const QuestionnairePage = () => {
  
   }
 
-  
   const deleteAndEditQuestion=(questionTitle,id)=>{
  
     setQuestionData(questionData.map(data=>{

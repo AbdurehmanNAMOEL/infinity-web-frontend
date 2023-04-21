@@ -9,16 +9,17 @@ import MediaCard from '../../components/MediaCard'
 import DataBaseImage from '../../../assets/image/dataBase.png'
 import {toast} from 'react-toastify'
 import { useDispatch, useSelector } from 'react-redux'
-import {  signUp } from '../../../redux/features/authSlice'
+import {  setSignUpVerification, signUp } from '../../../redux/features/authSlice'
 import InputSelector from '../../../shared/Components/InputSelector'
 import { genderList } from '../../utils/selectorData'
 import { useNavigate } from 'react-router-dom'
+import PhoneNumberVerifierPage from '../auth-rest/pages/PhoneNumberVerifierPage'
 
 
  const SignUp = () => {
    const navigate = useNavigate()
    const dispatch= useDispatch()
-   let {isUserExist,isUserVerified,userSignUpData}= useSelector(state=>state.auth)
+   const {isSignUpVerified}= useSelector(state=>state.auth)
    const [isFormValid,setFormValidation]=useState(false)
    const [isUserAgreed,setUserAgreed] = useState(false)
    const [isBtnDisabled,setIsBtnDisabled] = useState(true) 
@@ -46,7 +47,7 @@ import { useNavigate } from 'react-router-dom'
               password:'',gender:''})    
        }else toast.error('password and confirmPassword must be the same')
       }else setFormValidation(false)
-       
+     dispatch(setSignUpVerification(false))  
    }
   
         
@@ -63,13 +64,14 @@ import { useNavigate } from 'react-router-dom'
   
 
   const handlePrivacyPolicy=()=>{
-     userSignUpData=userData 
      window.open('/policy')
      
   }
-  console.log(userSignUpData)
+
+  console.log(isSignUpVerified);
   return ( 
-    <Box sx={signUpStyle.signUpMainContainer}>
+    <>
+    {isSignUpVerified?<Box sx={signUpStyle.signUpMainContainer}>
         <Paper sx={signUpStyle.signUpLeftContainer}>
           <div id='recaptcha-container'></div>
             <Box sx={signUpStyle.companyName}>
@@ -285,7 +287,13 @@ import { useNavigate } from 'react-router-dom'
          
         </Paper>
      
-    </Box>
+    </Box>:<PhoneNumberVerifierPage
+      navigateTo={'login'}
+      secondNavigate={'signUp'}
+      restIdentifier={'signUp'}
+     />}
+    </>
+  
     
   )
 }

@@ -163,7 +163,7 @@ export const createAppointment = createAsyncThunk('auth/createAppointment',async
 })
 
 export const createPersonalAppointment = createAsyncThunk('auth/createPersonalAppointment',async({toast,userData})=>{
-  
+
   try {
          const response = await axios.post(`consultees`,userData)
          if(response){
@@ -177,12 +177,13 @@ export const createPersonalAppointment = createAsyncThunk('auth/createPersonalAp
     }
 })
 
-export const restPassword = createAsyncThunk('auth/restPassWord',async({toast,newPasswordData})=>{
+export const restPassword = createAsyncThunk('auth/restPassWord',async({navigate,toast,newPasswordData})=>{
   
   try {
          const response = await axios.post(`users/resetPassword`,newPasswordData)
          if(response){
             toast.success('your password successfully rested')
+            navigate('/login')
             return response.data
          }
     } catch (error) {
@@ -194,15 +195,40 @@ export const restPassword = createAsyncThunk('auth/restPassWord',async({toast,ne
 
 
 export const findPhoneNumber = createAsyncThunk('auth/findPhoneNumber',async({
-  toast,navigate,phoneNumber,onSignUp,navigateTo})=>{
+  toast,navigate,phoneNumber,onSignUp,navigateTo,restIdentifier})=>{
   
   try {
-         const response = await axios.get(`users/phoneNumberExists/${phoneNumber}`)
+        const response = await axios.get(`users/phoneNumberExists/${phoneNumber}`)
           if(response.data){
-            onSignUp()
+            if(restIdentifier==='signUp'){
+              toast.error("user existed")
+               navigate(`/${navigateTo}`) 
+            }else onSignUp()   
           }else {
-            toast.error("user doesn't exist") 
+            if(restIdentifier==='signUp'){
+              onSignUp()
+            }else{
+             toast.error("user doesn't exist") 
              navigate(`/${navigateTo}`) 
+          }
+          }
+          return response.data
+        
+    } catch (error) {
+        toast.error(error.response.data)    
+    }
+})
+
+export const findConsulterPhoneNumber = createAsyncThunk('auth/findConsulterPhoneNumber',async({
+  toast,navigate,phoneNumber,onSignUp,navigateTo})=>{
+    alert('I was here')
+  try {
+        const response = await axios.get(`consultees/phoneNumberExists/${phoneNumber}`)
+          if(response.data){
+           onSignUp()   
+          }else {
+             toast.error("user doesn't exist") 
+             navigate(`/${navigateTo}`)  
           }
           return response.data
         
@@ -246,7 +272,10 @@ export const authSlice= createSlice({
       isImageLoading:false,
       isPhoneNumberExist:false,
       navigateTo:'',
-      userLoginData:{}
+      navIdentifier:'',
+      userLoginData:{},
+      isSignUpVerified:false,
+      isAppointmentVerified:false,
 },
   reducers:{
     logOut:(state,action)=>{
@@ -261,6 +290,8 @@ export const authSlice= createSlice({
       state.modeColor='white'
       state.uploadImageUrl={}
       cookies.remove('user')
+      state.isSignUpVerified=false
+      state.isAppointmentVerified=false
     },
      setMode:(state,action)=>{
        state.isLightMode=!state.isLightMode
@@ -277,6 +308,15 @@ export const authSlice= createSlice({
     },
     setNavigateValue:(state,action)=>{
           state.navigateTo=action.payload
+    },
+    setNavigateIdentifier:(state,action)=>{
+          state.navIdentifier=action.payload
+    },
+    setSignUpVerification:(state,action)=>{
+          state.isSignUpVerified=action.payload
+    },
+    setAppointmentVerification:(state,action)=>{
+          state.isAppointmentVerified=action.payload
     }
   },
   extraReducers:{
@@ -409,7 +449,10 @@ export const authSlice= createSlice({
     setUserLoginState,
     setUserSignUpData,
     getSurveyValue,
-    setNavigateValue
+    setNavigateValue,
+    setNavigateIdentifier,
+    setSignUpVerification,
+    setAppointmentVerification
   }=authSlice.actions
 
  export const authReducer=authSlice.reducer

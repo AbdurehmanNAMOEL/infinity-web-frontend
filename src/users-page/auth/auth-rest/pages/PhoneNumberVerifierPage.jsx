@@ -10,9 +10,10 @@ import { useNavigate } from 'react-router-dom';
 import {toast} from 'react-toastify'
 import ActionButton from '../../../components/ActionButton';
 import { useDispatch} from 'react-redux';
-import { findPhoneNumber, setNavigateValue } from '../../../../redux/features/authSlice';
+import { findConsulterPhoneNumber, findPhoneNumber, setNavigateIdentifier, setNavigateValue } from '../../../../redux/features/authSlice';
 import OtpVerifierPage from './OtpVerifierPage';
-const PhoneNumberVerifierPage= ({navigateTo,secondNavigate}) => {
+import { findSAdminPhoneNumber } from '../../../../redux/features/adminSlice';
+const PhoneNumberVerifierPage= ({navigateTo,secondNavigate,restIdentifier}) => {
 
   const navigate=useNavigate()
   const [phoneNumber,setPhoneNumber]=useState('')
@@ -29,6 +30,7 @@ const PhoneNumberVerifierPage= ({navigateTo,secondNavigate}) => {
        'callback': (response) => {
         // reCAPTCHA solved, allow signInWithPhoneNumber.
              navigate('/verify')
+              console.log('here!!')
         },
        'expired-callback': () => {
        // Response expired. Ask user to solve reCAPTCHA again.
@@ -44,13 +46,14 @@ const PhoneNumberVerifierPage= ({navigateTo,secondNavigate}) => {
   
    const appVerifier = window.recaptchaVerifier;
    const ph= '+251'+phoneNumber
-   console.log('here!!')
+        
     signInWithPhoneNumber(auth, ph, appVerifier)
     .then((confirmationResult) => {
       window.confirmationResult = confirmationResult;
        setOTPSetIsCodeSent(true)
         toast.success('successfully sent');
     }).catch((error) => {
+      console.log('hello');
       console.log(error.message)
       setOTPSetIsCodeSent(false)
     });
@@ -64,8 +67,15 @@ const PhoneNumberVerifierPage= ({navigateTo,secondNavigate}) => {
   },[phoneNumber,isFormValid])
 
    const onSubmit=()=>{
-      dispatch(findPhoneNumber({toast,navigate,phoneNumber,onSignUp,navigateTo})) 
-      dispatch(setNavigateValue(secondNavigate)) 
+    if(restIdentifier==='signUp' || restIdentifier ==='user'){
+      dispatch(findPhoneNumber({toast,navigate,phoneNumber,onSignUp,navigateTo,restIdentifier}))
+    }else if(restIdentifier==='userAppointment'){
+      dispatch(findConsulterPhoneNumber({toast,navigate,phoneNumber,onSignUp,navigateTo}))
+    }else if(restIdentifier==='admin'){
+      dispatch(findSAdminPhoneNumber({toast,navigate,phoneNumber,onSignUp,navigateTo}))
+    }  
+      dispatch(setNavigateValue(secondNavigate))
+      dispatch(setNavigateIdentifier(restIdentifier)) 
    }
    
   return (
@@ -75,7 +85,11 @@ const PhoneNumberVerifierPage= ({navigateTo,secondNavigate}) => {
     <Box sx={style.forgetPasswordContainer}>
      
        <Box sx={style.companyLogoContainer}>
-        <CardMedia image={companyLogoImage} sx={style.companyLogoImage}/>
+        <CardMedia 
+          onClick={()=>navigate('/')} 
+          image={companyLogoImage} 
+          sx={style.companyLogoImage}
+        />
        </Box>
        <Box sx={style.cardContainer}>
         <Paper sx={style.forgetPasswordCard}>
@@ -89,7 +103,12 @@ const PhoneNumberVerifierPage= ({navigateTo,secondNavigate}) => {
              setValue={(e)=>setPhoneNumber(e.target.value)}
              inputValue={phoneNumber}
            />
-             <Box onClick={onSubmit} sx={{width:'100%',marginTop:'-5px',display:'flex',justifyContent:'center',alignItems:'center'}}>
+             <Box onClick={onSubmit} sx={{
+              width:'100%',
+              marginTop:'-5px',
+              display:'flex',
+              justifyContent:'center',
+              alignItems:'center'}}>
              <Box sx={{width:'76%',marginLeft:'-3%'}}>
               <ActionButton
                btnLabel={'Submit'}
@@ -136,7 +155,8 @@ const style={
   },
   companyLogoImage:{
     width:'100%',
-    height:'100%'
+    height:'100%',
+    cursor:'pointer'
   },
   btnContainer:{
     width:'76%',

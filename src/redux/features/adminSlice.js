@@ -166,7 +166,7 @@ export const updatePassword=createAsyncThunk('admin/updatePassword',async({id,ne
 export const restAdminPassword = createAsyncThunk('auth/restAdminPassWord',async({toast,newPassword})=>{
   
   try {
-         const response = await axios.patch(`http://localhost:3000/admins`,newPassword)
+         const response = await axios.patch(`admins/resetPassword`,newPassword)
          if(response){
             toast.success('your password successfully rested')
             return response.data
@@ -176,6 +176,28 @@ export const restAdminPassword = createAsyncThunk('auth/restAdminPassWord',async
         console.log(error.response.data.error)    
     }
 })
+
+
+export const findSAdminPhoneNumber = createAsyncThunk('auth/findAdminPhoneNumber',async({
+  toast,navigate,phoneNumber,onSignUp,navigateTo})=>{
+  
+  try {
+        const response = await axios.get(`admin/phoneNumberExists/${phoneNumber}`)
+          if(response.data){
+             onSignUp()   
+          }else {
+             toast.error("user doesn't exist") 
+             navigate(`/${navigateTo}`)  
+          }
+          return response.data
+        
+    } catch (error) {
+        toast.error(error.response.data)    
+    }
+})
+
+
+
 
 
 export const getUserStaticData = createAsyncThunk('auth/getUserStaticData',async()=>{

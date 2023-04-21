@@ -91,9 +91,12 @@ useEffect(()=>{
              />  
         </Box>
   </Paper>
-</Box>:<PhoneNumberVerifierPage 
-    secondNavigate={'rest'}
-   navigateTo={'adminLogin'}/>}
+</Box>:
+   <PhoneNumberVerifierPage 
+    secondNavigate={'rest'} 
+    navigateTo={'adminLogin'}
+    restIdentifier={'admin'}
+    />}
 </>
 
   )
