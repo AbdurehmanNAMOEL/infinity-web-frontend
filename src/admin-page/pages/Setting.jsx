@@ -9,9 +9,9 @@ import InputField from '../../users-page/components/InputField'
 import ActionButton from '../../users-page/components/ActionButton'
 import {toast} from 'react-toastify'
 import { updatePassword } from '../../redux/features/adminSlice'
-import { restPassword } from '../../redux/features/authSlice'
-function Setting({isDrawerOpen,closeDrawer}) {
-    const {settingData,rewardAndCheckOutValue}= useSelector(state=>state.setting)
+
+const Setting=({isDrawerOpen,closeDrawer})=> {
+    const {settingData}= useSelector(state=>state.setting)
     const dispatch = useDispatch()
     const [isValid,setIsValid]=useState(false)
     const [isBtnDisabled,setIsBtnDisabled]= useState(true)

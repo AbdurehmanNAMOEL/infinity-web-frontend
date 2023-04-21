@@ -1,4 +1,4 @@
-import { handleResponsiveness } from "../../auth/styles/loginStyle";
+import { handleResponsiveness } from "../../../auth/styles/loginStyle";
 
 export const style={
 

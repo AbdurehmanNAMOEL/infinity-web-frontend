@@ -7,15 +7,14 @@ import surveyHomeImage from '../../../assets/image/survey-home.svg'
 import SurveyCard from '../../components/SurveyCard'
 import Footer from '../../components/Footer'
 import { useNavigate } from 'react-router-dom'
-import { handleResponsiveness } from '../../auth/styles/loginStyle'
-const SurveyHome = ({setSurveyDetailData}) => {
-    const dispatch = useDispatch()
-    
-    const { survey } = useSelector(state => state.auth)
-    const { generatedSurvey,isLightMode } = useSelector(state => state.auth)
-    const navigate= useNavigate()
+import { surveyHomePageStyle } from './styles/surveyHome'
 
+const SurveyHome = () => {
+     const { survey,isLightMode } = useSelector(state => state.auth)
+    const dispatch = useDispatch()
+    const navigate= useNavigate()
     const [isScrolling,setIsScrolling]=useState(false)
+
     window.addEventListener('scroll',()=>{
     if(window.pageYOffset>0) setIsScrolling(true)
     else setIsScrolling(false)       
@@ -32,37 +31,21 @@ const SurveyHome = ({setSurveyDetailData}) => {
 
     console.log(survey)
 
-    return (
-        <Box sx={{ width: '100%', display: 'flex',flexDirection:'column' }}>
-            <NavBar isScrolling={isScrolling} />
-            <Box sx={style.landingPage}>
-              <Box sx={{
-                width:handleResponsiveness('100%','50%'),
-                height:handleResponsiveness('30%','80%'),
-                display:'flex',
-                flexDirection:'column',
-                justifyContent:'center',
-                alignItems:'center'}}>
-               
-                <Typography 
-                   variant='h2' 
-                    sx={{fontWeight:'bold',display:'flex',gap:'10px'}}>
+   return (
+      <Box sx={{ width: '100%', display: 'flex',flexDirection:'column' }}>
+        <NavBar isScrolling={isScrolling} />
+        <Box sx={surveyHomePageStyle.landingPage}>
+          <Box sx={surveyHomePageStyle.surveyHomePageLandingPageContainer}> 
+            <Typography variant='h2' sx={{fontWeight:'bold',display:'flex',gap:'10px'}}>
                   Our
-                <span style={{color:'#1A6CE8'}}>Survey</span></Typography>
-                <Typography>Paid Online Surveys  Earn Money instantly. </Typography>
-              </Box>
-
-              <Box sx={{
-                width:handleResponsiveness('100%','50%'),
-                height:handleResponsiveness('70%','80%'),
-                display:'flex',
-                justifyContent:'center',
-                alignItems:'center'
-                }}>
-                <CardMedia image={surveyHomeImage} sx={{width:'80%',height:'90%'}}/>
-              </Box>
-            </Box>
-           <Grid container spacing={2} sx={{marginTop:'20px',width:'80%',marginLeft:'10%',marginBottom:'20px',diaplay:'flex',placeItems:'center'}}>
+              <span style={{color:'#1A6CE8'}}>Survey</span></Typography>
+              <Typography>Paid Online Surveys  Earn Money instantly. </Typography>
+          </Box>
+          <Box sx={surveyHomePageStyle.surveyHomeLandingPageImageContainer}>
+             <CardMedia image={surveyHomeImage} sx={{width:'80%',height:'90%'}}/>
+          </Box>
+        </Box>
+           <Grid container spacing={2} sx={surveyHomePageStyle.surveyCardContainer}>
             {!survey?.length>0?
               <Typography 
                 variant='h5' 
@@ -85,15 +68,6 @@ const SurveyHome = ({setSurveyDetailData}) => {
     )
 }
 
-const style = {
-    landingPage: {
-        width: '100%',
-        height: '80vh',
-        backgroundColor: '#DFDFDF',
-        display:'flex',
-        marginTop:'80px',
-        flexDirection:handleResponsiveness('column','row')
-    }
-}
+
 
 export default SurveyHome

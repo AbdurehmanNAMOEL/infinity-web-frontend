@@ -1,4 +1,4 @@
-import { Card, CardMedia, IconButton, Typography } from '@mui/material'
+import { Card, CardMedia, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import React from 'react'
 import { handleResponsiveness } from '../auth/styles/loginStyle'
@@ -14,7 +14,7 @@ import LogoImage from '../../assets/image/logo.png'
 import {useNavigate} from 'react-router-dom'
 import { useSelector } from 'react-redux';
 const Footer = () => {
-  const {modeColor,isLightMode}= useSelector(state=>state.auth)
+  const {isLightMode}= useSelector(state=>state.auth)
   const navigate = useNavigate()
   const handleCopyToClipBoard=(e)=>{
        e.stopPropagation()

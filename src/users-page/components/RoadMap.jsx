@@ -5,7 +5,7 @@ import {motion} from 'framer-motion'
 import { roadMapData } from '../utils/data'
 
 const CardWithAnimation=({year,userCount,work,animationDuration})=>{
-  const {modeColor,isLightMode} = useSelector(state=>state.auth)
+  const {isLightMode} = useSelector(state=>state.auth)
   const MotionPaper=motion(Paper)
   
   return (

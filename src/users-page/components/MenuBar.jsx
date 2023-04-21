@@ -12,16 +12,10 @@ import MenuPopupState from '../../shared/Components/MenuPopState'
 import LoginIcon from '@mui/icons-material/Login';
 const MenuBar = ({newNavList,handleNavigation,dispatch}) => {
    const navigate= useNavigate('/')
-   const [navTitle,setNavTitle]= useState('Home')
    const [isSideBarOpen,setIsSideBarOpen]= useState(false)
    const {modeColor,isLightMode,isUserLoggedIn} = useSelector(state=>state.auth)
    
-   const handleSideBarNavigation=(name,navigateTo)=>{
-       setNavTitle(name)
-       navigate(`${navigateTo}`)
-        
-       setIsSideBarOpen(prev=>!prev) // this to close the sidebar after clicking
-  }
+
   return (
     <Box sx={{
       display:'flex',

@@ -5,14 +5,13 @@ import CourseRegistration from '../../../assets/image/course.jpg'
 import { useDispatch, useSelector } from 'react-redux'
 import { createPersonalAppointment } from '../../../redux/features/authSlice'
 import {toast} from 'react-toastify'
-import { style } from '../style/registerationStyles'
+import { style } from './styles/registerationStyles'
 import ActionButton from '../../components/ActionButton'
 import InputField from '../../components/InputField'
+
 const Registration = () => {
   const [isItPersonal,setIsItPerson]=useState(true)
   const [isValid,setIsValid] = useState(false)
-  const [isCompanyFormValid,setIsCompanyFormValid] = useState(false)
-  const [isBtnDisabled,setIsBtnDisabled]= useState(true)
   const [isPersonalBtnDisabled,setIsPersonalBtnDisabled]= useState(true)
   const {modeColor,isLightMode,isPhoneNumberExist} = useSelector(state=>state.auth)
   
@@ -28,9 +27,6 @@ const Registration = () => {
    officeLocationId: "123456"
    })
 
-   const setCompanyPrefer=()=>{
-      setIsItPerson(false)
-   }
    const setPersonalPrefer=()=>{
       setIsItPerson(true)
    }

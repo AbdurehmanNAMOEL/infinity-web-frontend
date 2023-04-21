@@ -5,7 +5,6 @@ import { getAllUsers } from '../../redux/features/adminSlice'
 import GridTable from '../components/GridTable'
 import Header from '../components/Header'
 import SideBar from '../components/SideBar'
-import { mockDataTeam } from '../DummyData/data'
 
 const Users = ({closeDrawer,isDrawerOpen}) => {
     const {users}= useSelector(state=>state.admin)

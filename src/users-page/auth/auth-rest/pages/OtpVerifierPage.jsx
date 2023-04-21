@@ -1,6 +1,5 @@
-import { Box, CardMedia, Divider, IconButton, Paper, Typography } from '@mui/material'
+import { Box, CardMedia, Divider, Paper, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import InputField from '../../../components/InputField'
 import companyLogoImage from '../../../../assets/image/logo.png'
 import OtpInput from 'react-otp-input';
 import { handleResponsiveness } from '../../styles/loginStyle';

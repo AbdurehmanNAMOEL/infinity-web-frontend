@@ -70,9 +70,10 @@ const SurveyDisplayCard = ({
                fontWeight:'bolder',
                cursor:'pointer'
             }}>Edit</Typography>
-            <Typography 
-             onClick={handleDeletingApproved} 
-              sx={{marginLeft:'16px',color:'red',cursor:'pointer',fontWeight:'bolder'}}>Delete</Typography>
+            <Typography onClick={handleDeletingApproved} 
+              sx={{marginLeft:'16px',color:'red',cursor:'pointer',fontWeight:'bolder'}}>
+               Delete
+            </Typography>
          </Box>
      </Paper>
   )

@@ -11,7 +11,6 @@ import { answerCountList, choicesType,questionTypeList, surveyAccessingFilterLis
 import { useDispatch, useSelector } from 'react-redux'
 import { createNewSurvey, deleteSurvey, editSurvey } from '../../../redux/features/QuestionSlice'
 import {toast} from 'react-toastify'
-
 import { handleResponsiveness } from '../../../users-page/auth/styles/signUpStyle'
 import { useParams } from 'react-router-dom'
 import Modal from '../../components/Modal'

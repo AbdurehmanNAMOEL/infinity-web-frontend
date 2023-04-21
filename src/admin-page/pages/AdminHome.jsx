@@ -1,7 +1,6 @@
-import { Box, Paper} from '@mui/material'
+import { Box} from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import {  useDispatch, useSelector } from 'react-redux'
-
+import {useDispatch, useSelector } from 'react-redux'
 import Card from '../components/Card'
 import GridTable from '../components/GridTable'
 import Header from '../components/Header'
@@ -10,7 +9,7 @@ import LineChart from './chart/LineChart'
 import Modal from '../components/Modal'
 import AdminSignUp from './auth/pages/AdminSignUp'
 import { handleResponsiveness } from '../../users-page/auth/styles/signUpStyle'
-import { DailyData, MonthlyData } from '../DummyData/data'
+import {MonthlyData } from '../DummyData/data'
 import { column } from '../utils/data'
 import { getAllAnsweredSurvey, getAllSurveyQuestions } from '../../redux/features/adminSlice'
 

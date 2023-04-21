@@ -1,6 +1,6 @@
 import { Box, IconButton, Paper } from '@mui/material'
 import React from 'react'
-import { MenuOutlined,CloseOutlined } from '@mui/icons-material'
+import {CloseOutlined } from '@mui/icons-material'
 import { navList } from '../utils/navlist'
 import { handleResponsiveness } from '../auth/styles/loginStyle'
 import { useDispatch, useSelector } from 'react-redux'

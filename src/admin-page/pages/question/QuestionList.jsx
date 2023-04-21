@@ -1,21 +1,20 @@
-import { Box, Grid, Paper, Typography } from '@mui/material'
+import { Box, Grid, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import {getAllSurveyQuestions } from '../../../redux/features/adminSlice'
 import Header from '../../components/Header'
 import SideBar from '../../components/SideBar'
 import SurveyDisplayCard from '../../components/SurveyDisplayCard'
 import Modal from '../../components/Modal'
-import ButtonStyled from '../../../users-page/components/ButtonStyled'
 import PreviewQuestion from '../../components/PreviewQuestion'
 import { handleResponsiveness } from '../../../users-page/auth/styles/signUpStyle'
 import DeletingModal from '../../components/DeletingModal'
 import {toast} from 'react-toastify'
 import { deleteSurvey } from '../../../redux/features/QuestionSlice'
 import SearchBar from '../../../shared/Components/SearchBar'
+
 const QuestionList = ({isDrawerOpen,closeDrawer}) => {
 
-    const {users,generatedSurvey}= useSelector(state=>state.admin)
+    const {generatedSurvey}= useSelector(state=>state.admin)
     const {isLightMode,modeColor}= useSelector(state=>state.auth)
     const [isDeletingModalOpen,setIsDeletingModalOpen]= useState(false)
     const [isDeletingApproved,setIsDeletingApproved]= useState(false)

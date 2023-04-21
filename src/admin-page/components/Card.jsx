@@ -3,6 +3,7 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import ProgressBarImage from '../../assets/image/progressBar.svg'
 import { handleResponsiveness } from '../../users-page/auth/styles/loginStyle'
+
 function Card({cardHeader,cardBody}) {
     const {isLightMode} = useSelector(state=>state.auth)
   return (

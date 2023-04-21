@@ -1,22 +1,12 @@
 import { Box, IconButton, Paper, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import {
- MenuOutlined,
- HomeOutlined,
- ModeNightOutlined,
- LightMode,
-
-} from '@mui/icons-material/'
-import { useNavigate } from 'react-router-dom'
+import {MenuOutlined,ModeNightOutlined,LightMode,} from '@mui/icons-material/'
 import { useDispatch, useSelector } from 'react-redux'
 import { setMode } from '../../redux/features/authSlice'
-import MenuPopupState from '../../shared/Components/MenuPopState'
 import { logOut } from '../../redux/features/adminSlice'
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import LogoutIcon from '@mui/icons-material/Logout';
 function Header({closeDrawer,headerTitle,openModal}) {
-   const navigate = useNavigate()
    const dispatch = useDispatch()
    const {isLightMode}= useSelector(state=>state.auth)
    const {navTitle,isDrawerOpen}= useSelector(state=>state.admin)

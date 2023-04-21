@@ -2,7 +2,6 @@ import { Box, Card, CardMedia, Paper, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import LogoImage from '../../assets/image/logo.png'
 import ButtonStyled from '../components/ButtonStyled'
-import InputField from '../components/InputField'
 import TextArea from '../components/TextArea'
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { useNavigate } from 'react-router-dom'
@@ -17,9 +16,8 @@ import { feedBackGroupList } from '../utils/selectorData'
 import { sendFeedBack } from '../../redux/features/authSlice'
 import {toast} from 'react-toastify'
 import ActionButton from '../components/ActionButton'
-const responsive =(xs,md)=>{
-    return {xs:xs,md:md}
-}
+import { userFeedBackStyle } from './style/userFeedback'
+import { handleResponsiveness } from '../auth/styles/loginStyle'
 
 const UserFeedBack = () => {
     const navigate = useNavigate()
@@ -47,17 +45,18 @@ const UserFeedBack = () => {
     },[feedBack,feedBackGroup])
 
   return (
-   <Box sx={style.contactContainer}>
-     <Box sx={style.contactLeftContainer}>
-        <Box sx={[style.logoContainer,{backgroundColor:modeColor}]}>
+   <Box sx={userFeedBackStyle.contactContainer}>
+     <Box sx={userFeedBackStyle.contactLeftContainer}>
+        <Box sx={[userFeedBackStyle.logoContainer,{backgroundColor:modeColor}]}>
             <Card  onClick={()=>navigate('/')} 
-              sx={{backgroundColor:modeColor,cursor:'pointer',width:'200px',height:'150px',boxShadow:'none'}}>
+              sx={{backgroundColor:modeColor,cursor:'pointer',width:'200px',
+                  height:'150px',boxShadow:'none'}}>
                 <CardMedia
                    sx={{width:'100%',height:'100%'}}
                    image={LogoImage}
                 />
             </Card>
-            <Box sx={style.homeBtn}>
+            <Box sx={userFeedBackStyle.homeBtn}>
               <ButtonStyled 
                 label={'Home'}
                 bgColor='#0971f1'
@@ -67,8 +66,8 @@ const UserFeedBack = () => {
               />
             </Box>
         </Box>
-        <Box sx={style.contactFormContainer}>
-            <Paper sx={style.formContainer}>
+        <Box sx={userFeedBackStyle.contactFormContainer}>
+            <Paper sx={userFeedBackStyle.formContainer}>
                <Typography variant='h4' sx={{width:'80%',marginTop:'20px',marginBottom:'-40px'}}>
                    FeedBack
                </Typography>
@@ -76,7 +75,7 @@ const UserFeedBack = () => {
                    Feel free to contact us any time. We will get back to
                    you as soon as we can
                </Typography>
-                  <Box sx={style.feedBackGroupContainer}>                    
+                  <Box sx={userFeedBackStyle.feedBackGroupContainer}>                    
                     <InputSelector 
                       setValue={(e)=>setFeedBackGroup(e.target.value)}
                       optionList={feedBackGroupList} 
@@ -106,16 +105,16 @@ const UserFeedBack = () => {
             </Paper>
         </Box>
      </Box>
-     <Box sx={style.contactRightContainer}>
+     <Box sx={userFeedBackStyle.contactRightContainer}>
        <Box onClick={()=>navigate('/')} 
-         sx={{width:'100%',alignItems:'center',height:'70px',display:responsive('none','flex')}}
+         sx={{width:'100%',alignItems:'center',height:'70px',display:handleResponsiveness('none','flex')}}
          >
          <ArrowBackIosIcon sx={{marginLeft:'15px',color:'white',fontWeight:'bolder',cursor:'pointer'}}/>
          <ArrowBackIosIcon sx={{marginLeft:'-5px',color:'white',fontWeight:'bolder',cursor:'pointer'}}/>
          <Typography sx={{color:'white',cursor:'pointer'}}>Home</Typography>
        </Box>
-       <Paper sx={style.infoContainer}>
-          <Box sx={style.infoDirectContactContainer}>
+       <Paper sx={userFeedBackStyle.infoContainer}>
+          <Box sx={userFeedBackStyle.infoDirectContactContainer}>
             <Typography variant='h5' sx={{color:'white'}}>Info</Typography>
             <ButtonStyled
              label={'+251936970345'}
@@ -125,7 +124,7 @@ const UserFeedBack = () => {
              buttonIcon={<LocalPhoneOutlinedIcon/>}
             />
           </Box>
-          <Box sx={style.infoSocialMediaContactContainer}>
+          <Box sx={userFeedBackStyle.infoSocialMediaContactContainer}>
             <Typography variant='h6' sx={{color:'white'}}>ContactUs Via</Typography>
              <ButtonStyled
              label={'Facebook'}
@@ -154,89 +153,5 @@ const UserFeedBack = () => {
    </Box>
   )
 }
-const style ={
-    contactContainer:{
-      width:'100%',
-      height:'auto',
-      display:'flex',
-      flexDirection:responsive('column','row'),
-      gap:responsive('0','5%'),
-      overflowX:'hidden'
-    },
-    contactLeftContainer:{
-      width:responsive('100%','70%'),
-      height:responsive('80%','640px'),
-      display:'flex',
-      flexDirection:'column', 
-    },
-    contactRightContainer:{
-      width:responsive('100%','30%'),
-      height:responsive('50%','640px'),
-      backgroundColor:'#0971f1',
-      display:'flex',
-      flexDirection:'column'
-    },
-    logoContainer:{
-        width:'100%',
-        height:'70px',
-        backgroundColor:'white',
-        display:'flex',
-        alignItems:'center',
-        justifyContent:'space-between',
-        marginTop:'40px',
-        marginLeft:'20px'
-    },
-    contactFormContainer:{
-        width:'100%',
-        height:'580px',
-        display:'flex',
-        alignItems:'center',
-        justifyContent:'center',
-    },
-    formContainer:{
-        width:responsive('95%','80%'),
-        height:responsive('400px','500px'),
-        display:'flex',
-        flexDirection:'column',
-        alignItems:'center',
-        gap:responsive('40px','50px'),
-        boxShadow:'none',
-    },
-    infoContainer:{
-        width:responsive('100%','400px'),
-        height:responsive('500px','400px'),
-        backgroundColor:'#333',
-        marginLeft:responsive('0','-100px'),
-        marginTop:responsive('0','40px'),
-        display:'flex',
-        flexDirection:'column'
-    },
-    infoDirectContactContainer:{
-      width:responsive('30%','400px'),
-      height:responsive('30%','100px'),
-      display:'flex',
-      flexDirection:'column',
-      marginLeft:'40px',
-      marginTop:responsive('10px','40px'),
-      gap:'10px'
 
-    },
-    infoSocialMediaContactContainer:{
-        width:responsive('70%','400px'),
-        height:responsive('50%','400px'),
-        display:'flex',
-        flexDirection:'column',
-        marginLeft:'40px',
-        marginTop:responsive('10px','40px'),
-        gap:'10px',
-        overFlowX:'scroll'  
-    },
-    homeBtn:{
-      display:responsive('block','none'),
-      marginRight:'20px'
-    },
-    feedBackGroupContainer:{
-      width:'80%'
-    }
-}
 export default UserFeedBack

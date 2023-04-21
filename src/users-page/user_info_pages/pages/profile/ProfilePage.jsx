@@ -1,10 +1,10 @@
-import { Box, Button, Grid, Typography } from '@mui/material'
+import { Box,Grid, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { editUserProfile, getUserProfileData, getUserStaticData, restPassword } from '../../../../redux/features/authSlice'
 import InputField from '../../../components/InputField'
 import NavBar from '../../../components/NavBar'
-import ButtonStyled from '../../../components/ButtonStyled'
+
 import SelectorInput from '../../../components/SelectorInput'
 import {toast} from 'react-toastify'
 import { useNavigate } from 'react-router-dom'

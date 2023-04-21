@@ -8,10 +8,11 @@ import dayjs from 'dayjs'
 import { createAppointment, setAppointmentVerification } from '../../../redux/features/authSlice'
 import {toast} from 'react-toastify'
 import DateAndTimePicker from '../../../shared/Components/DateAndTimePicker'
-import { style } from '../../pages/style/registerationStyles'
+import { style } from './styles/registerationStyles'
 import NavBar from '../../components/NavBar'
 import CourseRegistration from '../../../assets/image/course.jpg'
 import PhoneNumberVerifierPage from '../../auth/auth-rest/pages/PhoneNumberVerifierPage'
+
 const UserAppointment = () => {
   const {modeColor,isLightMode,isAppointmentVerified} = useSelector(state=>state.auth)
   const newDate= new Date()
@@ -51,8 +52,6 @@ const UserAppointment = () => {
         }else setIsBtnDisabled(true)   
 
    },[appointmentData,isCompanyFormValid])
-
-
 
 
   return (

@@ -1,5 +1,5 @@
 import { Box, Card, CardMedia,Divider,Paper,Typography } from '@mui/material'
-import React, {useEffect, useState } from 'react'
+import React, {useState } from 'react'
 import NavBar from '../components/NavBar'
 import HomePhoto from '../../assets/image/home.png'
 import { handleResponsiveness } from '../auth/styles/loginStyle'
@@ -10,7 +10,6 @@ import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import FactCheckIcon from '@mui/icons-material/FactCheck';
 import CourseRegImage from '../../assets/image/course.png'
-import HomePageDarkModeImage from '../../assets/image/home-darkmode.png'
 import Footer from '../components/Footer'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
@@ -147,64 +146,18 @@ const HomePage = () => {
             }   
            </Box>
       </Box>
-       <Box sx={
-        {
-          width:'100%',
-          height:handleResponsiveness('auto','350px'),
-          // backgroundColor:'#F6F6F6',
-          marginBottom:handleResponsiveness('150px','0'),
-          display:'flex',
-          flexDirection:'column',
-          justifyContent:'center',
-          alignItems:'center',
-          marginTop:handleResponsiveness('200px','0px')
-          }}>
-            <Box sx={{
-              display:handleResponsiveness('none','flex'),
-              zIndex:500,
-              width:'50%',
-              justifyContent:'flex-start',
-              marginTop:'-10px',
-              height:'100px'
-              }}>
-             <div style={{
-              width:'120px',
-              position:'absolute',
-              height:'120px',
-              backgroundColor:'#80B2FF',
-              borderRadius:'100%'
-              }}>
-             </div>
-            </Box>
+       <Box sx={homePageStyle.surveyTimeMainContainer}>
+          <Box sx={homePageStyle.topCircleContainer}>
+             <div style={homePageStyle.topCircle}></div>
+          </Box>
         
-           <Box sx={{ 
-             width:'90%',
-             height:handleResponsiveness('50vh','50%'),
-             display:'flex',
-             justifyContent:'center',
-             alignItems:'center',
-             flexDirection:'column',
-             position:'absolute',
-             borderRadius:'10px',
-             backgroundColor:`${isLightMode?'#DFDFDF':'#333333'}`
-             }
-          }>
-           
-              <Typography 
-            variant='h4' 
-            sx={[homePageStyle.sectionMainTitle,{color:`${isLightMode?'#1e1e1e':'white'}`}]}
-            >Survey Time
+           <Box sx={[homePageStyle.surveyContainer,{backgroundColor:`${isLightMode?'#DFDFDF':'#333333'}`}]}>
+           <Typography variant='h4' 
+            sx={[homePageStyle.sectionMainTitle,{color:`${isLightMode?'#1e1e1e':'white'}`}]}>
+            Survey Time
           </Typography>
           <Divider/>
-            <Box sx={
-              {
-                width:handleResponsiveness('90%','30%'),
-                flexDirection:'column',
-                height:handleResponsiveness('10%','50%'),
-                display:'flex',
-                justifyContent:'center',
-                alignItems:'center'
-                }}>
+            <Box sx={homePageStyle.surveyContentContainer}>
             <Typography sx={{width:'100%',textAlign:'center',color:`${isLightMode?'#1e1e1e':'white'}`}}>
               Where you take free paid surveys and 
               earn “X” birr for each one you successfully 
@@ -221,22 +174,8 @@ const HomePage = () => {
 
             </Box>
           </Box>
-            <Box sx={{ 
-              display:handleResponsiveness('none','flex'),
-              marginTop:'250px',
-              width:'50%',
-              height:'100px',
-              justifyContent:'flex-end'
-              }}>
-              <div style={{
-                zIndex:500,
-                width:'120px',
-                marginTop:'-50px',
-                position:'absolute',
-                height:'120px',
-                backgroundColor:'#6B6F75',
-                borderRadius:'100%'
-                }}>
+            <Box sx={homePageStyle.bottomCircleContainer}>
+              <div style={homePageStyle.bottomCircle}>
               </div>
             </Box>
       </Box>
@@ -244,9 +183,7 @@ const HomePage = () => {
            <Box sx={[homePageStyle.registrationInnerContainers,{backgroundColor:modeColor}]}>
               <Box sx={{width:'70%',backgroundColor:modeColor}}>
                   <Typography 
-                    sx={{
-                      
-                      marginBottom:'10px',fontSize:handleResponsiveness('20px','30px'),
+                    sx={{marginBottom:'10px',fontSize:handleResponsiveness('20px','30px'),
                       color:`${isLightMode?'#1e1e1e':'white'}`
                       }}>
                     Do you want to our consultancy or other services then 

@@ -1,7 +1,6 @@
 import { Box, Grid, Paper, Typography } from '@mui/material'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllAnsweredSurvey } from '../../../redux/features/adminSlice'
 import DropDown from '../../components/DropDown'
 import Header from '../../components/Header'
 import SideBar from '../../components/SideBar'

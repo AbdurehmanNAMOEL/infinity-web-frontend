@@ -1,23 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { Box, CardMedia, Divider, IconButton, Paper, Typography } from '@mui/material';
+import { Box, Divider, IconButton, Paper, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteSurveyResponse, getAllSurveyQuestions, getAllUsers, updateSurveyResponse,verifySurveyResponse} from '../../redux/features/adminSlice';
+import { deleteSurveyResponse, getAllSurveyQuestions, getAllUsers,verifySurveyResponse} from '../../redux/features/adminSlice';
 import {toast} from 'react-toastify'
-const DropDown = ({title,data,isModalOpen,setModalOpen,isRejected,isVerified,userId}) => {
+const DropDown = ({data,setModalOpen,isRejected,isVerified,userId}) => {
   const [isExpanded,setIsExpanded]= useState(false)
   const [height,setHeight]= useState('60px')
   const {modeColor,isLightMode,generatedSurvey}= useSelector(state=>state.auth)
   const {users}= useSelector(state=>state.admin)
-  let dataTest=data?.map(data=>data.answer[0].includes('files'))
   const [userData,setUserData]= useState([])
  
   const dispatch = useDispatch()
   let id = data?.map(surveyResponse=>surveyResponse.surveyResponseId)[0];
- 
- 
-   
+
   const handleExpand=()=>{
     setIsExpanded(prev=>!prev)
   }

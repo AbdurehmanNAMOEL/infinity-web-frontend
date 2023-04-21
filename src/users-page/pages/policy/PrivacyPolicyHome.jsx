@@ -5,33 +5,24 @@ import NavBar from '../../components/NavBar'
 import {useNavigate} from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { handleResponsiveness } from '../../auth/styles/loginStyle'
+
 const PrivacyPolicyHome = () => {
    const navigate= useNavigate()
    const {isLightMode,modeColor} = useSelector(state=>state.auth)
   return (
-    <Box sx={
-      {
-        width:'100%',
-        height:'auto',
-        display:'flex',
-        flexDirection:'column',
-        alignItems:'center',
-        backgroundColor:modeColor
-      }
-      }>
+    <Box sx={[style.privacyMainContainer,{backgroundColor:modeColor}]}>
       <NavBar/>
       <Box sx={style.policyContainer}>
-        <Typography 
-          variant='h3' 
-          sx={{fontSize:handleResponsiveness('1.3rem','40px'),color:'white',fontWeight:'bold'}}>
+        <Typography variant='h3' sx={style.mainTitle}>
             Term of services & Privacy Policy 
-          </Typography>
+        </Typography>
       </Box>
 
-       <Box sx={[style.termOfServiceContainer,{marginTop:'100px',backgroundColor:modeColor}]}>
+       <Box sx={[style.termOfServiceContainer,{backgroundColor:modeColor}]}>
         <Box sx={{width:'100%',height:'auto',backgroundColor:modeColor}}>
           <Typography  variant='h4' 
-           sx={{fontSize:handleResponsiveness('24px','30px'),fontWeight:'bold',color:`${isLightMode?'#1e1e1e':'white'}`}}>
+           sx={{fontSize:handleResponsiveness('24px','30px'),fontWeight:'bold',
+           color:`${isLightMode?'#1e1e1e':'white'}`}}>
             1. Term of services 
             </Typography>
             <Box sx={{
@@ -71,7 +62,8 @@ const PrivacyPolicyHome = () => {
       <Box sx={style.termOfServiceContainer}>
         <Box sx={{width:'100%',height:'auto',}}>
           <Typography  variant='h4' 
-           sx={{fontSize:handleResponsiveness('24px','30px'),color:`${isLightMode?'#1e1e1e':'white'}`,fontWeight:'bold'}}>
+           sx={{fontSize:handleResponsiveness('24px','30px'),
+              color:`${isLightMode?'#1e1e1e':'white'}`,fontWeight:'bold'}}>
             2. Privacy policy 
             </Typography>
             <Box sx={{
@@ -108,7 +100,8 @@ const PrivacyPolicyHome = () => {
             2.1. Privacy policy 
             </Typography>
             <Typography  variant='h6' 
-              sx={{color:`${isLightMode?'#1e1e1e':'white'}`,fontWeight:'bold',marginLeft:'20px',marginTop:'20px'}}>
+              sx={{color:`${isLightMode?'#1e1e1e':'white'}`,
+              fontWeight:'bold',marginLeft:'20px',marginTop:'20px'}}>
             2.1.1 Who are 'you'? 
             </Typography>
             <Box sx={{
@@ -134,10 +127,9 @@ const PrivacyPolicyHome = () => {
                  conjunction with other information (a "Data Subject").
               </p>
             </Box>
-
-
-             <Typography  variant='h6' 
-              sx={{color:`${isLightMode?'#1e1e1e':'white'}`,fontWeight:'bold',marginLeft:'20px',marginTop:'20px'}}>
+            <Typography  variant='h6' 
+              sx={{color:`${isLightMode?'#1e1e1e':'white'}`,
+              fontWeight:'bold',marginLeft:'20px',marginTop:'20px'}}>
             2.1.2 Information we collect about you.
             </Typography>
             <Box sx={{
@@ -200,6 +192,13 @@ const PrivacyPolicyHome = () => {
 }
 
 const style ={
+  privacyMainContainer:{
+   width:'100%',
+   height:'auto',
+   display:'flex',
+   flexDirection:'column',
+   alignItems:'center',
+  },
   policyContainer: {
     width:'100%',
     height:'40vh',
@@ -211,8 +210,13 @@ const style ={
   },
   termOfServiceContainer:{
     width:handleResponsiveness('90%','80%'),
-    marginTop:'20px',
-    height:'auto'
+    height:'auto',
+    marginTop:'100px',
+  },
+  mainTitle:{
+    fontSize:handleResponsiveness('1.3rem','40px'),
+    color:'white',
+    fontWeight:'bold'
   }
 }
 export default PrivacyPolicyHome

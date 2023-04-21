@@ -4,6 +4,10 @@ import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import MeresaHiluf from '../../assets/image/Meresa-Hiluf.jpg'
 import SamuelGebremariam from '../../assets/image/Samuel-Gebremariam.jpg'
 import KirosWelduImage from '../../assets/image/KirosWeldu.jpg'
+import Investment from '../../assets/image/Investment.svg'
+import development from '../../assets/image/development.svg'
+import product from '../../assets/image/product.svg'
+import Consultancy from '../../assets/image/Consultancy.svg'
 const iconStyle={
     icon:{
         color:'#1A6CE8'
@@ -97,3 +101,11 @@ export const roadMapData=[
     "animationDuration":3
 },
 ]
+
+export const ourWorkData=[
+ {'title':'Market Research' ,'imageUrl':Investment},
+ {'title':'Business Development Research' ,'imageUrl':development},
+ {'title':'Product validitytes' ,'imageUrl':product},
+ {'title':'Consultant' ,'imageUrl':Consultancy},
+]
+

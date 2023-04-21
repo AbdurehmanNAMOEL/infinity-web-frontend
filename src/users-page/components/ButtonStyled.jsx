@@ -1,15 +1,8 @@
 import React, { useState } from 'react'
 import Button from '@mui/material/Button'
-import LoadingAnimation from '../../shared/Components/LoadingAnimation'
+
 const ButtonStyled = ({bgColor,label,btnHeight,btnWidth,buttonIcon,shadow,setValue}) => {
-  const [isButtonClicked,setButtonClicked]= useState(false)
 
-  const handleButtonClicked = ()=>{
-     setButtonClicked(prev=>!prev)
-
-     if(isButtonClicked) bgColor='red'
-    //  setValue()
-  }
   const handleClick=()=>{
     setValue()
   }

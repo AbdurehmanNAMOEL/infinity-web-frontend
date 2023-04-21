@@ -8,7 +8,7 @@ import UserFeedBackCard from '../components/UserFeedBackCard'
 import { handleResponsiveness } from '../../users-page/auth/styles/loginStyle'
 import InputSelector from '../../shared/Components/InputSelector'
 import { feedbackFilterList } from '../utils/selectorInputs'
-import {toast} from 'react-toastify'
+
 
 const FeedBackPage = ({isDrawerOpen,closeDrawer}) => {
     const dispatch = useDispatch()

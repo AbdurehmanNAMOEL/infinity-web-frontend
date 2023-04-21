@@ -1,7 +1,6 @@
 import { Box } from '@mui/material'
 import React from 'react'
 import { handleResponsiveness } from '../auth/styles/loginStyle'
-import UploadImage from '../../shared/Components/UploadImage'
 import { useSelector } from 'react-redux'
 
 const TextField = ({title,questionNumber,setValue,inputValue}) => {

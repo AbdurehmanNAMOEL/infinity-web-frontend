@@ -1,13 +1,11 @@
 import React, { useState } from 'react'
-import {Card, CardMedia, Collapse, Divider, Drawer, IconButton, List, ListItem, ListItemIcon, ListItemText, Paper, Typography} from '@mui/material'
+import {Card, Collapse, Divider, Drawer, IconButton, 
+  ListItem, ListItemIcon, ListItemText, Typography} from '@mui/material'
 import { Box } from '@mui/system'
-import AdminImage from '../../assets/image/user.png'
 import { sideBarIconList } from '../utils/iconsList'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { setNavTitle } from '../../redux/features/adminSlice'
-import DropDown from './DropDown'
-import Logo from '../../assets/image/logo.png'
 import { ExpandLess, ExpandMore, Settings } from '@mui/icons-material'
 import PlaylistAddCheckOutlinedIcon from '@mui/icons-material/PlaylistAddCheckOutlined';
 import SettingsIcon from '@mui/icons-material/Settings';

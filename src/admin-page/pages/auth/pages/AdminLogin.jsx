@@ -5,10 +5,8 @@ import {toast} from 'react-toastify'
 import { FaUserAstronaut } from 'react-icons/fa'
 import { Box, Card, CardMedia ,Paper, Typography } from '@mui/material'
 import InputField from '../../../../users-page/components/InputField'
-import ButtonStyled from '../../../../users-page/components/ButtonStyled'
 import LogoImage from '../../../../assets/image/logo.png'
 import { loginAdmin} from '../../../../redux/features/adminSlice'
-import LoadingAnimation from '../../../../shared/Components/LoadingAnimation'
 import { handleResponsiveness } from '../../../../users-page/auth/styles/loginStyle'
 import ActionButton from '../../../../users-page/components/ActionButton'
 import PhoneNumberVerifierPage from '../../../../users-page/auth/auth-rest/pages/PhoneNumberVerifierPage'
@@ -46,7 +44,7 @@ useEffect(()=>{
     <>{!isForgetPasswordClicked? <Box sx={style.adminLoginContainer}>  
       <Paper sx={style.adminLoginLogoContainer}>
       <Card onClick={()=>navigate('/')} sx={{width:'150px',height:'60px',boxShadow:'none',marginLeft:'10px'}}>
-        <CardMedia image={LogoImage} sx={{width:'80%',height:'100%'}}/>
+        <CardMedia image={LogoImage} sx={{width:'80%',height:'100%',cursor:'pointer'}}/>
       </Card>
       </Paper>
       <Paper sx={style.adminLoginCard}>

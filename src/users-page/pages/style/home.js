@@ -1,6 +1,5 @@
 import { useSelector } from "react-redux";
 import { handleResponsiveness } from "../../auth/styles/loginStyle";
-import React from "react";
 
 
 export const homePageStyle={
@@ -120,5 +119,65 @@ export const homePageStyle={
     justifyContent:'center',
     alignItems:'center',
     backgroundColor:'white',
+  },
+  surveyTimeMainContainer:{
+    width:'100%',
+    height:handleResponsiveness('auto','350px'),
+    // backgroundColor:'#F6F6F6',
+    marginBottom:handleResponsiveness('150px','0'),
+   display:'flex',
+   flexDirection:'column',
+   justifyContent:'center',
+   alignItems:'center',
+   marginTop:handleResponsiveness('200px','0px')
+  },
+  topCircleContainer:{
+    display:handleResponsiveness('none','flex'),
+    zIndex:500,
+    width:'50%',
+    justifyContent:'flex-start',
+    marginTop:'-10px',
+    height:'100px'
+  },
+  topCircle:{
+    width:'120px',
+    position:'absolute',
+    height:'120px',
+    backgroundColor:'#80B2FF',
+    borderRadius:'100%'
+  },
+  surveyContainer:{
+    width:'90%',
+    height:handleResponsiveness('50vh','50%'),
+    display:'flex',
+    justifyContent:'center',
+    alignItems:'center',
+    flexDirection:'column',
+    position:'absolute',
+    borderRadius:'10px',
+  },
+  surveyContentContainer:{
+    width:handleResponsiveness('90%','30%'),
+    flexDirection:'column',
+    height:handleResponsiveness('10%','50%'),
+    display:'flex',
+    justifyContent:'center',
+    alignItems:'center'
+  },
+  bottomCircleContainer:{
+    display:handleResponsiveness('none','flex'),
+    marginTop:'250px',
+    width:'50%',
+    height:'100px',
+    justifyContent:'flex-end'
+  },
+  bottomCircle:{
+    zIndex:500,
+    width:'120px',
+    marginTop:'-50px',
+    position:'absolute',
+    height:'120px',
+    backgroundColor:'#6B6F75',
+    borderRadius:'100%'
   }
 }

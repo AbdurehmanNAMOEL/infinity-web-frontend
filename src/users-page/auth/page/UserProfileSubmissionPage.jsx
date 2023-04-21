@@ -1,4 +1,4 @@
-import { Box, CardMedia, Divider, Grid, Typography } from '@mui/material'
+import { Box, CardMedia, Divider,Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { editUserProfile, getUserProfileData, getUserStaticData } from '../../../redux/features/authSlice'
@@ -8,6 +8,7 @@ import profileImage from '../../../assets/image/profile.svg'
 import { handleResponsiveness } from '../styles/loginStyle'
 import { useNavigate } from 'react-router-dom'
 import {toast} from 'react-toastify'
+import { userSubmissionInitialProfileData } from './userProfileData'
 const UserProfileSubmissionPage = () => {
   const {modeColor,userData,userStaticData,userProfileData,isLightMode}= useSelector(state=>state.auth)
   const navigate=useNavigate()
@@ -22,19 +23,8 @@ const UserProfileSubmissionPage = () => {
   },[])
 
  const handleProfileEdit=()=>{
-     let id = userData.id
-     let userProfileEditedData={
-     "id":id,
-     "birthPlaceId":userPersonData.birthPlaceId,
-     "residenceCityId":userPersonData.residenceCityId,
-     "religionId":userPersonData.religionId,
-     "employmentStatusId":userPersonData.employmentStatusId,
-     "incomeLevelId":userPersonData.incomeLevelId,
-     "professionId":userPersonData.professionId,
-     "educationalLevelId":userPersonData.educationalLevelId,
-     "martialStatusId":userPersonData.martialStatusId
-     }
-
+     let id = userData?.id
+     let userProfileEditedData=userSubmissionInitialProfileData(id,userPersonData)
      dispatch(editUserProfile({id,userProfileEditedData,navigate,toast}))
   }
     console.log(userProfileData)
@@ -168,11 +158,9 @@ const UserProfileSubmissionPage = () => {
           btnWidth={'120px'}
           setValue={handleProfileEdit}
           bgColor={'#1A6CE8'}
-          label={'Submit'}/>
-
-       
+          label={'Submit'}/>       
          </Box> 
-</Box>
+       </Box>
           </Box>
          </Box>
        </Box>

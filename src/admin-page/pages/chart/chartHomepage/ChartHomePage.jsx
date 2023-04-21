@@ -46,7 +46,9 @@ const ChartHomePage = ({closeDrawer,isDrawerOpen}) => {
             flexDirection:'column',
          
             }}>
-              <Typography sx={{width:'100%',marginTop:'20px',fontWeight:'bold',textAlign:'center'}}>Survey Comparison Chart</Typography>
+              <Typography sx={{width:'100%',marginTop:'20px',fontWeight:'bold',textAlign:'center'}}>
+                Survey Comparison Chart
+              </Typography>
             <PieChart/>
             <Box sx={{marginTop:'50px',width:'80%',marginLeft:'5%'}}>
                 <InputSelector

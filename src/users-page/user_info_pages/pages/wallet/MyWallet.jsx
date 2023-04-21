@@ -12,6 +12,7 @@ const MyWallet = ({isScrolling}) => {
   const {modeColor,isLightMode,myWalletBalance} = useSelector(state=>state.auth)
   const [isBtnDisabled,setIsBtnDisabled]= useState(true)  
   const dispatch = useDispatch()
+  
  useEffect(()=>{
      dispatch(getMyWalletBalance())
      if(myWalletBalance?.balance>50){

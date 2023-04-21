@@ -5,7 +5,7 @@ import { getConsultantAppointment } from '../../../redux/features/adminSlice'
 import GridTable from '../../components/GridTable'
 import Header from '../../components/Header'
 import SideBar from '../../components/SideBar'
-import { mockDataTeam } from '../../DummyData/data'
+
 
 const ConsultantSechdulingPage = ({ closeDrawer, isDrawerOpen }) => {
   const dispatch = useDispatch()

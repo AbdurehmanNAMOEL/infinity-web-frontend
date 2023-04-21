@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { ResponsiveLine } from '@nivo/line'
-import { MonthlyData, lineData } from '../../DummyData/data'
 import { useSelector } from 'react-redux'
+import { lineGraphLegends } from './lineGraphData'
 function LineChart({lineGraphData}) {
  const {isLightMode} = useSelector(state=>state.auth)
 
@@ -85,33 +85,7 @@ function LineChart({lineGraphData}) {
         pointBorderColor={{ from: 'serieColor' }}
         pointLabelYOffset={-12}
         useMesh={true}
-        legends={[
-            {
-                anchor: 'bottom-right',
-                direction: 'column',
-                justify: false,
-                translateX: 100,
-                translateY: 0,
-                itemsSpacing: 0,
-                itemDirection: 'left-to-right',
-                itemWidth: 80,
-                itemHeight: 20,
-                itemOpacity: 0.75,
-                symbolSize: 12,
-                symbolShape: 'circle',
-                symbolBorderColor: 'rgba(0, 0, 0, .5)',
-                itemTextColor:`${isLightMode?'#1E1E1E':'white'}`,
-                effects: [
-                    {
-                        on: 'hover',
-                        style: {
-                            itemBackground: 'rgba(0, 0, 0, .03)',
-                            itemOpacity: 1
-                        }
-                    }
-                ]
-            }
-        ]}
+        legends={lineGraphLegends(isLightMode)}
     />
 )
 }

@@ -1,6 +1,5 @@
-import { Box, Card, Divider, IconButton, Paper, Typography } from '@mui/material'
+import { Box,Divider, IconButton,Typography } from '@mui/material'
 import React from 'react'
-import MoneyOffCsredIcon from '@mui/icons-material/MoneyOffCsred';
 import { motion } from 'framer-motion';
 import { useSelector } from 'react-redux';
 const StyledCard = ({title,body, icon,animationDuration}) => {
