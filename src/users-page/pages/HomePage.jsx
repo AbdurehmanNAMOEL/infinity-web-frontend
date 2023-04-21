@@ -164,7 +164,7 @@ const HomePage = () => {
               complete!
             </Typography>
             
-            <Box sx={{display:'flex',marginTop:'20px'}}>
+            <Box sx={{display:'flex',marginTop:'20px',marginBottom:handleResponsiveness('20px','0px')}}>
               <ButtonStyled 
                 label={'Start'}  
                 bgColor={'#1A6CE8'}
@@ -181,7 +181,7 @@ const HomePage = () => {
       </Box>
         <Box sx={[homePageStyle.registrationContainer,{backgroundColor:modeColor}]}>
            <Box sx={[homePageStyle.registrationInnerContainers,{backgroundColor:modeColor}]}>
-              <Box sx={{width:'70%',backgroundColor:modeColor}}>
+              <Box sx={{width:handleResponsiveness('90%','70%'),backgroundColor:modeColor}}>
                   <Typography 
                     sx={{marginBottom:'10px',fontSize:handleResponsiveness('20px','30px'),
                       color:`${isLightMode?'#1e1e1e':'white'}`

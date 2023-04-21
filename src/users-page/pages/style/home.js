@@ -58,9 +58,9 @@ export const homePageStyle={
   sectionMainTitle:{
     textAlign:'center',
     fontFamily:'Inter',
-    marginTop:handleResponsiveness('0px','20px'),
+    marginTop:handleResponsiveness('50px','20px'),
     fontWeight:'bold',
-    marginBottom:handleResponsiveness('80px','0px'),
+    marginBottom:handleResponsiveness('20px','0px'),
     fontSize:handleResponsiveness('24px','42px')         
   },
   homeLandingPageImageContainer:{
@@ -122,14 +122,14 @@ export const homePageStyle={
   },
   surveyTimeMainContainer:{
     width:'100%',
-    height:handleResponsiveness('auto','350px'),
+    height:handleResponsiveness('250px','350px'),
     // backgroundColor:'#F6F6F6',
-    marginBottom:handleResponsiveness('150px','0'),
+   marginBottom:handleResponsiveness('15%','0'),
    display:'flex',
    flexDirection:'column',
    justifyContent:'center',
    alignItems:'center',
-   marginTop:handleResponsiveness('200px','0px')
+   marginTop:handleResponsiveness('25%','0px')
   },
   topCircleContainer:{
     display:handleResponsiveness('none','flex'),
@@ -148,7 +148,7 @@ export const homePageStyle={
   },
   surveyContainer:{
     width:'90%',
-    height:handleResponsiveness('50vh','50%'),
+    height:handleResponsiveness('auto','50%'),
     display:'flex',
     justifyContent:'center',
     alignItems:'center',

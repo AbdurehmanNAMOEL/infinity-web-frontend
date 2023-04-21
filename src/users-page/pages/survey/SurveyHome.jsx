@@ -45,7 +45,7 @@ const SurveyHome = () => {
              <CardMedia image={surveyHomeImage} sx={{width:'80%',height:'90%'}}/>
           </Box>
         </Box>
-           <Grid container spacing={2} sx={surveyHomePageStyle.surveyCardContainer}>
+           <Grid container spacing={5} sx={surveyHomePageStyle.surveyCardContainer}>
             {!survey?.length>0?
               <Typography 
                 variant='h5' 
@@ -54,7 +54,7 @@ const SurveyHome = () => {
                 </Typography>:null}
             {
               survey?.map((item,index)=>
-               <Grid onClick={()=>handleSurvey(item)} on item xs={8} md={3}>
+               <Grid onClick={()=>handleSurvey(item)} on item xs={12} md={3}>
                  <SurveyCard 
                   key={index} 
                   title={item?.title}

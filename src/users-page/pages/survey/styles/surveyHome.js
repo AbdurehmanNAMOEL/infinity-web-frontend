@@ -26,10 +26,11 @@ export const surveyHomePageStyle = {
   },
   surveyCardContainer:{
     marginTop:'20px',
-    width:'80%',
+    width:handleResponsiveness('90%','80%'),
     marginLeft:'10%',
     marginBottom:'20px',
     display:'flex',
-    placeItems:'center'}
+    placeItems:'center'
+}
   
 }

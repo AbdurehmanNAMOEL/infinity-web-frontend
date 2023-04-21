@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom'
 import {useSelector } from 'react-redux'
 import { logOut, setMode } from '../../redux/features/authSlice'
 import Mode from '../../shared/Components/Mode'
-import MenuPopupState from '../../shared/Components/MenuPopState'
+import LogoutIcon from '@mui/icons-material/Logout';
 import LoginIcon from '@mui/icons-material/Login';
 const MenuBar = ({newNavList,handleNavigation,dispatch}) => {
    const navigate= useNavigate('/')
@@ -87,9 +87,11 @@ const MenuBar = ({newNavList,handleNavigation,dispatch}) => {
             <LoginIcon sx={{marginRight:'10px'}}/> 
             <p>Login</p> 
             </IconButton>:
-            <IconButton  
+           <IconButton 
+            onClick={()=>dispatch(logOut())} 
             sx={style.logoInIcon}>
-              <MenuPopupState handleLogOut={()=>dispatch(logOut())}/>
+            <LogoutIcon sx={{marginRight:'10px'}}/> 
+            <p>LogOut</p> 
             </IconButton>
           }
     </Box>
