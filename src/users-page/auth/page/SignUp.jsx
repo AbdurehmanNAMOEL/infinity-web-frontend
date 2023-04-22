@@ -9,7 +9,7 @@ import MediaCard from '../../components/MediaCard'
 import DataBaseImage from '../../../assets/image/dataBase.png'
 import {toast} from 'react-toastify'
 import { useDispatch, useSelector } from 'react-redux'
-import {  setSignUpVerification, signUp } from '../../../redux/features/authSlice'
+import {  setSignUpNumber, setSignUpVerification, signUp } from '../../../redux/features/authSlice'
 import InputSelector from '../../../shared/Components/InputSelector'
 import { genderList } from '../../utils/selectorData'
 import { useNavigate } from 'react-router-dom'
@@ -19,7 +19,7 @@ import PhoneNumberVerifierPage from '../auth-rest/pages/PhoneNumberVerifierPage'
  const SignUp = () => {
    const navigate = useNavigate()
    const dispatch= useDispatch()
-   const {isSignUpVerified}= useSelector(state=>state.auth)
+   const {isSignUpVerified,signUpNumber}= useSelector(state=>state.auth)
    const [isFormValid,setFormValidation]=useState(false)
    const [isUserAgreed,setUserAgreed] = useState(false)
    const [isBtnDisabled,setIsBtnDisabled] = useState(true) 
@@ -28,7 +28,7 @@ import PhoneNumberVerifierPage from '../auth-rest/pages/PhoneNumberVerifierPage'
     firstName:"",
     lastName:"",
     email:"",
-    phoneNumber:"",
+    phoneNumber:signUpNumber,
     password:"",
     gender:"",
    })
@@ -48,6 +48,7 @@ import PhoneNumberVerifierPage from '../auth-rest/pages/PhoneNumberVerifierPage'
        }else toast.error('password and confirmPassword must be the same')
       }else setFormValidation(false)
      dispatch(setSignUpVerification(false))  
+     dispatch(setSignUpNumber(''))
    }
   
         
@@ -127,7 +128,7 @@ import PhoneNumberVerifierPage from '../auth-rest/pages/PhoneNumberVerifierPage'
                       setValue={(e)=>setUserData({...userData,"lastName":e.target.value})}
                     />
                     </Box>
-                    <Box sx={signUpStyle.signUpInputFieldContainer}>                    
+                    {/* <Box sx={signUpStyle.signUpInputFieldContainer}>                    
                       <InputField 
                       inputLabel={'Phone Number'}
                       type='phoneNumber'
@@ -135,7 +136,7 @@ import PhoneNumberVerifierPage from '../auth-rest/pages/PhoneNumberVerifierPage'
                       inputValue={userData.phoneNumber}
                       setValue={(e)=>setUserData({...userData,"phoneNumber":e.target.value})}
                     />
-                    </Box>
+                    </Box> */}
                        <Box sx={signUpStyle.signUpInputFieldContainer}>                    
                       <InputField 
                       inputLabel={'Email'}

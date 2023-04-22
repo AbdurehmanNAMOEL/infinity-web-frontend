@@ -40,6 +40,7 @@ import UserAppointment from './users-page/pages/Appointment/UserAppointment';
 import PageIsNotFound from './users-page/pages/PageIsNotFound';
 import Appointment from './admin-page/pages/appointment/Appointment';
 import Registration from './users-page/pages/Appointment/Registration';
+import MySurveyList from './users-page/user_info_pages/pages/mySurveyList/MySurveyList';
 function App() {
    const [isDrawerOpen,setDrawerOpen]=useState(true)
    const {isLightMode,modeColor,loading}= useSelector(state=>state.auth)
@@ -184,6 +185,10 @@ function App() {
         <Route  
           path='/myWallet' 
           element={<MyWallet/>}
+        />
+        <Route  
+          path='/mySurveyList' 
+          element={<MySurveyList/>}
         />
          <Route 
             isScrolling={isScrolling} 

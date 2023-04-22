@@ -76,7 +76,13 @@ const MenuBar = ({newNavList,handleNavigation,dispatch}) => {
          <IconButton
             onClick={()=>navigate('/myWallet')}
             sx={[style.navLists,{color:`${isLightMode?"#1e1e1e":'white'}`}]}>
-              Wallet
+             My Wallet
+         </IconButton>
+
+          <IconButton
+            onClick={()=>navigate('/mySurveyList')}
+            sx={[style.navLists,{color:`${isLightMode?"#1e1e1e":'white'}`}]}>
+              My Survey
          </IconButton>
         </>:''}
 

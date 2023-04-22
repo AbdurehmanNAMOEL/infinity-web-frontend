@@ -9,7 +9,7 @@ import InputSelector from '../../../shared/Components/InputSelector'
 import { appointmentFilterList } from '../../utils/selectorInputs'
 
 
-const Appointment = ({ closeDrawer, isDrawerOpen }) => {
+const Appointment = ({ closeDrawer,isDrawerOpen }) => {
   
       const dispatch = useDispatch()
 
@@ -20,24 +20,22 @@ const Appointment = ({ closeDrawer, isDrawerOpen }) => {
         dispatch(getAllAppointments())
     },[])
 
-    // console.log(appointmentList)
+    console.log(appointmentList)
 
   
  
     return (
-        <Box sx={{ width: '100%', display: 'flex', flexDirection: 'row', height: { md: '100vh', sm: 'auto' } }}>
+        <Box sx={style.appointmentMainContainer}>
             <SideBar
                 isDrawerOpen={isDrawerOpen}
                 closeDrawer={closeDrawer}
                 drawerWidth={isDrawerOpen ? 200 : 0}
             />
-            <Box sx={{ display: 'flex', width: '100%', position: 'relative', flexDirection: 'column' }}>
+            <Box sx={style.appointmentInnerContainer}>
                 <Box sx={{ position: 'fixed', width: `${isDrawerOpen ? 100 : 100}%`, zIndex: 200 }}>
                     <Header closeDrawer={() => closeDrawer(prev => !prev)} />
                 </Box>
                 <Box sx={{ width: '90%', marginLeft: '5%', marginTop: '80px' }}>
-
-
 
          { appointmentList?.length?  
            <Box sx={{marginTop:'40px',width:'90%',marginLeft:'5%'}}>
@@ -52,14 +50,8 @@ const Appointment = ({ closeDrawer, isDrawerOpen }) => {
             </Box>:null}  
 
 
-       { appointmentList?.length? <Grid sx={{
-            marginLeft:'5%',
-            height:'auto',
-            marginTop:'20px',
-            width:'90%',
-         
-            
-        }} container spacing={2}>
+       { appointmentList?.length? 
+         <Grid sx={style.appointmentCardListContainer} container spacing={2}>
             {
                 appointmentList?.map((data,index)=>
                   <Grid item xs={12} md={5}>
@@ -83,5 +75,25 @@ const Appointment = ({ closeDrawer, isDrawerOpen }) => {
     )
 }
 
+const style={
+ appointmentMainContainer:{ 
+    width: '100%', 
+    display: 'flex', 
+    flexDirection: 'row', 
+    height: { md: '100vh', sm: 'auto' } 
+},
+appointmentInnerContainer:{ 
+    display: 'flex', 
+    width: '100%', 
+    position: 'relative', 
+    flexDirection: 'column' 
+},
+appointmentCardListContainer:{
+    marginLeft:'5%',
+    height:'auto',
+    marginTop:'20px',
+    width:'90%',
+}
+}
 
 export default Appointment

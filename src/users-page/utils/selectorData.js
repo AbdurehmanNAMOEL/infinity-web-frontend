@@ -13,3 +13,9 @@ export const personalScheduleType=[
     {'title':'Business Development','value':'Business Development'},
 ]
 
+export const consultTypeDataList=[
+    {'title':'Market Research','value':'Market Research'},
+    {'title':'Business Development','value':'Business Development'},
+    {'title':'Product validities','value':'Product validities'},
+     {'title':'Consultant' ,'value':'Consultant'}
+]

@@ -3,12 +3,9 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import { IconButton } from '@mui/material';
-import { useDispatch } from 'react-redux';
-import { logOut } from '../../redux/features/adminSlice';
 import { Box } from '@mui/system';
 import { useNavigate } from 'react-router-dom';
 export default function MenuPopupState({handleLogOut,children}) {
-    const dispatch = useDispatch()
     const navigate = useNavigate()
   return (
     <PopupState 
@@ -22,10 +19,10 @@ export default function MenuPopupState({handleLogOut,children}) {
            {children}
         </IconButton>
           <Menu sx={{width:'400px',position:'absolute'}} {...bindMenu(popupState)}>
-            <MenuItem onClick={()=>dispatch(logOut())}></MenuItem>
-             <MenuItem onClick={handleLogOut}>Logout</MenuItem>
              <MenuItem onClick={()=>navigate('/profile')}>My Profile</MenuItem>
-              <MenuItem onClick={()=>navigate('/myWallet')}>My Wallet</MenuItem>
+             <MenuItem onClick={()=>navigate('/myWallet')}>My Wallet</MenuItem>
+             <MenuItem onClick={()=>navigate('/mySurveyList')}>My Survey</MenuItem>
+             <MenuItem onClick={handleLogOut}>Logout</MenuItem>           
           </Menu>
        </Box>
       )}

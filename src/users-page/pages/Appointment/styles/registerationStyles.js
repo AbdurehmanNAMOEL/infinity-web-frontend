@@ -47,6 +47,16 @@ export const style={
     marginTop:'30px',
     marginBottom:'20px'
   },
+  personalSelectorInputFieldContainer:{  
+    width:'86%',
+    height:'50px',
+    display:'flex',
+    marginLeft:'5%',
+    justifyContent:'center',
+    alignItems:'center',
+    marginTop:'30px',
+    marginBottom:'20px'
+  },
   personalSubmissionBtnContainer: {
     width:'90%',
     height:'80px',

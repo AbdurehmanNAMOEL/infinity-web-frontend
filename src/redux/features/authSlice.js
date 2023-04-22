@@ -276,6 +276,7 @@ export const authSlice= createSlice({
       userLoginData:{},
       isSignUpVerified:false,
       isAppointmentVerified:false,
+      signUpNumber:''
 },
   reducers:{
     logOut:(state,action)=>{
@@ -317,6 +318,9 @@ export const authSlice= createSlice({
     },
     setAppointmentVerification:(state,action)=>{
           state.isAppointmentVerified=action.payload
+    },
+     setSignUpNumber:(state,action)=>{
+          state.signUpNumber=action.payload
     }
   },
   extraReducers:{
@@ -452,7 +456,8 @@ export const authSlice= createSlice({
     setNavigateValue,
     setNavigateIdentifier,
     setSignUpVerification,
-    setAppointmentVerification
+    setAppointmentVerification,
+    setSignUpNumber
   }=authSlice.actions
 
  export const authReducer=authSlice.reducer

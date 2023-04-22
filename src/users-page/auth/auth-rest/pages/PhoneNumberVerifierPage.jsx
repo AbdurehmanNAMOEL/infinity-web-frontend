@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import {toast} from 'react-toastify'
 import ActionButton from '../../../components/ActionButton';
 import { useDispatch} from 'react-redux';
-import { findConsulterPhoneNumber, findPhoneNumber, setNavigateIdentifier, setNavigateValue } from '../../../../redux/features/authSlice';
+import { findConsulterPhoneNumber, findPhoneNumber, setNavigateIdentifier, setNavigateValue, setSignUpNumber } from '../../../../redux/features/authSlice';
 import OtpVerifierPage from './OtpVerifierPage';
 import { findSAdminPhoneNumber } from '../../../../redux/features/adminSlice';
 const PhoneNumberVerifierPage= ({navigateTo,secondNavigate,restIdentifier}) => {
@@ -68,6 +68,9 @@ const PhoneNumberVerifierPage= ({navigateTo,secondNavigate,restIdentifier}) => {
 
    const onSubmit=()=>{
     if(restIdentifier==='signUp' || restIdentifier ==='user'){
+       if(restIdentifier==='signUp'){
+          dispatch(setSignUpNumber(phoneNumber))
+       }
       dispatch(findPhoneNumber({toast,navigate,phoneNumber,onSignUp,navigateTo,restIdentifier}))
     }else if(restIdentifier==='userAppointment'){
       dispatch(findConsulterPhoneNumber({toast,navigate,phoneNumber,onSignUp,navigateTo}))

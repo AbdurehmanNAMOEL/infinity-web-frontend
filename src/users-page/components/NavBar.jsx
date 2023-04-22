@@ -72,7 +72,7 @@ const NavBar = ({isScrolling}) => {
             <IconButton  
             sx={{width:'200px',borderRadius:'0px'}}>
                 <MenuPopupState
-                handleLogOut={()=>dispatch(logOut())}>
+                 handleLogOut={()=>dispatch(logOut())}>
                  <Typography 
                    sx={{fontSize:'14px',color:isLightMode?'#1e1e1e':'white'}}>
                     {userData?.email}

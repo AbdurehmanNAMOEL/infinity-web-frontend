@@ -8,6 +8,9 @@ import {toast} from 'react-toastify'
 import { style } from './styles/registerationStyles'
 import ActionButton from '../../components/ActionButton'
 import InputField from '../../components/InputField'
+import SelectorInput from '../../components/SelectorInput'
+import { consultTypeDataList } from '../../utils/selectorData'
+import InputSelector from '../../../shared/Components/InputSelector'
 
 const Registration = () => {
   const [isItPersonal,setIsItPerson]=useState(true)
@@ -99,16 +102,18 @@ const Registration = () => {
                     />
                     </Box>
 
-                    <Box sx={style.personalInputFieldContainer}>                    
-                      <InputField 
-                       inputLabel={'Type'}
-                       type='name'
-                       width={'100%'}
-                       setValidation={setIsValid}
-                       inputValue={userData?.type}
-                       setValue={(e)=>setUserData({...userData,"type":e.target.value})}
-                    />
-                    </Box>
+                <Box sx={style.personalSelectorInputFieldContainer}>                    
+                    
+                 <InputSelector
+                   optionList={consultTypeDataList}
+                   optionValue={'value'}
+                   optionTitle={'title'}
+                   selectorWidth={'90%'}
+                   inputValue={userData?.type}
+                   setValue={(e)=>setUserData({...userData,"type":e.target.value})}
+                   label={'Type'}
+                 />
+                </Box>
                     <Box sx={style.personalSubmissionBtnContainer}>
                       <ActionButton
                         btnLabel={'Submit'}
