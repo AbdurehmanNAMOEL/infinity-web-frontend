@@ -12,6 +12,7 @@ import { style } from './styles/registerationStyles'
 import NavBar from '../../components/NavBar'
 import CourseRegistration from '../../../assets/image/course.jpg'
 import PhoneNumberVerifierPage from '../../auth/auth-rest/pages/PhoneNumberVerifierPage'
+import UseKey from '../../../hooks/keyEvents'
 
 const UserAppointment = () => {
   const {modeColor,isLightMode,isAppointmentVerified} = useSelector(state=>state.auth)
@@ -53,6 +54,7 @@ const UserAppointment = () => {
 
    },[appointmentData,isCompanyFormValid])
 
+  UseKey('Enter',handleCompanyAppointmentSubmission)
 
   return (
     <>

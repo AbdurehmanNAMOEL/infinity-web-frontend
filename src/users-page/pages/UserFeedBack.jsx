@@ -18,6 +18,7 @@ import {toast} from 'react-toastify'
 import ActionButton from '../components/ActionButton'
 import { userFeedBackStyle } from './style/userFeedback'
 import { handleResponsiveness } from '../auth/styles/loginStyle'
+import UseKey from '../../hooks/keyEvents'
 
 const UserFeedBack = () => {
     const navigate = useNavigate()
@@ -43,6 +44,8 @@ const UserFeedBack = () => {
         setIsBtnDisabled(false)
       }else setIsBtnDisabled(true)
     },[feedBack,feedBackGroup])
+
+    UseKey('Enter',handleFeedBack)
 
   return (
    <Box sx={userFeedBackStyle.contactContainer}>

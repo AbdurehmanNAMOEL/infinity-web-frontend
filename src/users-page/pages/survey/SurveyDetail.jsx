@@ -10,6 +10,7 @@ import UploadImage from '../../../shared/Components/UploadImage'
 import ChoiceCard from '../../../shared/Components/ChoiceCard'
 import MultipleAnswerCard from '../../../shared/Components/MultipleAnswerCard'
 import { surveyDetailStyle } from './styles/surveyDetail'
+import UseKey from '../../../hooks/keyEvents'
 
 const SurveyDetail = () => {
     const {surveyDetailValue,isLightMode}= useSelector(state=>state.auth) 
@@ -60,6 +61,7 @@ const SurveyDetail = () => {
     }else alert('survey answer is needed')
   }
 
+  UseKey('Enter',handleSurveyAnswer)
 
   return (
     <Box sx={surveyDetailStyle.surveyDetailMainContainer}>

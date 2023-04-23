@@ -9,6 +9,7 @@ import { handleResponsiveness } from '../styles/loginStyle'
 import { useNavigate } from 'react-router-dom'
 import {toast} from 'react-toastify'
 import { userSubmissionInitialProfileData } from './userProfileData'
+import UseKey from '../../../hooks/keyEvents'
 const UserProfileSubmissionPage = () => {
   const {modeColor,userData,userStaticData,userProfileData,isLightMode}= useSelector(state=>state.auth)
   const navigate=useNavigate()
@@ -22,12 +23,14 @@ const UserProfileSubmissionPage = () => {
    dispatch(getUserProfileData({id}))
   },[])
 
- const handleProfileEdit=()=>{
+  const handleProfileEdit=()=>{
      let id = userData?.id
      let userProfileEditedData=userSubmissionInitialProfileData(id,userPersonData)
      dispatch(editUserProfile({id,userProfileEditedData,navigate,toast}))
   }
-    console.log(userProfileData)
+
+  UseKey('Enter',handleProfileEdit)
+
   return (
     <Box sx={[style.profileContainer,{backgroundColor:modeColor}]}>
          <Typography variant='h5' sx={{marginTop:'20px',color:isLightMode?'#1e1e1e':'white'}}>

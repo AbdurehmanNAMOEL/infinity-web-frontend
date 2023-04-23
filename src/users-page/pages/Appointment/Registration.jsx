@@ -11,6 +11,7 @@ import InputField from '../../components/InputField'
 import SelectorInput from '../../components/SelectorInput'
 import { consultTypeDataList } from '../../utils/selectorData'
 import InputSelector from '../../../shared/Components/InputSelector'
+import UseKey from '../../../hooks/keyEvents'
 
 const Registration = () => {
   const [isItPersonal,setIsItPerson]=useState(true)
@@ -51,6 +52,8 @@ const Registration = () => {
         }else setIsPersonalBtnDisabled(true)
   
    },[userData,isValid])
+
+  UseKey('Enter',handlePersonalAppointmentSubmission)
 
   
   return (

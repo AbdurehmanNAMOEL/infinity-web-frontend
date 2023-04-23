@@ -12,6 +12,7 @@ import { useDispatch } from 'react-redux'
 import {toast} from 'react-toastify'
 import NavBar from '../../components/NavBar'
 import PhoneNumberVerifierPage from '../auth-rest/pages/PhoneNumberVerifierPage'
+import UseKey from '../../../hooks/keyEvents'
 
 
 export const Login = ({isSideBarOpen,setIsSideBarOpen,handleSideBarNavigation,navTitle}) => {
@@ -22,7 +23,7 @@ export const Login = ({isSideBarOpen,setIsSideBarOpen,handleSideBarNavigation,na
    const [isForgetClicked,setIsForgetClicked]=useState(false)
    const [userData,setUserData]= useState({phoneNumber:'',password:'',})
    const handleSubmit=()=>{
-    
+
    if(userData.phoneNumber!==''&&userData.password!==''){
          dispatch(signIn({userData,toast,navigate}))
          setFormValidation(true)
@@ -36,6 +37,8 @@ export const Login = ({isSideBarOpen,setIsSideBarOpen,handleSideBarNavigation,na
               setIsBtnDisabled(false)
        } else setIsBtnDisabled(true) 
    },[isFormValid,userData])
+
+    UseKey('Enter',handleSubmit)
 
   return (
     <>    

@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux'
 import { restPassword } from '../../../../redux/features/authSlice'
 import {toast} from 'react-toastify'
 import ActionButton from '../../../components/ActionButton'
+import UseKey from '../../../../hooks/keyEvents'
 const RestPassword = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -38,6 +39,9 @@ const RestPassword = () => {
         setIsBtnDisabled(false)
      }else setIsBtnDisabled(true)
   },[newPasswordData,isValid])
+
+  UseKey('Enter',handleRestingPassword)
+
 
   return (
   <Box sx={style.restPasswordContainer}>

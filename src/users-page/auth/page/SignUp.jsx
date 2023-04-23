@@ -14,6 +14,7 @@ import InputSelector from '../../../shared/Components/InputSelector'
 import { genderList } from '../../utils/selectorData'
 import { useNavigate } from 'react-router-dom'
 import PhoneNumberVerifierPage from '../auth-rest/pages/PhoneNumberVerifierPage'
+import UseKey from '../../../hooks/keyEvents'
 
 
  const SignUp = () => {
@@ -24,6 +25,7 @@ import PhoneNumberVerifierPage from '../auth-rest/pages/PhoneNumberVerifierPage'
    const [isUserAgreed,setUserAgreed] = useState(false)
    const [isBtnDisabled,setIsBtnDisabled] = useState(true) 
    const [confirmPassword,setConfirmPasswordValue]=useState('')
+
    const [userData,setUserData]= useState({
     firstName:"",
     lastName:"",
@@ -65,11 +67,11 @@ import PhoneNumberVerifierPage from '../auth-rest/pages/PhoneNumberVerifierPage'
   
 
   const handlePrivacyPolicy=()=>{
-     window.open('/policy')
-     
+     window.open('/policy')   
   }
 
-  console.log(isSignUpVerified);
+  UseKey('Enter',handleSubmit)
+
   return ( 
     <>
     {isSignUpVerified?<Box sx={signUpStyle.signUpMainContainer}>

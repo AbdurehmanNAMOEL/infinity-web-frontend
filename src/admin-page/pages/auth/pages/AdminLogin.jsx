@@ -10,6 +10,7 @@ import { loginAdmin} from '../../../../redux/features/adminSlice'
 import { handleResponsiveness } from '../../../../users-page/auth/styles/loginStyle'
 import ActionButton from '../../../../users-page/components/ActionButton'
 import PhoneNumberVerifierPage from '../../../../users-page/auth/auth-rest/pages/PhoneNumberVerifierPage'
+import UseKey from '../../../../hooks/keyEvents'
 
 const AdminLogin = () => {
  
@@ -19,7 +20,8 @@ const AdminLogin = () => {
    const [isValid,setIsValid]= useState(false)
    const [isForgetPasswordClicked,setIsForgetPasswordClicked]= useState(false)
    const [isBtnDisabled,setIsBtnDisabled]= useState(true)
-   const [userData,setUserData]= useState({phoneNumber:'',password:'',})
+   const [userData,setUserData]= useState({phoneNumber:'',password:''})
+
    const handleSubmit=()=>{
     
      if(userData.phoneNumber!==''&&userData.password!==''){
@@ -29,7 +31,7 @@ const AdminLogin = () => {
    }
 
 
-useEffect(()=>{
+  useEffect(()=>{
   
       if(userData.phoneNumber!==''&&userData.password!==''&& isValid){
          setIsBtnDisabled(false)
@@ -39,7 +41,9 @@ useEffect(()=>{
     const onForgotClicked=()=>{
       setIsForgetPasswordClicked(true)
     }
-   
+     
+    UseKey('Enter',handleSubmit)
+
   return (
     <>{!isForgetPasswordClicked? <Box sx={style.adminLoginContainer}>  
       <Paper sx={style.adminLoginLogoContainer}>

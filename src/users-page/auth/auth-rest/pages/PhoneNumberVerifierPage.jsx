@@ -13,6 +13,7 @@ import { useDispatch} from 'react-redux';
 import { findConsulterPhoneNumber, findPhoneNumber, setNavigateIdentifier, setNavigateValue, setSignUpNumber } from '../../../../redux/features/authSlice';
 import OtpVerifierPage from './OtpVerifierPage';
 import { findSAdminPhoneNumber } from '../../../../redux/features/adminSlice';
+import UseKey from '../../../../hooks/keyEvents';
 const PhoneNumberVerifierPage= ({navigateTo,secondNavigate,restIdentifier}) => {
 
   const navigate=useNavigate()
@@ -81,6 +82,9 @@ const PhoneNumberVerifierPage= ({navigateTo,secondNavigate,restIdentifier}) => {
       dispatch(setNavigateIdentifier(restIdentifier)) 
    }
    
+  UseKey('Enter',onSubmit)
+
+
   return (
     <>
     {!isOTPCodeSent?

@@ -19,7 +19,7 @@ import { homePageStyle } from './style/home'
 const HomePage = () => {
 
   const [isScrolling,setIsScrolling]=useState(false)
-  const {isLightMode,modeColor} = useSelector(state=>state.auth)
+  const {isLightMode,modeColor,isUserLoggedIn} = useSelector(state=>state.auth)
 
   const navigate = useNavigate()
   const BoxMotion = motion(Box);
@@ -53,14 +53,16 @@ const HomePage = () => {
                  Online.Join Infinity Today!</span>
               </Typography>
               </Box>
-              <Box sx={{marginTop:'20px'}}>
-               <ButtonStyled  
-                  btnWidth={'200px'} 
-                  label={'JoinUs'} 
-                  bgColor={'#1A6CE8'}
-                  setValue={()=>navigate('/signUp')}
-                />
-              </Box>
+              {!isUserLoggedIn?
+                <Box sx={{marginTop:'20px'}}>
+                 <ButtonStyled  
+                   btnWidth={'200px'} 
+                   label={'JoinUs'} 
+                   bgColor={'#1A6CE8'}
+                   setValue={()=>navigate('/signUp')}
+                 />
+               </Box>:''
+              }
             </motion.div>
          </Box>
          <Box

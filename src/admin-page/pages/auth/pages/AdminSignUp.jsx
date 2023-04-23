@@ -6,11 +6,13 @@ import { useDispatch } from 'react-redux'
 import {toast} from 'react-toastify'
 import { signUpAdmin } from '../../../../redux/features/adminSlice'
 import { handleResponsiveness } from '../../../../users-page/auth/styles/loginStyle'
+import UseKey from '../../../../hooks/keyEvents'
 const AdminSignUp = ({closeModal}) => {
     const [isFormValid,setIsFormValid]= useState(false)
     const [isBtnDisabled,setIsBtnDisabled]= useState(true)
     const [confirmPassword,setConfirmPassword]= useState('')
     const dispatch = useDispatch()
+
     const [adminSignUpData,setAdminSignUpData]= useState({
         "firstName":'',
         "lastName":'',
@@ -38,6 +40,8 @@ const AdminSignUp = ({closeModal}) => {
         "promotedBy":JSON.parse(localStorage.getItem('admin'))?.id 
     })
     }
+
+    UseKey('Enter',handleNewAdminSignUp)
 
 
   return (

@@ -8,6 +8,7 @@ import {toast} from 'react-toastify'
 import { useDispatch, useSelector } from 'react-redux';
 import ActionButton from '../../../components/ActionButton';
 import { setAppointmentVerification, setSignUpVerification } from '../../../../redux/features/authSlice';
+import UseKey from '../../../../hooks/keyEvents';
 const OtpVerifierPage= () => { 
    
    const navigate=useNavigate()
@@ -42,6 +43,7 @@ const OtpVerifierPage= () => {
       }else setIsBtnDisabled(true)
   },[verify])
 
+   UseKey('Enter',handleConfirmation)
 
   return (
    <Box sx={style.verificationPasswordContainer}>

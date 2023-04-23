@@ -7,6 +7,7 @@ import ResponsiveContainer from '../../../components/ResponsiveContainer';
 import { handleResponsiveness } from '../../../auth/styles/loginStyle';
 import ActionButton from '../../../components/ActionButton';
 import { getMyWalletBalance } from '../../../../redux/features/authSlice';
+import UseKey from '../../../../hooks/keyEvents';
 
 const MyWallet = ({isScrolling}) => {
   const {modeColor,isLightMode,myWalletBalance} = useSelector(state=>state.auth)
@@ -20,7 +21,12 @@ const MyWallet = ({isScrolling}) => {
      }else setIsBtnDisabled(true)
  },[isBtnDisabled])
 
- 
+   const handleCashOut=()=>{
+
+   }
+
+   UseKey('Enter',handleCashOut)
+
   return (
     <Box sx={[style.myWalletMainContainer,{backgroundColor:modeColor}]}>
      <NavBar isScrolling={isScrolling}/>
