@@ -34,7 +34,8 @@ import UseKey from '../../../hooks/keyEvents'
     password:"",
     gender:"",
    })
-
+   
+   console.log(signUpNumber);
    
    const handleSubmit=()=>{
     

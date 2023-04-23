@@ -20,7 +20,7 @@ const style ={
     alignItems:'center',
     flexDirection:'row',
     gap:'50px',
-    borderRadius:handleResponsiveness('0px','100px 50px 150px 50px'),
+    borderRadius:handleResponsiveness('0px','100px 50px 0px 50px'),
     overflowX:handleResponsiveness('scroll','hidden'),
     overflowY:'hidden',
   },

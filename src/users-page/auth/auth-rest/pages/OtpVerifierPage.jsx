@@ -43,7 +43,6 @@ const OtpVerifierPage= () => {
       }else setIsBtnDisabled(true)
   },[verify])
 
-   UseKey('Enter',handleConfirmation)
 
   return (
    <Box sx={style.verificationPasswordContainer}>

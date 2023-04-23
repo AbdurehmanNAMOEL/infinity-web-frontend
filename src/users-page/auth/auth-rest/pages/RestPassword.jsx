@@ -40,7 +40,6 @@ const RestPassword = () => {
      }else setIsBtnDisabled(true)
   },[newPasswordData,isValid])
 
-  UseKey('Enter',handleRestingPassword)
 
 
   return (

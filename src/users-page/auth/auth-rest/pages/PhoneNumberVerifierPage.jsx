@@ -68,6 +68,7 @@ const PhoneNumberVerifierPage= ({navigateTo,secondNavigate,restIdentifier}) => {
   },[phoneNumber,isFormValid])
 
    const onSubmit=()=>{
+    console.log(phoneNumber);
     if(restIdentifier==='signUp' || restIdentifier ==='user'){
        if(restIdentifier==='signUp'){
           dispatch(setSignUpNumber(phoneNumber))
@@ -82,7 +83,6 @@ const PhoneNumberVerifierPage= ({navigateTo,secondNavigate,restIdentifier}) => {
       dispatch(setNavigateIdentifier(restIdentifier)) 
    }
    
-  UseKey('Enter',onSubmit)
 
 
   return (

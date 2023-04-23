@@ -29,18 +29,24 @@ const AboutUs = () => {
       <ResponsiveContainer>
         <Box sx={[aboutUsStyle.proverbContainer,{backgroundColor:`${isLightMode?"white":'#333333'}`}]}>
          <Divider sx={aboutUsStyle.divider}/>
-         <Typography variant='h6' sx={{width:'90%',color:`${isLightMode?'#1e1e1e':'white'}`}}>
+         <Typography sx={{width:'90%',fontSize:handleResponsiveness('14px','22px'),
+          color:`${isLightMode?'#1e1e1e':'white'}`}}>
           "Knowledge is power. Information is liberating. 
           Education is the premise of progress, in every society, 
           in every family"
-          <Typography>.Kofi Annan</Typography>
+          <Typography sx={{fontSize:handleResponsiveness('14px','22px'),marginBottom:'20px'}}>
+            .Kofi Annan
+          </Typography>
           </Typography>
         </Box>
         <Box sx={[aboutUsStyle.infinityContainer,{backgroundColor:`${isLightMode?"white":'#333333'}`}]}>
          <Box sx={{width:'90%',display:'flex'}}>
-           <Typography variant='h5' sx={{fontWeight:'bold',marginBottom:'16px',color:'#1A6CE8'}}>Infinity</Typography> 
+           <Typography variant='h5' 
+            sx={{fontWeight:'bold',marginTop:'10px',marginBottom:'16px',color:'#1A6CE8'}}>
+              Infinity
+            </Typography> 
            </Box>
-         <Typography  sx={{width:'90%',fontWeight:'400',color:`${isLightMode?'#1e1e1e':'white'}`}}>
+         <Typography  sx={{width:'90%',marginBottom:'20px',fontSize:handleResponsiveness('14px','18px'),fontWeight:'400',color:`${isLightMode?'#1e1e1e':'white'}`}}>
             In this era and on the coming time to achieving your  
             goal information is the main key and getting this 
             information well organized high quality is very hard  
@@ -73,9 +79,9 @@ const AboutUs = () => {
         <Box sx={{width:'90%',display:'flex'}}>
            <Typography 
               variant='h5' 
-              sx={{fontWeight:'bold',marginBottom:'16px',color:'#1A6CE8'}}>Mission</Typography> 
+              sx={{fontWeight:'bold',marginTop:'10px',marginBottom:'16px',color:'#1A6CE8'}}>Mission</Typography> 
            </Box>
-         <Typography sx={{width:'90%',fontSize:'16px',fontWeight:'400',color:`${isLightMode?'#1e1e1e':'white'}`}}>
+         <Typography sx={{width:'90%',marginBottom:'20px',fontSize:{xs:'14px',md:'16px'},fontWeight:'400',color:`${isLightMode?'#1e1e1e':'white'}`}}>
           <ul style={{listStyle:'none',display:'flex',flexDirection:'column',gap:'10px'}}>
             <li>To Provide in-depth research that centres decision-making on facts and insights.</li>
              <li>To Support the creation and monitoring of appropriate Product metrics</li>
@@ -89,17 +95,23 @@ const AboutUs = () => {
           <Box sx={{width:'90%',display:'flex'}}>
            <Typography 
              variant='h5' 
-             sx={{fontWeight:'bold',marginBottom:'16px',color:'#1A6CE8'}}>Vision</Typography> 
+             sx={{fontWeight:'bold',marginTop:'10px',marginBottom:'16px',color:'#1A6CE8'}}>Vision</Typography> 
            </Box>
-         <Typography variant='h6' sx={{width:'90%',fontWeight:'400',color:`${isLightMode?'#1e1e1e':'white'}`}}>
+         <Typography 
+           sx={{
+            width:'90%',
+            marginBottom:'20px',
+            fontWeight:'400',
+            fontSize:{xs:'16px',md:'20px'},
+            color:`${isLightMode?'#1e1e1e':'white'}`}}>
             Renovate the world of Data through intelligence for better decisions!
           </Typography>
         </Box>
       </ResponsiveContainer>
-      <Typography sx={{width:'90%',fontSize:'32px',color:'#1A6CE8',fontWeight:'bold',marginBottom:'20px' }}>
+      <Typography sx={{width:'90%',marginTop:'20px',fontSize:'32px',color:'#1A6CE8',fontWeight:'bold',marginBottom:'20px' }}>
         Road Map
       </Typography>
-      <Box sx={{width:'100%'}}>
+      <Box sx={{width:'100%',marginBottom:'20px'}}>
        <RoadMap/>
       </Box>
        <Typography 

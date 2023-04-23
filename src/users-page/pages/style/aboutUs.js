@@ -26,7 +26,7 @@ export const aboutUsStyle ={
 
   },
   missionMainContainer:{
-     width:handleResponsiveness('100%','45%'),
+     width:handleResponsiveness('95%','45%'),
      height:handleResponsiveness('auto','70%'),
      display:'flex',
      justifyContent:'center',
@@ -35,7 +35,7 @@ export const aboutUsStyle ={
 
   },
   visionMainContainer:{
-    width:handleResponsiveness('100%','50%'),
+    width:handleResponsiveness('95%','50%'),
      height:handleResponsiveness('auto','70%'),
      display:'flex',
      justifyContent:'center',
@@ -81,7 +81,7 @@ export const aboutUsStyle ={
   },
 
   proverbContainer:{ 
-    width:handleResponsiveness('100%','40%'),
+    width:handleResponsiveness('95%','40%'),
     height:handleResponsiveness('auto','65%'),
     display:'flex',
     justifyContent:'center',
@@ -96,11 +96,13 @@ export const aboutUsStyle ={
     backgroundColor:'#1A6CE8'
   },
   infinityContainer:{ 
-    width:handleResponsiveness('100%','50%'),
+    width:handleResponsiveness('95%','50%'),
     height:handleResponsiveness('auto','65%'),
     display:'flex',
     justifyContent:'center',
     flexDirection:'column',
     alignItems:'center',
+    marginTop:'10px',
+    marginBottom:'10px'
 }
 }

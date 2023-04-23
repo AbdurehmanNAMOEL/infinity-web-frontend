@@ -13,9 +13,9 @@ const UseKey=(key,cb)=>{
         if(e.code===key)
         callbackRef.current(e)
      }
-    document.addEventListener('keypress',handleKeyPress,true)
+    document.addEventListener('keydown',handleKeyPress,true)
  
-     return () => document.removeEventListener('keypress',handleKeyPress)
+     return () => document.removeEventListener('keydown',handleKeyPress)
   },[key])
 }
 
