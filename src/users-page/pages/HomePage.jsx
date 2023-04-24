@@ -33,7 +33,9 @@ const HomePage = () => {
   const handleSurveyTime=()=> navigate('/survey')
     
   return (
-    <Box sx={{width:'100%',display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center',height:'auto',overflowX:'hidden',backgroundColor:modeColor}}>
+    <Box sx={{
+      width:'100%',display:'flex',flexDirection:'column',justifyContent:'center',
+    alignItems:'center',height:'auto',overflowX:'hidden',backgroundColor:modeColor}}>
      <Box sx={{width:'100%'}}><NavBar isScrolling={isScrolling}/></Box> 
       <Box sx={homePageStyle.homeLandingPage}>
          <Box sx={homePageStyle.homeLeftLadingPageContainer}>
@@ -76,6 +78,7 @@ const HomePage = () => {
                  loading="lazy"
                  sx={{width:'100%',height:'80%'}}
                  image={HomePhoto}
+                 
                  />
             </motion.div>
          </Box>
@@ -205,8 +208,11 @@ const HomePage = () => {
              backgroundColor:modeColor,
              boxShadow:'none'
              }}>
-              <CardMedia image={CourseRegImage} 
-               sx={{width:'100%',height:'100%'}}/>
+              <CardMedia 
+                image={CourseRegImage} 
+                loading={'lazy'}
+                sx={{width:'100%',height:'100%'}}
+               />
              </Card>
            </Box>
          </Box>

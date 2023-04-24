@@ -1,46 +1,53 @@
 import { Box } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { Suspense, lazy, useEffect, useState } from 'react';
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
 import {BrowserRouter as Router ,Routes,Route} from 'react-router-dom'
-import DashBoard from './admin-page/pages/DashBoard';
-import Users from './admin-page/pages/Users';
-import QuestionnairePage from './admin-page/pages/question/QuestionnairePage';
-import ChartHomePage from './admin-page/pages/chart/chartHomepage/ChartHomePage';
-import HomePage from './users-page/pages/HomePage';
-import { Login } from './users-page/auth/page/Login';
-import AboutUs from './users-page/pages/AboutUs';
-import SignUp from './users-page/auth/page/SignUp';
-import SurveyHome from './users-page/pages/survey/SurveyHome';
-import AdminHome from './admin-page/pages/AdminHome';
 import PrivateRoute from './users-page/privateRoute/PrivateRoute';
-import { useSelector } from 'react-redux';
-import PrivacyPolicyHome from './users-page/pages/policy/PrivacyPolicyHome';
-import AdminLogin from './admin-page/pages/auth/pages/AdminLogin';
 import AdminPrivateRoute from './admin-page/privateRoute/AdminPrivateRoute';
-import SurveyDetail from './users-page/pages/survey/SurveyDetail';
+import { useSelector } from 'react-redux';
 import ScrollToTop from './shared/Components/ScrollToTop';
 import LoadingPage from './shared/Components/LoadingPage';
-import RestPassword from './users-page/auth/auth-rest/pages/RestPassword';
-import FeedBackPage from './admin-page/pages/FeedBackPage';
-import QuestionList from './admin-page/pages/question/QuestionList';
-import QuestionAnswered from './admin-page/pages/question/QuestionAnswered';
-import ProfilePage from './users-page/user_info_pages/pages/profile/ProfilePage';
-import UserProfileSubmissionPage from './users-page/auth/page/UserProfileSubmissionPage';
-import ConsultantSechdulingPage from './admin-page/pages/appointment/ConsultantSechdulingPage';
-import UserFeedBack from './users-page/pages/UserFeedBack';
-import MyWallet from './users-page/user_info_pages/pages/wallet/MyWallet';
-import Modal from './admin-page/components/Modal';
-import Setting from './admin-page/pages/Setting';
-import PhoneNumberVerifierPage from './users-page/auth/auth-rest/pages/PhoneNumberVerifierPage';
 
-import OtpVerifierPage from './users-page/auth/auth-rest/pages/OtpVerifierPage';
-import UserAppointment from './users-page/pages/Appointment/UserAppointment';
-import PageIsNotFound from './users-page/pages/PageIsNotFound';
-import Appointment from './admin-page/pages/appointment/Appointment';
-import Registration from './users-page/pages/Appointment/Registration';
-import MySurveyList from './users-page/user_info_pages/pages/mySurveyList/MySurveyList';
+
+
+
+const HomePage =lazy (()=>import('./users-page/pages/HomePage'))
+const  DashBoard =lazy (()=>import('./admin-page/pages/DashBoard'))
+const Users =lazy (()=>import('./admin-page/pages/Users'))
+const QuestionnairePage =lazy (()=>import('./admin-page/pages/question/QuestionnairePage'))
+const ChartHomePage =lazy (()=>import('./admin-page/pages/chart/chartHomepage/ChartHomePage'))
+const  Login =lazy (()=>import('./users-page/auth/page/Login'))
+const AboutUs =lazy (()=>import('./users-page/pages/AboutUs'))
+const  SignUp =lazy (()=>import( './users-page/auth/page/SignUp'))
+const SurveyHome =lazy (()=>import('./users-page/pages/survey/SurveyHome'))
+const  AdminHome =lazy (()=>import('./admin-page/pages/AdminHome'))
+const PrivacyPolicyHome =lazy (()=>import('./users-page/pages/policy/PrivacyPolicyHome'))
+const AdminLogin =lazy (()=>import('./admin-page/pages/auth/pages/AdminLogin'))
+const  SurveyDetail =lazy (()=>import('./users-page/pages/survey/SurveyDetail'))
+const RestPassword =lazy (()=>import('./users-page/auth/auth-rest/pages/RestPassword'))
+const  FeedBackPage =lazy (()=>import('./admin-page/pages/FeedBackPage'))
+const  QuestionList =lazy (()=>import('./admin-page/pages/question/QuestionList'))
+const QuestionAnswered =lazy (()=>import('./admin-page/pages/question/QuestionAnswered'))
+const ProfilePage =lazy (()=>import('./users-page/user_info_pages/pages/profile/ProfilePage'))
+const UserProfileSubmissionPage =lazy (()=>import('./users-page/auth/page/UserProfileSubmissionPage'))
+const ConsultantSechdulingPage =lazy (()=>import('./admin-page/pages/appointment/ConsultantSechdulingPage'))
+const UserFeedBack =lazy (()=>import('./users-page/pages/UserFeedBack'))
+const MyWallet =lazy (()=>import('./users-page/user_info_pages/pages/wallet/MyWallet'))
+const  Modal =lazy (()=>import('./admin-page/components/Modal'))
+const  Setting =lazy (()=>import('./admin-page/pages/Setting'))
+const PhoneNumberVerifierPage =lazy (()=>import('./users-page/auth/auth-rest/pages/PhoneNumberVerifierPage'))
+const OtpVerifierPage =lazy (()=>import('./users-page/auth/auth-rest/pages/OtpVerifierPage'))
+const UserAppointment =lazy (()=>import('./users-page/pages/Appointment/UserAppointment'))
+const PageIsNotFound =lazy (()=>import('./users-page/pages/PageIsNotFound'))
+const  Appointment =lazy (()=>import( './admin-page/pages/appointment/Appointment'))
+const  Registration =lazy (()=>import('./users-page/pages/Appointment/Registration'))
+const MySurveyList =lazy (()=>import('./users-page/user_info_pages/pages/mySurveyList/MySurveyList'))
+
+
+
+
 function App() {
    const [isDrawerOpen,setDrawerOpen]=useState(true)
    const {isLightMode,modeColor,loading}= useSelector(state=>state.auth)
@@ -69,8 +76,9 @@ function App() {
       <Router>
            <ScrollToTop/>
         <ToastContainer/>
-      
+      <Suspense fallback={<LoadingPage/>}>
        <Routes>
+   
         <Route 
           path='adminLogin' 
           element={<AdminLogin/>}/>
@@ -208,6 +216,7 @@ function App() {
              element={<PageIsNotFound/>}
            />
        </Routes>
+       </Suspense>
       </Router>
      
     </Box>
