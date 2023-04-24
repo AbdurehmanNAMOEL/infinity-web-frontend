@@ -35,7 +35,6 @@ const UserProfileSubmissionPage =lazy (()=>import('./users-page/auth/page/UserPr
 const ConsultantSechdulingPage =lazy (()=>import('./admin-page/pages/appointment/ConsultantSechdulingPage'))
 const UserFeedBack =lazy (()=>import('./users-page/pages/UserFeedBack'))
 const MyWallet =lazy (()=>import('./users-page/user_info_pages/pages/wallet/MyWallet'))
-const  Modal =lazy (()=>import('./admin-page/components/Modal'))
 const  Setting =lazy (()=>import('./admin-page/pages/Setting'))
 const PhoneNumberVerifierPage =lazy (()=>import('./users-page/auth/auth-rest/pages/PhoneNumberVerifierPage'))
 const OtpVerifierPage =lazy (()=>import('./users-page/auth/auth-rest/pages/OtpVerifierPage'))
