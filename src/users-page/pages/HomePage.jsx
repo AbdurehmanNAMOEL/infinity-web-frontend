@@ -76,6 +76,7 @@ const HomePage = () => {
              transition={{ duration:1.5}} 
              style={homePageStyle.homeLandingPageImageContainer}>
                <CardMedia 
+                 loading="lazy"
                  sx={{width:'100%',height:'80%'}}
                  image={HomePhoto}
                  
@@ -209,6 +210,7 @@ const HomePage = () => {
              boxShadow:'none'
              }}>
               <CardMedia 
+                loading="lazy"
                 image={CourseRegImage} 
                 sx={{width:'100%',height:'100%'}}
                />
@@ -229,9 +231,10 @@ const HomePage = () => {
               transform:handleResponsiveness('0','rotate(-10deg)'),
               boxShadow:'none'}}>
               <CardMedia
-              image={mobileApp} 
-              sx={{width:handleResponsiveness('80%','100%'),
-              height:'100%'}}/>
+               loading="lazy"
+               image={mobileApp} 
+               sx={{width:handleResponsiveness('80%','100%'),
+               height:'100%'}}/>
              </Card>
            </Box>
 
