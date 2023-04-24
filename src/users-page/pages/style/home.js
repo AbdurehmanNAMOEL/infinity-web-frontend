@@ -112,13 +112,40 @@ export const homePageStyle={
     marginBottom:'5px',
     marginTop:'50px'
   },
+
+  mobileAppContainer:{
+    width:'80%',
+    height:handleResponsiveness('auto','300px'),
+    backgroundColor:'white',
+    display:'flex',
+    flexDirection:handleResponsiveness('column','row'),
+    justifyContent:'center',
+    alignItems:'center',
+    gap:'20px',
+    marginBottom:'50px',
+    marginTop:'90px',
+    borderRadius:'30px',
+  },
+
   registrationInnerContainers:{
     width:handleResponsiveness('100%','50%'),
-    height:handleResponsiveness('200px','100%'),
+    height:handleResponsiveness('300px','100%'),
     display:'flex',
     justifyContent:'center',
     alignItems:'center',
     backgroundColor:'white',
+  },
+
+  appImageInnerContainers:{
+    width:handleResponsiveness('100%','50%'),
+    height:handleResponsiveness('auto','100%'),
+    display:'flex',
+    justifyContent:'center',
+    alignItems:'center',
+ 
+   
+    
+
   },
   surveyTimeMainContainer:{
     width:'100%',

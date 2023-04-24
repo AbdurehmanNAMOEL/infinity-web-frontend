@@ -10,6 +10,7 @@ import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import FactCheckIcon from '@mui/icons-material/FactCheck';
 import CourseRegImage from '../../assets/image/course.png'
+import mobileApp from '../../assets/image/mobile-app.png'
 import Footer from '../components/Footer'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
@@ -32,8 +33,8 @@ const HomePage = () => {
   const handleSurveyTime=()=> navigate('/survey')
     
   return (
-    <Box sx={{width:'100%',height:'auto',overflowX:'hidden',backgroundColor:modeColor}}>
-     <NavBar isScrolling={isScrolling}/>
+    <Box sx={{width:'100%',display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center',height:'auto',overflowX:'hidden',backgroundColor:modeColor}}>
+     <Box sx={{width:'100%'}}><NavBar isScrolling={isScrolling}/></Box> 
       <Box sx={homePageStyle.homeLandingPage}>
          <Box sx={homePageStyle.homeLeftLadingPageContainer}>
             <motion.div
@@ -198,11 +199,60 @@ const HomePage = () => {
               </Box>
            </Box>
            <Box sx={[homePageStyle.registrationInnerContainers,{backgroundColor:modeColor}]}>
-             <Card sx={{width:'80%',height:'100%',backgroundColor:modeColor}}>
-              <CardMedia image={CourseRegImage} sx={{width:'100%',height:'100%'}}/>
+             <Card sx={{
+             width:handleResponsiveness('75%','80%'),
+             height:handleResponsiveness('100%','100%'),
+             backgroundColor:modeColor,
+             boxShadow:'none'
+             }}>
+              <CardMedia image={CourseRegImage} 
+               sx={{width:'100%',height:'100%'}}/>
              </Card>
            </Box>
-      </Box>
+         </Box>
+
+
+       <Box sx={[homePageStyle.mobileAppContainer,{backgroundColor:`${isLightMode?'#DFDFDF':'#333333'}`}]}>
+          
+          <Box sx={[homePageStyle.appImageInnerContainers,{backgroundColor:`${isLightMode?'#DFDFDF':'#333333'}`}]}>
+             <Card sx={{
+              width:handleResponsiveness('150px','16%'),
+              bgcolor:'rgba(0,0,0,0)',
+              position:handleResponsiveness('relative','absolute'),
+              height:handleResponsiveness('250px','70%'), 
+              marginTop:handleResponsiveness('-50px','-100px'),
+              transform:handleResponsiveness('0','rotate(-10deg)'),
+              boxShadow:'none'}}>
+              <CardMedia image={mobileApp} 
+              sx={{width:handleResponsiveness('80%','100%'),
+              height:'100%'}}/>
+             </Card>
+           </Box>
+
+           <Box sx={[homePageStyle.appImageInnerContainers,{backgroundColor:`${isLightMode?'#DFDFDF':'#333333'}`}]}>
+              <Box sx={{width:handleResponsiveness('90%','70%'),backgroundColor:`${isLightMode?'#DFDFDF':'#333333'}`}}>
+                  <Typography 
+                    sx={{marginBottom:'10px',fontSize:handleResponsiveness('18px','20px'),
+                      color:`${isLightMode?'#1e1e1e':'white'}`
+                      }}>
+                   To make your survey experience Very fast try to download our app
+                   from app store
+                    </Typography>
+                  <Box sx={{marginBottom:'40px'}}>  
+                  <ButtonStyled 
+                   bgColor={'#1A6CE8'} 
+                   label={'Download Link'}
+                   btnWidth={'200px'}
+                   setValue={()=>navigate('https://play.google.com/store/apps/details?id=com.google.android.apps.paidtasks')}
+                   />
+                   </Box>
+              </Box>
+           </Box>
+         
+         </Box>
+
+         
+      
       <Footer/>
     </Box>
   )

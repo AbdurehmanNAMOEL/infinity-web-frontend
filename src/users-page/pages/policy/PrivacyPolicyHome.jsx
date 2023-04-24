@@ -169,23 +169,7 @@ const PrivacyPolicyHome = () => {
             
               </Box>
             </Box>
-            </Box>    
-            <Box 
-             sx={
-            { 
-              width:'80%',
-              display:'flex',
-              justifyContent:'center',
-              alignItems:'center',
-              marginBottom:'50px',
-              marginTop:'16px'
-            }}>
-              <ButtonStyled
-               label={'Agreed'}
-               bgColor='#1A6CE8'
-               setValue={()=>navigate('/signUp')}
-              />
-            </Box>        
+            </Box>           
       </Box>
  
   )
@@ -212,6 +196,7 @@ const style ={
     width:handleResponsiveness('90%','80%'),
     height:'auto',
     marginTop:'100px',
+    marginBottom:'60px'
   },
   mainTitle:{
     fontSize:handleResponsiveness('1.3rem','40px'),
