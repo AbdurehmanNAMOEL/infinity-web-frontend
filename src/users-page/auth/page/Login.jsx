@@ -15,7 +15,7 @@ import PhoneNumberVerifierPage from '../auth-rest/pages/PhoneNumberVerifierPage'
 import UseKey from '../../../hooks/keyEvents'
 
 
-export const Login = ({isSideBarOpen,setIsSideBarOpen,handleSideBarNavigation,navTitle}) => {
+ const Login = ({isSideBarOpen,setIsSideBarOpen,handleSideBarNavigation,navTitle}) => {
    const navigate = useNavigate()
    const dispatch= useDispatch()
    const [isFormValid,setFormValidation]=useState(false)
@@ -194,3 +194,4 @@ export const Login = ({isSideBarOpen,setIsSideBarOpen,handleSideBarNavigation,na
   )
 }
 
+export default Login
