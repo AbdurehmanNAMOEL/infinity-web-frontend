@@ -31,7 +31,8 @@ const HomePage = () => {
   })
 
   const handleSurveyTime=()=> navigate('/survey')
-    
+ 
+  
   return (
     <Box sx={{
       width:'100%',display:'flex',flexDirection:'column',justifyContent:'center',
@@ -75,7 +76,6 @@ const HomePage = () => {
              transition={{ duration:1.5}} 
              style={homePageStyle.homeLandingPageImageContainer}>
                <CardMedia 
-                 loading="lazy"
                  sx={{width:'100%',height:'80%'}}
                  image={HomePhoto}
                  
@@ -210,7 +210,6 @@ const HomePage = () => {
              }}>
               <CardMedia 
                 image={CourseRegImage} 
-                loading={'lazy'}
                 sx={{width:'100%',height:'100%'}}
                />
              </Card>
@@ -229,7 +228,8 @@ const HomePage = () => {
               marginTop:handleResponsiveness('-50px','-100px'),
               transform:handleResponsiveness('0','rotate(-10deg)'),
               boxShadow:'none'}}>
-              <CardMedia image={mobileApp} 
+              <CardMedia
+              image={mobileApp} 
               sx={{width:handleResponsiveness('80%','100%'),
               height:'100%'}}/>
              </Card>

@@ -49,7 +49,7 @@ const MySurveyList =lazy (()=>import('./users-page/user_info_pages/pages/mySurve
 
 function App() {
    const [isDrawerOpen,setDrawerOpen]=useState(true)
-   const {isLightMode,modeColor,loading}= useSelector(state=>state.auth)
+   const {modeColor,loading}= useSelector(state=>state.auth)
    const [isScrolling,setIsScrolling]=useState(false)
    const [surveyData, setSurveyDetailData] = useState([])
    const closeDrawer=()=>setDrawerOpen(prev=>!prev)
