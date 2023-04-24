@@ -232,7 +232,7 @@ const HomePage = () => {
            <Box sx={[homePageStyle.appImageInnerContainers,{backgroundColor:`${isLightMode?'#DFDFDF':'#333333'}`}]}>
               <Box sx={{width:handleResponsiveness('90%','70%'),backgroundColor:`${isLightMode?'#DFDFDF':'#333333'}`}}>
                   <Typography 
-                    sx={{marginBottom:'10px',fontSize:handleResponsiveness('18px','20px'),
+                    sx={{marginBottom:'10px',fontSize:handleResponsiveness('14px','20px'),
                       color:`${isLightMode?'#1e1e1e':'white'}`
                       }}>
                    To make your survey experience Very fast try to download our app

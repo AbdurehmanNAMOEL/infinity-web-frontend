@@ -1,13 +1,10 @@
 import { Box, Typography } from '@mui/material'
 import React from 'react'
-import ButtonStyled from '../../components/ButtonStyled'
 import NavBar from '../../components/NavBar'
-import {useNavigate} from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { handleResponsiveness } from '../../auth/styles/loginStyle'
 
 const PrivacyPolicyHome = () => {
-   const navigate= useNavigate()
    const {isLightMode,modeColor} = useSelector(state=>state.auth)
   return (
     <Box sx={[style.privacyMainContainer,{backgroundColor:modeColor}]}>
