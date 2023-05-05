@@ -215,7 +215,7 @@ export const findPhoneNumber = createAsyncThunk('auth/findPhoneNumber',async({
           return response.data
         
     } catch (error) {
-        toast.error(error.response.data)    
+        toast.error(error.response.data.error.message)    
     }
 })
 

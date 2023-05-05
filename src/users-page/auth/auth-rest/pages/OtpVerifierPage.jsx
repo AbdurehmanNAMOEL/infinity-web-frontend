@@ -70,7 +70,7 @@ const OtpVerifierPage= () => {
              isBtnDisabled={isBtnDisabled}
             />
            </Box>
-        <Typography  sx={{
+        {/* <Typography  sx={{
           width:'70%',
           display:'flex',
           justifyContent:'flex-end',
@@ -78,7 +78,7 @@ const OtpVerifierPage= () => {
           cursor:'pointer'
           }}>
           Resend code
-        </Typography>
+        </Typography> */}
       </Paper>
       </Box>
     </Box>

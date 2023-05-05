@@ -38,7 +38,7 @@ const SideBar = ({isDrawerOpen,closeDrawer,drawerWidth}) => {
     <Drawer
      open={{xs:!isDrawerOpen,md:isDrawerOpen}}
      onClose={closeDrawer}   
-     variant='persistent' 
+     variant='persistent'
      sx={{
         zIndex:8000,
         height:handleResponsiveness('100vh','auto',),

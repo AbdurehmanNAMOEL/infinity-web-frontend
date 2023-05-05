@@ -31,7 +31,6 @@ const PhoneNumberVerifierPage= ({navigateTo,secondNavigate,restIdentifier}) => {
        'callback': (response) => {
         // reCAPTCHA solved, allow signInWithPhoneNumber.
              navigate('/verify')
-              console.log('here!!')
         },
        'expired-callback': () => {
        // Response expired. Ask user to solve reCAPTCHA again.
@@ -54,8 +53,7 @@ const PhoneNumberVerifierPage= ({navigateTo,secondNavigate,restIdentifier}) => {
        setOTPSetIsCodeSent(true)
         toast.success('successfully sent');
     }).catch((error) => {
-      console.log('hello');
-      console.log(error.message)
+     
       setOTPSetIsCodeSent(false)
     });
 
@@ -68,7 +66,7 @@ const PhoneNumberVerifierPage= ({navigateTo,secondNavigate,restIdentifier}) => {
   },[phoneNumber,isFormValid])
 
    const onSubmit=()=>{
-    console.log(phoneNumber);
+  
     if(restIdentifier==='signUp' || restIdentifier ==='user'){
        if(restIdentifier==='signUp'){
           dispatch(setSignUpNumber(phoneNumber))
@@ -100,7 +98,7 @@ const PhoneNumberVerifierPage= ({navigateTo,secondNavigate,restIdentifier}) => {
        </Box>
        <Box sx={style.cardContainer}>
         <Paper sx={style.forgetPasswordCard}>
-          <Typography sx={{color:'#1A6CE8',fontWeight:'bold'}} variant='h6'>Verifier</Typography>
+          <Typography sx={{color:'#1A6CE8',fontWeight:'bold'}} variant='h6'>Phone number Verifier</Typography>
           <Divider sx={{width:'100%'}}/>
            <InputField
              type={'phoneNumber'}

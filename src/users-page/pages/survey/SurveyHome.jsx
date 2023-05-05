@@ -29,7 +29,6 @@ const SurveyHome = () => {
       navigate('/takeSurvey')
     }
 
-    console.log(survey)
 
    return (
       <Box sx={{ width: '100%', display: 'flex',flexDirection:'column' }}>
@@ -58,7 +57,7 @@ const SurveyHome = () => {
                  <SurveyCard 
                   key={index} 
                   title={item?.title}
-                  questionNumber={item}
+                  question={item}
                   />
                </Grid>
              )}

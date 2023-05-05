@@ -17,8 +17,7 @@ const QuestionAnswered = ({isDrawerOpen,closeDrawer}) => {
     const [isModalOpen,setModalOpen]= useState(false)
     const [isRejected,setIsRejected]= useState(false)
 
- 
-  console.log(answeredSurvey);
+
   return (
     <>
       <Box sx={{ width: '100%',backgroundColor:modeColor, display: 'flex', flexDirection: 'row', height: { md: '100vh', sm: 'auto' } }}>

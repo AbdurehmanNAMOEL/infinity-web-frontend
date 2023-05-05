@@ -70,8 +70,7 @@ useEffect(()=>{
 const handleInputValueChange=(e)=>{
   setValue(e)
   validate(e.target.value,type)
-  
-  console.log(e.target.value);
+ 
 }
 
   return (

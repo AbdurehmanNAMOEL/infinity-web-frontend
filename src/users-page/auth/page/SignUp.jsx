@@ -35,7 +35,7 @@ import UseKey from '../../../hooks/keyEvents'
     gender:"",
    })
    
-   console.log(signUpNumber);
+
    
    const handleSubmit=()=>{
     
@@ -56,8 +56,6 @@ import UseKey from '../../../hooks/keyEvents'
   
         
   useEffect(()=>{
-     console.log(isFormValid)
-     console.log(userData.firstName);
      if(userData.firstName!=='' && userData.lastName!==''&& confirmPassword!==''
        && userData.phoneNumber!=='' && userData.email!==''
        &&userData.password!==''&& userData.gender!==''&& isFormValid && isUserAgreed){

@@ -21,7 +21,6 @@ const Registration = () => {
   
   const dispatch = useDispatch()
 
-  console.log(isPhoneNumberExist);
 
   const [userData,setUserData]= useState({
    type: "",

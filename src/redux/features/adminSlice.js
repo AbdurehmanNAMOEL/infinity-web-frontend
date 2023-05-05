@@ -39,7 +39,7 @@ export const loginAdmin = createAsyncThunk('admin/loginAdmin',async({userData,to
          }
     } catch (error) {
         
-        toast.error(error.response.data.error.message)    
+      toast.error(error.response.data.error.message)   
     }
 })
 

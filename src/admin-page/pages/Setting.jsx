@@ -70,17 +70,25 @@ const Setting=({isDrawerOpen,closeDrawer})=> {
             
         <Box sx={{position:'fixed',height:'100vh',width:`${isDrawerOpen?100:100}%`,zIndex:200}}> 
          <Header closeDrawer={()=>closeDrawer(prev=>!prev)}/>
-         <Box sx={{display:'flex',flexDirection:'column',height:'100vh',overflowY:'scroll'}}>
+         <Box sx={{
+          width:{xs:'98%',md:!isDrawerOpen?'98%':'80%'},
+          display:'flex',
+          flexDirection:{xs:'column',md:'row'},
+          height:'80vh',
+          overflowY:handleResponsiveness('scroll','hidden'),
+          marginTop:'90px'
+          }}>
          <Paper sx={{
-            marginTop:handleResponsiveness('120px','100px'),
+            marginTop:handleResponsiveness('120px','60px'),
             width:handleResponsiveness('90%','50%'),
-            marginLeft:handleResponsiveness('5%','15%')}}>
+            height:'350px',
+            marginLeft:handleResponsiveness('5%','5%')}}>
            <Box sx={
             {width:'100%',
              height:'200px',
              display:'flex',
              marginTop:'20px',
-             flexDirection:handleResponsiveness('column','row'),
+             flexDirection:'column',
              justifyContent:'space-around',
              alignItems:'center',
           
@@ -93,7 +101,7 @@ const Setting=({isDrawerOpen,closeDrawer})=> {
               justifyContent:'center',
               alignItems:'center',
               gap:'10px',
-              width:handleResponsiveness('100%','50%')
+              width:handleResponsiveness('100%','100%')
 
               }}>   
               <Typography sx={{fontSize:'16px',width:'80%'}}>RewardPerCredit(EB)</Typography>
@@ -112,7 +120,7 @@ const Setting=({isDrawerOpen,closeDrawer})=> {
             justifyContent:'center',
             alignItems:'center',
             gap:'10px',
-            width:handleResponsiveness('100%','50%')
+            width:handleResponsiveness('100%','100%')
             }}>   
             <Typography sx={{fontSize:'16px',width:'80%'}}>MinAmountForCashOut(EB)</Typography>
             <Box sx={{width:'80%'}}>
@@ -125,7 +133,13 @@ const Setting=({isDrawerOpen,closeDrawer})=> {
              </Box>
            </Box>
            </Box>
-           <Box sx={{width:'100%',display:'flex',justifyContent:'center',height:'50px',marginTop:'40px'}}>
+           <Box sx={{
+            width:'100%',
+            display:'flex',
+            justifyContent:'center',
+            height:'50px',marginTop:'40px'
+            
+            }}>
               <ActionButton
                btnLabel={'Edit'}
                btnWidth={'80%'}
@@ -134,16 +148,17 @@ const Setting=({isDrawerOpen,closeDrawer})=> {
               />
            </Box>
          </Paper>
-            <Paper sx={{width:handleResponsiveness('90%','50%'),
+            <Paper sx={{
+            width:handleResponsiveness('90%','50%'),
             display:'flex',
             flexDirection:'column',
             gap:'16px',
-            marginLeft:handleResponsiveness('5%','15%'),
-            marginTop:'20px',
+            marginLeft:handleResponsiveness('5%','5%'),
             justifyContent:'center',
             alignItems:'center',
             marginBottom:'40px',
-            height:'auto'
+            height:'350px',
+             marginTop:handleResponsiveness('120px','60px'),
           
           }}>
           <Typography sx={{marginTop:'16px',fontWeight:'bolder'}}>UpdatePassword</Typography>
@@ -169,12 +184,16 @@ const Setting=({isDrawerOpen,closeDrawer})=> {
           />
      
         </Box>
-        <Box sx={{width:handleResponsiveness('95%','90%'),marginBottom:'20px'}}>
-          <Divider sx={{width:'100%'}}/>
+        <Box sx={{
+         width:handleResponsiveness('80%','80%'),
+         display:'flex',
+         justifyContent:'flex-start',
+         alignItems:'center',
+         marginBottom:'20px'}}>
          <ActionButton
           btnLabel={'Update'}
           bgColor='#1A6CE8'
-          btnWidth={'95%'}
+          btnWidth={'87%'}
           isBtnDisabled={isPasswordRestBtnDisabled}
           onClick={updateExistingPassword}
          />

@@ -9,7 +9,7 @@ export default function MenuPopupState({handleLogOut,children}) {
     const navigate = useNavigate()
   return (
     <PopupState 
-      sx={{zIndex:8000,width:'300px',position:'absolute'}} 
+      sx={{width:'300px',position:'relative'}} 
       variant="popover" 
       popupId="demo-popup-menu"
       >
@@ -18,7 +18,7 @@ export default function MenuPopupState({handleLogOut,children}) {
         <IconButton {...bindTrigger(popupState)} sx={{borderRadius:'0px'}}>
            {children}
         </IconButton>
-          <Menu sx={{width:'400px',position:'absolute'}} {...bindMenu(popupState)}>
+          <Menu sx={{width:'400px',position:'absolute',zIndex:8000}} {...bindMenu(popupState)}>
              <MenuItem onClick={()=>navigate('/profile')}>My Profile</MenuItem>
              <MenuItem onClick={()=>navigate('/myWallet')}>My Wallet</MenuItem>
              <MenuItem onClick={()=>navigate('/mySurveyList')}>My Survey</MenuItem>

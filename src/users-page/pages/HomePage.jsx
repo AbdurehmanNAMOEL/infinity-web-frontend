@@ -219,9 +219,11 @@ const HomePage = () => {
          </Box>
 
 
-       <Box sx={[homePageStyle.mobileAppContainer,{backgroundColor:`${isLightMode?'#DFDFDF':'#333333'}`}]}>
+       <Box sx={[homePageStyle.mobileAppContainer,
+        {backgroundColor:`${isLightMode?'#DFDFDF':'#333333'}`}]}>
           
-          <Box sx={[homePageStyle.appImageInnerContainers,{backgroundColor:`${isLightMode?'#DFDFDF':'#333333'}`}]}>
+          <Box sx={[homePageStyle.appImageInnerContainers,
+            {backgroundColor:`${isLightMode?'#DFDFDF':'#333333'}`}]}>
              <Card sx={{
               width:handleResponsiveness('150px','16%'),
               bgcolor:'rgba(0,0,0,0)',
@@ -238,8 +240,10 @@ const HomePage = () => {
              </Card>
            </Box>
 
-           <Box sx={[homePageStyle.appImageInnerContainers,{backgroundColor:`${isLightMode?'#DFDFDF':'#333333'}`}]}>
-              <Box sx={{width:handleResponsiveness('90%','70%'),backgroundColor:`${isLightMode?'#DFDFDF':'#333333'}`}}>
+           <Box sx={[homePageStyle.appImageInnerContainers,
+            {backgroundColor:`${isLightMode?'#DFDFDF':'#333333'}`}]}>
+              <Box sx={{width:handleResponsiveness('90%','70%'),
+              backgroundColor:`${isLightMode?'#DFDFDF':'#333333'}`}}>
                   <Typography 
                     sx={{marginBottom:'10px',fontSize:handleResponsiveness('14px','20px'),
                       color:`${isLightMode?'#1e1e1e':'white'}`

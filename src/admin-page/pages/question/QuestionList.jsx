@@ -36,7 +36,7 @@ const QuestionList = ({isDrawerOpen,closeDrawer}) => {
     }
    },[filteringValue,generatedSurvey])
 
-  console.log(generatedSurvey.find(data=>data.title.includes(filteringValue)));
+ 
    const handleSurveyDeletingApproval=()=>{
         setIsDeletingModalOpen(false)
         setIsDeletingApproved(true)

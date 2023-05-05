@@ -11,7 +11,6 @@ const ChoiceCard = ({index,questions,surveyAnswer,type,setSurveyAnswer,id}) => {
   const handleInputValue=(e)=>{
       let isFound = surveyAnswer.find(data=>data.questionId===id)===undefined
       setCheckedValue(e.target.value)
-      console.log(surveyAnswer.find(data=>data.questionId===id)===undefined);
        if(type==='choice'){
        if(isFound){
        
@@ -28,10 +27,7 @@ const ChoiceCard = ({index,questions,surveyAnswer,type,setSurveyAnswer,id}) => {
     }
         
   }
-   useEffect(()=>{
-    console.log(surveyAnswer)
-    },[surveyAnswer,checkedValue])
-    
+
   return (
     <>
  {questions?.type==="choice"?

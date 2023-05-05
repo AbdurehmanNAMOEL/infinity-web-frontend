@@ -10,8 +10,8 @@ const UploadImage = ({title,id,inputValue,type,questionNumber,surveyAnswer,setSu
   let {uploadImageUrl,isImageLoading,isLightMode}= useSelector(state=>state.auth)
   const [imageUrl,setImageUrl]=useState('')
   const dispatch = useDispatch()
-   const [isBtnDisabled,setIsBtnDisabled]=useState(true)
-
+  const [isBtnDisabled,setIsBtnDisabled]=useState(true)
+  const [isImageUploaded,setIsImageUploaded]= useState(false)
   const handleImageInputFieldValue=(e)=>{
        const formData = new FormData();
        formData.append("file",e.target.files[0]);
@@ -46,7 +46,7 @@ const handleUploadImage=()=>{
   }
 
 }
-    
+    setIsImageUploaded(true)
 }
 
   return (
@@ -83,7 +83,7 @@ const handleUploadImage=()=>{
       </Button>
       <Box sx={{width:'90%',marginTop:'10px',marginBottom:'10px'}}>
       <ActionButton
-       btnLabel={'UploadFile'} 
+       btnLabel={ isImageUploaded?'Uploaded':'UploadFile'} 
        isBtnDisabled={isBtnDisabled}
        onClick={handleUploadImage}/>
        </Box>

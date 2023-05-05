@@ -73,7 +73,7 @@ const QuestionnairePage = () => {
     if(question!==''){
        if(questionData.find(item=>item.query===question)===undefined){
          if(questionTitle==='choice'){
-          console.log(answerData.map((item,index)=>item.answer[index]!==''))
+        
            
            if(answerData.find((item,index)=>item.answer==='')===undefined){
              let optionData=[]
@@ -105,7 +105,7 @@ const QuestionnairePage = () => {
         return {...data,'deleteThis':true}
       }else return data
     }))
-    console.log(questionData);
+
   }
 
 const deleteQuestion=(questionTitle)=>{
@@ -150,7 +150,7 @@ const deleteQuestion=(questionTitle)=>{
       'questions':questionData,
        "hasImageQuestion": questionData.find(data=>data.type==='image')!==undefined,
      }
-      console.log(surveyData)
+   
      dispatch(createNewSurvey({surveyData,toast}))
      deleteOrRestNewSurvey()
   }
@@ -170,9 +170,9 @@ const deleteQuestion=(questionTitle)=>{
       'questions':questionData,
        "hasImageQuestion": questionData.find(data=>data.type==='image')!==undefined,
      }
-    console.log(surveyData)
+ 
      let newIdValue=id.split('-')[0]
-     console.log(newIdValue);
+
      dispatch(editSurvey({surveyData,newIdValue,toast}))
      deleteOrRestNewSurvey()
   }
@@ -200,12 +200,28 @@ const deleteQuestion=(questionTitle)=>{
           drawerWidth={isDrawerOpen?200:0}
         />
         <Box sx={{display:'flex',height:'auto',position:'relative',flexDirection:'column'}}>
-        <Box sx={{position:'fixed',height:'100vh',backgroundColor:modeColor,width:`${isDrawerOpen?100:100}%`,zIndex:200}}> 
+        <Box sx={{
+          position:'fixed',
+          height:'100vh',
+          backgroundColor:modeColor,
+          width:`${isDrawerOpen?100:100}%`,
+          zIndex:200
+        }}> 
          <Header  closeDrawer={()=>dispatch(closeDrawer())}/>
-         <Box sx={{height:'90vh',overflowY:'scroll',marginTop:'80px'}}>
+         <Box sx={{
+          width:{xs:'98%',md:!isDrawerOpen?'98%':'85%'},
+          display:'flex',
+          flexDirection:'column',
+          alignItems:'center',
+          height:'90vh',
+          overflowY:'scroll',
+          marginTop:'80px'
+          }}>
          <Paper sx={[style.questionMainTitle,
-          {backgroundColor:modeColor,width:{xs:'100%',md:isDrawerOpen?'80%':'90%'}}]}>
-          <Box sx={{width:handleResponsiveness('100%','15%'),height:'50px'}}>
+          {backgroundColor:modeColor,width:{xs:'100%',md:isDrawerOpen?'90%':'90%'}}]}>
+          <Box sx={{
+             marginTop:'25px',
+            width:handleResponsiveness('100%','15%')}}>
             <InputField
              inputLabel={'Question Title'}
              setValue={(e)=>setQuestionMainTitle(e.target.value)}
@@ -269,7 +285,7 @@ const deleteQuestion=(questionTitle)=>{
          
          </Paper>
        
-         <Paper sx={[style.questionDisplay,{width:{xs:'100%',md:isDrawerOpen?'80%':'90%'}}]}>
+         <Paper sx={[style.questionDisplay,{width:{xs:'100%',md:isDrawerOpen?'90%':'90%'}}]}>
            <Box sx={{
             width:'90%',
             display:'flex',
@@ -279,7 +295,9 @@ const deleteQuestion=(questionTitle)=>{
            
           <Box sx={{width:'90%',display:'flex',justifyContent:'center',alignItems:'center'}}>
             <Typography 
-              sx={{marginRight:'10px',fontSize:handleResponsiveness('14px','24px')}} >{`Q${questionData?.length+1}`}</Typography>  
+              sx={{marginRight:'10px',fontSize:handleResponsiveness('14px','24px')}} >
+                {`Q${questionData?.length+1}`}
+              </Typography>  
               <InputField
                inputLabel={'Enter your Question'}
                setValue={(e)=>setQuestion(e.target.value)}
@@ -309,7 +327,11 @@ const deleteQuestion=(questionTitle)=>{
 
             }}>
              { questionTitle==='choice' && questionType==='userInput'?
-               <Box sx={{width:handleResponsiveness('100%','50%'),display:'flex'}}>
+               <Box sx={{
+                width:handleResponsiveness('100%','50%'),
+                display:'flex',
+                marginLeft:'23px'
+                }}>
                 <InputSelector
                  setValue={(e)=>setAnswerCount(e.target.value)}
                  inputValue={answerCount} 
@@ -348,7 +370,7 @@ const deleteQuestion=(questionTitle)=>{
                bgColor='#1A6CE8'/>
             </Box>
              {questionData?.map((item,index)=>
-              <Paper sx={
+              <Paper key={index} sx={
                 {
                   width:handleResponsiveness('97%','80%'),
                   marginTop:'20px',
@@ -358,7 +380,7 @@ const deleteQuestion=(questionTitle)=>{
                   justifyContent:'space-around',
                   backgroundColor:'white',
                   flexDirection:handleResponsiveness('column','row')
-                  }} key={index} htmlFor="#">
+                  }} htmlFor="#">
                <Typography sx={{
                 width:handleResponsiveness('100%','80%'),
                 fontSize:handleResponsiveness('12px','16px'),
@@ -454,7 +476,7 @@ const style={
       border:'solid 1px rgba(0,0,0,0.5)'
     },
  questionDisplay:{
-      width:handleResponsiveness('100%','80%'),
+      width:handleResponsiveness('100%','90%'),
       marginLeft:'2%',
       height:'auto',
       border:'dashed 2px #1e1e1e',
