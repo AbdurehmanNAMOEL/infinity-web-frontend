@@ -17,7 +17,7 @@ const SelectorInput = ({optionList,selectorWidth,setValue,inputValue,label}) => 
           label={label}
           onChange={setValue}
         >
-         { optionList?.map((item,index)=>
+         {optionList?.map((item,index)=>
            <MenuItem 
              value={item.id}>
               {item.en}

@@ -11,8 +11,6 @@ import ScrollToTop from './shared/Components/ScrollToTop';
 import LoadingPage from './shared/Components/LoadingPage';
 
 
-
-
 const HomePage =lazy (()=>import('./users-page/pages/HomePage'))
 const  DashBoard =lazy (()=>import('./admin-page/pages/DashBoard'))
 const Users =lazy (()=>import('./admin-page/pages/Users'))

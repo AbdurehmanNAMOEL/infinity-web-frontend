@@ -75,7 +75,7 @@ export const setPieChart=(survey,answeredSurvey)=>{
   {
     "id": "Survey",
     "label": "Survey",
-    "value": survey.length,
+    "value": survey?.length,
     "color": "hsl(121, 70%, 50%)"
   },
   {
