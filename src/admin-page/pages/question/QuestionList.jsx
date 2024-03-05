@@ -28,7 +28,7 @@ const QuestionList = ({isDrawerOpen,closeDrawer}) => {
  
 
    useEffect(()=>{
-    let surveyList=generatedSurvey.find(data=>data.title.includes(filteringValue))
+    let surveyList=generatedSurvey?.find(data=>data.title.includes(filteringValue))
     if(filteringValue===''){
       setFilteredSurveyList(generatedSurvey)
     }else if(surveyList!==undefined) {

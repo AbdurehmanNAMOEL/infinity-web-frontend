@@ -139,9 +139,9 @@ const deleteQuestion=(questionTitle)=>{
   
   },[])
 
-    useEffect(()=>{
-       setSurveyFilteredOptionValue(userStaticData[`${surveyFilteringValue}`]) 
-    },[surveyFilteringValue,userStaticData])
+    // useEffect(()=>{
+    //    setSurveyFilteredOptionValue(userStaticData[`${surveyFilteringValue}`]) 
+    // },[surveyFilteringValue,userStaticData])
 
     const createSurvey=()=>{
      const surveyData={
