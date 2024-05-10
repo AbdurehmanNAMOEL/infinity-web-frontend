@@ -25,7 +25,7 @@ const QuestionnairePage = () => {
   const [surveyFilteringValue,setSurveyFilteringValue]= useState('')
   const [surveyFilterValue,setSurveyFilterValue]= useState('')
   const [surveyFilteredOptionValue,setSurveyFilteredOptionValue]= useState([])
-  const {isLightMode,modeColor,userStaticData} = useSelector(state=>state.admin)
+  const {modeColor} = useSelector(state=>state.admin)
   const {editableSurveyValue} = useSelector(state=>state.question)
   const {isDrawerOpen} = useSelector(state=>state.admin)
   const [questionData,setQuestionData]= useState([])
@@ -129,9 +129,7 @@ const deleteQuestion=(questionTitle)=>{
 
 
   const handleSurveyFilter=(e)=>{
-       setSurveyFilteringValue(e.target.value)
-      
-      
+       setSurveyFilteringValue(e.target.value)   
   }
 
    useEffect(()=>{
